@@ -2,7 +2,11 @@ Started: January 2016
 
 * Requirements: Prelude
 
-This library is the contents of the =personal= folder for configuring emacs when using [[https://github.com/bbatsov/prelude][prelude]].
+This library is the contents of the =personal= folder for configuring emacs when using the [[https://github.com/bbatsov/prelude][prelude]] library for EMACS by bbatsov Bozhidar Batsov.
+
+The path for this folder for a standard installation of EMACS should be:
+
+: ~/.emacs.d/personal
 
 * Installation
 
@@ -17,7 +21,9 @@ This will create a folder emacs-prelude-personal at the location where you ran t
 
 ** 2: Link the folder of this library to your .emacs.d folder
 
-Then link the library to your prelude personal folder by running this:
+Then link the library to your prelude personal folder by running the following commands. 
+
+*Take care to edit =/full/path/to= to correspond to the actual location of =emacs-prelude-personal= as you downloaded it with =git -clone=.*
 
 #+BEGIN_SRC sh
 # Rename previous personal folder to personal + current date and time:
@@ -26,6 +32,4 @@ mv ~/.emacs.d/personal ~/.emacs.d/"personal-`date`"
 ln -s /full/path/to/emacs-prelude-personal ~/.emacs.d/personal
 #+END_SRC
 
-(Edit =/full/path/to= to correspond to the actual location of =emacs-prelude-personal= as you downloaded it with =git -clone=.)
-
-** Restart emacs
+** 3. Restart emacs
