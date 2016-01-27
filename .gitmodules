@@ -1,6 +1,0 @@
-[submodule "packages/sclang"]
-	path = packages/sclang
-	url = https://github.com/iani/sclang.git
-[submodule "packages/sc-snippets"]
-	path = packages/sc-snippets
-	url = https://github.com/iani/sc-snippets.git
