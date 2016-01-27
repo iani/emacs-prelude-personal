@@ -2,6 +2,8 @@
 (load-file "~/.emacs.d/personal/packages/sclang/sclang.el")
 (load-file "~/.emacs.d/personal/packages/sc-snippets/sc-snippets.el")
 (require 'sclang)
+(require 'sc-snippets)
+
 ;;; Directory of SuperCollider support, for quarks, plugins, help etc.
 (defvar sc_userAppSupportDir
   (expand-file-name "~/Library/Application Support/SuperCollider"))

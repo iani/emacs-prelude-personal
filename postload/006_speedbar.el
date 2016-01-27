@@ -1,4 +1,5 @@
 (require 'deft)
+(require 'sr-speedbar)  ;; loads commands required by speedbar-workfiles
 
 (setq deft-use-filename-as-title t)
 
@@ -24,7 +25,7 @@
           (deft-here f)
           (dframe-message "Okie dokie.")
           (let ((p (point)))
-            (speedbar-refresh)
+           ;; (speedbar-refresh)
             (goto-char p))))))
 
 (defun speedbar-log-here ()
@@ -35,14 +36,11 @@
     (if (not f) (error "Not a file"))
     (if (speedbar-y-or-n-p (format "Create log entry on %s? " f) t)
         (progn
-          (org-log-here f)
+          (org-log-here f) ;; defined in org-notes.el
           (dframe-message "Okie dokie.")
           (let ((p (point)))
-            (speedbar-refresh)
+           ;; (speedbar-refresh)
             (goto-char p))))))
-
-(defun org-log-here (FILE)
-  "Create org-log entry in FILE.")
 
 (defun speedbar-agenda-here (PATH)
   ;; copied from speedbar-item-delete
@@ -55,12 +53,27 @@
           (org-agenda-here f)
           (dframe-message "Okie dokie.")
           (let ((p (point)))
-            (speedbar-refresh)
+            ;; (speedbar-refresh)
             (goto-char p))))))
 
-(defun org-agenda-here ()
+(defun org-agenda-here (&optional path)
   "Open org-agenda on selected directory or file."
-  )
+  (interactive)
+  (message "org-agenda-here not yet implemented"))
+
+(defun speedbar-workfiles ()
+  "Open sr-speebar on workfiles root and keep it there."
+  (interactive)
+  (let ((buffer (current-buffer)))
+    (sr-speedbar-refresh-turn-on)
+    (dired iz-log-dir)
+    (sr-speedbar-open)
+    (speedbar-refresh)
+    (sr-speedbar-refresh-turn-off)
+    (switch-to-buffer buffer)))
+
+(global-set-key (kbd "H-L") 'speedbar-log)
+(global-set-key (kbd "H-s") 'speedbar-workfiles)
 
 (defun add-speedbar-keys ()
   (local-set-key (kbd "d") 'speedbar-deft-here)
