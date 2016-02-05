@@ -1,6 +1,6 @@
 (require 'deft)
 (require 'sr-speedbar)  ;; loads commands required by speedbar-workfiles
-(require 'org-notes)
+;; (require 'org-notes) ;; TODO: load all packages in personal/packages
 
 (setq deft-use-filename-as-title t)
 
@@ -69,33 +69,11 @@
     (if (not f) (error "Not a file"))
     (if (speedbar-y-or-n-p (format "Create log entry on %s? " f) t)
         (progn
-          (org-log-here f)
+          (org-log-here f) ;; defined in org-notes
           (dframe-message "Okie dokie.")
           (let ((p (point)))
            ;; (speedbar-refresh)
             (goto-char p))))))
-
-(defun org-log-here (file)
-  "Create org-capture entry with date in FILE."
-  (when file
-    (setq org-capture-templates
-          (list
-           (list
-            "l"
-            (format "log: %s" (file-name-sans-extension
-                               (file-name-nondirectory file)))
-            'entry (list 'file+datetree+prompt file)
-            "* %?\n :PROPERTIES:\n :DATE:\t%^T\n :END:\n\n%i\n")
-           (list
-            "d" "diary" 'entry (list 'file+datetree+prompt
-                                     (concat iz-log-dir "0_PRIVATE/DIARY.org"))
-            "* %?\n :PROPERTIES:\n :DATE:\t%^T\n :END:\n\n%i\n")
-           (list
-            "s" "sudel" 'entry (list 'file+datetree+prompt
-                                     (concat iz-log-dir "6_WEBSITES-ORG/SUDEL.org"))
-            "* %?\n :PROPERTIES:\n :DATE:\t%^T\n :END:\n\n%i\n")))
-    (org-capture))
-  )
 
 (defun speedbar-workfiles ()
   "Open sr-speebar on workfiles root and keep it there."
@@ -129,4 +107,3 @@
 (add-hook 'speedbar-mode-hook 'add-speedbar-keys)
 
 (global-set-key (kbd "C-M-H-s") 'sr-speedbar-open)
-
