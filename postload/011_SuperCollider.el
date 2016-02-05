@@ -32,6 +32,7 @@
 
 (add-hook 'sclang-mode-hook 'rainbow-delimiters-mode)
 (add-hook 'sclang-mode-hook 'hl-sexp-mode)
+(add-hook 'sclang-mode-hook 'hs-minor-mode)
 ;; (add-hook 'sclang-mode-hook 'electric-pair-mode)
 ;; (add-hook 'sclang-mode-hook 'yas-minor-mode)
 ;; (add-hook 'sclang-mode-hook 'auto-complete-mode)

@@ -1,3 +1,4 @@
+(setq org-attach-directory (file-truename "~/.org-attachments/"))
 (custom-set-faces
  '(org-block-end-line ((t (:background "#3a3a3a" :foreground "gray99"))) t)
  '(org-level-1 ((t (:weight bold :height 1.1))))
