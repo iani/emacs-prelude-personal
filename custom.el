@@ -185,6 +185,7 @@ static char *gnus-pointer[] = {
  '(org-level-7 ((t (:weight bold :height 1.1))))
  '(org-level-8 ((t (:weight bold :height 1.1))))
  '(org-level-9 ((t (:weight bold :height 1.1))))
+ '(org-meta-line ((t (:background "black" :foreground "pink1"))))
  '(rainbow-delimiters-depth-1-face ((t (:foreground "#CCFFCC"))))
  '(rainbow-delimiters-depth-2-face ((t (:foreground "#33FF66"))))
  '(rainbow-delimiters-depth-3-face ((t (:foreground "#009933"))))

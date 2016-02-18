@@ -10,3 +10,32 @@
  '(org-level-7 ((t (:weight bold :height 1.1))))
  '(org-level-8 ((t (:weight bold :height 1.1))))
  '(org-level-9 ((t (:weight bold :height 1.1)))))
+
+(defun org-set-date (&optional active property)
+  "Set DATE property with current time.  Active timestamp."
+  (interactive "P")
+  (org-set-property
+   (if property property "DATE")
+   (cond ((equal active nil)
+          (format-time-string (cdr org-time-stamp-formats) (current-time)))
+         ((equal active '(4))
+          (concat "["
+                  (substring
+                   (format-time-string (cdr org-time-stamp-formats) (current-time))
+                   1 -1)
+                  "]"))
+         ((equal active '(16))
+          (concat
+           "["
+           (substring
+            (format-time-string (cdr org-time-stamp-formats) (org-read-date t t))
+            1 -1)
+           "]"))
+         ((equal active '(64))
+          (format-time-string (cdr org-time-stamp-formats) (org-read-date t t))))))
+
+;; Note: This keybinding is in analogy to the standard keybinding:
+;; C-c . -> org-time-stamp
+(eval-after-load 'org
+  '(progn
+     (define-key org-mode-map (kbd "C-c C-.") 'org-set-date)))
