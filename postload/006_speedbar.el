@@ -12,6 +12,25 @@
 (speedbar-add-supported-extension ".css")
 (speedbar-add-supported-extension ".tex")
 
+(defun speedbar-workfiles ()
+  "Open sr-speebar on workfiles root and keep it there."
+  (interactive)
+  (speedbar-fixed-dir iz-log-dir))
+
+(defun speedbar-dev ()
+  "Open sr-speebar on workfiles root and keep it there."
+  (interactive)
+  (speedbar-fixed-dir (file-truename "~/MEGA/001DEV/")))
+
+(defun speedbar-fixed-dir (dir)
+  (let ((buffer (current-buffer)))
+    (sr-speedbar-refresh-turn-on)
+    (dired dir)
+    (sr-speedbar-open)
+    (speedbar-refresh)
+    (sr-speedbar-refresh-turn-off)
+    (switch-to-buffer buffer)))
+
 (defun deft-here (dir)
   "Change DEFT-DIRECTORY to a directory selected interactively."
   (interactive)
@@ -72,33 +91,44 @@
           (org-log-here f) ;; defined in org-notes
           (dframe-message "Okie dokie.")
           (let ((p (point)))
-           ;; (speedbar-refresh)
+            ;; (speedbar-refresh)
             (goto-char p))))))
 
-(defun speedbar-workfiles ()
-  "Open sr-speebar on workfiles root and keep it there."
+(defun speedbar-agenda-here ()
+  ;; copied from speedbar-item-delete
+  "Create org-log entry on selected file."
   (interactive)
-  (speedbar-fixed-dir iz-log-dir))
+  (let ((f (speedbar-line-file)))
+    (if (not f) (error "Not a file"))
+    (setq org-agenda-files (list f))
+    (org-agenda)
+    (dframe-message "Okie dokie.")
+    (let ((p (point)))
+      ;; (speedbar-refresh)
+      (goto-char p))))
 
-(defun speedbar-dev ()
-  "Open sr-speebar on workfiles root and keep it there."
+;; (defun org-make-agenda-)
+
+(defun speedbar-calfw-here ()
+  ;; copied from speedbar-item-delete
+  "Create org-log entry on selected file."
   (interactive)
-  (speedbar-fixed-dir (file-truename "~/Documents/Dev/")))
-
-(defun speedbar-fixed-dir (dir)
-  (let ((buffer (current-buffer)))
-    (sr-speedbar-refresh-turn-on)
-    (dired dir)
-    (sr-speedbar-open)
-    (speedbar-refresh)
-    (sr-speedbar-refresh-turn-off)
-    (switch-to-buffer buffer)))
+  (let ((f (speedbar-line-file)))
+    (if (not f) (error "Not a file"))
+    (setq org-agenda-files (list f))
+    (cfw:open-org-calendar)
+    (dframe-message "Okie dokie.")
+    (let ((p (point)))
+      ;; (speedbar-refresh)
+      (goto-char p))))
 
 (global-set-key (kbd "H-L") 'speedbar-log)
 (global-set-key (kbd "H-s w") 'speedbar-workfiles)
 (global-set-key (kbd "H-s d") 'speedbar-dev)
 
 (defun add-speedbar-keys ()
+  (local-set-key (kbd "C-c a") 'speedbar-agenda-here)
+  (local-set-key (kbd "C-c c") 'speedbar-calfw-here)
   (local-set-key (kbd "s") 'isearch-forward)
   (local-set-key (kbd "d") 'speedbar-deft-here)
   (local-set-key (kbd "C-d") 'speedbar-dired-here)
