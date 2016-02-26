@@ -103,6 +103,7 @@ static char *gnus-pointer[] = {
  '(main-line-color1 "#1E1E1E")
  '(main-line-color2 "#111111")
  '(main-line-separator-style (quote chamfer))
+ '(ns-right-command-modifier (quote meta))
  '(org-attach-directory "./attachments" t)
  '(org-drill-optimal-factor-matrix (quote ((1 (2.5 . 4.0) (1.96 . 3.58)))))
  '(org-export-backends (quote (ascii html icalendar latex md taskjuggler)))
