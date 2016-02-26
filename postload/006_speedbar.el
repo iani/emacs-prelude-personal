@@ -117,7 +117,7 @@
     (if (not f) (error "Not a file"))
     (setq org-agenda-files (list f))
     (cfw:open-org-calendar)
-    (cfw:refresh-calendar-buffer)
+    ;; (cfw:refresh-calendar-buffer nil)
     (dframe-message "Okie dokie.")
     (let ((p (point)))
       ;; (speedbar-refresh)
