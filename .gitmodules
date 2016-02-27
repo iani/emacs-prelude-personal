@@ -1,9 +1,9 @@
 [submodule "packages/sclang"]
 	path = packages/sclang
-	url = git@github.com:iani/sclang.git
+	url = https://github.com/iani/org-notes.git
 [submodule "packages/sc-snippets"]
 	path = packages/sc-snippets
-	url = git@github.com:iani/sc-snippets.git
+	url = https://github.com/iani/sc-snippets.git
 [submodule "packages/org-notes"]
 	path = packages/org-notes
-	url = git@github.com:iani/org-notes.git
+	url = https://github.com/iani/org-notes.git
