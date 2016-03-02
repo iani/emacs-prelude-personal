@@ -4,13 +4,15 @@
 
 (setq deft-use-filename-as-title t)
 
-(speedbar-add-supported-extension ".sc")
-(speedbar-add-supported-extension ".scd")
-(speedbar-add-supported-extension ".js")
-(speedbar-add-supported-extension ".sh")
-(speedbar-add-supported-extension ".html")
-(speedbar-add-supported-extension ".css")
-(speedbar-add-supported-extension ".tex")
+;; (speedbar-add-supported-extension ".sc")
+;; (speedbar-add-supported-extension ".scd")
+;; (speedbar-add-supported-extension ".js")
+;; (speedbar-add-supported-extension ".sh")
+;; (speedbar-add-supported-extension ".html")
+;; (speedbar-add-supported-extension ".css")
+;; (speedbar-add-supported-extension ".tex")
+
+(setq speedbar-show-unknown-files t)
 
 (defun speedbar-workfiles ()
   "Open sr-speebar on workfiles root and keep it there."
@@ -126,6 +128,7 @@
 (global-set-key (kbd "H-L") 'speedbar-log)
 (global-set-key (kbd "H-s w") 'speedbar-workfiles)
 (global-set-key (kbd "H-s d") 'speedbar-dev)
+(global-set-key (kbd "H-s t") 'sr-speedbar-refresh-toggle)
 
 (defun add-speedbar-keys ()
   (local-set-key (kbd "C-c a") 'speedbar-agenda-here)
@@ -138,3 +141,5 @@
 (add-hook 'speedbar-mode-hook 'add-speedbar-keys)
 
 (global-set-key (kbd "C-M-H-s") 'sr-speedbar-open)
+(global-set-key (kbd "C-M-H-s") 'sr-speedbar-open)
+
