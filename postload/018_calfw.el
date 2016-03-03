@@ -61,3 +61,9 @@
      ("9" . digit-argument)
 
      )))
+
+(defun org-calfw-here ()
+  "Open calfw on the file of the present buffer."
+  (interactive)
+  (setq org-agenda-files (list (buffer-file-name)))
+     (cfw:open-org-calendar))
