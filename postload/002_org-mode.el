@@ -38,4 +38,7 @@
 ;; C-c . -> org-time-stamp
 (eval-after-load 'org
   '(progn
-     (define-key org-mode-map (kbd "C-c C-.") 'org-set-date)))
+     (define-key org-mode-map (kbd "C-c C-.") 'org-set-date)
+     (define-key org-mode-map (kbd "C-c c c") 'org-calfw-here)
+     (define-key org-mode-map (kbd "C-c c l") 'org-log-here)
+     (define-key org-mode-map (kbd "C-c c a") 'org-agenda-here)))
