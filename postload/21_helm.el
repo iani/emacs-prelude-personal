@@ -7,6 +7,11 @@
 ;; (global-set-key (kbd "C-c C-h p") 'helm-browse-project) 
 
 ;; Modified from helm-browse-project
+(defun helm-browse-workfiles ()
+  "Browse workfiles root directory with helm-project."
+  (interactive)
+  (helm-browse-project-root '(4)))
+
 (defun helm-browse-project-root (arg)
   "Preconfigured helm to browse projects FROM .git ROOT.
 Adapted from helm-browse-project.
@@ -103,8 +108,7 @@ Adapted from helm-switch-to-buffers."
         ("Hardlink file(s) `M-H, C-u to follow'" . helm-find-files-hardlink)
         ("Open file externally (C-u to choose)" . helm-open-file-externally)
         ("Open file with default tool" . helm-open-file-with-default-tool)
-        ("Find file in hex dump" . hexl-find-file))
-      )
+        ("Find file in hex dump" . hexl-find-file)))
 
 (setq helm-type-buffer-actions
       '(("Switch to buffer(s)" . helm-switch-to-buffers)
@@ -128,3 +132,4 @@ Adapted from helm-switch-to-buffers."
               4 "\n\n(fn CANDIDATE)"])))
 
 (global-set-key (kbd "C-c C-h b") 'helm-browse-project-root)
+(global-set-key (kbd "C-c C-h w") 'helm-browse-workfiles)
