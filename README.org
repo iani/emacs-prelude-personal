@@ -8,6 +8,41 @@ The path for this folder for a standard installation of EMACS should be:
 
 : ~/.emacs.d/personal
 
+* Some packages used
+
+Before installing my setup, have a look at the following list of packages used, and my =prelude-modules.el= configuration.  Install prelude modules and the packages listed below to prevent having to restart emacs many times because of missing packages.
+
+Following is an *incomplete* list of the packages used.  Some of these come with prelude, others have to be downloaded with =package-install=, others still (e.g. =ag=) must be installed from the shell command line. 
+
+Also: Have a look at ~/emacs.d/sample/prelude-modules.el and copy it to ~/.emacs.d/ then edit it to customize.  These are the prelude modules that I use in my =prelude-modules.el=:
+
+1. (require 'prelude-helm) ;; Interface for narrowing and search
+2. (require 'prelude-helm-everywhere) ;; Enable Helm everywhere
+3. (require 'prelude-key-chord) ;; Binds useful features to key combinations
+4. (require 'prelude-emacs-lisp)
+5. (require 'prelude-org)
+
+Here are the packages that I recall using a lot: 
+
+1. projectile
+2. helm (helm-everywhere)
+3. ace
+4. ace-isearch
+5. helm-swoop (required by ace-isearch)
+6. paredit
+7. hl-sexp
+8. rainbow-identifiers
+9. ag (for projectile and helm-projectile, is a unix package, installed via shell)
+10. calfw
+11. moe theme
+12. deft
+
+I am evaluating =company=.
+
+I do not use =yasnippet= - but am thinking of trying it out again.
+
+My current versions of org-notes and org-pm (not org-pm2) use =grizzl=, but I am in the process of substituting this by =helm=.
+
 * Installation
 
 ** 1: Download this library
@@ -33,39 +68,6 @@ ln -s /full/path/to/emacs-prelude-personal ~/.emacs.d/personal
 #+END_SRC
 
 ** 3. Restart emacs
-
-* Some packages used
-
-Following is an incomplete list of the packages used.  Some of these come with prelude, others have to be downloaded with =package-install=, others still (e.g. =ag=) must be installed from the shell command line. 
-
-Also: Have a look at ~/emacs.d/sample/prelude-modules.el and copy it to ~/.emacs.d/ then edit it to customize.  These are the prelude modules that I use in my =prelude-modules.el=:
-
-1. (require 'prelude-helm) ;; Interface for narrowing and search
-2. (require 'prelude-helm-everywhere) ;; Enable Helm everywhere
-3. (require 'prelude-key-chord) ;; Binds useful features to key combinations
-4. (require 'prelude-emacs-lisp)
-5. (require 'prelude-org)
-
-Here are the packages that I recall using a lot: 
-
-1. projectile
-2. helm (helm-everywhere)
-3. ace
-4. ace-isearch
-5. helm-swoop (required by ace-isearch)
-6. paredit
-7. hl-sexp
-8. rainbow-identifiers
-9. ag (for projectile and helm-projectile, is a unix package, installed via shell)
-10. calfw
-11. moe theme
-12. deft
-
-I am evaluating =company=
-
-I do not use =yasnippets= - but am thinking of trying them out again.
-
-My current versions of org-notes and org-pm (not org-pm2) use =grizzl=, but I am in the process of substituting this by =helm=.
 
 
 
