@@ -1,4 +1,9 @@
 (setq org-attach-directory (file-truename "~/.org-attachments/"))
+
+;; (setq org-agenda-diary-file (file-truename
+;;                              (concat iz-log-dir "PERSONAL/DIARY2.txt")))
+
+;; customize looks
 (custom-set-faces
  '(org-block-end-line ((t (:background "#3a3a3a" :foreground "gray99"))) t)
  '(org-level-1 ((t (:weight bold :height 1.1))))
@@ -34,11 +39,18 @@
          ((equal active '(64))
           (format-time-string (cdr org-time-stamp-formats) (org-read-date t t))))))
 
-;; Note: This keybinding is in analogy to the standard keybinding:
+(defun org-insert-current-date (arg)
+  "Insert current date in format readable for org-capture minibuffer.
+If called with ARG, do not insert time."
+  (interactive "P")
+  (if arg
+      (insert (format-time-string "%e %b %Y"))
+    (insert (format-time-string "%e %b %Y %H:%M"))))
+
+;; Note: This keybinding is in analogy to the default keybinding:
 ;; C-c . -> org-time-stamp
 (eval-after-load 'org
   '(progn
-     (define-key org-mode-map (kbd "C-c C-.") 'org-set-date)
-     (define-key org-mode-map (kbd "C-c c c") 'org-calfw-here)
-     (define-key org-mode-map (kbd "C-c c l") 'org-log-here)
-     (define-key org-mode-map (kbd "C-c c a") 'org-agenda-here)))
+     (define-key org-mode-map (kbd "C-c C-.") 'org-set-date)))
+
+(global-set-key (kbd "C-c C-x t") 'org-insert-current-date)

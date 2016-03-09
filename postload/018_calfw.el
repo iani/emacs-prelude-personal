@@ -1,5 +1,6 @@
 (require 'calfw)
 (require 'calfw-org)
+(require 'calfw-cal)
 
 (setq calendar-christian-all-holidays-flag t)
 
@@ -7,11 +8,14 @@
 
 (setq cfw:org-overwrite-default-keybinding t)
 
-(defun org-calfw-here ()
+(defun org-calfw-here (&optional arg)
   "Open calfw on the file of the present buffer."
-  (interactive)
-  (setq org-agenda-files (list (buffer-file-name)))
-  (org-log-here (buffer-file-name) t)
+  (interactive "P")
+  (when (and (buffer-file-name) (eq major-mode 'org-mode))
+    (if arg
+        (setq org-agenda-files (list (buffer-file-name)))
+      (add-to-list 'org-agenda-files (buffer-file-name))))
+  ;; (org-log-here (buffer-file-name) t)
   (cfw:open-org-calendar))
 
 (defun cfw:org-capture ()
@@ -31,6 +35,4 @@
                          (calendar-extract-year pos))))
       (org-capture))))
 
-
-
-
+(global-set-key (kbd "C-c c c") 'org-calfw-here)

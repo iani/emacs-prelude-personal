@@ -1,0 +1,66 @@
+(defvar org-pm-tiddlywiki-root (expand-file-name "~/tiddlywiki-sites/")
+  "Folder storing latex templates.
+It is your responsibility to link this folder to your public_html directory,
+since that may require admin privileges.")
+
+(defvar org-pm-tiddlywiki-name "TIDDLYWIKI_NAME"
+  "Name of proerty storing the name of tiddlywiki where file or section were exported.")
+
+(unless (file-exists-p org-pm-tiddlywiki-root)
+  (make-directory org-pm-tiddlywiki-root t))
+
+(defun org-pm-export-tiddlywiki (arg)
+  "Export file or section to tiddlywiki."
+  (interactive "P")
+  (if arg
+      (org-pm-export-tiddlywiki-file)
+    (org-pm-export-tiddlywiki-section)))
+
+;; (let ((default-directory "/Users/iani/tiddlywiki-sites/"))
+;;   (helm-find-files nil))
+
+;; (read-file-name "xxx" "/Users/iani/tiddlywiki-sites/")
+
+(defun org-pm-export-tiddlywiki-file ()
+  (let ((tw-name
+         (file-name-nondirectory
+          (read-file-name
+           "Select folder: " org-pm-tiddlywiki-root
+           nil t (or (org-get-file-property org-pm-tiddlywiki-name) "mywiki"))))))
+  )
+
+(read-file-name "xxx" "/Users/iani/tiddlywiki-sites/" nil t "index.html")
+
+(defun org-pm-export-tiddlywiki-section ()
+
+  )
+
+(defun org-pm-get-tiddlywiki-path (subtree-p)
+  "Get path for exporting file or subtree to TiddlyWiki."
+  
+  (message "this is the wiki name IN FILE %s"
+           (org-get-file-property org-pm-tiddlywiki-name nil))
+  (message "this is the wiki NAME IN SUBTREE %s"
+           (org-entry-get (point) org-pm-tiddlywiki-name nil)))
+
+(eval-after-load 'org
+  '(progn
+     (define-key org-mode-map (kbd "C-c C-x t") 'org-pm-export-tiddlywiki)
+     (define-key org-mode-map (kbd "C-c C-x T") 'org-pm-deploy-tiddlywiki)))
+
+(defun org-get-file-property (property &optional all)
+  "Get property from buffer variable.  Returns only fist match except if ALL is defined.
+NOTE: Also works if editing subtree narrowed or in separate narrowed buffer. "
+  (with-current-buffer
+      (current-buffer)
+    (save-excursion
+      (save-restriction
+        (save-match-data
+          (widen)
+          (goto-char (point-min))
+          (let (values)
+            (while (re-search-forward (format "^#\\+%s:?[ \t]*\\(.*\\)" property) nil t)
+              (add-to-list 'values (substring-no-properties (match-string 1))))
+            (if all
+                values
+              (car values))))))))

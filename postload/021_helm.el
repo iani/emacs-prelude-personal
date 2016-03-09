@@ -75,6 +75,15 @@ Adapted from helm-browse-project-get--root-dir."
     (find-file file)
     (org-log-here)))
 
+(defun helm-org-add-to-agenda (&optional _ignore1 _ignore2)
+  (let* ((helm--reading-passwd-or-string t)
+         (file (car (helm-marked-candidates))))
+    (add-to-list 'org-agenda-files file)))
+
+(defun helm-org-set-agenda (&optional _ignore1 _ignore2)
+  (let* ((helm--reading-passwd-or-string t))
+    (setq org-agenda-files (helm-marked-candidates))))
+
 (defun helm-org-capture-in-buffer (buffer-or-name &optional other-window)
   "Switch to org mode buffer and capture in it.
 Adapted from helm-switch-to-buffers."
@@ -84,15 +93,17 @@ Adapted from helm-switch-to-buffers."
 ;; Customize helm-type-file-actions: Add org-capture action
 (setq helm-type-file-actions
       '(("Find file" . helm-find-many-files)
-        ("Org-capture on file" . helm-org-capture-in-file)
+        ("Org-capture in file" . helm-org-capture-in-file)
+        ("Add file to org agenda" . helm-org-add-to-agenda)
+        ("Set org agenda to file(s)" . helm-org-set-agenda)
         ("Find file as root" . helm-find-file-as-root)
         ("Find file other window" . helm-find-files-other-window)
         ("Find file other frame" . find-file-other-frame)
         ("Open dired in file's directory" . helm-open-dired)
+        ("Insert as org link" . helm-files-insert-as-org-link)
         ("Grep File(s) `C-u recurse'" . helm-find-files-grep)
         ("Zgrep File(s) `C-u Recurse'" . helm-ff-zgrep)
         ("Pdfgrep File(s)" . helm-ff-pdfgrep)
-        ("Insert as org link" . helm-files-insert-as-org-link)
         ("Checksum File" . helm-ff-checksum)
         ("Ediff File" . helm-find-files-ediff-files)
         ("Ediff Merge File" . helm-find-files-ediff-merge-files)
@@ -113,6 +124,8 @@ Adapted from helm-switch-to-buffers."
 (setq helm-type-buffer-actions
       '(("Switch to buffer(s)" . helm-switch-to-buffers)
        ("Org-capture in buffer)" . helm-org-capture-in-buffer)
+       ("Add file to org agenda" . helm-org-add-to-agenda)
+       ("Set org agenda to file(s)" . helm-org-set-agenda)
        ("Switch to buffer(s) other window `C-c o'" . helm-switch-to-buffers-other-window)
        ("Switch to buffer other frame `C-c C-o'" . switch-to-buffer-other-frame)
        ("Query replace regexp `C-M-%'" . helm-buffer-query-replace-regexp)
