@@ -24,22 +24,32 @@ Also: Have a look at ~/emacs.d/sample/prelude-modules.el and copy it to ~/.emacs
 
 Here are the packages that I recall using a lot: 
 
-1. projectile
-2. helm (helm-everywhere)
-3. ace
-4. ace-isearch
-5. helm-swoop (required by ace-isearch)
-6. paredit
-7. hl-sexp
-8. rainbow-identifiers
-9. ag (for projectile and helm-projectile, is a unix package, installed via shell)
-10. calfw
-11. moe theme
-12. deft
+1. projectile (included in prelude)
+2. helm (helm-everywhere) (installed with prelude-modules.el)
+3. key-chord-mode (installed with prelude-modules.el
+4. ace
+5. ace-isearch
+6. evil-mode (for moving in buffer instead of ace when input mode is greek)
+7. evil-org (like for evil-mode, but in org files)
+8. linum-mode
+9. linum-relative-mode
+10. helm-swoop (required by ace-isearch)
+11. paredit
+12. hl-sexp
+13. rainbow-identifiers
+14. ag (for projectile and helm-projectile, is a unix package, installed via shell)
+15. calfw
+16. org-calfw (indispensable)
+17. moe theme
+18. deft
+20. dired+
+21. bookmark+
 
 I am evaluating =company=.
 
 I do not use =yasnippet= - but am thinking of trying it out again.
+
+
 
 My current versions of org-notes and org-pm (not org-pm2) use =grizzl=, but I am in the process of substituting this by =helm=.
 
