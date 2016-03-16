@@ -4,13 +4,12 @@
 
 ;;; Code:
 
-;; (org-babel-load-file "~/.emacs.d/personal/postload/init.org")
+;;; Add load paths for all packages in personal/packages.
+(mapc (lambda (path)
+        (add-to-list 'load-path (concat path "/")))
+      (file-expand-wildcards "~/.emacs.d/personal/packages/*"))
 
-;; (mapcar (lambda (path) (load-file path))
-;;        (directory-files "~/.emacs.d/personal/postload/" nil ".el$"))
-
-;; (load-file "/Users/iani/.emacs.d/personal/000_EnableFullscreen.el")
-
+;;; Load all customization files in alphabetical order.
 (mapcar (lambda (path)
           (load-file path))
         (file-expand-wildcards "~/.emacs.d/personal/postload/*.el"))
