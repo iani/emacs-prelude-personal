@@ -7,3 +7,6 @@
 [submodule "packages/org-notes"]
 	path = packages/org-notes
 	url = https://github.com/iani/org-notes.git
+[submodule "packages/org-pm2"]
+	path = packages/org-pm2
+	url = https://github.com/iani/org-pm2.git
