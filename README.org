@@ -42,8 +42,9 @@ Here are the packages that I recall using a lot:
 16. org-calfw (indispensable)
 17. moe theme
 18. deft
-20. dired+
-21. bookmark+
+19. dired+
+20. bookmark+
+21. elisp-slime-nav https://github.com/purcell/elisp-slime-nav
 
 I am evaluating =company=.
 
