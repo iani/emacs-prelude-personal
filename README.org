@@ -26,7 +26,7 @@ Here are the packages that I recall using a lot:
 
 1. projectile (included in prelude)
 2. helm (helm-everywhere) (installed with prelude-modules.el)
-3. key-chord-mode (installed with prelude-modules.el
+3. key-chord-mode (installed with prelude-modules.el)
 4. ace
 5. ace-isearch
 6. evil-mode (for moving in buffer instead of ace when input mode is greek)
@@ -45,12 +45,11 @@ Here are the packages that I recall using a lot:
 19. dired+
 20. bookmark+
 21. elisp-slime-nav https://github.com/purcell/elisp-slime-nav
+22. hs-minor-mode (hide-show blocks of code)
 
 I am evaluating =company=.
 
 I do not use =yasnippet= - but am thinking of trying it out again.
-
-
 
 My current versions of org-notes and org-pm (not org-pm2) use =grizzl=, but I am in the process of substituting this by =helm=.
 

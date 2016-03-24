@@ -31,10 +31,11 @@
 ;; minor modes SuperCollider
 
 ;; (add-hook 'sclang-mode-hook 'sclang-extensions-mode) ;; still problems with this
+(add-hook 'sclang-mode-hook 'paredit-mode)
 (add-hook 'sclang-mode-hook 'rainbow-delimiters-mode)
 (add-hook 'sclang-mode-hook 'hl-sexp-mode)
 (add-hook 'sclang-mode-hook 'hs-minor-mode)
-(add-hook 'sclang-mode-hook 'electric-pair-mode)
+;; (add-hook 'sclang-mode-hook 'electric-pair-mode)
 ;; (add-hook 'sclang-mode-hook 'yas-minor-mode)
 (add-hook 'sclang-mode-hook 'auto-complete-mode)
 (add-hook 'sclang-mode-hook 'hl-paren-mode)
