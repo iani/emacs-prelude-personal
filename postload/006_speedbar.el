@@ -90,7 +90,8 @@
     (if (not f) (error "Not a file"))
     (if (speedbar-y-or-n-p (format "Create log entry on %s? " f) t)
         (progn
-          (org-log-here f) ;; defined in org-notes
+          ;; (org-log-here f)
+          ;; defined in org-notes
           (dframe-message "Okie dokie.")
           (let ((p (point)))
             ;; (speedbar-refresh)
@@ -103,7 +104,7 @@
   (let ((f (speedbar-line-file)))
     (if (not f) (error "Not a file"))
     (setq org-agenda-files (list f))
-    (org-log-here f t)
+    ;; (org-log-here f t)
     (org-agenda)
     (dframe-message "Okie dokie.")
     (let ((p (point)))
@@ -119,7 +120,7 @@
   (let ((f (speedbar-line-file)))
     (if (not f) (error "Not a file"))
     (setq org-agenda-files (list f))
-    (org-log-here f t)
+    ;; (org-log-here f t)
     (cfw:open-org-calendar)
     ;; (cfw:refresh-calendar-buffer nil)
     (dframe-message "Okie dokie.")

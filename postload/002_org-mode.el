@@ -1,5 +1,5 @@
 (setq org-attach-directory (file-truename "~/.org-attachments/"))
-
+(setq org-agenda-sticky t) ;; open agenda and todo views in separate buffers
 ;; (setq org-agenda-diary-file (file-truename
 ;;                              (concat iz-log-dir "PERSONAL/DIARY2.txt")))
 

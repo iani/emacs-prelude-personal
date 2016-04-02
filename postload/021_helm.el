@@ -73,7 +73,8 @@ Adapted from helm-browse-project-get--root-dir."
   (let* ((helm--reading-passwd-or-string t)
          (file (car (helm-marked-candidates))))
     (find-file file)
-    (org-log-here)))
+    ;; (org-log-here)
+    ))
 
 (defun helm-org-add-to-agenda (&optional _ignore1 _ignore2)
   (let* ((helm--reading-passwd-or-string t)
@@ -88,7 +89,8 @@ Adapted from helm-browse-project-get--root-dir."
   "Switch to org mode buffer and capture in it.
 Adapted from helm-switch-to-buffers."
   (switch-to-buffer buffer-or-name)
-  (org-log-here))
+  ;; (org-log-here)
+  )
 
 ;; Customize helm-type-file-actions: Add org-capture action
 (setq helm-type-file-actions

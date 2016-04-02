@@ -106,7 +106,7 @@ static char *gnus-pointer[] = {
  '(org-agenda-files
    (quote
     ("/Users/iani/MEGA/000WORKFILES/PERSONAL/DIARY.org" "/Users/iani/MEGA/000WORKFILES/PERSONAL/TODOS/TODOS.org")))
- '(org-attach-directory "./attachments" t)
+ '(org-attach-directory "./attachments")
  '(org-drill-optimal-factor-matrix (quote ((1 (2.5 . 4.0) (1.96 . 3.58)))))
  '(org-export-backends (quote (ascii html icalendar latex md odt taskjuggler)))
  '(org-export-with-sub-superscripts (quote {}))
