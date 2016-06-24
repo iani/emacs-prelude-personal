@@ -47,10 +47,12 @@ If called with ARG, do not insert time."
       (insert (format-time-string "%e %b %Y"))
     (insert (format-time-string "%e %b %Y %H:%M"))))
 
-;; Note: This keybinding is in analogy to the default keybinding:
-;; C-c . -> org-time-stamp
 (eval-after-load 'org
   '(progn
-     (define-key org-mode-map (kbd "C-c C-.") 'org-set-date)))
+     ;; Note: This keybinding is in analogy to the default keybinding:
+     ;; C-c . -> org-time-stamp
+     (define-key org-mode-map (kbd "C-c C-.") 'org-set-date)
+     (define-key org-mode-map (kbd "C-M-{") 'backward-paragraph)
+     (define-key org-mode-map (kbd "C-M-}") 'forward-paragraph)))
 
 (global-set-key (kbd "C-c C-x t") 'org-insert-current-date)
