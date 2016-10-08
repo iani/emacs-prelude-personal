@@ -22,7 +22,7 @@
 (defun speedbar-dev ()
   "Open sr-speebar on workfiles root and keep it there."
   (interactive)
-  (speedbar-fixed-dir (file-truename "~/MEGA/001DEV/")))
+  (speedbar-fixed-dir (file-truename "~/Documents/001DEV/")))
 
 (defun speedbar-fixed-dir (dir)
   (let ((buffer (current-buffer)))

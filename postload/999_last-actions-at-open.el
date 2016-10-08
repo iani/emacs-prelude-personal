@@ -8,10 +8,10 @@
 ;; (org-agenda-here '(4))
 ;; (org-agenda-toggle-diary)
 
-(setq org-agenda-files
-      (list
-       (concat iz-log-dir "PERSONAL/DIARY.org")
-       (concat iz-log-dir "PERSONAL/TODOS/TODOS.org")))
+;; (setq org-agenda-files
+;;       (list
+;;        (concat iz-log-dir "PERSONAL/DIARY.org")
+;;        (concat iz-log-dir "PERSONAL/TODOS/TODOS.org")))
 
 ;; (org-log-here (car org-agenda-files) t)
 
