@@ -1,7 +1,7 @@
 ;; copied from old repository.  Needs review
 ;; 10 May 2016 18:20
 
-;;; Load latex package
+;;; Load latex package for org-mode exports
 (require 'ox-latex)
 
 ;;; Use xelatex instead of pdflatex, for support of multilingual fonts (Greek etc.)
