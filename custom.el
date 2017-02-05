@@ -111,6 +111,7 @@ static char *gnus-pointer[] = {
  '(org-export-backends (quote (ascii html icalendar latex md odt taskjuggler)))
  '(org-export-with-sub-superscripts (quote {}))
  '(org-hide-leading-stars t)
+ '(org-journal-file-format "%Y%m%d.org")
  '(org-log-into-drawer t)
  '(org-mobile-directory "~/Dropbox/Apps/MobileOrg")
  '(org-modules
@@ -121,7 +122,7 @@ static char *gnus-pointer[] = {
  '(org-tags-column -50)
  '(package-selected-packages
    (quote
-    (zop-to-char zenburn-theme volatile-highlights vkill use-package swiper-helm sr-speedbar smex smartrep smartparens smart-mode-line sclang-extensions rainbow-mode rainbow-delimiters rainbow-blocks powerline paredit-menu paredit-everywhere ox-twbs ov org-drill-table operate-on-number move-text moe-theme migemo mc-extras markdown-mode magit litable linum-relative less-css-mode kivy-mode key-chord json-mode ido-ubiquitous hl-sexp hl-sentence hl-anything helm-w3m helm-projectile helm-descbinds helm-ag guru-mode grizzl god-mode gitignore-mode gitconfig-mode git-timemachine gist flycheck flx-ido expand-region exec-path-from-shell evil elisp-slime-nav easy-kill discover-my-major dired+ diff-hl deft csv-mode company calfw buffer-move browse-kill-ring bookmark+ beacon avy-zap avy-menu auto-async-byte-compile anzu ace-window ace-popup-menu ace-isearch)))
+    (org-journal elfeed-org auto-org-md yaml-mode zop-to-char zenburn-theme volatile-highlights vkill use-package swiper-helm sr-speedbar smex smartrep smartparens smart-mode-line sclang-extensions rainbow-mode rainbow-delimiters rainbow-blocks powerline paredit-menu paredit-everywhere ox-twbs ov org-drill-table operate-on-number move-text moe-theme migemo mc-extras markdown-mode magit litable linum-relative less-css-mode kivy-mode key-chord json-mode ido-ubiquitous hl-sexp hl-sentence hl-anything helm-w3m helm-projectile helm-descbinds helm-ag guru-mode grizzl god-mode gitignore-mode gitconfig-mode git-timemachine gist flycheck flx-ido expand-region exec-path-from-shell evil elisp-slime-nav easy-kill discover-my-major dired+ diff-hl deft csv-mode company calfw buffer-move browse-kill-ring bookmark+ beacon avy-zap avy-menu auto-async-byte-compile anzu ace-window ace-popup-menu ace-isearch)))
  '(powerline-color1 "#1E1E1E")
  '(powerline-color2 "#111111")
  '(rainbow-identifiers-cie-l*a*b*-lightness 25)
