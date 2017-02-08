@@ -55,7 +55,7 @@
 (define-key
   cfw:calendar-mode-map "C" 'cfw:org-journal-entry-for-now)
 (define-key
-  cfw:calendar-mode-map "C" 'cfw:org-journal-at-date-from-cursor)
+  cfw:calendar-mode-map "c" 'cfw:org-journal-at-date-from-cursor)
 
 (provide '018_calfw)
 ;;; 018_calfw.el ends here
