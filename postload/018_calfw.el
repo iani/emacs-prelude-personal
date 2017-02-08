@@ -34,7 +34,7 @@
                          (calendar-extract-month pos)
                          (calendar-extract-year pos))))
       (org-journal-new-entry prefix org-overriding-default-time)
-      (org-insert-time-stamp org-overriding-default-time t))))
+      (unless prefix (org-insert-time-stamp org-overriding-default-time t)))))
 
 (defun cfw:org-journal-entry-for-now (prefix)
   "Run org-journal-new-entry with date+time timestamp from current time."
