@@ -18,12 +18,12 @@
   ;; (org-log-here (buffer-file-name) t)
   (cfw:open-org-calendar))
 
-(defun cfw:org-capture (prefix)
-  "Overwrite original to run own cfw:org-capture-at-date instead."
-  (interactive "P")
-  (cfw:org-journal-at-date prefix))
+;; (defun cfw:org-capture (prefix)
+;;   "Overwrite original to run own cfw:org-capture-at-date instead."
+;;   (interactive "P")
+;;   (cfw:org-journal-at-date prefix))
 
-(defun cfw:org-journal-at-date (prefix)
+(defun cfw:org-journal-at-date-from-cursor (prefix)
   "Run org-journal-new-entry with ORG-OVERRIDING-DEFAULT-TIME from cursor."
   (interactive "P")
   (with-current-buffer  (get-buffer-create cfw:calendar-buffer-name)
@@ -52,6 +52,10 @@
 
 (global-set-key (kbd "C-c c c") 'org-calfw-here)
 (global-set-key (kbd "C-c C J") 'cfw:org-journal-entry-for-now)
+(define-key
+  cfw:calendar-mode-map "C" 'cfw:org-journal-entry-for-now)
+(define-key
+  cfw:calendar-mode-map "C" 'cfw:org-journal-at-date-from-cursor)
 
 (provide '018_calfw)
 ;;; 018_calfw.el ends here
