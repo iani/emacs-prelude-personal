@@ -15,17 +15,19 @@
 
 ;; (org-log-here (car org-agenda-files) t)
 
-(run-at-time "5 sec" nil
-             (lambda ()
-               (org-agenda nil "a")
-               (org-agenda-toggle-diary)
-               ;; (let ((org-agenda-multi t))
-               ;;   (org-agenda nil "t")
-               ;;   (widen)
-               ;;   (org-agenda-finalize)
-               ;;   (setq buffer-read-only t)
-               ;;   (org-agenda-fit-window-to-buffer))
-               (delete-other-windows)
-               (split-window-right)
-               (org-agenda nil "t")
-               ))
+;; (run-at-time "5 sec" nil
+;;              (lambda ()
+;;                (org-agenda nil "a")
+;;                (org-agenda-toggle-diary)
+;;                ;; (let ((org-agenda-multi t))
+;;                ;;   (org-agenda nil "t")
+;;                ;;   (widen)
+;;                ;;   (org-agenda-finalize)
+;;                ;;   (setq buffer-read-only t)
+;;                ;;   (org-agenda-fit-window-to-buffer))
+;;                (delete-other-windows)
+;;                (split-window-right)
+;;                (org-agenda nil "t")
+;;                ))
+
+(run-at-time "2 sec" nil (lambda () (org-calfw-here)))

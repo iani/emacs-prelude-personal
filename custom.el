@@ -17,7 +17,7 @@
  '(calendar-longitude 19.919)
  '(cursor-color "#cccctscc")
  '(cursor-type (quote bar))
- '(default-frame-alist (quote ((font . "Anonymous Pro for Powerline-12"))))
+ '(default-frame-alist nil)
  '(diary-entry-marker (quote font-lock-variable-name-face))
  '(emms-mode-line-icon-image-cache
    (quote

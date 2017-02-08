@@ -18,14 +18,14 @@
   ;; (org-log-here (buffer-file-name) t)
   (cfw:open-org-calendar))
 
-(defun cfw:org-capture ()
+(defun cfw:org-capture (prefix)
   "Overwrite original to run own cfw:org-capture-at-date instead."
-  (interactive)
-  (cfw:org-capture-at-date))
+  (interactive "P")
+  (cfw:org-journal-at-date prefix))
 
-(defun cfw:org-capture-at-date ()
-  "Run org-capture with ORG-OVERRIDING-DEFAULT-TIME from cursor."
-  (interactive)
+(defun cfw:org-journal-at-date (prefix)
+  "Run org-journal-new-entry with ORG-OVERRIDING-DEFAULT-TIME from cursor."
+  (interactive "P")
   (with-current-buffer  (get-buffer-create cfw:calendar-buffer-name)
     (let* ((pos (cfw:cursor-to-nearest-date))
            (org-overriding-default-time
@@ -33,6 +33,25 @@
                          (calendar-extract-day pos)
                          (calendar-extract-month pos)
                          (calendar-extract-year pos))))
-      (org-capture))))
+      (org-journal-new-entry prefix org-overriding-default-time)
+      (org-insert-time-stamp org-overriding-default-time t))))
+
+(defun cfw:org-journal-entry-for-now (prefix)
+  "Run org-journal-new-entry with date+time timestamp from current time."
+  (interactive "P")
+  (with-current-buffer  (get-buffer-create cfw:calendar-buffer-name)
+    (let* ((pos (cfw:cursor-to-nearest-date))
+           (org-overriding-default-time (apply 'encode-time (decode-time))
+            ;; (encode-time 0 0 7
+            ;;              (calendar-extract-day pos)
+            ;;              (calendar-extract-month pos)
+            ;;              (calendar-extract-year pos))
+            ))
+      (org-journal-new-entry prefix org-overriding-default-time)
+      (org-insert-time-stamp org-overriding-default-time t))))
 
 (global-set-key (kbd "C-c c c") 'org-calfw-here)
+(global-set-key (kbd "C-c C J") 'cfw:org-journal-entry-for-now)
+
+(provide '018_calfw)
+;;; 018_calfw.el ends here
