@@ -37,7 +37,9 @@
       (unless prefix
         (org-insert-time-stamp org-overriding-default-time t)
         (backward-word)
-        (backward-word)))))
+        (backward-word)
+        (paredit-forward-kill-word)
+        (paredit-forward-kill-word)))))
 
 (defun cfw:org-journal-entry-for-now (prefix)
   "Run org-journal-new-entry with date+time timestamp from current time."
@@ -55,10 +57,18 @@
 
 (global-set-key (kbd "C-c c c") 'org-calfw-here)
 (global-set-key (kbd "C-c C J") 'cfw:org-journal-entry-for-now)
+;; journal entry for Now (current date and time at time of command)
 (define-key
-  cfw:calendar-mode-map "C" 'cfw:org-journal-entry-for-now)
+  cfw:calendar-mode-map "N" 'cfw:org-journal-for-now)
+;; journal entry for Here (date at cursor on calfw buffer)
 (define-key
-  cfw:calendar-mode-map "c" 'cfw:org-journal-at-date-from-cursor)
+  cfw:calendar-mode-map "H" 'cfw:org-journal-at-date-from-cursor)
+
+
+;; (define-key
+;;   cfw:calendar-mode-map "C" 'cfw:org-journal-entry-for-now)
+;; (define-key
+;;   cfw:calendar-mode-map "c" 'cfw:org-journal-at-date-from-cursor)
 
 (provide '018_calfw)
 ;;; 018_calfw.el ends here
