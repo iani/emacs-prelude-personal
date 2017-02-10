@@ -34,7 +34,10 @@
                          (calendar-extract-month pos)
                          (calendar-extract-year pos))))
       (org-journal-new-entry prefix org-overriding-default-time)
-      (unless prefix (org-insert-time-stamp org-overriding-default-time t)))))
+      (unless prefix
+        (org-insert-time-stamp org-overriding-default-time t)
+        (backward-word)
+        (backward-word)))))
 
 (defun cfw:org-journal-entry-for-now (prefix)
   "Run org-journal-new-entry with date+time timestamp from current time."
@@ -48,10 +51,7 @@
             ;;              (calendar-extract-year pos))
             ))
       (org-journal-new-entry prefix org-overriding-default-time)
-      (org-insert-time-stamp org-overriding-default-time t)
-      (backward-word)
-      (backward-word)
-      (paredit-forward-kill-word))))
+      (org-insert-time-stamp org-overriding-default-time t))))
 
 (global-set-key (kbd "C-c c c") 'org-calfw-here)
 (global-set-key (kbd "C-c C J") 'cfw:org-journal-entry-for-now)
