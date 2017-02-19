@@ -4,7 +4,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(Linum-format "%7i ")
- '(TeX-engine (quote xetex))
+ '(TeX-engine (quote xetex) t)
  '(ansi-color-faces-vector
    [default bold shadow italic underline bold bold-italic bold])
  '(ansi-color-names-vector
@@ -107,7 +107,7 @@ static char *gnus-pointer[] = {
  '(org-agenda-files
    (quote
     ("/Users/iani/Documents/000WORKFILES/2_PROJECTS_PERMANENT/AVARTS/POST_DOC/URSUS_POST_DOC_RESEARCH_SCHOLARSHIPS_1612ff.org" "/Users/iani/Documents/000WORKFILES/PERSONAL/DIARY.org" "/Users/iani/Documents/000WORKFILES/PERSONAL/journal/19700117.org" "/Users/iani/Documents/000WORKFILES/PERSONAL/journal/20140101.org" "/Users/iani/Documents/000WORKFILES/PERSONAL/journal/20160901.org" "/Users/iani/Documents/000WORKFILES/PERSONAL/journal/20161110.org" "/Users/iani/Documents/000WORKFILES/PERSONAL/journal/20170124.org" "/Users/iani/Documents/000WORKFILES/PERSONAL/journal/20170202.org" "/Users/iani/Documents/000WORKFILES/PERSONAL/journal/20170205.org" "/Users/iani/Documents/000WORKFILES/PERSONAL/journal/20170206.org" "/Users/iani/Documents/000WORKFILES/PERSONAL/journal/20170207.org" "/Users/iani/Documents/000WORKFILES/PERSONAL/journal/20170208.org" "/Users/iani/Documents/000WORKFILES/PERSONAL/journal/20170209.org" "/Users/iani/Documents/000WORKFILES/PERSONAL/journal/20170211.org" "/Users/iani/Documents/000WORKFILES/PERSONAL/journal/20170213.org" "/Users/iani/Documents/000WORKFILES/PERSONAL/journal/20170214.org" "/Users/iani/Documents/000WORKFILES/PERSONAL/journal/20170215.org" "/Users/iani/Documents/000WORKFILES/PERSONAL/journal/20170216.org" "/Users/iani/Documents/000WORKFILES/PERSONAL/journal/20170217.org" "/Users/iani/Documents/000WORKFILES/PERSONAL/journal/20170223.org" "/Users/iani/Documents/000WORKFILES/PERSONAL/journal/20170303.org" "/Users/iani/Documents/000WORKFILES/PERSONAL/journal/20170304.org" "/Users/iani/Documents/000WORKFILES/PERSONAL/journal/20170307.org" "/Users/iani/Documents/000WORKFILES/PERSONAL/journal/20170308.org" "/Users/iani/Documents/000WORKFILES/PERSONAL/journal/20170309.org" "/Users/iani/Documents/000WORKFILES/PERSONAL/journal/20170312.org" "/Users/iani/Documents/000WORKFILES/PERSONAL/journal/20170324.org" "/Users/iani/Documents/000WORKFILES/PERSONAL/journal/20170420.org")))
- '(org-attach-directory "./attachments")
+ '(org-attach-directory "./attachments" t)
  '(org-drill-optimal-factor-matrix (quote ((1 (2.5 . 4.0) (1.96 . 3.58)))))
  '(org-export-backends (quote (ascii html icalendar latex md odt taskjuggler)))
  '(org-export-with-sub-superscripts (quote {}))
