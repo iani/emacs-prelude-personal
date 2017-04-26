@@ -1,4 +1,16 @@
-(setq org-attach-directory (file-truename "~/.org-attachments/"))
+;;; 002_org-mode --- org-mode customization
+
+;;; Commentary:
+
+;; customize some org mode settings
+;; define some useful functions
+
+;;; Code:
+
+;; load util to insert recipes for export customization:
+(require 'org-export-recipes)
+
+;; (setq org-attach-directory (file-truename "~/Documents/org-attachments/"))
 (setq org-agenda-sticky t) ;; open agenda and todo views in separate buffers
 ;; (setq org-agenda-diary-file (file-truename
 ;;                              (concat iz-log-dir "PERSONAL/DIARY2.txt")))

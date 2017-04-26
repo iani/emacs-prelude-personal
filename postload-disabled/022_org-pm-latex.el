@@ -22,7 +22,7 @@
 
 (defcustom custom-latex-headers (concat
                             (file-name-directory load-file-name)
-                            "org-latex-headers.org")
+                            "latex/org-latex-headers.org")
   "Path of org file containing custom latex headers")
 
 (defun latex-headers-open ()
@@ -59,7 +59,16 @@
   (goto-char 0)
   (yank))
 
-(defun latex-block-copy ()
+(defun latex-header-strip-default ()
+  "Strip default latex header from buffer, up to the author declaration statement."
+  (interactive)
+  (goto-char 0)
+  (re-search-forward "\\\\author{\\(.+\\)}")
+  (beginning-of-line)
+  (delete-region 1 (point))
+  (goto-char 0))
+
+(defun latex-header-copy ()
   (interactive)
   (outline-back-to-heading)
   (let ((section-begin
@@ -68,3 +77,10 @@
     ;; (message "%s" (plist-get (cadr (org-element-at-point)) :value))
     (kill-new (plist-get (cadr (org-element-at-point)) :value)))
   )
+
+;;; Candidate keyboard-command group:
+;;; C-S-c C-S-l [
+;;; g: insert custom header for greek article,
+;;; o: open org-file with custom headers for various formats
+;;; H: strip header 
+;;; ... ]

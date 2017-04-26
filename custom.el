@@ -18,6 +18,9 @@
  '(calendar-longitude 19.919)
  '(cursor-color "#cccctscc")
  '(cursor-type (quote bar))
+ '(custom-safe-themes
+   (quote
+    ("8dc4a35c94398efd7efee3da06a82569f660af8790285cd211be006324a4c19a" "b571f92c9bfaf4a28cb64ae4b4cdbda95241cd62cf07d942be44dc8f46c491f4" default)))
  '(default-frame-alist nil)
  '(diary-entry-marker (quote font-lock-variable-name-face))
  '(emms-mode-line-icon-image-cache
@@ -107,7 +110,7 @@ static char *gnus-pointer[] = {
  '(org-agenda-files
    (quote
     ("/Users/iani/Documents/000WORKFILES/2_PROJECTS_PERMANENT/AVARTS/POST_DOC/URSUS_POST_DOC_RESEARCH_SCHOLARSHIPS_1612ff.org" "/Users/iani/Documents/000WORKFILES/PERSONAL/DIARY.org" "/Users/iani/Documents/000WORKFILES/PERSONAL/journal/19700117.org" "/Users/iani/Documents/000WORKFILES/PERSONAL/journal/20140101.org" "/Users/iani/Documents/000WORKFILES/PERSONAL/journal/20160901.org" "/Users/iani/Documents/000WORKFILES/PERSONAL/journal/20161110.org" "/Users/iani/Documents/000WORKFILES/PERSONAL/journal/20170124.org" "/Users/iani/Documents/000WORKFILES/PERSONAL/journal/20170202.org" "/Users/iani/Documents/000WORKFILES/PERSONAL/journal/20170205.org" "/Users/iani/Documents/000WORKFILES/PERSONAL/journal/20170206.org" "/Users/iani/Documents/000WORKFILES/PERSONAL/journal/20170207.org" "/Users/iani/Documents/000WORKFILES/PERSONAL/journal/20170208.org" "/Users/iani/Documents/000WORKFILES/PERSONAL/journal/20170209.org" "/Users/iani/Documents/000WORKFILES/PERSONAL/journal/20170211.org" "/Users/iani/Documents/000WORKFILES/PERSONAL/journal/20170213.org" "/Users/iani/Documents/000WORKFILES/PERSONAL/journal/20170214.org" "/Users/iani/Documents/000WORKFILES/PERSONAL/journal/20170215.org" "/Users/iani/Documents/000WORKFILES/PERSONAL/journal/20170216.org" "/Users/iani/Documents/000WORKFILES/PERSONAL/journal/20170217.org" "/Users/iani/Documents/000WORKFILES/PERSONAL/journal/20170223.org" "/Users/iani/Documents/000WORKFILES/PERSONAL/journal/20170303.org" "/Users/iani/Documents/000WORKFILES/PERSONAL/journal/20170304.org" "/Users/iani/Documents/000WORKFILES/PERSONAL/journal/20170307.org" "/Users/iani/Documents/000WORKFILES/PERSONAL/journal/20170308.org" "/Users/iani/Documents/000WORKFILES/PERSONAL/journal/20170309.org" "/Users/iani/Documents/000WORKFILES/PERSONAL/journal/20170312.org" "/Users/iani/Documents/000WORKFILES/PERSONAL/journal/20170324.org" "/Users/iani/Documents/000WORKFILES/PERSONAL/journal/20170420.org")))
- '(org-attach-directory "./attachments" t)
+ '(org-attach-directory "/Users/iani/Documents/org-attachments/")
  '(org-drill-optimal-factor-matrix (quote ((1 (2.5 . 4.0) (1.96 . 3.58)))))
  '(org-export-backends (quote (ascii html icalendar latex md odt taskjuggler)))
  '(org-export-with-sub-superscripts (quote {}))
@@ -123,7 +126,7 @@ static char *gnus-pointer[] = {
  '(org-tags-column -50)
  '(package-selected-packages
    (quote
-    (auctex org-journal elfeed-org auto-org-md yaml-mode zop-to-char zenburn-theme volatile-highlights vkill use-package swiper-helm sr-speedbar smex smartrep smartparens smart-mode-line sclang-extensions rainbow-mode rainbow-delimiters rainbow-blocks powerline paredit-menu paredit-everywhere ox-twbs ov org-drill-table operate-on-number move-text moe-theme migemo mc-extras markdown-mode magit litable linum-relative less-css-mode kivy-mode key-chord json-mode ido-ubiquitous hl-sexp hl-sentence hl-anything helm-w3m helm-projectile helm-descbinds helm-ag guru-mode grizzl god-mode gitignore-mode gitconfig-mode git-timemachine gist flycheck flx-ido expand-region exec-path-from-shell evil elisp-slime-nav easy-kill discover-my-major dired+ diff-hl deft csv-mode company calfw buffer-move browse-kill-ring bookmark+ beacon avy-zap avy-menu auto-async-byte-compile anzu ace-window ace-popup-menu ace-isearch)))
+    (haskell-mode molokai-theme php-mode auctex org-journal elfeed-org auto-org-md yaml-mode zop-to-char zenburn-theme volatile-highlights vkill use-package swiper-helm sr-speedbar smex smartrep smartparens smart-mode-line sclang-extensions rainbow-mode rainbow-delimiters rainbow-blocks powerline paredit-menu paredit-everywhere ox-twbs ov org-drill-table operate-on-number move-text moe-theme migemo mc-extras markdown-mode magit litable linum-relative less-css-mode kivy-mode key-chord json-mode ido-ubiquitous hl-sexp hl-sentence hl-anything helm-w3m helm-projectile helm-descbinds helm-ag guru-mode grizzl god-mode gitignore-mode gitconfig-mode git-timemachine gist flycheck flx-ido expand-region exec-path-from-shell evil elisp-slime-nav easy-kill discover-my-major dired+ diff-hl deft csv-mode company calfw buffer-move browse-kill-ring bookmark+ beacon avy-zap avy-menu auto-async-byte-compile anzu ace-window ace-popup-menu ace-isearch)))
  '(powerline-color1 "#1E1E1E")
  '(powerline-color2 "#111111")
  '(rainbow-identifiers-cie-l*a*b*-lightness 25)

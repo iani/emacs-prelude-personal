@@ -30,4 +30,4 @@
 ;;                (org-agenda nil "t")
 ;;                ))
 
-(run-at-time "2 sec" nil (lambda () (org-calfw-here)))
+;; (run-at-time "2 sec" nil (lambda () (org-calfw-here)))

@@ -4,7 +4,7 @@
 #+BEGIN_EXPORT latex
 % Created 2017-02-16 Thu 19:53
 % Intended LaTeX compiler: xelatex
-\abcw  documentclass[11pt]{article}
+\documentclass[11pt]{article}
 \usepackage{graphicx}
 \usepackage{grffile}
 \usepackage{longtable}

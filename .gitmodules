@@ -10,3 +10,6 @@
 [submodule "packages/org-pm2"]
 	path = packages/org-pm2
 	url = https://github.com/iani/org-pm2.git
+[submodule "packages/org-export-recipes"]
+	path = packages/org-export-recipes
+	url = git@github.com:iani/org-export-recipes.git
