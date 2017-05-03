@@ -18,9 +18,10 @@
  '(calendar-longitude 19.919)
  '(cursor-color "#cccctscc")
  '(cursor-type (quote bar))
+ '(custom-enabled-themes nil)
  '(custom-safe-themes
    (quote
-    ("8dc4a35c94398efd7efee3da06a82569f660af8790285cd211be006324a4c19a" "b571f92c9bfaf4a28cb64ae4b4cdbda95241cd62cf07d942be44dc8f46c491f4" default)))
+    ("74278d14b7d5cf691c4d846a4bbf6e62d32104986f104c1e61f718f9669ec04b" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "14f0fbf6f7851bfa60bf1f30347003e2348bf7a1005570fd758133c87dafe08f" "1b386f9d14ac6e9ae88ab3993ccf4ccb67d0cb196b4279126a85bd8e03269f7d" "8dc4a35c94398efd7efee3da06a82569f660af8790285cd211be006324a4c19a" "b571f92c9bfaf4a28cb64ae4b4cdbda95241cd62cf07d942be44dc8f46c491f4" default)))
  '(default-frame-alist nil)
  '(diary-entry-marker (quote font-lock-variable-name-face))
  '(emms-mode-line-icon-image-cache
@@ -48,6 +49,7 @@ static char *note[] = {
  '(fci-rule-color "#14151E" t)
  '(foreground-color "#cccccc")
  '(fringe-mode 4 nil (fringe))
+ '(global-rainbow-blocks-mode t)
  '(gnus-logo-colors (quote ("#0d7b72" "#adadad")) t)
  '(gnus-mode-line-image-cache
    (quote
@@ -106,6 +108,9 @@ static char *gnus-pointer[] = {
  '(main-line-color1 "#1E1E1E")
  '(main-line-color2 "#111111")
  '(main-line-separator-style (quote chamfer))
+ '(nrepl-message-colors
+   (quote
+    ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
  '(ns-right-command-modifier (quote meta))
  '(org-agenda-files
    (quote
@@ -127,6 +132,7 @@ static char *gnus-pointer[] = {
  '(package-selected-packages
    (quote
     (haskell-mode molokai-theme php-mode auctex org-journal elfeed-org auto-org-md yaml-mode zop-to-char zenburn-theme volatile-highlights vkill use-package swiper-helm sr-speedbar smex smartrep smartparens smart-mode-line sclang-extensions rainbow-mode rainbow-delimiters rainbow-blocks powerline paredit-menu paredit-everywhere ox-twbs ov org-drill-table operate-on-number move-text moe-theme migemo mc-extras markdown-mode magit litable linum-relative less-css-mode kivy-mode key-chord json-mode ido-ubiquitous hl-sexp hl-sentence hl-anything helm-w3m helm-projectile helm-descbinds helm-ag guru-mode grizzl god-mode gitignore-mode gitconfig-mode git-timemachine gist flycheck flx-ido expand-region exec-path-from-shell evil elisp-slime-nav easy-kill discover-my-major dired+ diff-hl deft csv-mode company calfw buffer-move browse-kill-ring bookmark+ beacon avy-zap avy-menu auto-async-byte-compile anzu ace-window ace-popup-menu ace-isearch)))
+ '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
  '(powerline-color1 "#1E1E1E")
  '(powerline-color2 "#111111")
  '(rainbow-identifiers-cie-l*a*b*-lightness 25)
@@ -160,6 +166,7 @@ static char *gnus-pointer[] = {
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:background nil))))
+ '(aw-background-face ((t (:background "#3F3F3F" :foreground "red3" :inverse-video nil))))
  '(cfw:face-annotation ((t :foreground "RosyBrown" :inherit cfw:face-day-title)))
  '(cfw:face-day-title ((t :background "grey10")))
  '(cfw:face-default-content ((t :foreground "#bfebbf")))
@@ -179,9 +186,11 @@ static char *gnus-pointer[] = {
  '(cfw:face-toolbar-button-off ((t :foreground "Gray10" :weight bold)))
  '(cfw:face-toolbar-button-on ((t :foreground "Gray50" :weight bold)))
  '(cursor ((t (:background "#FF5" :foreground "#000"))))
+ '(font-lock-comment-delimiter-face ((t (:foreground "sky blue" :slant italic))))
+ '(font-lock-comment-face ((t (:foreground "rosy brown" :slant italic))))
  '(helm-buffer-directory ((t (:background "DarkRed" :foreground "LightGray"))))
  '(helm-selection ((t (:background "#703" :underline t))))
- '(hl-line ((t (:background "gray0"))))
+ '(hl-line ((t (:background "alternateSelectedControlColor"))))
  '(hl-sexp-face ((t (:background "gray10"))))
  '(info-title-3 ((t (:inherit info-title-4 :foreground "white" :height 1.2))))
  '(info-title-4 ((t (:inherit info-title-4 :foreground "black"))))
@@ -197,7 +206,8 @@ static char *gnus-pointer[] = {
  '(org-level-8 ((t (:weight bold :height 1.1))))
  '(org-level-9 ((t (:weight bold :height 1.1))))
  '(org-meta-line ((t (:background "black" :foreground "pink1"))))
- '(rainbow-delimiters-depth-1-face ((t (:foreground "#CCFFCC"))))
+ '(rainbow-blocks-depth-5-face ((t (:foreground "gray87"))))
+ '(rainbow-delimiters-depth-1-face ((t (:foreground "brown1"))))
  '(rainbow-delimiters-depth-2-face ((t (:foreground "#33FF66"))))
  '(rainbow-delimiters-depth-3-face ((t (:foreground "#009933"))))
  '(rainbow-delimiters-depth-4-face ((t (:foreground "#3366FF"))))

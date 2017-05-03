@@ -19,3 +19,5 @@
                            (invert-face 'mode-line)
                            (run-with-timer 1 nil 'invert-face 'mode-line)))
 
+(set-cursor-color "tomato")
+
