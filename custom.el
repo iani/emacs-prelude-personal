@@ -4,7 +4,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(Linum-format "%7i ")
- '(TeX-engine (quote xetex) t)
+ '(TeX-engine (quote xetex))
  '(ansi-color-faces-vector
    [default bold shadow italic underline bold bold-italic bold])
  '(ansi-color-names-vector
@@ -131,7 +131,7 @@ static char *gnus-pointer[] = {
  '(org-tags-column -50)
  '(package-selected-packages
    (quote
-    (haskell-mode molokai-theme php-mode auctex org-journal elfeed-org auto-org-md yaml-mode zop-to-char zenburn-theme volatile-highlights vkill use-package swiper-helm sr-speedbar smex smartrep smartparens smart-mode-line sclang-extensions rainbow-mode rainbow-delimiters rainbow-blocks powerline paredit-menu paredit-everywhere ox-twbs ov org-drill-table operate-on-number move-text moe-theme migemo mc-extras markdown-mode magit litable linum-relative less-css-mode kivy-mode key-chord json-mode ido-ubiquitous hl-sexp hl-sentence hl-anything helm-w3m helm-projectile helm-descbinds helm-ag guru-mode grizzl god-mode gitignore-mode gitconfig-mode git-timemachine gist flycheck flx-ido expand-region exec-path-from-shell evil elisp-slime-nav easy-kill discover-my-major dired+ diff-hl deft csv-mode company calfw buffer-move browse-kill-ring bookmark+ beacon avy-zap avy-menu auto-async-byte-compile anzu ace-window ace-popup-menu ace-isearch)))
+    (stylus-mode desktop+ haskell-mode molokai-theme php-mode auctex org-journal elfeed-org auto-org-md yaml-mode zop-to-char zenburn-theme volatile-highlights vkill use-package swiper-helm sr-speedbar smex smartrep smartparens smart-mode-line sclang-extensions rainbow-mode rainbow-delimiters powerline paredit-menu paredit-everywhere ox-twbs ov org-drill-table operate-on-number move-text moe-theme migemo mc-extras markdown-mode magit litable linum-relative less-css-mode kivy-mode key-chord json-mode ido-ubiquitous hl-sexp hl-sentence hl-anything helm-w3m helm-projectile helm-descbinds helm-ag guru-mode grizzl god-mode gitignore-mode gitconfig-mode git-timemachine gist flycheck flx-ido expand-region exec-path-from-shell evil elisp-slime-nav easy-kill discover-my-major dired+ diff-hl deft csv-mode company calfw buffer-move browse-kill-ring bookmark+ beacon avy-zap avy-menu auto-async-byte-compile anzu ace-window ace-popup-menu ace-isearch)))
  '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
  '(powerline-color1 "#1E1E1E")
  '(powerline-color2 "#111111")
@@ -165,7 +165,7 @@ static char *gnus-pointer[] = {
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:background nil))))
+ '(default ((t (:inherit nil :stipple nil :background "#303030" :foreground "#c6c6c6" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "nil" :family "Inconsolata"))))
  '(aw-background-face ((t (:background "#3F3F3F" :foreground "red3" :inverse-video nil))))
  '(cfw:face-annotation ((t :foreground "RosyBrown" :inherit cfw:face-day-title)))
  '(cfw:face-day-title ((t :background "grey10")))

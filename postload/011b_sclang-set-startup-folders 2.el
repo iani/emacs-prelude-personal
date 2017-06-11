@@ -1,0 +1,1 @@
+/Users/iani/Documents/001DEV/SC_LIBS_AND_DOC/LIBRARIES-IZ/sc-boot-folders/sclang-set-startup-folders.el
