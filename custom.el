@@ -137,6 +137,10 @@ static char *gnus-pointer[] = {
  '(powerline-color2 "#111111")
  '(rainbow-identifiers-cie-l*a*b*-lightness 25)
  '(rainbow-identifiers-cie-l*a*b*-saturation 40)
+ '(safe-local-variable-values
+   (quote
+    ((buffer-face-mode-face :family "Source Code Pro" :height 110)
+     (org-provide-todo-statistics "TUN" "PRÜFEN"))))
  '(tab-width 4)
  '(vc-annotate-background nil)
  '(vc-annotate-color-map
@@ -165,7 +169,7 @@ static char *gnus-pointer[] = {
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "#303030" :foreground "#c6c6c6" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "nil" :family "Inconsolata"))))
+ '(default ((t (:inherit nil :stipple nil :background "#303030" :foreground "#c6c6c6" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 110 :width normal :foundry "nil" :family "Inconsolata"))))
  '(aw-background-face ((t (:background "#3F3F3F" :foreground "red3" :inverse-video nil))))
  '(cfw:face-annotation ((t :foreground "RosyBrown" :inherit cfw:face-day-title)))
  '(cfw:face-day-title ((t :background "grey10")))
