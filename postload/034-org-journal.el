@@ -37,7 +37,8 @@
       (org-journal-new-entry prefix org-overriding-default-time)
       (unless prefix
         (org-insert-time-stamp org-overriding-default-time t)
-        (backward-word)
-        (backward-word)
-        (paredit-forward-kill-word)
-        (paredit-forward-kill-word)))))
+        ;; (backward-word)
+        ;; (backward-word)
+        ;; (paredit-forward-kill-word)
+        ;; (paredit-forward-kill-word)
+        ))))
