@@ -17,6 +17,17 @@
 
 ;;; Code:
 
+
+(defun org-hugo-autosplit ()
+  "Auto-export sections marked with filename property after each save."
+  (interactive)
+ (add-hook 'after-save-hook
+           (lambda ()
+             (org-split-hugo)
+             (message "hugo export to individual files done"))
+           'append 'local))
+
+
 (defun org-split-hugo ()
   "Split 1st level sections with filename property to files.
 Add front-matter for hugo, including automatic weights."
