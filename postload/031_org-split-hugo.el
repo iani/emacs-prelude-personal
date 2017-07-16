@@ -56,11 +56,6 @@ Add front-matter for hugo, including automatic weights."
       (re-search-forward ":PROPERTIES:")
       (replace-match "+++")
       (re-search-forward ":filename: ")
-      ;; (replace-match "title = \"")
-      ;; (delete-horizontal-space)
-      ;; (end-of-line)
-      ;; (delete-horizontal-space)
-      ;; (insert-string "\"\n")
       (beginning-of-line)
       (kill-line)
       (insert-string (format "title = \"%s\"\n"
@@ -68,16 +63,9 @@ Add front-matter for hugo, including automatic weights."
       (insert-string (format "weight = %d" index))
       (re-search-forward ":END:")
       (replace-match "+++")
-      ;; (org-map-entries '(org-promote) t 'file 'comment)
-      ;; (org-promote-all-entries)
       (org-map-entries '(org-promote))
       (save-buffer)
       (kill-buffer))))
-
-(defun org-promote-all-entries ()
-  "Promote all entries in this file"
-  (interactive)
-  (org-map-entries '(org-promote) t 'file 'comment))
 
 (provide '031_org-split-hugo)
 ;;; 031_org-split-hugo.el ends here
