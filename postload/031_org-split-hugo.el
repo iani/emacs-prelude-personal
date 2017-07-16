@@ -14,7 +14,6 @@
 
 ;;; Code:
 
-
 (defun org-hugo-autosplit ()
   "Auto-export sections marked with filename property after each save."
   (interactive)
