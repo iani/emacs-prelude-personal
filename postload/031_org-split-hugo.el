@@ -21,7 +21,8 @@
            (lambda ()
              (org-split-hugo)
              (message "hugo export to individual files done"))
-           'append 'local))
+           'append 'local)
+ (message "This buffer will now export to hugo section files when saved."))
 
 
 (defun org-split-hugo ()
