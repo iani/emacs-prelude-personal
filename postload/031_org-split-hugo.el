@@ -9,10 +9,7 @@
 ;;; the filename property gives the filename.
 ;;; the heading becomes title property in yaml front-matter.
 ;;; the weight is set according to the order of the exported sections.
-;;; TODO: 1 replace BEGIN, END filename strings to make front-matter
-;;; TODO: 2 insert weight in front matter, from index
-;;; TODO: 3 Demote all subtrees of level 2 by 1.
-;;; Note: 3 presupposes that only trees of level 1 are to be split into files.
+;;; Note: Presupposes that only trees of level 1 are to be split into files.
 ;;; It is possible to generalize this for any level, but not worth the trouble for now.
 
 ;;; Code:
