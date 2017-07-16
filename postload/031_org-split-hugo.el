@@ -20,9 +20,10 @@
  (add-hook 'after-save-hook
            (lambda ()
              (org-split-hugo)
-             (message "hugo export to individual files done"))
+             ;; (message "hugo export to individual files done")
+             )
            'append 'local)
- (message "This buffer will now export to hugo section files when saved."))
+ (message "This buffer will now export to hugo section files after each save."))
 
 
 (defun org-split-hugo ()
