@@ -33,21 +33,61 @@
            'append 'local)
  (message "This buffer will now export to hugo section files after each save."))
 
-
 (defun org-split-hugo ()
   "Split 1st level sections with filename property to files.
 Add front-matter for hugo, including automatic weights."
   (interactive)
   (let
       ((root-dir (file-name-directory (buffer-file-name)))
+       (composed_foldername "")
        (index 0)
        (folderindex 0))
     (org-map-entries
-     '(org-split-1-file-hugo)
+     '(org-split-1-file-or-folder-hugo)
      t 'file 'archive 'comment)
     (message "Exported %d files" index)))
 
-(defun org-split-1-file-hugo ()
+(global-set-key (kbd "C-c C-h C-h") 'org-split-hugo)
+
+(defun org-split-1-file-or-folder-hugo ()
+  "Helper function for org-split-hugo
+DRAFT TO INCLUDE FOLDERS."
+  (let*
+      ((filename (org-entry-get (point) "filename"))
+       (foldername (org-entry-get (point) "foldername"))
+       (element (cadr (org-element-at-point)))
+       (title (plist-get element :title)))
+    (cond
+     (foldername (org-hugo-make-folder))
+     (filename (org-hugo-make-file)))))
+
+(defun org-hugo-make-folder ()
+  (setq folderindex (+ 1 folderindex))
+  ;;; create foldername
+  (if (equal "/" (substring foldername 0 1))
+      ;; reset folder to given foldername at root of export dir
+      (setq composed_foldername (substring 1 nil))
+    ;; append given folder name to inherited composed_foldername
+    (setq composed_foldername
+          (concat composed_foldername foldername)))
+  ;;; create folder if needed
+  (let
+      ((path (concat root-dir composed_foldername)))
+    (make-directory path t)
+    ;;; create _index.md file, use heading for title, add folderindex as weight.
+    (find-file
+     (concat path "/_index.md"))
+    (erase-buffer)
+    (insert-string
+     "+++\n"
+     "title = \""
+     (org-hugo-get-title)
+     "\"\n"
+     (format "weight = %d\n+++\n" folderindex))
+    (save-buffer)
+    (kill-buffer)))
+
+(defun org-split-1-file-hugo-old-but-works ()
   "Helper function for org-split-hugo."
   (let
       ((fname (org-entry-get (point) "filename"))
@@ -77,30 +117,14 @@ Add front-matter for hugo, including automatic weights."
       (save-buffer)
       (kill-buffer))))
 
-(defun org-split-1-file-or-folder-hugo-DRAFT ()
-  "Helper function for org-split-hugo
-DRAFT TO INCLUDE FOLDERS."
-  (let
-      ((filename (org-entry-get (point) "filename"))
-       (foldername (org-entry-get (point) "foldername"))
-       (element (cadr (org-element-at-point))))
-    (cond
-     (foldername (org-hugo-make-folder))
-     (filename (org-hugo-make-file)))))
-
-(defun org-hugo-make-folder ()
-  (setq folderindex (+ 1 folderindex))
-  ;;; create foldername
-  ;;; create folder if needed
-  ;;; create _index.md file, use heading for title, add folderindex as weight.
-  ())
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun org-hugo-make-file ()
   (setq index (+ 1 index))
   (goto-char (plist-get element :begin))
   (org-copy-subtree)
   (find-file (format "%03d-%s.org" index filename))
-  (find-file (format "%s/%s/%03d-%s.org" root-dir foldername index filename))
+  (find-file (format "%s%s/%03d-%s.org" root-dir foldername index filename))
   (erase-buffer)
   (org-paste-subtree 1)
   (org-show-subtree)
@@ -111,8 +135,7 @@ DRAFT TO INCLUDE FOLDERS."
   (re-search-forward ":filename: ")
   (beginning-of-line)
   (kill-line)
-  (insert-string (format "title = \"%s\"\n"
-                         (plist-get element :title)))
+  (insert-string (format "title = \"%s\"\n" title))
   (insert-string (format "weight = %d" index))
   (re-search-forward ":END:")
   (replace-match "+++")
@@ -120,6 +143,14 @@ DRAFT TO INCLUDE FOLDERS."
   (org-map-entries '(org-promote))
   (save-buffer)
   (kill-buffer))
+
+;; testing
+;; (let
+;;     ((root-dir (file-name-directory (buffer-file-name)))
+;;      (composed_foldername "")
+;;      (foldername "folder_new/subfolder/subsubfolder/subsubsubfolder")
+;;      (folderindex 0))
+;;   (org-hugo-make-folder))
 
 (provide '031_org-split-hugo)
 ;;; 031_org-split-hugo.el ends here
