@@ -40,7 +40,8 @@ Add front-matter for hugo, including automatic weights."
   (interactive)
   (let
       ((root-dir (file-name-directory (buffer-file-name)))
-       (index 0))
+       (index 0)
+       (folderindex 0))
     (org-map-entries
      '(org-split-1-file-hugo)
      t 'file 'archive 'comment)
@@ -75,6 +76,50 @@ Add front-matter for hugo, including automatic weights."
       ;; subsections were pasted as level 2
       (save-buffer)
       (kill-buffer))))
+
+(defun org-split-1-file-or-folder-hugo-DRAFT ()
+  "Helper function for org-split-hugo
+DRAFT TO INCLUDE FOLDERS."
+  (let
+      ((filename (org-entry-get (point) "filename"))
+       (foldername (org-entry-get (point) "foldername"))
+       (element (cadr (org-element-at-point))))
+    (cond
+     (foldername (org-hugo-make-folder))
+     (filename (org-hugo-make-file)))))
+
+(defun org-hugo-make-folder ()
+  (setq folderindex (+ 1 folderindex))
+  ;;; create foldername
+  ;;; create folder if needed
+  ;;; create _index.md file, use heading for title, add folderindex as weight.
+  ())
+
+(defun org-hugo-make-file ()
+  (setq index (+ 1 index))
+  (goto-char (plist-get element :begin))
+  (org-copy-subtree)
+  (find-file (format "%03d-%s.org" index filename))
+  (find-file (format "%s/%s/%03d-%s.org" root-dir foldername index filename))
+  (erase-buffer)
+  (org-paste-subtree 1)
+  (org-show-subtree)
+  (kill-line)
+  (kill-line)
+  (re-search-forward ":PROPERTIES:")
+  (replace-match "+++")
+  (re-search-forward ":filename: ")
+  (beginning-of-line)
+  (kill-line)
+  (insert-string (format "title = \"%s\"\n"
+                         (plist-get element :title)))
+  (insert-string (format "weight = %d" index))
+  (re-search-forward ":END:")
+  (replace-match "+++")
+  ;; Subsections were pasted as level 2. Shift them to level 1.
+  (org-map-entries '(org-promote))
+  (save-buffer)
+  (kill-buffer))
 
 (provide '031_org-split-hugo)
 ;;; 031_org-split-hugo.el ends here
