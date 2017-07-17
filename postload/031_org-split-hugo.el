@@ -39,7 +39,7 @@ Add front-matter for hugo, including automatic weights."
   (interactive)
   (let
       ((root-dir (file-name-directory (buffer-file-name)))
-       (composed_foldername "")
+       (folder_componenrs '(""))
        (index 0)
        (folderindex 0))
     (org-map-entries
@@ -56,37 +56,86 @@ DRAFT TO INCLUDE FOLDERS."
       ((filename (org-entry-get (point) "filename"))
        (foldername (org-entry-get (point) "foldername"))
        (element (cadr (org-element-at-point)))
-       (title (plist-get element :title)))
+       (title (plist-get element :title))
+       initial path)
     (cond
-     (foldername (org-hugo-make-folder))
+     (foldername
+      (setq folderindex (+ 1 folderindex))
+      (setq initial (substring foldername 0 1))
+      (setq foldername (folderify (substring foldername 1 nil)))
+      (org-hugo-make-folder))
      (filename (org-hugo-make-file)))))
 
 (defun org-hugo-make-folder ()
-  (setq folderindex (+ 1 folderindex))
   ;;; create foldername
-  (if (equal "/" (substring foldername 0 1))
-      ;; reset folder to given foldername at root of export dir
-      (setq composed_foldername (substring 1 nil))
-    ;; append given folder name to inherited composed_foldername
-    (setq composed_foldername
-          (concat composed_foldername foldername)))
+  (cond
+   ;; reset folder components to given foldLername
+   ((equal initial "/")
+    (setq folder_components (list foldername)))
+   ;; add  foldername to folder components
+   ((equal initial "+"
+           (setq folder_components
+                 (append folder_components (list foldername)))))
+   ;; replace last folder component by foldername
+   (t (setf (nth (- (length folder_components) 1) folder_components) foldername)))
   ;;; create folder if needed
-  (let
-      ((path (concat root-dir composed_foldername)))
-    (make-directory path t)
+  (setq path (concat root-dir (apply 'concat folder_components)))
+  (make-directory path t)
     ;;; create _index.md file, use heading for title, add folderindex as weight.
-    (find-file
-     (concat path "/_index.md"))
-    (erase-buffer)
-    (insert-string
-     "+++\n"
-     "title = \""
-     (org-hugo-get-title)
-     "\"\n"
-     (format "weight = %d\n+++\n" folderindex))
-    (save-buffer)
-    (kill-buffer)))
+  (find-file
+   (concat path "_index.md"))
+  (erase-buffer)
+  (insert-string
+   "+++\n"
+   "title = \""
+   (org-hugo-get-title)
+   "\"\n"
+   (format "weight = %d\n+++\n" folderindex))
+  (save-buffer)
+  (kill-buffer))
 
+(defun folderify (string)
+  "add trailing / to turn STRING into folder name."
+  (if (equal "/" (substring string -1 nil))
+      string
+    (concat string "/")))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun org-hugo-make-file ()
+  (setq index (+ 1 index))
+  (goto-char (plist-get element :begin))
+  (org-copy-subtree)
+  (find-file (format "%03d-%s.org" index filename))
+  (find-file (format "%s%03d-%s.org" path index filename))
+  (erase-buffer)
+  (org-paste-subtree 1)
+  (org-show-subtree)
+  (kill-line)
+  (kill-line)
+  (re-search-forward ":PROPERTIES:")
+  (replace-match "+++")
+  (re-search-forward ":filename: ")
+  (beginning-of-line)
+  (kill-line)
+  (insert-string (format "title = \"%s\"\n" title))
+  (insert-string (format "weight = %d" index))
+  (re-search-forward ":END:")
+  (replace-match "+++")
+  ;; Subsections were pasted as level 2. Shift them to level 1.
+  (org-map-entries '(org-promote))
+  (save-buffer)
+  (kill-buffer))
+
+;; testing
+;; (let
+;;     ((root-dir (file-name-directory (buffer-file-name)))
+;;      (composed_foldername "")
+;;      (foldername "folder_new/subfolder/subsubfolder/subsubsubfolder")
+;;      (folderindex 0))
+;;   (org-hugo-make-folder))
+
+;; TODO: Remove thist after testing the new version above
 (defun org-split-1-file-hugo-old-but-works ()
   "Helper function for org-split-hugo."
   (let
@@ -116,41 +165,5 @@ DRAFT TO INCLUDE FOLDERS."
       ;; subsections were pasted as level 2
       (save-buffer)
       (kill-buffer))))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(defun org-hugo-make-file ()
-  (setq index (+ 1 index))
-  (goto-char (plist-get element :begin))
-  (org-copy-subtree)
-  (find-file (format "%03d-%s.org" index filename))
-  (find-file (format "%s%s/%03d-%s.org" root-dir foldername index filename))
-  (erase-buffer)
-  (org-paste-subtree 1)
-  (org-show-subtree)
-  (kill-line)
-  (kill-line)
-  (re-search-forward ":PROPERTIES:")
-  (replace-match "+++")
-  (re-search-forward ":filename: ")
-  (beginning-of-line)
-  (kill-line)
-  (insert-string (format "title = \"%s\"\n" title))
-  (insert-string (format "weight = %d" index))
-  (re-search-forward ":END:")
-  (replace-match "+++")
-  ;; Subsections were pasted as level 2. Shift them to level 1.
-  (org-map-entries '(org-promote))
-  (save-buffer)
-  (kill-buffer))
-
-;; testing
-;; (let
-;;     ((root-dir (file-name-directory (buffer-file-name)))
-;;      (composed_foldername "")
-;;      (foldername "folder_new/subfolder/subsubfolder/subsubsubfolder")
-;;      (folderindex 0))
-;;   (org-hugo-make-folder))
-
 (provide '031_org-split-hugo)
 ;;; 031_org-split-hugo.el ends here
