@@ -9,8 +9,16 @@
 ;;; the filename property gives the filename.
 ;;; the heading becomes title property in yaml front-matter.
 ;;; the weight is set according to the order of the exported sections.
-;;; Note: Presupposes that only trees of level 1 are to be split into files.
-;;; It is possible to generalize this for any level, but not worth the trouble for now.
+;;; TODO: sections with property "foldername" append the string value
+;;; of the property to the folder path, and create the folder if it does not
+;;; exist.
+;;; Start by obtaining the root path from the file being exported.
+;;; Append the cumulave folder path constructed by nested folderpath properties.
+;;; Use it for all subsequent exported sections (until reset by other section)
+;;; Use "/" at the beginning of the foldername to denote return to local root
+;;; instead of appending the foldername.
+;;; Construct _index.md from the name of the folder section.
+;;; Increment a folder_index variable to set weight for folder _index.md.
 
 ;;; Code:
 
@@ -42,17 +50,17 @@ Add front-matter for hugo, including automatic weights."
   "Helper function for org-split-hugo."
   (let
       ((fname (org-entry-get (point) "filename"))
-       (element (cadr (org-element-at-point)))
-       contents)
+       (element (cadr (org-element-at-point))))
     (when fname
       (setq index (+ 1 index))
-      (setq contents (buffer-substring-no-properties
-                      (plist-get element :contents-begin)
-                      (plist-get element :contents-end)))
+      (goto-char (plist-get element :begin))
+      (org-copy-subtree)
       (find-file (format "%03d-%s.org" index fname))
       (erase-buffer)
-      (insert-string contents)
-      (goto-char (point-min))
+      (org-paste-subtree 1)
+      (org-show-subtree)
+      (kill-line)
+      (kill-line)
       (re-search-forward ":PROPERTIES:")
       (replace-match "+++")
       (re-search-forward ":filename: ")
@@ -64,6 +72,7 @@ Add front-matter for hugo, including automatic weights."
       (re-search-forward ":END:")
       (replace-match "+++")
       (org-map-entries '(org-promote))
+      ;; subsections were pasted as level 2
       (save-buffer)
       (kill-buffer))))
 
