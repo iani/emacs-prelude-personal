@@ -22,6 +22,15 @@
 
 ;;; Code:
 
+;;; this org-mode function stops the file creation process
+;;; and therefore must be redefined here.
+;;; Consequences of overwriting it are not yet checked, but seem irrelevant.
+(defun org-check-agenda-file (file)
+  "Make sure FILE exists.  If not, ask user what to do."
+  (unless (file-exists-p file)
+    (message "Ignoring non-existent agenda file: %s"
+             (abbreviate-file-name file))))
+
 (defun org-hugo-autosplit ()
   "Auto-export sections marked with filename property after each save."
   (interactive)
@@ -42,10 +51,16 @@ Add front-matter for hugo, including automatic weights."
        (path root-dir)
        (folder_components)
        (index 0)
-       (folderindex 0))
+       (folderindex 0)
+       buffers-to-delete)
     (org-map-entries
      '(org-split-1-file-or-folder-hugo)
      t 'file 'archive 'comment)
+    (mapc (lambda (buffer)
+            (message "killing buffer: %s" buffer)
+            (set-buffer-modified-p nil)
+            (kill-buffer buffer))
+          buffers-to-delete)
     (message "Exported %d files" index)))
 
 (global-set-key (kbd "C-c C-h C-h") 'org-split-hugo)
@@ -138,7 +153,9 @@ DRAFT TO INCLUDE FOLDERS."
   ;; Subsections were pasted as level 2. Shift them to level 1.
   (org-map-entries '(org-promote))
   (save-buffer)
-  (kill-buffer))
+  ;; (kill-buffer)
+  (setq buffers-to-delete (cons (current-buffer) buffers-to-delete))
+  )
 
 (provide '031_org-split-hugo)
 ;;; 031_org-split-hugo.el ends here
