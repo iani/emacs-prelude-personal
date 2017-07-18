@@ -92,7 +92,8 @@ DRAFT TO INCLUDE FOLDERS."
             (message "%s" path)
             (message "%s" (string-match  "[[:digit:]]+-[^.]*\.org" path))
             (if (string-match  "[[:digit:]]+-[^.]*\.org" path)
-                (delete-file path)))))
+                (delete-file path)))
+          all))
     ;;; create _index.md file, use heading for title, add folderindex as weight.
   (find-file
    (concat path "_index.md"))
