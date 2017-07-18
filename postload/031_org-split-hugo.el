@@ -9,14 +9,14 @@
 ;;; the filename property gives the filename.
 ;;; the heading becomes title property in yaml front-matter.
 ;;; the weight is set according to the order of the exported sections.
-;;; TODO: sections with property "foldername" append the string value
-;;; of the property to the folder path, and create the folder if it does not
-;;; exist.
-;;; Start by obtaining the root path from the file being exported.
-;;; Append the cumulave folder path constructed by nested folderpath properties.
+;;; 
+;;; Sections with property "foldername" set a subfolder for saving
+;;; subsequent file sections.
+;;; Folder path is constructed by concatenating a cumulative list of subfolders.
+;;; "/path" resets the list to '("path")
+;;; "+path" appends "path" to the folder list.
+;;; "path" replaces (sets) the last element of the folder list by (to) "path".
 ;;; Use it for all subsequent exported sections (until reset by other section)
-;;; Use "/" at the beginning of the foldername to denote return to local root
-;;; instead of appending the foldername.
 ;;; Construct _index.md from the name of the folder section.
 ;;; Increment a folder_index variable to set weight for folder _index.md.
 
@@ -39,7 +39,7 @@ Add front-matter for hugo, including automatic weights."
   (interactive)
   (let
       ((root-dir (file-name-directory (buffer-file-name)))
-       (folder_componenrs '(""))
+       (folder_components)
        (index 0)
        (folderindex 0)
        path)
@@ -89,8 +89,8 @@ DRAFT TO INCLUDE FOLDERS."
   (insert-string
    "+++\n"
    "title = \""
-   title
-   "\"\n"
+   titlet
+ 
    (format "weight = %d\n+++\n" folderindex))
   (save-buffer)
   (kill-buffer))
@@ -128,43 +128,5 @@ DRAFT TO INCLUDE FOLDERS."
   (save-buffer)
   (kill-buffer))
 
-;; testing
-;; (let
-;;     ((root-dir (file-name-directory (buffer-file-name)))
-;;      (composed_foldername "")
-;;      (foldername "folder_new/subfolder/subsubfolder/subsubsubfolder")
-;;      (folderindex 0))
-;;   (org-hugo-make-folder))
-
-;; TODO: Remove thist after testing the new version above
-(defun org-split-1-file-hugo-old-but-works ()
-  "Helper function for org-split-hugo."
-  (let
-      ((fname (org-entry-get (point) "filename"))
-       (element (cadr (org-element-at-point))))
-    (when fname
-      (setq index (+ 1 index))
-      (goto-char (plist-get element :begin))
-      (org-copy-subtree)
-      (find-file (format "%03d-%s.org" index fname))
-      (erase-buffer)
-      (org-paste-subtree 1)
-      (org-show-subtree)
-      (kill-line)
-      (kill-line)
-      (re-search-forward ":PROPERTIES:")
-      (replace-match "+++")
-      (re-search-forward ":filename: ")
-      (beginning-of-line)
-      (kill-line)
-      (insert-string (format "title = \"%s\"\n"
-                             (plist-get element :title)))
-      (insert-string (format "weight = %d" index))
-      (re-search-forward ":END:")
-      (replace-match "+++")
-      (org-map-entries '(org-promote))
-      ;; subsections were pasted as level 2
-      (save-buffer)
-      (kill-buffer))))
 (provide '031_org-split-hugo)
 ;;; 031_org-split-hugo.el ends here
