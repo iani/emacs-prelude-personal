@@ -37,12 +37,12 @@
   "Split 1st level sections with filename property to files.
 Add front-matter for hugo, including automatic weights."
   (interactive)
-  (let
+  (let*
       ((root-dir (file-name-directory (buffer-file-name)))
+       (path root-dir)
        (folder_components)
        (index 0)
-       (folderindex 0)
-       path)
+       (folderindex 0))
     (org-map-entries
      '(org-split-1-file-or-folder-hugo)
      t 'file 'archive 'comment)
@@ -77,11 +77,22 @@ DRAFT TO INCLUDE FOLDERS."
     (setq folder_components
           (append folder_components (list (folderify (substring foldername 1 nil))))))
    ;; replace last folder component by foldername
-   (t (setf (nth (- (length folder_components) 1) folder_components)
+   (t
+    (unless folder_components
+      (setq folder_components '(1)))
+    (setf (nth (- (length folder_components) 1) folder_components)
             (folderify foldername))))
   ;;; create folder if needed
   (setq path (concat root-dir (apply 'concat folder_components)))
   (make-directory path t)
+  ;;; cleanup: remove previous exports
+  (let*
+      ((all (file-expand-wildcards (concat path "*.org"))))
+    (mapc (lambda (path)
+            (message "%s" path)
+            (message "%s" (string-match  "[[:digit:]]+-[^.]*\.org" path))
+            (if (string-match  "[[:digit:]]+-[^.]*\.org" path)
+                (delete-file path)))))
     ;;; create _index.md file, use heading for title, add folderindex as weight.
   (find-file
    (concat path "_index.md"))
@@ -89,9 +100,8 @@ DRAFT TO INCLUDE FOLDERS."
   (insert-string
    "+++\n"
    "title = \""
-   titlet
- 
-   (format "weight = %d\n+++\n" folderindex))
+   title
+   (format "\"\nweight = %d\n+++\n" folderindex))
   (save-buffer)
   (kill-buffer))
 
@@ -105,6 +115,7 @@ DRAFT TO INCLUDE FOLDERS."
 
 (defun org-hugo-make-file ()
   (setq index (+ 1 index))
+  (unless path)
   (goto-char (plist-get element :begin))
   (org-copy-subtree)
   (find-file (format "%03d-%s.org" index filename))
