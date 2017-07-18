@@ -41,7 +41,8 @@ Add front-matter for hugo, including automatic weights."
       ((root-dir (file-name-directory (buffer-file-name)))
        (folder_componenrs '(""))
        (index 0)
-       (folderindex 0))
+       (folderindex 0)
+       path)
     (org-map-entries
      '(org-split-1-file-or-folder-hugo)
      t 'file 'archive 'comment)
@@ -57,12 +58,11 @@ DRAFT TO INCLUDE FOLDERS."
        (foldername (org-entry-get (point) "foldername"))
        (element (cadr (org-element-at-point)))
        (title (plist-get element :title))
-       initial path)
+       initial)
     (cond
      (foldername
       (setq folderindex (+ 1 folderindex))
       (setq initial (substring foldername 0 1))
-      (setq foldername (folderify (substring foldername 1 nil)))
       (org-hugo-make-folder))
      (filename (org-hugo-make-file)))))
 
@@ -71,13 +71,14 @@ DRAFT TO INCLUDE FOLDERS."
   (cond
    ;; reset folder components to given foldLername
    ((equal initial "/")
-    (setq folder_components (list foldername)))
+    (setq folder_components (list (folderify (substring foldername 1 nil)))))
    ;; add  foldername to folder components
-   ((equal initial "+"
-           (setq folder_components
-                 (append folder_components (list foldername)))))
+   ((equal initial "+")
+    (setq folder_components
+          (append folder_components (list (folderify (substring foldername 1 nil))))))
    ;; replace last folder component by foldername
-   (t (setf (nth (- (length folder_components) 1) folder_components) foldername)))
+   (t (setf (nth (- (length folder_components) 1) folder_components)
+            (folderify foldername))))
   ;;; create folder if needed
   (setq path (concat root-dir (apply 'concat folder_components)))
   (make-directory path t)
@@ -88,7 +89,7 @@ DRAFT TO INCLUDE FOLDERS."
   (insert-string
    "+++\n"
    "title = \""
-   (org-hugo-get-title)
+   title
    "\"\n"
    (format "weight = %d\n+++\n" folderindex))
   (save-buffer)
