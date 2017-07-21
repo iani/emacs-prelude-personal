@@ -1,5 +1,9 @@
-(require 'multiple-cursors)
-(require 'mc-extras)
+
+(prelude-load-require-packages '(multiple-cursors mc-extras ace-mc))
+
+;; ace-mc
+(global-set-key (kbd "C-c )") 'ace-mc-add-multiple-cursors)
+(global-set-key (kbd "C-M-)") 'ace-mc-add-single-cursor)
 
 ;; multiple-cursors
 

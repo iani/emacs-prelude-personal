@@ -1,7 +1,15 @@
-(require 'moe-theme)
+;;; 001_Theme_Cursor_Beem --- Basic theming
+
+;;; Commentary:
+;;; basic theming, cursor style.
+
+;;; Code:
+
+(require'moe-theme)
+(prelude-load-require-package 'moe-theme)
 (setq powerline-moe-theme t)
 (moe-dark)
-(require 'powerline)
+(require'powerline)
 (powerline-default-theme)
 (custom-set-faces
  '(info-title-3 ((t (:inherit info-title-4 :foreground "white" :height 1.2))))
@@ -12,6 +20,7 @@
                               :box (:line-width 1 :color "turquoise3")
                               :weight light :height 118 :family "Monospace")))))
 
+(setq cursor-type 'bar)   ;; show cursor as thin vertical bar.
 (blink-cursor-mode 1)     ;; turn on cursor blinking
 
 (setq visible-bell nil)   ;; instead of ringing a bell ...
@@ -21,3 +30,6 @@
 
 (set-cursor-color "tomato")
 
+(provide '001_Theme_Cursor_Beep)
+
+;;; 001_Theme_Cursor_Beep ends here
