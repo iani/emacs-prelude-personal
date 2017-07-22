@@ -1,4 +1,4 @@
-;;; bookmark_plus --- 2017-07-22 08:40:52 AM
+;;; bookmark_plus --- 2017-07-22 11:08:05 AM
 
 ;;; Commentary:
 ;;; Better editing of bookmarks perhaps the advantage

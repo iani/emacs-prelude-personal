@@ -1,5 +1,4 @@
-;;; hugo --- 2017-07-22 08:40:51 AM
-;;; 004_hugo --- Utilities for blog + website editing with HUGO
+;;; hugo --- 2017-07-22 11:08:05 AM
 
 ;;; Commentary:
 ;;; Utilities for blog + website editing with HUGO

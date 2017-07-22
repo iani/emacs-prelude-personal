@@ -1,4 +1,4 @@
-;;; packages --- 2017-07-22 08:40:51 AM
+;;; packages --- 2017-07-22 11:08:04 AM
 
 ;;; Commentary:
 ;;; this is only some of the packags.
@@ -12,7 +12,7 @@
 
 ;; also load prelude-required packages manually.
 ;; this loads packages which are not (auto-) loaded otherwise.
-;; apparently prelude-required packages will be available after restarting emacs 2 ...
+;; apparently prelude-required packages will be available after restarting emacs twice ...
 (defun prelude-load-require-package (package)
   "Install PACKAGE unless already installed."
   (unless (memq package prelude-packages)

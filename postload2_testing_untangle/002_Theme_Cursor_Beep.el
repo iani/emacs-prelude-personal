@@ -1,5 +1,4 @@
-;;; Theme_Cursor_Beep --- 2017-07-22 08:40:51 AM
-;;; 001_Theme_Cursor_Beem --- Basic theming
+;;; Theme_Cursor_Beep --- 2017-07-22 11:08:04 AM
 
 ;;; Commentary:
 ;;; basic theming, cursor style.

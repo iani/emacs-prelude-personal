@@ -1,4 +1,4 @@
-;;; helm-swoop --- 2017-07-22 08:40:52 AM
+;;; helm-swoop --- 2017-07-22 11:08:05 AM
 
 (prelude-load-require-package 'helm-swoop)
 
