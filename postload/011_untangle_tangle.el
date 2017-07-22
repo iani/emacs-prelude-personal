@@ -1,4 +1,4 @@
-;;; untangle_tangle --- 2017-07-22 01:47:56 PM
+;;; untangle_tangle --- 2017-07-22 04:30:58 PM
   ;;; Commentary:
   ;;; org-el-untangle:
   ;;; import muliple el files from one folder into one org mode file.
@@ -20,8 +20,7 @@
       (setq target-buffer (current-buffer))
       (insert "#+STARTUP: overview\n")
       (goto-char (point-max))
-      (mapc 'org-el-import-1-file files)
-      (mapc 'delete-file files)))
+      (mapc 'org-el-import-1-file files)))
 
   (defun org-el-import-1-file (fname)
     "Insert file FNAME into the master org file.
@@ -65,6 +64,9 @@
         ((index 0)
          (root-dir (file-name-directory (buffer-file-name)))
          buffers)
+      ;;; First delete old entries, before creating new ones.
+      ;;; Prevent duplicate entries due to renumbering.
+      (mapc 'delete-file (file-expand-wildcards (concat root-dir "*.el")))
       (org-map-entries 'org-el-export-1-section)
       (mapc 'kill-buffer buffers)))
 
@@ -100,4 +102,4 @@
         (setq buffers (cons (current-buffer) buffers))
         (kill-buffer))))
 (provide 'untangle_tangle)
-;;; 002_untangle_tangle.el ends here
+;;; 011_untangle_tangle.el ends here
