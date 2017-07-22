@@ -1,0 +1,1497 @@
+#+STARTUP: overview
+
+* packages
+
+#+BEGIN_SRC emacs-lisp
+
+;;; Commentary:
+;;; this is only some of the packags.
+;;; Some other required packages are loaded in the following postload files.
+;;; using prelude-require-package ensures that the packges are loaded
+;;; at the time required, if necessary.
+
+;;; Code:
+
+(require 'prelude-packages)
+
+;; also load prelude-required packages manually.
+;; this loads packages which are not (auto-) loaded otherwise.
+;; apparently prelude-required packages will be available after restarting emacs twice ...
+(defun prelude-load-require-package (package)
+  "Install PACKAGE unless already installed."
+  (unless (memq package prelude-packages)
+    (add-to-list 'prelude-packages package))
+  (unless (package-installed-p package)
+    (package-install package))
+  (require package))
+
+(defun prelude-load-require-packages (packages)
+  "Ensure PACKAGES are installed.
+Missing packages are installed automatically."
+  (mapc #'prelude-load-require-package packages))
+
+(prelude-load-require-packages '(moe-theme powerline))
+
+#+END_SRC
+
+* COMMENT Theme Cursor Beep
+
+#+BEGIN_SRC emacs-lisp
+
+;;; Commentary:
+;;; basic theming, cursor style.
+
+;;; Code:
+
+(require'moe-theme)
+(prelude-load-require-package 'moe-theme)
+(setq powerline-moe-theme t)
+(moe-dark)
+(require'powerline)
+(powerline-default-theme)
+(custom-set-faces
+ '(info-title-3 ((t (:inherit info-title-4 :foreground "white" :height 1.2))))
+ '(info-title-4 ((t (:inherit info-title-4 :foreground "red"))))
+ '(mode-line ((t (
+                  :background "DarkCyan"
+                              :foreground "tomato"
+                              :box (:line-width 1 :color "turquoise3")
+                              :weight light :height 118 :family "Monospace")))))
+
+(setq cursor-type 'bar)   ;; show cursor as thin vertical bar.
+(blink-cursor-mode 1)     ;; turn on cursor blinking
+
+(setq visible-bell nil)   ;; instead of ringing a bell ...
+(setq ring-bell-function (lambda () ;; .. invert the mode line colors for 1 second
+                           (invert-face 'mode-line)
+                           (run-with-timer 1 nil 'invert-face 'mode-line)))
+
+(set-cursor-color "tomato")
+
+#+END_SRC
+
+* COMMENT org-mode
+
+#+BEGIN_SRC emacs-lisp
+
+;;; Commentary:
+
+;; customize some org mode settings
+;; define some useful functions
+
+;;; Code:
+
+;; load util to insert recipes for export customization:
+(require 'org-export-recipes)
+
+;; (setq org-attach-directory (file-truename "~/Documents/org-attachments/"))
+(setq org-agenda-sticky t) ;; open agenda and todo views in separate buffers
+;; (setq org-agenda-diary-file (file-truename
+;;                              (concat iz-log-dir "PERSONAL/DIARY2.txt")))
+
+;; customize looks
+(custom-set-faces
+ '(org-block-end-line ((t (:background "#3a3a3a" :foreground "gray99"))) t)
+ '(org-level-1 ((t (:weight bold :height 1.1))))
+ '(org-level-2 ((t (:weight bold :height 1.1))))
+ '(org-level-3 ((t (:weight bold :height 1.1))))
+ '(org-level-4 ((t (:weight bold :height 1.1))))
+ '(org-level-5 ((t (:weight bold :height 1.1))))
+ '(org-level-6 ((t (:weight bold :height 1.1))))
+ '(org-level-7 ((t (:weight bold :height 1.1))))
+ '(org-level-8 ((t (:weight bold :height 1.1))))
+ '(org-level-9 ((t (:weight bold :height 1.1)))))
+
+(defun org-set-date (&optional active property)
+  "Set DATE property with current time.  Active timestamp."
+  (interactive "P")
+  (org-set-property
+   (if property property "DATE")
+   (cond ((equal active nil)
+          (format-time-string (cdr org-time-stamp-formats) (current-time)))
+         ((equal active '(4))
+          (concat "["
+                  (substring
+                   (format-time-string (cdr org-time-stamp-formats) (current-time))
+                   1 -1)
+                  "]"))
+         ((equal active '(16))
+          (concat
+           "["
+           (substring
+            (format-time-string (cdr org-time-stamp-formats) (org-read-date t t))
+            1 -1)
+           "]"))
+         ((equal active '(64))
+          (format-time-string (cdr org-time-stamp-formats) (org-read-date t t))))))
+
+(defun org-insert-current-date (arg)
+  "Insert current date in format readable for org-capture minibuffer.
+If called with ARG, do not insert time."
+  (interactive "P")
+  (if arg
+      (insert (format-time-string "%e %b %Y"))
+    (insert (format-time-string "%e %b %Y %H:%M"))))
+
+(eval-after-load 'org
+  '(progn
+     ;; Note: This keybinding is in analogy to the default keybinding:
+     ;; C-c . -> org-time-stamp
+     (define-key org-mode-map (kbd "C-c C-.") 'org-set-date)
+     (define-key org-mode-map (kbd "C-M-{") 'backward-paragraph)
+     (define-key org-mode-map (kbd "C-M-}") 'forward-paragraph)))
+
+(global-set-key (kbd "C-c C-x t") 'org-insert-current-date)
+#+END_SRC
+
+* COMMENT background
+
+#+BEGIN_SRC emacs-lisp
+(custom-set-variables
+ '(background-color "#202020"))
+#+END_SRC
+
+* COMMENT multiple cursors
+
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "C-)") 'ace-mc-add-multiple-cursors)
+(global-set-key (kbd "C-M-)") 'ace-mc-add-single-cursor)
+#+END_SRC
+
+* COMMENT hugo
+
+#+BEGIN_SRC emacs-lisp
+
+;;; Commentary:
+;;; Utilities for blog + website editing with HUGO
+
+;;; Code:
+(prelude-load-require-package 'easy-hugo)
+#+END_SRC
+
+* COMMENT parenthesis-colors
+
+#+BEGIN_SRC emacs-lisp
+(custom-set-faces
+ '(rainbow-delimiters-depth-1-face ((t (:foreground "#CCFFCC"))))
+ '(rainbow-delimiters-depth-2-face ((t (:foreground "#33FF66"))))
+ '(rainbow-delimiters-depth-3-face ((t (:foreground "#009933"))))
+ '(rainbow-delimiters-depth-4-face ((t (:foreground "#3366FF"))))
+ '(rainbow-delimiters-depth-5-face ((t (:foreground "#77BBFF"))))
+ '(rainbow-delimiters-depth-6-face ((t (:foreground "#FFAACC"))))
+ '(rainbow-delimiters-depth-7-face ((t (:foreground "gold1"))))
+ '(rainbow-delimiters-depth-8-face ((t (:foreground "orange"))))
+ '(rainbow-delimiters-depth-9-face ((t (:foreground "red")))))
+#+END_SRC
+
+* COMMENT ace-jump and helm-swoop
+
+#+BEGIN_SRC emacs-lisp
+;; (global-ace-isearch-mode +1)
+(global-set-key (kbd "C-S-s") 'helm-swoop)
+#+END_SRC
+
+* COMMENT bookmark plus
+
+#+BEGIN_SRC emacs-lisp
+
+;;; Commentary:
+;;; Better editing of bookmarks perhaps the advantage
+
+;;; Code:
+(prelude-load-require-packages '(bm autobookmarks bookmark+))
+
+#+END_SRC
+
+* COMMENT helm-swoop
+
+#+BEGIN_SRC emacs-lisp
+
+(prelude-load-require-package 'helm-swoop)
+
+#+END_SRC
+
+* COMMENT speedbar
+
+#+BEGIN_SRC emacs-lisp
+(require 'deft)
+(require 'sr-speedbar)  ;; loads commands required by speedbar-workfiles
+;; (require 'org-notes) ;; TODO: load all packages in personal/packages
+
+(setq deft-use-filename-as-title t)
+
+;; (speedbar-add-supported-extension ".sc")
+;; (speedbar-add-supported-extension ".scd")
+;; (speedbar-add-supported-extension ".js")
+;; (speedbar-add-supported-extension ".sh")
+;; (speedbar-add-supported-extension ".html")
+;; (speedbar-add-supported-extension ".css")
+;; (speedbar-add-supported-extension ".tex")
+
+(setq speedbar-show-unknown-files t)
+
+(defun speedbar-workfiles ()
+  "Open sr-speebar on workfiles root and keep it there."
+  (interactive)
+  (speedbar-fixed-dir iz-log-dir))
+
+(defun speedbar-dev ()
+  "Open sr-speebar on workfiles root and keep it there."
+  (interactive)
+  (speedbar-fixed-dir (file-truename "~/Documents/001DEV/")))
+
+(defun speedbar-fixed-dir (dir)
+  (let ((buffer (current-buffer)))
+    (sr-speedbar-refresh-turn-on)
+    (dired dir)
+    (sr-speedbar-open)
+    (speedbar-refresh)
+    (sr-speedbar-refresh-turn-off)
+    (switch-to-buffer buffer)))
+
+(defun deft-here (dir)
+  "Change DEFT-DIRECTORY to a directory selected interactively."
+  (interactive)
+  ;; (setq deft-directory "~/Copy/000WORKFILES/00_META/")
+  ;; (message dir)
+  ;; (message "file exists? %s" (file-exists-p dir))
+  (setq deft-directory
+        (if (file-directory-p dir) dir (file-name-directory dir)))
+  (switch-to-buffer deft-buffer)
+  (deft-mode))
+
+(defun speedbar-deft-here ()
+  ;; copied from speedbar-item-delete
+  "Open deft current directory."
+  (interactive)
+  (let ((f (speedbar-line-file)))
+    (if (not f) (error "Not a file"))
+    (if (speedbar-y-or-n-p (format "Open Deft on %s? " f) t)
+        (progn
+          (deft-here f)
+          (dframe-message "Okie dokie.")
+          (let ((p (point)))
+            ;; (speedbar-refresh)
+            (goto-char p))))))
+
+(defun speedbar-dired-here ()
+  ;; copied from speedbar-item-delete
+  "Open deft current directory."
+  (interactive)
+  (let ((f (speedbar-line-file)))
+    (if (not f) (error "Not a file"))
+    (if (speedbar-y-or-n-p (format "Dired %s? " f) t)
+        (progn
+          (dired-here f)
+          (dframe-message "Okie dokie.")
+          (let ((p (point)))
+            ;; (speedbar-refresh)
+            (goto-char p))))))
+
+(defun dired-here (dir)
+  "Dired dir or directory of dir if it is a file."
+  (interactive)
+  ;; (setq deft-directory "~/Copy/000WORKFILES/00_META/")
+  ;; (message dir)
+  ;; (message "file exists? %s" (file-exists-p dir))
+  (setq dir
+        (if (file-directory-p dir) dir (file-name-directory dir)))
+  (dired dir))
+
+(defun speedbar-log-here ()
+  ;; copied from speedbar-item-delete
+  "Create org-log entry on selected file."
+  (interactive)
+  (let ((f (speedbar-line-file)))
+    (if (not f) (error "Not a file"))
+    (if (speedbar-y-or-n-p (format "Create log entry on %s? " f) t)
+        (progn
+          ;; (org-log-here f)
+          ;; defined in org-notes
+          (dframe-message "Okie dokie.")
+          (let ((p (point)))
+            ;; (speedbar-refresh)
+            (goto-char p))))))
+
+(defun speedbar-agenda-here ()
+  ;; copied from speedbar-item-delete
+  "Create org-log entry on selected file."
+  (interactive)
+  (let ((f (speedbar-line-file)))
+    (if (not f) (error "Not a file"))
+    (setq org-agenda-files (list f))
+    ;; (org-log-here f t)
+    (org-agenda)
+    (dframe-message "Okie dokie.")
+    (let ((p (point)))
+      ;; (speedbar-refresh)
+      (goto-char p))))
+
+;; (defun org-make-agenda-)
+
+(defun speedbar-calfw-here ()
+  ;; copied from speedbar-item-delete
+  "Create org-log entry on selected file."
+  (interactive)
+  (let ((f (speedbar-line-file)))
+    (if (not f) (error "Not a file"))
+    (setq org-agenda-files (list f))
+    ;; (org-log-here f t)
+    (cfw:open-org-calendar)
+    ;; (cfw:refresh-calendar-buffer nil)
+    (dframe-message "Okie dokie.")
+    (let ((p (point)))
+      ;; (speedbar-refresh)
+      (goto-char p))))
+
+(global-set-key (kbd "H-L") 'speedbar-log)
+(global-set-key (kbd "H-s w") 'speedbar-workfiles)
+(global-set-key (kbd "H-s d") 'speedbar-dev)
+(global-set-key (kbd "H-s t") 'sr-speedbar-refresh-toggle)
+
+(defun add-speedbar-keys ()
+  (local-set-key (kbd "C-c a") 'speedbar-agenda-here)
+  (local-set-key (kbd "C-c c") 'speedbar-calfw-here)
+  (local-set-key (kbd "s") 'isearch-forward)
+  (local-set-key (kbd "d") 'speedbar-deft-here)
+  (local-set-key (kbd "C-d") 'speedbar-dired-here)
+  (local-set-key (kbd "l") 'speedbar-log-here))
+
+(add-hook 'speedbar-mode-hook 'add-speedbar-keys)
+
+(global-set-key (kbd "C-M-H-s") 'sr-speedbar-open)
+(global-set-key (kbd "C-M-H-s") 'sr-speedbar-open)
+
+#+END_SRC
+
+* COMMENT desktop
+
+#+BEGIN_SRC emacs-lisp
+;; (setq desktop-save-mode 1)
+#+END_SRC
+
+* untangle tangle
+
+#+BEGIN_SRC emacs-lisp
+  ;;; Commentary:
+  ;;; org-el-untangle:
+  ;;; import muliple el files from one folder into one org mode file.
+  ;;; org-el-tangle-sections
+  ;;; export each sections' emacs-lisp block to a separate file.
+
+  ;;; Code:
+
+  (defun org-el-import-all-files (directory)
+    "Import muliple el files from one folder into one org mode file."
+    (interactive "D")
+    (let
+        ((filename (concat "MASTER-FILE-" (format-time-string "%y%m%d") ".org"))
+         (files (file-expand-wildcards (concat directory "*.el")))
+         (target-buffer))
+      ;; (message (concat (file-truename directory) filename))
+      (find-file filename)
+      (erase-buffer)
+      (setq target-buffer (current-buffer))
+      (insert "#+STARTUP: overview\n")
+      (goto-char (point-max))
+      (mapc 'org-el-import-1-file files)
+      (mapc 'delete-file files)))
+
+  (defun org-el-import-1-file (fname)
+    "Insert file FNAME into the master org file.
+  Create org header and SRC block from data in FNAME file."
+    (message fname)
+    (save-excursion
+      (let*
+          ((fname-base (substring (file-name-base fname) 4 nil))
+           found body-start body-end body)
+        (find-file fname)
+        (goto-char (point-min)) ;; in case we are already editing the buffer!
+        (setq found
+              (search-forward fname-base (line-end-position 1) t 1))
+        (cond
+         (found
+          (forward-line 1)
+          (setq body-start (point)))
+         (t (setq body-start (point-min))))
+        (setq found
+              (search-forward (format "provide '%s" fname-base) nil t 1))
+        (cond
+         (found (setq body-end (line-beginning-position)))
+         (t (setq body-end (point-max))))
+        (setq body (buffer-substring body-start body-end))
+        (kill-buffer (current-buffer))
+        (with-current-buffer target-buffer
+          (goto-char (point-max))
+          (insert (replace-regexp-in-string
+                   "  " " "
+                   (format "\n* %s\n"
+                           (replace-regexp-in-string "_" " " fname-base))))
+          (insert "\n#+BEGIN_SRC emacs-lisp\n")
+          (insert body)
+          (insert "#+END_SRC")))))
+
+  (defun org-el-export-all-sections ()
+    "Export each sections' emacs-lisp block to a separate file.
+  Add header and footer parts required by flycheck."
+    (interactive)
+    (let
+        ((index 0)
+         (root-dir (file-name-directory (buffer-file-name)))
+         buffers)
+      (org-map-entries 'org-el-export-1-section)
+      (mapc 'kill-buffer buffers)))
+
+  (defun org-el-export-1-section ()
+    "Export this sections' emacs-lisp block to a separate file.
+  Add header and footer parts required by flycheck.
+  Skip sections marked with COMMENT."
+    (let* (body-element
+           (element (cadr (org-element-at-point)))
+           (title (plist-get element :title))
+           (commented (plist-get element :commentedp))
+           (filename))
+      ;; skip commented sections
+      (unless commented
+        (setq index (+ 1 index))
+        (search-forward "#+BEGIN_SRC")
+        (setq body-element (cadr (org-element-at-point)))
+        ;; (message
+        ;;  (replace-regexp-in-string " " "_" (plist-get element :title)))
+        ;; (message "%s" body-element)
+        (setq title (replace-regexp-in-string " " "_" title))
+        (setq filename (format "%03d_%s.el" index title))
+        (find-file filename)
+        (erase-buffer)
+        (insert (format ";;; %s --- %s"
+                        title
+                        (format-time-string "%F %r\n")))
+        (goto-char (point-max))
+        (insert (plist-get body-element :value))
+        (goto-char (point-max))
+        (insert (format "(provide '%s)\n;;; %s ends here" title filename))
+        (save-buffer)
+        (setq buffers (cons (current-buffer) buffers))
+        (kill-buffer))))
+#+END_SRC
+
+* COMMENT prelude-customization
+
+#+BEGIN_SRC emacs-lisp
+(setq prelude-whitespace nil)
+
+;; undo prelude shift-meta-up/down keybindings which interfere with org-mode
+ (setq prelude-mode-map
+   (let ((map (make-sparse-keymap)))
+     (define-key map (kbd "C-c o") 'prelude-open-with)
+     (define-key map (kbd "C-c g") 'prelude-google)
+     (define-key map (kbd "C-c G") 'prelude-github)
+     (define-key map (kbd "C-c y") 'prelude-youtube)
+     (define-key map (kbd "C-c U") 'prelude-duckduckgo)
+;;     ;; mimic popular IDEs binding, note that it doesn't work in a terminal session
+     (define-key map [(shift return)] 'prelude-smart-open-line)
+     (define-key map (kbd "M-o") 'prelude-smart-open-line)
+     (define-key map [(control shift return)] 'prelude-smart-open-line-above)
+     (define-key map [(control shift up)]  'move-text-up)
+     (define-key map [(control shift down)]  'move-text-down)
+;;     ;; the following 2 break structure editing with meta-shift-up / down in org mode
+;;     ;;    (define-key map [(meta shift up)]  'move-text-up)
+;;     ;;    (define-key map [(meta shift down)]  'move-text-down)
+;;     ;; new substitutes for above:  (these are overwritten by other modes...)
+;;     ;; (define-key map (kbd "C-c [")  'move-text-up)
+;;     ;; (define-key map (kbd "C-c ]")  'move-text-down)
+;;     ;; (define-key map [(control meta shift up)]  'move-text-up)
+;;     ;; (define-key map [(control meta shift down)]  'move-text-down)
+     (define-key map (kbd "C-c n") 'prelude-cleanup-buffer-or-region)
+     (define-key map (kbd "C-c f")  'prelude-recentf-ido-find-file)
+     (define-key map (kbd "C-M-z") 'prelude-indent-defun)
+     (define-key map (kbd "C-c u") 'prelude-view-url)
+     (define-key map (kbd "C-c e") 'prelude-eval-and-replace)
+     (define-key map (kbd "C-c s") 'prelude-swap-windows)
+     (define-key map (kbd "C-c D") 'prelude-delete-file-and-buffer)
+     (define-key map (kbd "C-c d") 'prelude-duplicate-current-line-or-region)
+     (define-key map (kbd "C-c M-d") 'prelude-duplicate-and-comment-current-line-or-region)
+     (define-key map (kbd "C-c r") 'prelude-rename-buffer-and-file)
+     (define-key map (kbd "C-c t") 'prelude-visit-term-buffer)
+     (define-key map (kbd "C-c k") 'prelude-kill-other-buffers)
+;;     ;; another annoying overwrite of a useful org-mode command:
+;;     ;; (define-key map (kbd "C-c TAB") 'prelude-indent-rigidly-and-copy-to-clipboard)
+     (define-key map (kbd "C-c I") 'prelude-find-user-init-file)
+     (define-key map (kbd "C-c S") 'prelude-find-shell-init-file)
+     (define-key map (kbd "C-c i") 'prelude-goto-symbol)
+;;     ;; extra prefix for projectile
+     (define-key map (kbd "s-p") 'projectile-command-map)
+;;     ;; make some use of the Super key
+     (define-key map (kbd "s-g") 'god-local-mode)
+     (define-key map (kbd "s-r") 'prelude-recentf-ido-find-file)
+     (define-key map (kbd "s-j") 'prelude-top-join-line)
+     (define-key map (kbd "s-k") 'prelude-kill-whole-line)
+     (define-key map (kbd "s-m m") 'magit-status)
+     (define-key map (kbd "s-m l") 'magit-log)
+     (define-key map (kbd "s-m f") 'magit-log-buffer-file)
+     (define-key map (kbd "s-m b") 'magit-blame)
+     (define-key map (kbd "s-o") 'prelude-smart-open-line-above)
+     map))
+#+END_SRC
+
+* COMMENT multiple-cursors
+
+#+BEGIN_SRC emacs-lisp
+
+(prelude-load-require-packages '(multiple-cursors mc-extras ace-mc))
+
+;; ace-mc
+(global-set-key (kbd "C-c )") 'ace-mc-add-multiple-cursors)
+(global-set-key (kbd "C-M-)") 'ace-mc-add-single-cursor)
+
+;; multiple-cursors
+
+(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+;; mc-extras
+
+(define-key mc/keymap (kbd "C-. C-d") 'mc/remove-current-cursor)
+(define-key mc/keymap (kbd "C-. d")   'mc/remove-duplicated-cursors)
+
+(define-key mc/keymap (kbd "C-. C-.") 'mc/freeze-fake-cursors-dwim)
+
+(define-key mc/keymap (kbd "C-. =")   'mc/compare-chars)
+
+;; Emacs 24.4+ comes with rectangle-mark-mode.
+(define-key rectangle-mark-mode-map (kbd "C-. C-,")
+  'mc/rect-rectangle-to-multiple-cursors)
+
+(define-key cua--rectangle-keymap   (kbd "C-. C-,")
+  'mc/cua-rectangle-to-multiple-cursors)
+
+(mc/cua-rectangle-setup)
+#+END_SRC
+
+* COMMENT visual-line-mode
+
+#+BEGIN_SRC emacs-lisp
+#+END_SRC
+
+* COMMENT EmacsLispModes
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'emacs-lisp-mode-hook 'hl-sexp-mode)
+(add-hook 'emacs-lisp-mode-hook 'hs-minor-mode)
+(global-set-key (kbd "H-l h") 'hs-hide-level)
+(global-set-key (kbd "H-l s") 'hs-show-all)
+
+(add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode)
+(require 'paredit) ;; smart edit parentheses
+(require 'cl)
+(require 'litable) ;; show lisp eval results in the buffer, interactively
+(add-hook 'emacs-lisp-mode-hook 'paredit-mode)
+;; (add-hook 'emacs-lisp-mode-hook 'turn-on-whitespace-mode)
+(add-hook 'emacs-lisp-mode-hook 'auto-complete-mode)
+(add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
+;; H-C-i:
+(define-key emacs-lisp-mode-map (kbd "H-TAB") 'icicle-imenu-command)
+#+END_SRC
+
+* COMMENT SuperCollider
+
+#+BEGIN_SRC emacs-lisp
+;; (add-to-list 'load-path "~/.emacs.d/personal/packages/sclang/")
+;; (load-file "~/.emacs.d/personal/packages/sclang/sclang.el")
+;; (load-file "~/.emacs.d/personal/packages/sc-snippets/sc-snippets.el")
+(require 'sclang)
+(require 'sc-snippets)
+
+;;; Directory of SuperCollider support, for quarks, plugins, help etc.
+(defvar sc_userAppSupportDir
+  (expand-file-name "~/Library/Application Support/SuperCollider"))
+
+;; Make path of sclang executable available to emacs shell load path
+
+;; For Version 3.6.6:
+(add-to-list
+ 'exec-path
+ "/Applications/SuperCollider/SuperCollider.app/Contents/Resources/")
+
+;; For Version 3.7:
+(add-to-list
+ 'exec-path
+ "/Applications/SuperCollider/SuperCollider.app/Contents/MacOS/")
+
+;; Global keyboard shortcut for starting sclang
+(global-set-key (kbd "C-c M-s") 'sclang-start)
+;; overrides alt-meta switch command
+(global-set-key (kbd "C-c W") 'sclang-switch-to-workspace)
+
+;; Disable switching to default SuperCollider Workspace when recompiling SClang
+(setq sclang-show-workspace-on-startup nil)
+
+;; minor modes SuperCollider
+
+;; (add-hook 'sclang-mode-hook 'sclang-extensions-mode) ;; still problems with this
+(add-hook 'sclang-mode-hook 'paredit-mode)
+(add-hook 'sclang-mode-hook 'rainbow-delimiters-mode)
+(add-hook 'sclang-mode-hook 'hl-sexp-mode)
+(add-hook 'sclang-mode-hook 'hs-minor-mode)
+(add-hook 'sclang-mode-hook 'electric-pair-mode)
+;; (add-hook 'sclang-mode-hook 'yas-minor-mode)
+(add-hook 'sclang-mode-hook 'auto-complete-mode)
+;; (add-hook 'sclang-mode-hook 'hl-paren-mode)
+
+;; Own bindings for hide-show minor mode:
+(add-hook 'sclang-mode-hook
+          (lambda()
+            (local-set-key (kbd "H-b b") 'hs-toggle-hiding)
+            (local-set-key (kbd "H-b H-b")  'hs-hide-block)
+            (local-set-key (kbd "H-b a")    'hs-hide-all)
+            (local-set-key (kbd "H-b H-a")  'hs-show-all)
+            (local-set-key (kbd "H-b l")  'hs-hide-level)
+            (local-set-key (kbd "H-b H-l")  'hs-show-level)
+            (hs-minor-mode 1)))
+#+END_SRC
+
+* COMMENT SuperCollider-utils
+
+#+BEGIN_SRC emacs-lisp
+
+;; (sclang-eval-string string &optional print-p)
+;; (defun dired-get-filename (&optional localp no-error-if-not-filep)
+;; Requires Buffers class of sc-hacks lib.
+
+(defun dired-load-audio-buffer (&optional play)
+  "Load file at cursor in dired to sc audio buffer."
+  (interactive "P")
+  (message (dired-get-filename))
+  (sclang-eval-string
+   (format "Buffers.load(\"%s\", %s)"
+           (dired-get-filename)
+           (if play "true" "false"))
+   t))
+
+(global-set-key (kbd "H-d l") 'dired-load-audio-buffer)
+#+END_SRC
+
+* COMMENT hl-faces
+
+#+BEGIN_SRC emacs-lisp
+(custom-set-faces
+ '(hl-line ((t (:background "gray0"))))
+ '(hl-sexp-face ((t (:background "gray10")))))
+#+END_SRC
+
+* COMMENT EnableFullscreen
+
+#+BEGIN_SRC emacs-lisp
+(setq ns-use-native-fullscreen nil)
+#+END_SRC
+
+* COMMENT ToggleFrameFullscreenKey
+
+#+BEGIN_SRC emacs-lisp
+;;; Set global key for Toggle frame fullscreen
+;; keyboard shortcut is function-key - t.
+(global-set-key (kbd "H-t") 'toggle-frame-fullscreen)
+#+END_SRC
+
+* COMMENT unset-command-q
+
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "s-q") nil)
+#+END_SRC
+
+* COMMENT org-export-recipes
+
+#+BEGIN_SRC emacs-lisp
+#+END_SRC
+
+* COMMENT calfw
+
+#+BEGIN_SRC emacs-lisp
+(require 'calfw-org)
+(require 'calfw-cal)
+
+(setq calendar-christian-all-holidays-flag t)
+
+(setq org-capture-use-agenda-date t)
+
+(setq cfw:org-overwrite-default-keybinding t)
+
+(defun org-calfw-here (&optional arg)
+  "Open calfw on the file of the present buffer."
+  (interactive "P")
+  (when (and (buffer-file-name) (eq major-mode 'org-mode))
+    (if arg
+        (setq org-agenda-files (list (buffer-file-name)))
+      (add-to-list 'org-agenda-files (buffer-file-name))))
+  ;; (org-log-here (buffer-file-name) t)
+  (cfw:open-org-calendar))
+
+;; (defun cfw:org-capture (prefix)
+;;   "Overwrite original to run own cfw:org-capture-at-date instead."
+;;   (interactive "P")
+;;   (cfw:org-journal-at-date prefix))
+
+(defun cfw:org-journal-at-date-from-cursor (prefix)
+  "Run org-journal-new-entry with ORG-OVERRIDING-DEFAULT-TIME from cursor."
+  (interactive "P")
+  (with-current-buffer  (get-buffer-create cfw:calendar-buffer-name)
+    (let* ((pos (cfw:cursor-to-nearest-date))
+           (org-overriding-default-time
+            (encode-time 0 0 7
+                         (calendar-extract-day pos)
+                         (calendar-extract-month pos)
+                         (calendar-extract-year pos))))
+      (org-journal-new-entry prefix org-overriding-default-time)
+      (unless prefix
+        (org-insert-time-stamp org-overriding-default-time t)
+        (backward-word)
+        (backward-word)
+        (paredit-forward-kill-word)
+        (paredit-forward-kill-word)))))
+
+(defun cfw:org-journal-entry-for-now (prefix)
+  "Run org-journal-new-entry with date+time timestamp from current time."
+  (interactive "P")
+  (with-current-buffer  (get-buffer-create cfw:calendar-buffer-name)
+    (let* ((pos (cfw:cursor-to-nearest-date))
+           (org-overriding-default-time (apply 'encode-time (decode-time))
+            ;; (encode-time 0 0 7
+            ;;              (calendar-extract-day pos)
+            ;;              (calendar-extract-month pos)
+            ;;              (calendar-extract-year pos))
+            ))
+      (org-journal-new-entry prefix org-overriding-default-time)
+      (org-insert-time-stamp org-overriding-default-time t))))
+
+(global-set-key (kbd "C-c c c") 'org-calfw-here)
+(global-set-key (kbd "C-c C J") 'cfw:org-journal-entry-for-now)
+;; journal entry for Now (current date and time at time of command)
+(define-key
+  cfw:calendar-mode-map "N" 'cfw:org-journal-entry-for-now)
+;; journal entry for Here (date at cursor on calfw buffer)
+(define-key
+  cfw:calendar-mode-map "H" 'cfw:org-journal-at-date-from-cursor)
+
+
+;; (define-key
+;;   cfw:calendar-mode-map "C" 'cfw:org-journal-entry-for-now)
+;; (define-key
+;;   cfw:calendar-mode-map "c" 'cfw:org-journal-at-date-from-cursor)
+
+(provide '018_calfw)
+;;; 018_calfw.el ends here
+#+END_SRC
+
+* COMMENT projectile
+
+#+BEGIN_SRC emacs-lisp
+#+END_SRC
+
+* COMMENT dired-hide-details
+
+#+BEGIN_SRC emacs-lisp
+;; HIDE DETAILS WHEN FIRST OPENING DIRED
+
+;; Note: following does not work. Why?
+;; (setq dired-hide-details-mode t)
+
+;; Using dired+ opens dired without details per default
+(require 'dired+)
+(require 'bookmark+)
+
+
+
+#+END_SRC
+
+* COMMENT helm
+
+#+BEGIN_SRC emacs-lisp
+;; 1. Ensure that helm-browse-project will find .git root dir and update cache
+;; 2. Add actions to helm to org-capture on the selected file.
+
+;; Current helm-browse-project does not go up to .git root
+;; Behavior is erratic. Goes to .git root after repeating 2 times
+;; (global-set-key (kbd "C-c C-h p") 'helm-browse-project)
+
+;; Modified from helm-browse-project
+(defun helm-browse-workfiles ()
+  "Browse workfiles root directory with helm-project."
+  (interactive)
+  (helm-browse-project-root '(4)))
+
+(defun helm-browse-project-root (arg)
+  "Preconfigured helm to browse projects FROM .git ROOT.
+Adapted from helm-browse-project.
+Browse files and see status of project with its vcs.
+Only HG and GIT are supported for now.
+Fall back to `helm-browse-project-find-files'
+if current directory is not under control of one of those vcs.
+With a prefix ARG browse files recursively, with two prefix ARG
+rebuild the cache.
+If the current directory is found in the cache, start
+`helm-browse-project-find-files' even with no prefix ARG.
+NOTE: The prefix ARG have no effect on the VCS controlled directories.
+
+Needed dependencies for VCS:
+<https://github.com/emacs-helm/helm-ls-git>
+and
+<https://github.com/emacs-helm/helm-ls-hg>
+and
+<http://melpa.org/#/helm-ls-svn>."
+  (interactive "P")
+  (cond ((and (require 'helm-ls-git nil t)
+              (fboundp 'helm-ls-git-root-dir)
+              (helm-ls-git-root-dir))
+         (helm-ls-git-ls))
+        ((and (require 'helm-ls-hg nil t)
+              (fboundp 'helm-hg-root)
+              (helm-hg-root))
+         (helm-hg-find-files-in-project))
+        ((and (require 'helm-ls-svn nil t)
+              (fboundp 'helm-ls-svn-root-dir)
+              (helm-ls-svn-root-dir))
+         (helm-ls-svn-ls))
+        (t (let ((cur-dir (helm-browse-project-get-git-root-dir
+                           (if arg
+                               iz-log-dir ;; defined in org-notes
+                             (helm-current-directory)))))
+             (setq arg '(4))
+             (if (or arg (gethash cur-dir helm--browse-project-cache))
+                 (helm-browse-project-find-files cur-dir (equal arg '(16)))
+                 (helm :sources (helm-browse-project-build-buffers-source cur-dir)
+                       :buffer "*helm browse project*"))))))
+
+;; Modifying helm function to look for .git folder
+(defun helm-browse-project-get-git-root-dir (directory)
+  "Search in directory or its superdirectories for .git folder.
+Adapted from helm-browse-project-get--root-dir."
+  (cl-loop with dname = (file-name-as-directory directory)
+           while (and dname (not
+                             (file-expand-wildcards (concat dname ".git"))
+                             ;; (gethash dname helm--browse-project-cache)
+                             ))
+           if (file-remote-p dname)
+           do (setq dname nil) else
+           do (setq dname (helm-basedir (substring dname 0 (1- (length dname)))))
+           finally return (or dname (file-name-as-directory directory))))
+
+
+(defun helm-org-capture-in-file (_ignore)
+  (let* ((helm--reading-passwd-or-string t)
+         (file (car (helm-marked-candidates))))
+    (find-file file)
+    ;; (org-log-here)
+    ))
+
+(defun helm-org-add-to-agenda (&optional _ignore1 _ignore2)
+  (let* ((helm--reading-passwd-or-string t)
+         (file (car (helm-marked-candidates))))
+    (add-to-list 'org-agenda-files file)))
+
+(defun helm-org-set-agenda (&optional _ignore1 _ignore2)
+  (let* ((helm--reading-passwd-or-string t))
+    (setq org-agenda-files (helm-marked-candidates))))
+
+(defun helm-org-capture-in-buffer (buffer-or-name &optional other-window)
+  "Switch to org mode buffer and capture in it.
+Adapted from helm-switch-to-buffers."
+  (switch-to-buffer buffer-or-name)
+  ;; (org-log-here)
+  )
+
+;; Customize helm-type-file-actions: Add org-capture action
+(setq helm-type-file-actions
+      '(("Find file" . helm-find-many-files)
+        ("Org-capture in file" . helm-org-capture-in-file)
+        ("Add file to org agenda" . helm-org-add-to-agenda)
+        ("Set org agenda to file(s)" . helm-org-set-agenda)
+        ("Find file as root" . helm-find-file-as-root)
+        ("Find file other window" . helm-find-files-other-window)
+        ("Find file other frame" . find-file-other-frame)
+        ("Open dired in file's directory" . helm-open-dired)
+        ("Insert as org link" . helm-files-insert-as-org-link)
+        ("Grep File(s) `C-u recurse'" . helm-find-files-grep)
+        ("Zgrep File(s) `C-u Recurse'" . helm-ff-zgrep)
+        ("Pdfgrep File(s)" . helm-ff-pdfgrep)
+        ("Checksum File" . helm-ff-checksum)
+        ("Ediff File" . helm-find-files-ediff-files)
+        ("Ediff Merge File" . helm-find-files-ediff-merge-files)
+        ("Etags `M-., C-u reload tag file'" . helm-ff-etags-select)
+        ("View file" . view-file)
+        ("Insert file" . insert-file)
+        ("Add marked files to file-cache" . helm-ff-cache-add-file)
+        ("Delete file(s)" . helm-delete-marked-files)
+        ("Copy file(s) `M-C, C-u to follow'" . helm-find-files-copy)
+        ("Rename file(s) `M-R, C-u to follow'" . helm-find-files-rename)
+        ("Symlink files(s) `M-S, C-u to follow'" . helm-find-files-symlink)
+        ("Relsymlink file(s) `C-u to follow'" . helm-find-files-relsymlink)
+        ("Hardlink file(s) `M-H, C-u to follow'" . helm-find-files-hardlink)
+        ("Open file externally (C-u to choose)" . helm-open-file-externally)
+        ("Open file with default tool" . helm-open-file-with-default-tool)
+        ("Find file in hex dump" . hexl-find-file)))
+
+(setq helm-type-buffer-actions
+      '(("Switch to buffer(s)" . helm-switch-to-buffers)
+       ("Org-capture in buffer)" . helm-org-capture-in-buffer)
+       ("Add file to org agenda" . helm-org-add-to-agenda)
+       ("Set org agenda to file(s)" . helm-org-set-agenda)
+       ("Switch to buffer(s) other window `C-c o'" . helm-switch-to-buffers-other-window)
+       ("Switch to buffer other frame `C-c C-o'" . switch-to-buffer-other-frame)
+       ("Query replace regexp `C-M-%'" . helm-buffer-query-replace-regexp)
+       ("Query replace `M-%'" . helm-buffer-query-replace)
+       ("View buffer" . view-buffer)
+       ("Display buffer" . display-buffer)
+       ("Grep buffers `M-g s' (C-u grep all buffers)" . helm-zgrep-buffers)
+       ("Multi occur buffer(s) `C-s'" . helm-multi-occur-as-action)
+       ("Revert buffer(s) `M-U'" . helm-revert-marked-buffers)
+       ("Insert buffer" . insert-buffer)
+       ("Kill buffer(s) `M-D'" . helm-kill-marked-buffers)
+       ("Diff with file `C-='" . diff-buffer-with-file)
+       ("Ediff Marked buffers `C-c ='" . helm-ediff-marked-buffers)
+       ("Ediff Merge marked buffers `M-='" .
+        #[257 "\300\301\"\207"
+              [helm-ediff-marked-buffers t]
+              4 "\n\n(fn CANDIDATE)"])))
+
+(global-set-key (kbd "C-c C-h b") 'helm-browse-project-root)
+(global-set-key (kbd "C-c C-h w") 'helm-browse-workfiles)
+#+END_SRC
+
+* COMMENT copy line2shell
+
+#+BEGIN_SRC emacs-lisp
+;;; line2shell --- copy current line and paste to shell in other window
+
+;;; Commentary:
+
+;;; Facilitate the execution of series of commands,
+;; by copying them over line-by-line from any notebook buffer to the shell terminal.
+
+;;; Code:
+
+(defun copy-line-2-shell ()
+  "Copy current line, switch window, and paste."
+  (interactive)
+  (move-beginning-of-line nil)
+  (push-mark)
+  (move-end-of-line nil)
+  (copy-region-as-kill (mark) (point))
+  (other-window 1)
+  (yank)
+  )
+
+(provide '022-line2shell)
+;;; 022_line2shell.el ends here
+
+#+END_SRC
+
+* COMMENT hexo-export-hacks
+
+#+BEGIN_SRC emacs-lisp
+
+;; Convert sclang source code regions to javascript when saving
+;; This makes the hexo org-mode plugin htmlize those regions acceptably.
+;; Otherwise, no coloring, and > characters are converted to html-entities
+
+(defun org-sclang2js ()
+  "Convert scr regions from sclang to javascript."
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    (while (re-search-forward  "\\#\\+BEGIN_SRC sclang" nil t)
+      (replace-match "\#\+BEGIN_SRC javascript"))))
+
+(defun org-js2sclang ()
+  "Convert scr regions from sclang to javascript."
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    (while (re-search-forward "\\#\\+BEGIN_SRC javascript" nil t)
+      (replace-match "\#\+BEGIN_SRC sclang"))))
+
+(global-set-key (kbd "H-c H-s") 'org-js2sclang)
+(global-set-key (kbd "H-c H-j") 'org-sclang2js)
+
+
+#+END_SRC
+
+* COMMENT copy-filename-to-clipboard
+
+#+BEGIN_SRC emacs-lisp
+(defun copy-file-name-to-clipboard ()
+  "Copy the current buffer file name to the clipboard."
+  (interactive)
+  (let ((filename (if (equal major-mode 'dired-mode)
+                      default-directory
+                    (buffer-file-name))))
+    (when filename
+      (kill-new filename)
+      (message "Copied buffer file name '%s' to the clipboard." filename))))
+#+END_SRC
+
+* COMMENT calendar
+
+#+BEGIN_SRC emacs-lisp
+
+;;; Commentary:
+
+;; Tweak Emacs built-in calendar
+
+;;; Code:
+
+(require 'calendar)
+
+(global-set-key (kbd "C-c c C-c") 'calendar)
+
+;;; Override old calendar-goto-date to use org-read-date, since
+;;; the latter is much more convenient.
+;;; Unfortunately will not work if new date is not displayed in current calendar.
+(defun calendar-goto-date-org-style (date)
+  "Move cursor to DATE."
+  (interactive (list (let ((date (org-parse-time-string (org-read-date))))
+                       (list
+                        (nth 4 date)
+                        (nth 3 date)
+                        (nth 5 date)))))
+  (let ((month (calendar-extract-month date))
+        (year (calendar-extract-year date)))
+    (if (not (calendar-date-is-visible-p date))
+        (calendar-other-month
+         (if (and (= month 1) (= year 1))
+             2
+           month)
+         year)))
+  (calendar-cursor-to-visible-date date)
+  (run-hooks 'calendar-move-hook)
+  ;; make cursor visible again (otherwise it disappears:)
+  (setq cursor-type "box"))
+
+;;; (global-set-key (kbd "C-c c C-o") 'calendar-goto-date-org-style)
+
+;;; provide 025_calendar
+;;; 025_calendar.el ends here
+#+END_SRC
+
+* COMMENT evil-mode
+
+#+BEGIN_SRC emacs-lisp
+          (lambda ()
+            (if evil-mode
+                (linum-relative-mode 1)
+              (linum-relative-mode -1))))
+
+(global-set-key (kbd "s-:") 'evil-mode)
+#+END_SRC
+
+* COMMENT greek input
+
+#+BEGIN_SRC emacs-lisp
+;; (global-set-key (kbd "C-c C-\\") 'toggle-input-method)
+
+(setq default-input-method "greek")
+(global-set-key (kbd "s-;") 'toggle-input-method)
+#+END_SRC
+
+* COMMENT window and buffer switching
+
+#+BEGIN_SRC emacs-lisp
+(require 'buffer-move)
+;; (require 'windmove) required by buffermove
+;; (winner-mode -1)
+(global-set-key (kbd "s-<left>")  'windmove-left)
+(global-set-key (kbd "s-<right>") 'windmove-right)
+(global-set-key (kbd "s-<up>")    'windmove-up)
+(global-set-key (kbd "s-<down>")  'windmove-down)
+(global-set-key (kbd "s-S-<up>")     'buf-move-up)
+(global-set-key (kbd "s-S-<down>")   'buf-move-down)
+(global-set-key (kbd "s-S-<left>")   'buf-move-left)
+(global-set-key (kbd "s-S-<right>")  'buf-move-right)
+(setq aw-keys '(?a ?b ?c ?d ?e ?f ?g ?h ?i ?j ?k ?l ?m ?n ?o ?p ?q))
+
+;; (require 'use-package)
+;; (use-package
+;;  ace-window
+;;  :ensure ace-window
+;;  :config (setq aw-keys '(?a ?o ?e ?u ?i ?d ?h ?t ?n ?s))
+;;  :bind ("C-x o") . ace-window)
+
+
+#+END_SRC
+
+* COMMENT god-mode
+
+#+BEGIN_SRC emacs-lisp
+;; (global-set-key (kbd "<escape>") 'god-local-mode)
+(global-set-key (kbd "<escape>") 'god-mode-all)
+#+END_SRC
+
+* COMMENT elisp-slime-nav
+
+#+BEGIN_SRC emacs-lisp
+;; see: http://sachachua.com/blog/2014/05/emacs-chat-bozhidar-batsov/
+;; and https://github.com/purcell/elisp-slime-nav
+(require 'elisp-slime-nav)
+(dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook))
+  (add-hook hook 'turn-on-elisp-slime-nav-mode))
+#+END_SRC
+
+* COMMENT org-split-hugo
+
+#+BEGIN_SRC emacs-lisp
+
+;;; Commentary:
+;;; 16 Jul 2017 13:07
+;;; Draft of function to split an entire org-file into subfiles for export
+;;; to hugo.
+;;; The contents of any section that has a property "filename" will be
+;;; exported under the same directory as the source file.
+;;; the filename property gives the filename.
+;;; the heading becomes title property in yaml front-matter.
+;;; the weight is set according to the order of the exported sections.
+;;;
+;;; Sections with property "foldername" set a subfolder for saving
+;;; subsequent file sections.
+;;; Folder path is constructed by concatenating a cumulative list of subfolders.
+;;; "/path" resets the list to '("path")
+;;; "+path" appends "path" to the folder list.
+;;; "path" replaces (sets) the last element of the folder list by (to) "path".
+;;; Use it for all subsequent exported sections (until reset by other section)
+;;; Construct _index.md from the name of the folder section.
+;;; Increment a folder_index variable to set weight for folder _index.md.
+
+;;; Code:
+
+;;; this org-mode function stops the file creation process
+;;; and therefore must be redefined here.
+;;; Consequences of overwriting it are not yet checked, but seem irrelevant.
+(defun org-check-agenda-file (file)
+  "Make sure FILE exists.  If not, ask user what to do."
+  (unless (file-exists-p file)
+    (message "Ignoring non-existent agenda file: %s"
+             (abbreviate-file-name file))))
+
+(defun org-hugo-autosplit ()
+  "Auto-export sections marked with filename property after each save."
+  (interactive)
+ (add-hook 'after-save-hook
+           (lambda ()
+             (org-split-hugo)
+             ;; (message "hugo export to individual files done")
+             )
+           'append 'local)
+ (message "This buffer will now export to hugo section files after each save."))
+
+(defun org-split-hugo ()
+  "Split 1st level sections with filename property to files.
+Add front-matter for hugo, including automatic weights."
+  (interactive)
+  (let*
+      ((root-dir (file-name-directory (buffer-file-name)))
+       (path root-dir)
+       (folder_components)
+       (index 0)
+       (folderindex 0)
+       buffers-to-delete)
+    (org-map-entries
+     '(org-split-1-file-or-folder-hugo)
+     t 'file 'archive 'comment)
+    (mapc (lambda (buffer)
+            (message "killing buffer: %s" buffer)
+            (set-buffer-modified-p nil)
+            (kill-buffer buffer))
+          buffers-to-delete)
+    (message "Exported %d files" index)))
+
+(global-set-key (kbd "C-c C-h C-h") 'org-split-hugo)
+
+(defun org-split-1-file-or-folder-hugo ()
+  "Helper function for org-split-hugo
+DRAFT TO INCLUDE FOLDERS."
+  (let*
+      ((filename (org-entry-get (point) "filename"))
+       (foldername (org-entry-get (point) "foldername"))
+       (element (cadr (org-element-at-point)))
+       (title (plist-get element :title))
+       initial)
+    (cond
+     (foldername
+      (setq folderindex (+ 1 folderindex))
+      (setq initial (substring foldername 0 1))
+      (org-hugo-make-folder))
+     (filename (org-hugo-make-file)))))
+
+(defun org-hugo-make-folder ()
+  ;;; create foldername
+  (cond
+   ;; reset folder components to given foldLername
+   ((equal initial "/")
+    (setq folder_components (list (folderify (substring foldername 1 nil)))))
+   ;; add  foldername to folder components
+   ((equal initial "+")
+    (setq folder_components
+          (append folder_components (list (folderify (substring foldername 1 nil))))))
+   ;; replace last folder component by foldername
+   (t
+    (unless folder_components
+      (setq folder_components '(1)))
+    (setf (nth (- (length folder_components) 1) folder_components)
+            (folderify foldername))))
+  ;;; create folder if needed
+  (setq path (concat root-dir (apply 'concat folder_components)))
+  (make-directory path t)
+  ;;; cleanup: remove previous exports
+  (let*
+      ((all (file-expand-wildcards (concat path "*.org"))))
+    (mapc (lambda (path)
+            (message "%s" path)
+            (message "%s" (string-match  "[[:digit:]]+-[^.]*\.org" path))
+            (if (string-match  "[[:digit:]]+-[^.]*\.org" path)
+                (delete-file path)))
+          all))
+    ;;; create _index.md file, use heading for title, add folderindex as weight.
+  (find-file
+   (concat path "_index.md"))
+  (erase-buffer)
+  (insert-string
+   "+++\n"
+   "title = \""
+   title
+   (format "\"\nweight = %d\n+++\n" folderindex))
+  (save-buffer)
+  (kill-buffer))
+
+(defun folderify (string)
+  "add trailing / to turn STRING into folder name."
+  (if (equal "/" (substring string -1 nil))
+      string
+    (concat string "/")))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun org-hugo-make-file ()
+  (setq index (+ 1 index))
+  (unless path)
+  (goto-char (plist-get element :begin))
+  (org-copy-subtree)
+  (find-file (format "%03d-%s.org" index filename))
+  (find-file (format "%s%03d-%s.org" path index filename))
+  (erase-buffer)
+  (org-paste-subtree 1)
+  (org-show-subtree)
+  (kill-line)
+  (kill-line)
+  (re-search-forward ":PROPERTIES:")
+  (replace-match "+++")
+  (re-search-forward ":filename: ")
+  (beginning-of-line)
+  (kill-line)
+  (insert-string (format "title = \"%s\"\n" title))
+  (insert-string (format "weight = %d" index))
+  (re-search-forward ":END:")
+  (replace-match "+++")
+  ;; Subsections were pasted as level 2. Shift them to level 1.
+  (org-map-entries '(org-promote))
+  (save-buffer)
+  ;; (kill-buffer)
+  (setq buffers-to-delete (cons (current-buffer) buffers-to-delete))
+  )
+
+(provide '031_org-split-hugo)
+;;; 031_org-split-hugo.el ends here
+#+END_SRC
+
+* COMMENT copy-file-path
+
+#+BEGIN_SRC emacs-lisp
+  "Copy the current buffer's file path or dired path to `kill-ring'.
+Result is full path.
+If `universal-argument' is called first, copy only the dir path.
+URL `http://ergoemacs.org/emacs/emacs_copy_file_path.html'
+Version 2015-12-02"
+  (interactive "P")
+  (let ((ξfpath
+         (if (equal major-mode 'dired-mode)
+             (expand-file-name default-directory)
+           (if (null (buffer-file-name))
+               (user-error "Current buffer is not associated with a file.")
+             (buffer-file-name)))))
+    (kill-new
+     (if (null φdir-path-only-p)
+         (progn
+           (message "File path copied: 「%s」" ξfpath)
+           ξfpath
+           )
+       (progn
+         (message "Directory path copied: 「%s」" (file-name-directory ξfpath))
+         (file-name-directory ξfpath))))))
+
+(global-set-key (kbd "C-c q p") 'xah-copy-file-path)
+#+END_SRC
+
+* COMMENT ox-twbs
+
+#+BEGIN_SRC emacs-lisp
+
+;;; Commentary:
+;; Provides dynamic menu in right column.
+
+;;; Code:
+
+(setq org-publish-project-alist
+      '(("org-notes"
+         :base-directory "~/org-bs/"
+         :publishing-directory "~/public_html-bs/"
+         :publishing-function org-twbs-publish-to-html
+         :with-sub-superscript nil
+         )))
+
+
+(defun org-publish-twbs ()
+  "Publish using ox-twbs.
+This version saves the buffer into the default base-directory for publishing,
+and then deletes the published file and buffer after publishing.
+This means, any org-file can be published, independently from wher it is stored.
+No need to define a different base-directory for the publish-project-alist."
+  (interactive)
+  (save-buffer)
+  (message
+   (file-truename (concat
+                   "~/org-bs/"
+                   (file-name-nondirectory (buffer-file-name)))))
+  (write-file
+   (file-truename (concat
+                   "~/org-bs/"
+                   (file-name-nondirectory (buffer-file-name)))))
+  (save-excursion (org-publish-current-file))
+  (let* ((proj (org-publish-get-project-from-filename buffer-file-name))
+         (proj-plist (cdr proj))
+         (rel (file-relative-name buffer-file-name
+                                  (plist-get proj-plist :base-directory)))
+         (dest (plist-get proj-plist :publishing-directory)))
+    (delete-file (buffer-file-name)) ;; keep the publishing directory empty
+    (kill-buffer (current-buffer))
+    (browse-url (concat "file://"
+                        (file-name-as-directory (expand-file-name dest))
+                        (file-name-sans-extension rel)
+                        ".html"))))
+
+;; Original version
+;; (defun my-org-publish-buffer ()
+;;   "Publish using ox-twbs."
+;;   (interactive)
+;;   (save-buffer)
+;;   (write-file (file-truename (concat
+;;                               "~/org-bs/"
+;;                               (file-name-nondirectory (buffer-file-name)))))
+;;   (save-excursion (org-publish-current-file))
+;;   (let* ((proj (org-publish-get-project-from-filename buffer-file-name))
+;;          (proj-plist (cdr proj))
+;;          (rel (file-relative-name buffer-file-name
+;;                                   (plist-get proj-plist :base-directory)))
+;;          (dest (plist-get proj-plist :publishing-directory)))
+;;     (browse-url (concat "file://"
+;;                         (file-name-as-directory (expand-file-name dest))
+;;                         (file-name-sans-extension rel)
+;;                         ".html"))))
+
+(global-set-key (kbd "s-\\") 'org-publish-twbs)
+
+(provide '033-ox-twbs)
+;;; 033-ox-twbs.el ends here
+#+END_SRC
+
+* COMMENT org-journal
+
+#+BEGIN_SRC emacs-lisp
+
+;;; Code:
+
+;; Make new-entry keyboard command available also in org-mode:
+(global-set-key (kbd "C-c c j") 'org-journal-at-date-from-user)
+(global-set-key (kbd "C-c c J") 'org-journal-new-entry-from-org-timestamp)
+
+(defun org-journal-new-entry-from-org-timestamp (prefix)
+  "Like org-journal-new-entry except read time interactively using org-read-date."
+  (interactive "P")
+  (org-journal-new-entry prefix (apply 'encode-time (org-parse-time-string (org-read-date t t)))))
+
+;; Create files with .org ending to automatically enable org-mode when loading them:
+(setq org-journal-file-format "%Y%m%d.org")
+
+(setq org-journal-dir "/Users/iani/Documents/000WORKFILES/PERSONAL/journal")
+
+;; Include all journal files in agenda:
+(setq org-agenda-files `("/Users/iani/Documents/000WORKFILES/PERSONAL/DIARY.org" ,org-journal-dir))
+
+(provide '034-org-journal)
+;;; 034-org-journal ends here
+
+(defun org-journal-at-date-from-user (prefix)
+  "Run org-journal-new-entry with ORG-OVERRIDING-DEFAULT-TIME from cursor."
+  (interactive "P")
+  (with-current-buffer  (get-buffer-create cfw:calendar-buffer-name)
+    (let* (
+           ;; (pos (cfw:cursor-to-nearest-date))
+           (org-overriding-default-time
+            (org-read-date t t)
+            ;; (encode-time 0 0 7
+            ;;              (calendar-extract-day pos)
+            ;;              (calendar-extract-month pos)
+            ;;              (calendar-extract-year pos))
+            ))
+      (org-journal-new-entry prefix org-overriding-default-time)
+      (unless prefix
+        (org-insert-time-stamp org-overriding-default-time t)
+        ;; (backward-word)
+        ;; (backward-word)
+        ;; (paredit-forward-kill-word)
+        ;; (paredit-forward-kill-word)
+        ))))
+#+END_SRC
+
+* COMMENT re-builder
+
+#+BEGIN_SRC emacs-lisp
+;;; see https://www.masteringemacs.org/article/re-builder-interactive-regexp-builder
+(require 're-builder)
+(setq reb-re-syntax 'string)
+#+END_SRC
+
+* COMMENT sclang-link-folder-to-extensions
+
+#+BEGIN_SRC emacs-lisp
+
+;;; Commentary:
+
+;;; Add the folder of the present file to SC Extensions, to compile its class code.
+;;; Create a symbolic link to the present folder into the
+;;; Extensions folder of SuperCollider user app support dir.
+
+;;; Code:
+
+(defun sclang-link-folder-to-extensions (unlink-p)
+  "Add the folder of the present file to SC Extensions, to compile it.
+Create a symbolic link to the present folder into the
+Extensions folder of SuperCollider user app support dir.
+If UNLINK-P is not nil, then delete the link instead."
+  (interactive "P")
+  (let* ((lib-path (file-name-directory (buffer-file-name)))
+         (lib-name (file-name-nondirectory (directory-file-name lib-path)))
+         (link-path (concat
+                     (file-truename "~/Library/Application Support/SuperCollider/Extensions/")
+                     lib-name)))
+    (message lib-path)
+    (message lib-name)
+    (message link-path)
+   (if unlink-p
+       ()))
+  )
+
+#+END_SRC
+
+* last-actions-at-open
+
+#+BEGIN_SRC emacs-lisp
+(toggle-frame-fullscreen)
+#+END_SRC

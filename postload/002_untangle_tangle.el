@@ -1,5 +1,4 @@
-;;; untangle_tangle --- 2017-07-22 11:08:05 AM
-
+;;; untangle_tangle --- 2017-07-22 01:47:56 PM
   ;;; Commentary:
   ;;; org-el-untangle:
   ;;; import muliple el files from one folder into one org mode file.
@@ -8,7 +7,7 @@
 
   ;;; Code:
 
-  (defun org-el-collect-files (directory)
+  (defun org-el-import-all-files (directory)
     "Import muliple el files from one folder into one org mode file."
     (interactive "D")
     (let
@@ -19,10 +18,12 @@
       (find-file filename)
       (erase-buffer)
       (setq target-buffer (current-buffer))
-      (mapc 'org-el-insert-1-file files)
+      (insert "#+STARTUP: overview\n")
+      (goto-char (point-max))
+      (mapc 'org-el-import-1-file files)
       (mapc 'delete-file files)))
 
-  (defun org-el-insert-1-file (fname)
+  (defun org-el-import-1-file (fname)
     "Insert file FNAME into the master org file.
   Create org header and SRC block from data in FNAME file."
     (message fname)
@@ -54,9 +55,9 @@
                            (replace-regexp-in-string "_" " " fname-base))))
           (insert "\n#+BEGIN_SRC emacs-lisp\n")
           (insert body)
-          (insert "#+END_SRC\n\n")))))
+          (insert "#+END_SRC")))))
 
-  (defun org-el-unpack-sections ()
+  (defun org-el-export-all-sections ()
     "Export each sections' emacs-lisp block to a separate file.
   Add header and footer parts required by flycheck."
     (interactive)
@@ -71,14 +72,14 @@
     "Export this sections' emacs-lisp block to a separate file.
   Add header and footer parts required by flycheck.
   Skip sections marked with COMMENT."
-    (setq index (+ 1 index))
     (let* (body-element
            (element (cadr (org-element-at-point)))
            (title (plist-get element :title))
-           (filename
-            ))
+           (commented (plist-get element :commentedp))
+           (filename))
       ;; skip commented sections
-      (unless (string-match "^COMMENT" title)
+      (unless commented
+        (setq index (+ 1 index))
         (search-forward "#+BEGIN_SRC")
         (setq body-element (cadr (org-element-at-point)))
         ;; (message
@@ -98,6 +99,5 @@
         (save-buffer)
         (setq buffers (cons (current-buffer) buffers))
         (kill-buffer))))
-
 (provide 'untangle_tangle)
-;;; 007_untangle_tangle.el ends here
+;;; 002_untangle_tangle.el ends here
