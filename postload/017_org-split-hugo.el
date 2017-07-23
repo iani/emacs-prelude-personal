@@ -1,4 +1,4 @@
-;;; org-split-hugo --- 2017-07-23 09:38:43 AM
+;;; org-split-hugo --- 2017-07-23 09:41:55 AM
 
   ;;; Commentary:
   ;;; Utilities for blog + website editing with HUGO
@@ -82,7 +82,7 @@
     ;;; initialize folder order counter if needed
         (if folderindex
             (setq folderindex (+ 1 folderindex))
-          (setq folderindex (+1 index)))
+          (setq folderindex (+ 1 index)))
         (setq initial (substring foldername 0 1))
         (org-hugo-make-folder))
        (filename (org-hugo-make-file)))))

@@ -1024,7 +1024,7 @@ If called with ARG, do not insert time."
     ;;; initialize folder order counter if needed
         (if folderindex
             (setq folderindex (+ 1 folderindex))
-          (setq folderindex (+1 index)))
+          (setq folderindex (+ 1 index)))
         (setq initial (substring foldername 0 1))
         (org-hugo-make-folder))
        (filename (org-hugo-make-file)))))
