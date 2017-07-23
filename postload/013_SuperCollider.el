@@ -1,4 +1,4 @@
-;;; SuperCollider --- 2017-07-22 04:30:58 PM
+;;; SuperCollider --- 2017-07-23 09:38:42 AM
   ;; (add-to-list 'load-path "~/.emacs.d/personal/packages/sclang/")
   ;; (load-file "~/.emacs.d/personal/packages/sclang/sclang.el")
   ;; (load-file "~/.emacs.d/personal/packages/sc-snippets/sc-snippets.el")
@@ -31,12 +31,17 @@
 
   ;; minor modes SuperCollider
 
+  ;;; note: Replacing paredit with smartparens
   (prelude-load-require-packages
-   '(paredit rainbow-delimiters hl-sexp auto-complete))
+   '(smartparens rainbow-delimiters hl-sexp auto-complete))
+
+  (require 'smartparens-config)
+
+  ;;; paredit
   ;; NOTE: hs-minor, electric-pair: package names?
 
   ;; (add-hook 'sclang-mode-hook 'sclang-extensions-mode) ;; still problems with this
-  (add-hook 'sclang-mode-hook 'paredit-mode)
+  (add-hook 'sclang-mode-hook 'smartparens-mode)
   (add-hook 'sclang-mode-hook 'rainbow-delimiters-mode)
   (add-hook 'sclang-mode-hook 'hl-sexp-mode)
   (add-hook 'sclang-mode-hook 'hs-minor-mode)
@@ -56,4 +61,4 @@
               (local-set-key (kbd "H-b H-l")  'hs-show-level)
               (hs-minor-mode 1)))
 (provide 'SuperCollider)
-;;; 012_SuperCollider.el ends here
+;;; 013_SuperCollider.el ends here

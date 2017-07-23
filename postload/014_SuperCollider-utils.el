@@ -1,4 +1,4 @@
-;;; SuperCollider-utils --- 2017-07-22 04:30:59 PM
+;;; SuperCollider-utils --- 2017-07-23 09:38:42 AM
   ;;; Commentary:
   ;;; emacs commands for doing useful things in supercollider.
 
@@ -20,4 +20,4 @@
 
   (global-set-key (kbd "H-d l") 'dired-load-audio-buffer)
 (provide 'SuperCollider-utils)
-;;; 013_SuperCollider-utils.el ends here
+;;; 014_SuperCollider-utils.el ends here

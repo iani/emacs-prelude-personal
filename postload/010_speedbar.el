@@ -1,4 +1,4 @@
-;;; speedbar --- 2017-07-22 04:30:58 PM
+;;; speedbar --- 2017-07-23 09:38:42 AM
   (prelude-load-require-packages '(deft sr-speedbar))
 
   (setq deft-use-filename-as-title t)
@@ -146,4 +146,4 @@
   (global-set-key (kbd "C-M-H-s") 'sr-speedbar-open)
 
 (provide 'speedbar)
-;;; 009_speedbar.el ends here
+;;; 010_speedbar.el ends here

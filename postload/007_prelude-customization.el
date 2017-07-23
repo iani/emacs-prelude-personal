@@ -1,4 +1,4 @@
-;;; prelude-customization --- 2017-07-22 04:30:57 PM
+;;; prelude-customization --- 2017-07-23 09:38:41 AM
 (setq prelude-whitespace nil)
 
 ;; undo prelude shift-meta-up/down keybindings which interfere with org-mode
@@ -54,4 +54,4 @@
      (define-key map (kbd "s-o") 'prelude-smart-open-line-above)
      map))
 (provide 'prelude-customization)
-;;; 006_prelude-customization.el ends here
+;;; 007_prelude-customization.el ends here

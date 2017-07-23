@@ -1,4 +1,4 @@
-;;; org-journal --- 2017-07-22 04:31:01 PM
+;;; org-journal --- 2017-07-23 09:38:44 AM
   ;;; Commentary:
   ;;; use org-journal for capture globally.
   ;;; https://github.com/bastibe/org-journal
@@ -49,4 +49,4 @@
           ;; (paredit-forward-kill-word)
           ))))
 (provide 'org-journal)
-;;; 022_org-journal.el ends here
+;;; 023_org-journal.el ends here
