@@ -1,4 +1,4 @@
-;;; org-split-hugo --- 2017-07-23 09:41:55 AM
+;;; org-split-hugo --- 2017-07-23 10:48:33 AM
 
   ;;; Commentary:
   ;;; Utilities for blog + website editing with HUGO
@@ -51,11 +51,22 @@
     (interactive)
     (let*
         ((root-dir (file-name-directory (buffer-file-name)))
+         (cleanup-list (file-expand-wildcards (concat buffer-file-name "*")))
          (path root-dir)
          (folder_components)
          (index 0)
          folderindex ;; initialized from index upon first folder
          buffers-to-delete)
+      (mapc
+       (lambda (path)
+         (if 
+             (file-directory-p path)
+             (delete-directory path))
+         (if (string-match-p
+              "[[:digit:]]+-"
+              (file-name-nondirectory path))
+             (delete-file path)))
+       cleanup-list)
       (org-map-entries
        '(org-split-1-file-or-folder-hugo)
        t 'file 'archive 'comment)

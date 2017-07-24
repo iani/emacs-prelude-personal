@@ -993,11 +993,23 @@ If called with ARG, do not insert time."
     (interactive)
     (let*
         ((root-dir (file-name-directory (buffer-file-name)))
+         (cleanup-list (file-expand-wildcards (concat root-dir "*")))
          (path root-dir)
          (folder_components)
          (index 0)
+         (level 0)
          folderindex ;; initialized from index upon first folder
          buffers-to-delete)
+      (mapc
+       (lambda (path)
+         (if 
+             (file-directory-p path)
+             (delete-directory path t))
+         (if (string-match-p
+              "[[:digit:]]+-"
+              (file-name-nondirectory path))
+             (delete-file path)))
+       cleanup-list)
       (org-map-entries
        '(org-split-1-file-or-folder-hugo)
        t 'file 'archive 'comment)
@@ -1018,6 +1030,7 @@ If called with ARG, do not insert time."
          (foldername (org-entry-get (point) "foldername"))
          (element (cadr (org-element-at-point)))
          (title (plist-get element :title))
+         (new-level (plist-get element :level))
          initial)
       (cond
        (foldername
