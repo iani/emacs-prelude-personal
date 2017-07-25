@@ -1,4 +1,4 @@
-;;; org-mode --- 2017-07-23 10:48:32 AM
+;;; org-mode --- 2017-07-25 09:12:43 PM
 
 ;;; Commentary:
 
@@ -10,7 +10,7 @@
 ;; load util to insert recipes for export customization:
 (require 'org-export-recipes)
 
-;; (setq org-attach-directory (file-truename "~/Documents/org-attachments/"))
+(setq org-attach-directory (file-truename "~/Documents/org-attachments/"))
 (setq org-agenda-sticky t) ;; open agenda and todo views in separate buffers
 ;; (setq org-agenda-diary-file (file-truename
 ;;                              (concat iz-log-dir "PERSONAL/DIARY2.txt")))
