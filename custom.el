@@ -6,9 +6,9 @@
  '(bmkp-last-as-first-bookmark-file "~/.emacs.d/savefile/bookmarks")
  '(package-selected-packages
    (quote
-    (smartparens-config markdown-mode org-journal buffer-move dired+ calfw-cal calfw calfw-org auto-complete electric-pair hs hl-sexp paredit-mode sr-speedbar deft icicles litable paredit mc-extras
-                        (quote multiple-cursors)
-                        bookmark+ autobookmarks bm org org-mode easy-hugo powerline moe-theme geiser json-mode js2-mode rainbow-mode elisp-slime-nav rainbow-delimiters company smex ido-completing-read+ flx-ido vkill exec-path-from-shell zop-to-char zenburn-theme which-key volatile-highlights undo-tree smartrep smartparens smart-mode-line operate-on-number move-text magit projectile ov imenu-anywhere guru-mode grizzl god-mode gitignore-mode gitconfig-mode git-timemachine gist flycheck expand-region epl editorconfig easy-kill diminish diff-hl discover-my-major dash crux browse-kill-ring beacon anzu ace-window))))
+    (persp-projectile perspective-projectile perspective smartparens-config markdown-mode org-journal buffer-move dired+ calfw-cal calfw calfw-org auto-complete electric-pair hs hl-sexp paredit-mode sr-speedbar deft icicles litable paredit mc-extras
+                      (quote multiple-cursors)
+                      bookmark+ autobookmarks bm org org-mode easy-hugo powerline moe-theme geiser json-mode js2-mode rainbow-mode elisp-slime-nav rainbow-delimiters company smex ido-completing-read+ flx-ido vkill exec-path-from-shell zop-to-char zenburn-theme which-key volatile-highlights undo-tree smartrep smartparens smart-mode-line operate-on-number move-text magit projectile ov imenu-anywhere guru-mode grizzl god-mode gitignore-mode gitconfig-mode git-timemachine gist flycheck expand-region epl editorconfig easy-kill diminish diff-hl discover-my-major dash crux browse-kill-ring beacon anzu ace-window))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
