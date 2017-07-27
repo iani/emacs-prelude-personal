@@ -4,6 +4,9 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(bmkp-last-as-first-bookmark-file "~/.emacs.d/savefile/bookmarks")
+ '(custom-safe-themes
+   (quote
+    ("6952b5d43bbd4f1c6727ff61bc9bf5677d385e101433b78ada9c3f0e3787af06" default)))
  '(package-selected-packages
    (quote
     (perspective-projectile smartparens-config markdown-mode org-journal buffer-move dired+ calfw-cal calfw calfw-org auto-complete electric-pair hs hl-sexp paredit-mode sr-speedbar deft icicles litable paredit mc-extras
