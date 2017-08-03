@@ -1,4 +1,4 @@
-;;; SuperCollider-utils --- 2017-07-26 02:15:56 PM
+;;; SuperCollider-utils --- 2017-08-03 04:42:04 PM
   ;;; Commentary:
   ;;; emacs commands for doing useful things in supercollider.
 
@@ -19,5 +19,19 @@
      t))
 
   (global-set-key (kbd "H-d l") 'dired-load-audio-buffer)
+
+  (defun org-sclang-eval-babel-block ()
+    "Evaluate current babel code block as sclang code."
+    (interactive)
+    (let*
+        ((element (cadr (org-element-at-point)))
+         (code (plist-get element :value)))
+      (sclang-eval-string code)))
+
+  (eval-after-load 'org
+    '(progn
+       ;; Note: This keybinding is in analogy to the default keybinding:
+       ;; C-c . -> org-time-stamp
+       (define-key org-mode-map (kbd "C-c C-/") 'org-sclang-eval-babel-block)))
 (provide 'SuperCollider-utils)
 ;;; 014_SuperCollider-utils.el ends here

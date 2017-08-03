@@ -1,11 +1,12 @@
-;;; projectile --- 2017-07-26 02:15:58 PM
+;;; projectile --- 2017-08-03 04:42:06 PM
   ;;; Commentary:
   ;;; some useful extensions to projectile
-  ;;; helm-projectile, helm-perspective
+  ;;; helm-projectile
+  ;;; Note: neither perspective nor helm-perspective work for me.
 
   ;;; Code:
-;; (prelude-load-require-packages '(perspective helm-projectile persp-projectile))
-(prelude-load-require-packages '(helm-projectile))
+  ;; (prelude-load-require-packages '(perspective helm-projectile persp-projectile))
+  (prelude-load-require-packages '(helm-projectile))
   (helm-projectile-on)
   (setq projectile-switch-project-action #'projectile-commander)
   ;; (persp-mode)
