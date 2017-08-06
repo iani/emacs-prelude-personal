@@ -9,9 +9,9 @@
     ("6952b5d43bbd4f1c6727ff61bc9bf5677d385e101433b78ada9c3f0e3787af06" default)))
  '(package-selected-packages
    (quote
-    (perspective-projectile smartparens-config markdown-mode org-journal buffer-move dired+ calfw-cal calfw calfw-org auto-complete electric-pair hs hl-sexp paredit-mode sr-speedbar deft icicles litable paredit mc-extras
-                            (quote multiple-cursors)
-                            bookmark+ autobookmarks bm org org-mode easy-hugo powerline moe-theme geiser json-mode js2-mode rainbow-mode elisp-slime-nav rainbow-delimiters company smex ido-completing-read+ flx-ido vkill exec-path-from-shell zop-to-char zenburn-theme which-key volatile-highlights undo-tree smartrep smartparens smart-mode-line operate-on-number move-text magit projectile ov imenu-anywhere guru-mode grizzl god-mode gitignore-mode gitconfig-mode git-timemachine gist flycheck expand-region epl editorconfig easy-kill diminish diff-hl discover-my-major dash crux browse-kill-ring beacon anzu ace-window))))
+    (ztree perspective-projectile smartparens-config markdown-mode org-journal buffer-move dired+ calfw-cal calfw calfw-org auto-complete electric-pair hs hl-sexp paredit-mode sr-speedbar deft icicles litable paredit mc-extras
+           (quote multiple-cursors)
+           bookmark+ autobookmarks bm org org-mode easy-hugo powerline moe-theme geiser json-mode js2-mode rainbow-mode elisp-slime-nav rainbow-delimiters company smex ido-completing-read+ flx-ido vkill exec-path-from-shell zop-to-char zenburn-theme which-key volatile-highlights undo-tree smartrep smartparens smart-mode-line operate-on-number move-text magit projectile ov imenu-anywhere guru-mode grizzl god-mode gitignore-mode gitconfig-mode git-timemachine gist flycheck expand-region epl editorconfig easy-kill diminish diff-hl discover-my-major dash crux browse-kill-ring beacon anzu ace-window))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
