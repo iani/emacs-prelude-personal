@@ -1,4 +1,4 @@
-;;; SuperCollider-utils --- 2017-08-06 08:41:22 PM
+;;; SuperCollider-utils --- 2017-08-09 07:10:34 AM
   ;;; Commentary:
   ;;; emacs commands for doing useful things in supercollider.
 
@@ -52,5 +52,36 @@
        ;; Note: This keybinding is in analogy to the default keybinding:
        ;; C-c . -> org-time-stamp
        (define-key org-mode-map (kbd "C-c C-/") 'org-sclang-eval-babel-block)))
+
+  ;;; key chords for sclang
+  (defun sclang-2-windows ()
+    "Reconfigure frame to this window and sclang-post-window."
+    (interactive)
+    (delete-other-windows)
+    (sclang-show-post-buffer))
+
+  (defun sclang-plusgt ()
+    "Insert +>."
+    (interactive)
+    (insert "+>"))
+
+  (defun sclang-ltplus ()
+    "Insert <+."
+    (interactive)
+    (insert "<+"))
+
+  (defun sclang-xgt ()
+    "Insert *>"
+    (interactive)
+    (insert "*>"))
+
+  (eval-after-load 'sclang
+    '(progn
+       ;; Note: This keybinding is in analogy to the default keybinding:
+       ;; C-c . -> org-time-stamp
+       (key-chord-define sclang-mode-map "11" 'sclang-2-windows)
+       (key-chord-define sclang-mode-map ".." 'sclang-plusgt)
+       (key-chord-define sclang-mode-map ",," 'sclang-ltplus)
+       (key-chord-define sclang-mode-map ">>" 'sclang-xgt)))
 (provide 'SuperCollider-utils)
 ;;; 014_SuperCollider-utils.el ends here
