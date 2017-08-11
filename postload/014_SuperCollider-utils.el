@@ -1,4 +1,4 @@
-;;; SuperCollider-utils --- 2017-08-09 07:10:34 AM
+;;; SuperCollider-utils --- 2017-08-11 12:19:11 PM
   ;;; Commentary:
   ;;; emacs commands for doing useful things in supercollider.
 
@@ -75,10 +75,15 @@
     (interactive)
     (insert "*>"))
 
+  (defun sclang-extensions-gui ()
+    "Open gui for browsing user extensions classes and methods.
+  Type return on a selected item to open the file where it is defined."
+    (interactive)
+    (sclang-eval-string "Class.extensionsGui;"))
+
   (eval-after-load 'sclang
     '(progn
-       ;; Note: This keybinding is in analogy to the default keybinding:
-       ;; C-c . -> org-time-stamp
+       (define-key sclang-mode-map (kbd "C-c C-e") 'sclang-extensions-gui)
        (key-chord-define sclang-mode-map "11" 'sclang-2-windows)
        (key-chord-define sclang-mode-map ".." 'sclang-plusgt)
        (key-chord-define sclang-mode-map ",," 'sclang-ltplus)
