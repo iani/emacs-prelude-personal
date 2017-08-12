@@ -1,4 +1,4 @@
-;;; untangle_tangle --- 2017-08-11 12:19:10 PM
+;;; untangle_tangle --- 2017-08-13 06:25:06 AM
   ;;; Commentary:
   ;;; org-el-untangle:
   ;;; import muliple el files from one folder into one org mode file.
@@ -101,5 +101,12 @@
         (save-buffer)
         (setq buffers (cons (current-buffer) buffers))
         (kill-buffer))))
+
+
+  (eval-after-load 'org
+    '(progn
+       ;; Note: This keybinding is in analogy to the default keybinding:
+       ;; C-c . -> org-time-stamp
+       (define-key org-mode-map (kbd "C-c C-M-e") 'org-el-export-all-sections)))
 (provide 'untangle_tangle)
 ;;; 012_untangle_tangle.el ends here

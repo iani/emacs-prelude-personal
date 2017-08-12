@@ -1,4 +1,4 @@
-;;; org-split-hugo --- 2017-08-11 12:19:12 PM
+;;; org-split-hugo --- 2017-08-13 06:25:08 AM
 
   ;;; Commentary:
   ;;; Utilities for blog + website editing with HUGO
@@ -39,13 +39,13 @@
     (interactive)
    (add-hook 'after-save-hook
              (lambda ()
-               (org-split-hugo)
+               (org-hugo-split)
                ;; (message "hugo export to individual files done")
                )
              'append 'local)
    (message "This buffer will now export to hugo section files after each save."))
 
-  (defun org-split-hugo ()
+  (defun org-hugo-split ()
     "Split 1st level sections with filename property to files.
   Add front-matter for hugo, including automatic weights."
     (interactive)
@@ -77,18 +77,16 @@
             buffers-to-delete)
       (message "Exported %d files" index)))
 
-  (global-set-key (kbd "C-c C-h C-h") 'org-split-hugo)
-
   (defun org-split-1-file-or-folder ()
-    "Helper function for org-split-hugo.
-  New draft.
+    "Helper function for org-hugo-split.
   First compute the path based on levels and previous input.
   Then export the file using the path.
   Files are automatically stored in nested folders corresponding 
   to the level of the section that is the source of the file.
   The path for the nested folders is stored in variable FOLDER-COMPONENTS.
   Level 1 corresponds to root level of the base folder path.
-  Therefore for level 1 the string to add to the folder path is the empty string \"\"
+  Therefore for level 1 the string to add to the folder path is the 
+  empty string \"\".
   Level 2 has default contents (\"section1/\"), Etc.
   The default names section1, section2 etc. can be overwritten
   by setting the property foldername of any section.
@@ -181,5 +179,17 @@
     (-dotimes level (lambda (n) (org-map-entries 'org-promote)))
     (save-buffer)
     (setq buffers-to-delete (cons (current-buffer) buffers-to-delete)))
+
+  (defun org-hugo-sparse-filename-property ()
+    "Build sparse tree with entries whose property filename is set."
+    (interactive)
+    (global-set-key )
+    (org-match-sparse-tree nil "filename={[^§]}"))
+
+  (eval-after-load 'org
+    '(progn
+       (define-key org-mode-map (kbd "C-c C-h C-h") 'org-hugo-split)
+       (define-key org-mode-map (kbd "C-c C-h C-/") 'org-hugo-sparse-filename-property)))
+
 (provide 'org-split-hugo)
 ;;; 017_org-split-hugo.el ends here
