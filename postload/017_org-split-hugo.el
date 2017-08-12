@@ -1,4 +1,4 @@
-;;; org-split-hugo --- 2017-08-13 06:25:08 AM
+;;; org-split-hugo --- 2017-08-13 06:29:01 AM
 
   ;;; Commentary:
   ;;; Utilities for blog + website editing with HUGO
@@ -183,7 +183,6 @@
   (defun org-hugo-sparse-filename-property ()
     "Build sparse tree with entries whose property filename is set."
     (interactive)
-    (global-set-key )
     (org-match-sparse-tree nil "filename={[^§]}"))
 
   (eval-after-load 'org

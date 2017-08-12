@@ -1214,7 +1214,6 @@ Adapted from helm-switch-to-buffers."
   (defun org-hugo-sparse-filename-property ()
     "Build sparse tree with entries whose property filename is set."
     (interactive)
-    (global-set-key )
     (org-match-sparse-tree nil "filename={[^§]}"))
 
   (eval-after-load 'org
