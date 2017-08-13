@@ -1,4 +1,4 @@
-;;; SuperCollider-utils --- 2017-08-13 08:59:56 AM
+;;; SuperCollider-utils --- 2017-08-14 07:44:16 AM
   ;;; Commentary:
   ;;; emacs commands for doing useful things in supercollider.
 
@@ -80,6 +80,22 @@
   Type return on a selected item to open the file where it is defined."
     (interactive)
     (sclang-eval-string "Class.extensionsGui;"))
+
+  (defun scundelify ()
+    "Blah."
+    (interactive)
+    (save-excursion
+      (goto-char (point-min))
+      (while (re-search-forward "\n//:" nil t)
+        (replace-match "\n\)\n//:")
+        (goto-char (line-end-position 2))
+        (goto-char (line-beginning-position 1))
+        (insert "\(\n")
+        (goto-char (line-beginning-position 1))
+        (delete-blank-lines))
+      (goto-char (point-min))
+      (re-search-forward "\)\n//:" nil t)
+      (replace-match "\n://:")))
 
   (eval-after-load 'sclang
     '(progn

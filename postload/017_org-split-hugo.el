@@ -1,4 +1,4 @@
-;;; org-split-hugo --- 2017-08-13 08:59:57 AM
+;;; org-split-hugo --- 2017-08-14 07:44:17 AM
 
   ;;; Commentary:
   ;;; Utilities for blog + website editing with HUGO
@@ -71,7 +71,7 @@
        '(org-split-1-file-or-folder)
        t 'file 'archive 'comment)
       (mapc (lambda (buffer)
-              (message "killing buffer: %s" buffer)
+              ;; (message "killing buffer: %s" buffer)
               (set-buffer-modified-p nil)
               (kill-buffer buffer))
             buffers-to-delete)
@@ -101,7 +101,7 @@
          contents
          ;; (num-folders (- level 1))
          )
-      (message "PREPARING TOPLEVEL eXPORt OF: %s" filename)
+      ;; (message "PREPARING TOPLEVEL EXPORT OF: %s" filename)
       (when (or foldername filename)
         (setq index (+ 1 index))
         ;; add missing default levels to folder-components list
@@ -116,7 +116,7 @@
                              (list (concat foldername "/") title)
                              folder-components)))
       (when filename
-        (message "the filename is: %s" filename)
+        ;; (message "the filename is: %s" filename)
         (setq contents (buffer-substring
                         (plist-get element :contents-begin)
                         (plist-get element :contents-end)))
@@ -126,7 +126,7 @@
   (defun org-hugo-make-folders ()
     "Make subfolders for this level and provide index file for each."
     (when (> level 1)
-      (message "testing %s" folder-components)
+      ;; (message "testing %s" folder-components)
       (let
           ((sub-components (-take (1- level) folder-components))
            (dir root-dir))
@@ -151,15 +151,15 @@
   (defun org-hugo-export-section-2-file ()
     "Export current \"org-mode\" section to org-mode file.
   Add yaml header for hugo."
-    (message "EXPORTING!!! filename: %s, level: %d, foldername: %s, components: %s"
-             filename level foldername folder-components)
-    (message "subfolderpath: %s"
-             (apply 'concat (-take (1- level) (-map 'car folder-components))))
-    (message "full path: %s"
-             (concat
-              root-dir
-              (apply 'concat (-take (1- level) (-map 'car folder-components)))
-              filename ".org"))
+    ;; (message "EXPORTING!!! filename: %s, level: %d, foldername: %s, components: %s"
+    ;;          filename level foldername folder-components)
+    ;; (message "subfolderpath: %s"
+    ;;          (apply 'concat (-take (1- level) (-map 'car folder-components))))
+    ;; (message "full path: %s"
+    ;;          (concat
+    ;;           root-dir
+    ;;           (apply 'concat (-take (1- level) (-map 'car folder-components)))
+    ;;           filename ".org"))
     ;; (goto-char (plist-get element :begin))
     ;; (org-copy-subtree)
     (find-file (format "%s%03d-%s.org"
@@ -169,7 +169,7 @@
                         )
                        index filename))
     (erase-buffer)
-    (message "I am now in buffer: %s" (current-buffer))
+    ;; (message "I am now in buffer: %s" (current-buffer))
     (insert contents)
     (goto-char (point-min))
     (re-search-forward ":END:")
@@ -180,7 +180,7 @@
     (save-buffer)
     (setq buffers-to-delete (cons (current-buffer) buffers-to-delete)))
 
-  (defun org-hugo-sparse-filename-property ()
+  (defun 'org-hugo-select-filenames ()
     "Build sparse tree with entries whose property filename is set."
     (interactive)
     (org-match-sparse-tree nil "filename={[^§]}"))
@@ -188,7 +188,8 @@
   (eval-after-load 'org
     '(progn
        (define-key org-mode-map (kbd "C-c C-h C-e") 'org-hugo-export)
-       (define-key org-mode-map (kbd "C-c C-h C-/") 'org-hugo-sparse-filename-property)))
+       (define-key org-mode-map (kbd "C-c C-h C-a") 'org-hugo-autosplit)
+       (define-key org-mode-map (kbd "C-c C-h C-/") 'org-hugo-select-filenames)))
 
 (provide 'org-split-hugo)
 ;;; 017_org-split-hugo.el ends here
