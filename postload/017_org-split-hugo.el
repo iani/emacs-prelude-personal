@@ -1,4 +1,4 @@
-;;; org-split-hugo --- 2017-08-13 06:29:01 AM
+;;; org-split-hugo --- 2017-08-13 08:59:57 AM
 
   ;;; Commentary:
   ;;; Utilities for blog + website editing with HUGO
@@ -39,13 +39,13 @@
     (interactive)
    (add-hook 'after-save-hook
              (lambda ()
-               (org-hugo-split)
+               (org-hugo-export)
                ;; (message "hugo export to individual files done")
                )
              'append 'local)
    (message "This buffer will now export to hugo section files after each save."))
 
-  (defun org-hugo-split ()
+  (defun org-hugo-export ()
     "Split 1st level sections with filename property to files.
   Add front-matter for hugo, including automatic weights."
     (interactive)
@@ -78,7 +78,7 @@
       (message "Exported %d files" index)))
 
   (defun org-split-1-file-or-folder ()
-    "Helper function for org-hugo-split.
+    "Helper function for org-hugo-export.
   First compute the path based on levels and previous input.
   Then export the file using the path.
   Files are automatically stored in nested folders corresponding 
@@ -187,7 +187,7 @@
 
   (eval-after-load 'org
     '(progn
-       (define-key org-mode-map (kbd "C-c C-h C-h") 'org-hugo-split)
+       (define-key org-mode-map (kbd "C-c C-h C-e") 'org-hugo-export)
        (define-key org-mode-map (kbd "C-c C-h C-/") 'org-hugo-sparse-filename-property)))
 
 (provide 'org-split-hugo)
