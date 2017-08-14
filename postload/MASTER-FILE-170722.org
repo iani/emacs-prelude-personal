@@ -30,7 +30,11 @@
   Missing packages are installed automatically."
     (mapc #'prelude-load-require-package packages))
 
-  (prelude-load-require-packages '(moe-theme powerline))
+  (prelude-load-require-packages
+   '(
+     moe-theme
+     powerline
+     multi-term))
 
 #+END_SRC
 

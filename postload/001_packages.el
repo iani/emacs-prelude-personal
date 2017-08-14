@@ -1,4 +1,4 @@
-;;; packages --- 2017-08-14 07:44:12 AM
+;;; packages --- 2017-08-14 02:53:23 PM
 
   ;;; Commentary:
   ;;; this is only some of the packags.
@@ -26,7 +26,11 @@
   Missing packages are installed automatically."
     (mapc #'prelude-load-require-package packages))
 
-  (prelude-load-require-packages '(moe-theme powerline))
+  (prelude-load-require-packages
+   '(
+     moe-theme
+     powerline
+     multi-term))
 
 (provide 'packages)
 ;;; 001_packages.el ends here
