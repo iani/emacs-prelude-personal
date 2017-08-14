@@ -180,10 +180,10 @@
     (save-buffer)
     (setq buffers-to-delete (cons (current-buffer) buffers-to-delete)))
 
-  (defun 'org-hugo-select-filenames ()
+  (defun org-hugo-select-filenames ()
     "Build sparse tree with entries whose property filename is set."
     (interactive)
-    (org-match-sparse-tree nil "filename={[^§]}"))
+    (org-match-sparse-tree nil "filename=c{[^§]}"))
 
   (eval-after-load 'org
     '(progn
