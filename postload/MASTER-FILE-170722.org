@@ -776,6 +776,12 @@ Adapted from helm-switch-to-buffers."
   ;; (defun dired-get-filename (&optional localp no-error-if-not-filep)
   ;; Requires Buffers class of sc-hacks lib.
 
+  ;; make javascript blocks open in sclang mode in org-edit-special
+  ;; this is because sclang blocks must currently be marked as javascript
+  ;; in order to render properly with hugo / pygments for webite creation.
+  
+  (setq org-src-lang-modes (add-to-list 'org-src-lang-modes '("javascript" . sclang)))
+
   (defun dired-preview-audio-buffer ()
     "Load file at cursor in dired to sc audio buffer.
   If called with prefix, play the buffer as soon as it is loaded."
