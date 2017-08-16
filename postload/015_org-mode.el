@@ -1,4 +1,4 @@
-;;; org-mode --- 2017-08-16 10:30:28 AM
+;;; org-mode --- 2017-08-16 01:46:00 PM
 
   ;;; Commentary:
 
@@ -59,34 +59,80 @@
         (insert (format-time-string "%e %b %Y"))
       (insert (format-time-string "%e %b %Y %H:%M"))))
 
-  (defun org-babel-map-js-2-sclang ()
-    "Make javascript blocks open in sclang mode in org-edit-special.
-  This is because sclang blocks must currently be marked as javascript
-  in order to render properly with hugo / pygments for webite creation."
-    (setq org-src-lang-modes (add-to-list 'org-src-lang-modes '("javascript" . sclang))))
-
-
+  ;; This is run once after loading org for the first time
+  ;; It adds some org-mode specific key bindings.
   (eval-after-load 'org
     '(progn
        ;; Note: This keybinding is in analogy to the default keybinding:
        ;; C-c . -> org-time-stamp
-       (org-customize-mode)
        (define-key org-mode-map (kbd "C-c C-.") 'org-set-date)
        (define-key org-mode-map (kbd "C-M-{") 'backward-paragraph)
        (define-key org-mode-map (kbd "C-M-}") 'forward-paragraph)
        (define-key org-mode-map (kbd "C-c C-S") 'org-schedule)
        (define-key org-mode-map (kbd "C-c C-s") 'sclang-main-stop)
-       (define-key org-mode-map (kbd "C-c >") 'sclang-show-post-buffer)))
+       (define-key org-mode-map (kbd "C-c >") 'sclang-show-post-buffer)
+       ;; own additions after org-config-examples below:
+       (define-key org-mode-map (kbd "C-M-f") 'org-forward-heading-same-level)
+       (define-key org-mode-map (kbd "C-M-b") 'org-backward-heading-same-level)
+       (define-key org-mode-map (kbd "C-M-u") 'outline-up-heading)
+       (define-key org-mode-map (kbd "C-M-n") 'org-next-src-block)
+       (define-key org-mode-map (kbd "C-M-p") 'org-show-properties-block)
+       (define-key org-mode-map (kbd "C-M-/") 'org-sclang-eval-babel-block)
+          ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+       ;; from: http://orgmode.org/worg/org-configs/org-config-examples.html
+       ;; section navigation
+       (define-key org-mode-map (kbd "M-n") 'outline-next-visible-heading)
+       (define-key org-mode-map (kbd "M-p") 'outline-previous-visible-heading)
+       ;; table
+       (define-key org-mode-map (kbd "C-M-w") 'org-table-copy-region)
+       (define-key org-mode-map (kbd "C-M-y") 'org-table-paste-rectangle)
+       (define-key org-mode-map (kbd "C-M-l") 'org-table-sort-lines)
+       ;; display images
+       (define-key org-mode-map (kbd "M-I") 'org-toggle-iimage-in-org)
+       ))
+
+  (defun org-next-src-block ()
+    "Jump to the next src block using SEARCH-FORWARD."
+    (interactive)
+    (search-forward "\n#+BEGIN_SRC")
+    (let ((block-beginning (point)))
+      (org-show-entry)
+      (goto-char block-beginning)
+      (goto-char (line-end-position 2))))
+
+  (defun org-show-properties-block ()
+    "Show the entire next properties block using SEARCH-FORWARD."
+    (interactive)
+    (search-forward ":PROPERTIES:")
+    (let ((block-beginning (point)))
+      (org-show-entry)
+      (goto-char block-beginning)
+      (org-cycle)
+      ;; (goto-char (line-end-position 2))
+      ;; (org-hide-block-toggle t)
+      ))
+
+  ;; org-mode-hook is run every time that org-mode is turned on for a buffer
+  ;; It customizes some settings in the mode.
+  (add-hook
+   'org-mode-hook 
+   (lambda ()
+     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+     ;; own stuff:
+     ;; Make javascript blocks open in sclang mode in org-edit-special
+     ;; This is because sclang blocks must currently be marked as javascript
+     ;; in order to render properly with hugo / pygments for webite creation.
+     (setq org-src-lang-modes (add-to-list 'org-src-lang-modes '("javascript" . sclang)))
+     (setq org-hide-leading-stars t)
+     ;; (org-indent-mode) ;; this results in added leading spaces in org-edit-special
+     (visual-line-mode)))
 
   (defun org-customize-mode ()
-  "Customize some display options for ORG-MODE.
+    "Customize some display options for ORG-MODE.
   - map javascript to sclang-mode in babel blocks.
   - hide extra leading stars for sections.
   - turn on visual line mode."
-    (org-babel-map-js-2-sclang)
-    (setq org-hide-leading-stars t)
-    ;; (org-indent-mode)
-    (visual-line-mode))
+  )
 
   (global-set-key (kbd "C-c C-x t") 'org-insert-current-date)
 (provide 'org-mode)

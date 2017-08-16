@@ -1,4 +1,4 @@
-;;; hl-faces --- 2017-08-16 10:30:26 AM
+;;; hl-faces --- 2017-08-16 01:45:58 PM
 (custom-set-faces
  '(hl-line ((t (:background "gray0"))))
  '(hl-sexp-face ((t (:background "gray10")))))

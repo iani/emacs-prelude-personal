@@ -1,4 +1,4 @@
-;;; untangle_tangle --- 2017-08-16 10:30:28 AM
+;;; untangle_tangle --- 2017-08-16 01:45:59 PM
   ;;; Commentary:
   ;;; org-el-untangle:
   ;;; import muliple el files from one folder into one org mode file.
@@ -101,7 +101,6 @@
         (save-buffer)
         (setq buffers (cons (current-buffer) buffers))
         (kill-buffer))))
-
 
   (eval-after-load 'org
     '(progn
