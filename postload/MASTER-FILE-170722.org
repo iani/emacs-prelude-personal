@@ -949,7 +949,6 @@ Adapted from helm-switch-to-buffers."
     '(progn
        ;; Note: This keybinding is in analogy to the default keybinding:
        ;; C-c . -> org-time-stamp
-     
        (org-customize-mode)
        (define-key org-mode-map (kbd "C-c C-.") 'org-set-date)
        (define-key org-mode-map (kbd "C-M-{") 'backward-paragraph)
@@ -967,8 +966,6 @@ Adapted from helm-switch-to-buffers."
     (setq org-hide-leading-stars t)
     ;; (org-indent-mode)
     (visual-line-mode))
-
-  (add-hook 'org-mode-hook 'my-org-mode-hook)
 
   (global-set-key (kbd "C-c C-x t") 'org-insert-current-date)
 #+END_SRC

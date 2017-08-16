@@ -1,4 +1,4 @@
-;;; org-mode --- 2017-08-16 10:20:39 AM
+;;; org-mode --- 2017-08-16 10:30:28 AM
 
   ;;; Commentary:
 
@@ -70,7 +70,6 @@
     '(progn
        ;; Note: This keybinding is in analogy to the default keybinding:
        ;; C-c . -> org-time-stamp
-     
        (org-customize-mode)
        (define-key org-mode-map (kbd "C-c C-.") 'org-set-date)
        (define-key org-mode-map (kbd "C-M-{") 'backward-paragraph)
@@ -88,8 +87,6 @@
     (setq org-hide-leading-stars t)
     ;; (org-indent-mode)
     (visual-line-mode))
-
-  (add-hook 'org-mode-hook 'my-org-mode-hook)
 
   (global-set-key (kbd "C-c C-x t") 'org-insert-current-date)
 (provide 'org-mode)
