@@ -1,4 +1,4 @@
-;;; org-mode --- 2017-08-16 01:17:44 AM
+;;; org-mode --- 2017-08-16 10:20:39 AM
 
   ;;; Commentary:
 
@@ -59,10 +59,19 @@
         (insert (format-time-string "%e %b %Y"))
       (insert (format-time-string "%e %b %Y %H:%M"))))
 
+  (defun org-babel-map-js-2-sclang ()
+    "Make javascript blocks open in sclang mode in org-edit-special.
+  This is because sclang blocks must currently be marked as javascript
+  in order to render properly with hugo / pygments for webite creation."
+    (setq org-src-lang-modes (add-to-list 'org-src-lang-modes '("javascript" . sclang))))
+
+
   (eval-after-load 'org
     '(progn
        ;; Note: This keybinding is in analogy to the default keybinding:
        ;; C-c . -> org-time-stamp
+     
+       (org-customize-mode)
        (define-key org-mode-map (kbd "C-c C-.") 'org-set-date)
        (define-key org-mode-map (kbd "C-M-{") 'backward-paragraph)
        (define-key org-mode-map (kbd "C-M-}") 'forward-paragraph)
@@ -70,13 +79,15 @@
        (define-key org-mode-map (kbd "C-c C-s") 'sclang-main-stop)
        (define-key org-mode-map (kbd "C-c >") 'sclang-show-post-buffer)))
 
-  (defun my-org-mode-hook ()
-    ;; The following two lines of code is run from the mode hook.
-    ;; These are for buffer-specific things.
-    ;; In this setup, you want to enable flyspell-mode
-    ;; and run org-reveal for every org buffer.
-    (visual-line-mode)
-    (org-indent-mode))
+  (defun org-customize-mode ()
+  "Customize some display options for ORG-MODE.
+  - map javascript to sclang-mode in babel blocks.
+  - hide extra leading stars for sections.
+  - turn on visual line mode."
+    (org-babel-map-js-2-sclang)
+    (setq org-hide-leading-stars t)
+    ;; (org-indent-mode)
+    (visual-line-mode))
 
   (add-hook 'org-mode-hook 'my-org-mode-hook)
 

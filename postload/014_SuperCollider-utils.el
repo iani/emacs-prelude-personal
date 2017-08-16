@@ -1,4 +1,4 @@
-;;; SuperCollider-utils --- 2017-08-16 01:17:44 AM
+;;; SuperCollider-utils --- 2017-08-16 10:20:39 AM
   ;;; Commentary:
   ;;; emacs commands for doing useful things in supercollider.
 
@@ -6,12 +6,6 @@
   ;; (sclang-eval-string string &optional print-p)
   ;; (defun dired-get-filename (&optional localp no-error-if-not-filep)
   ;; Requires Buffers class of sc-hacks lib.
-
-  ;; make javascript blocks open in sclang mode in org-edit-special
-  ;; this is because sclang blocks must currently be marked as javascript
-  ;; in order to render properly with hugo / pygments for webite creation.
-  
-  (setq org-src-lang-modes (add-to-list 'org-src-lang-modes '("javascript" . sclang)))
 
   (defun dired-preview-audio-buffer ()
     "Load file at cursor in dired to sc audio buffer.
