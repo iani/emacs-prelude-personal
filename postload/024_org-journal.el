@@ -1,4 +1,4 @@
-;;; org-journal --- 2017-08-16 01:46:02 PM
+;;; org-journal --- 2017-08-17 08:00:43 AM
   ;;; Commentary:
   ;;; use org-journal for capture globally.
   ;;; https://github.com/bastibe/org-journal
@@ -42,11 +42,40 @@
               ))
         (org-journal-new-entry prefix org-overriding-default-time)
         (unless prefix
-          (org-insert-time-stamp org-overriding-default-time t)
+          (org-set-property-and-value "DATE" )
+          (org-make-time-stamp org-overriding-default-time t)
           ;; (backward-word)
           ;; (backward-word)
           ;; (paredit-forward-kill-word)
           ;; (paredit-forward-kill-word)
           ))))
+
+  (defun org-make-time-stamp (time &optional with-hm inactive pre post extra)
+    "Make a date stamp for the date given by the internal TIME.
+  Adapted from org-insert-time-stamp for use with org-set-property.
+  See `format-time-string' for the format of TIME.
+  WITH-HM means use the stamp format that includes the time of the day.
+  INACTIVE means use square brackets instead of angular ones, so that the
+  stamp will not contribute to the agenda.
+  PRE and POST are optional strings to be inserted before and after the
+  stamp.
+  The command returns the inserted time stamp."
+    (let ((fmt (funcall (if with-hm 'cdr 'car) org-time-stamp-formats))
+          stamp)
+      (when inactive (setq fmt (concat "[" (substring fmt 1 -1) "]")))
+      (insert-before-markers (or pre ""))
+      (when (listp extra)
+        (setq extra (car extra))
+        (if (and (stringp extra)
+                 (string-match "\\([0-9]+\\):\\([0-9]+\\)" extra))
+            (setq extra (format "-%02d:%02d"
+                                (string-to-number (match-string 1 extra))
+                                (string-to-number (match-string 2 extra))))
+          (setq extra nil)))
+      (when extra
+        (setq fmt (concat (substring fmt 0 -1) extra (substring fmt -1))))
+      (setq stamp (concat (format-time-string fmt time)) (or post ""))
+      (setq org-last-inserted-timestamp stamp)
+      stamp))
 (provide 'org-journal)
 ;;; 024_org-journal.el ends here
