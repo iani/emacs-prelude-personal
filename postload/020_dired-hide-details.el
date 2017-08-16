@@ -1,4 +1,4 @@
-;;; dired-hide-details --- 2017-08-17 08:00:42 AM
+;;; dired-hide-details --- 2017-08-17 08:42:33 AM
   ;;; Commentary:
   ;; HIDE DETAILS WHEN FIRST OPENING DIRED
 
