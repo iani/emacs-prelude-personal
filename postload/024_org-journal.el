@@ -1,4 +1,4 @@
-;;; org-journal --- 2017-08-17 09:06:07 AM
+;;; org-journal --- 2017-08-17 09:41:03 AM
   ;;; Commentary:
   ;;; use org-journal for capture globally.
   ;;; https://github.com/bastibe/org-journal
@@ -23,15 +23,18 @@
   (defun org-journal-at-date-from-user (no-entry)
     "Creat journal entry with date from user, NO-ENTRY prefix enters timestamp without section."
     (interactive "P")
-    (let ((time (org-read-date t t)))
+    (let ((time (org-read-date t t)) timestamp)
       (org-journal-new-entry no-entry time)
+      (setq timestamp (format-time-string (cdr org-time-stamp-formats) time))
       (if no-entry
-          (insert "\n" (org-make-time-stamp time t))
-          (insert
-           "\n :PROPERTIES:\n :DATE: "
-           (org-make-time-stamp time t)
-           " \n :END:\n"
-           ))))
+          (insert "\n" timestamp))
+      (progn
+        (insert
+         "\n :PROPERTIES:\n :DATE: "
+         timestamp
+         " \n :END:\n")
+         (previous-line 4)
+         (end-of-line))))
 
   ;; Make new-entry keyboard command available also in org-mode:
   (global-set-key (kbd "C-c c j") 'org-journal-at-date-from-user)

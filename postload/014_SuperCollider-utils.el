@@ -1,4 +1,4 @@
-;;; SuperCollider-utils --- 2017-08-17 09:06:04 AM
+;;; SuperCollider-utils --- 2017-08-17 09:41:01 AM
   ;;; Commentary:
   ;;; emacs commands for doing useful things in supercollider.
 
