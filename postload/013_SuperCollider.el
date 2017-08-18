@@ -1,9 +1,9 @@
-;;; SuperCollider --- 2017-08-19 03:34:53 AM
+;;; SuperCollider --- 2017-08-19 04:26:24 AM
   ;; (add-to-list 'load-path "~/.emacs.d/personal/packages/sclang/")
   ;; (load-file "~/.emacs.d/personal/packages/sclang/sclang.el")
   ;; (load-file "~/.emacs.d/personal/packages/sc-snippets/sc-snippets.el")
   (require 'sclang) ;; must be made available through links in personal/packages
-  (require 'sc-snippets)
+  ;; (require 'sc-snippets) ;; replaced by postload file
 
   ;;; Directory of SuperCollider support, for quarks, plugins, help etc.
   (defvar sc_userAppSupportDir

@@ -1,16 +1,16 @@
-;;; SuperCollider-utils --- 2017-08-19 03:34:53 AM
-  ;;; Commentary:
-  ;;; emacs commands for doing useful things in supercollider.
-  ;;; Includes newest version of snippets library.
+;;; SuperCollider-utils --- 2017-08-19 04:26:24 AM
+    ;;; Commentary:
+    ;;; emacs commands for doing useful things in supercollider.
+    ;;; Includes newest version of snippets library.
 
-  ;;; Code:
+    ;;; Code:
   ;; (sclang-eval-string string &optional print-p)
   ;; (defun dired-get-filename (&optional localp no-error-if-not-filep)
   ;; Requires Buffers class of sc-hacks lib.
 
   (defun dired-preview-audio-buffer ()
     "Load file at cursor in dired to sc audio buffer.
-  If called with prefix, play the buffer as soon as it is loaded."
+    If called with prefix, play the buffer as soon as it is loaded."
     (interactive)
     (message (dired-get-filename))
     (sclang-eval-string
@@ -20,16 +20,16 @@
 
   (defun dired-load-sc-file (&optional loadNow)
     "Load file at cursor in dired to sc audio buffer.
-  If called with prefix, play the buffer as soon as it is loaded."
+    If called with prefix, play the buffer as soon as it is loaded."
     (interactive "P")
     (let ((paths (dired-get-marked-files)))
       (dolist (path paths)
-       (message path)
-       (sclang-eval-string
-        (format "LoadFile(\"%s\");\nLoadFile.save;\n" path))
-       (if loadNow
-           (sclang-eval-string
-            (format "\"%s\".load", path))))))
+        (message path)
+        (sclang-eval-string
+         (format "LoadFile(\"%s\");\nLoadFile.save;\n" path))
+        (if loadNow
+            (sclang-eval-string
+             (format "\"%s\".load", path))))))
 
   (eval-after-load 'dired
     '(progn
@@ -54,7 +54,7 @@
        ;; C-c . -> org-time-stamp
        (define-key org-mode-map (kbd "C-c C-/") 'org-sclang-eval-babel-block)))
 
-  ;;; key chords for sclang
+    ;;; key chords for sclang
   (defun sclang-2-windows ()
     "Reconfigure frame to this window and sclang-post-window."
     (interactive)
@@ -78,7 +78,7 @@
 
   (defun sclang-extensions-gui ()
     "Open gui for browsing user extensions classes and methods.
-  Type return on a selected item to open the file where it is defined."
+    Type return on a selected item to open the file where it is defined."
     (interactive)
     (sclang-eval-string "Class.extensionsGui;"))
 
@@ -162,8 +162,8 @@
 
   (defun sclang-eval-current-snippet ()
     "Evaluate the current snippet in sclang.
-  A snippet is a block of code enclosed between comments
-  starting at the beginning of line and with a : following immediately after //."
+    A snippet is a block of code enclosed between comments
+    starting at the beginning of line and with a : following immediately after //."
     (interactive)
     (sclang-eval-string (sclang-get-current-snippet)))
 
@@ -211,10 +211,10 @@
     "Go to the previous snippet."
     (interactive)
     (goto-char (line-end-position))
-    (goto-char (sclang-beginning-of-snippet))
-    (goto-char (sclang-beginning-of-snippet))
-    (goto-char (line-end-position 2))
-    (goto-char (line-beginning-position)))
+    (let ((pos (search-backward-regexp "^//:" nil t)))
+      (if (and pos (> pos 1)) (goto-char (1- pos)))
+      (re-search-backward "^//:")
+      (goto-char (1+ (line-end-position)))))
 
   (eval-after-load 'sclang
     '(progn
@@ -231,6 +231,5 @@
        (key-chord-define sclang-mode-map "''" 'sclang-plusgt)
        (key-chord-define sclang-mode-map ";;" 'sclang-ltplus)
        (key-chord-define sclang-mode-map "\\\\" 'sclang-xgt)))
-
 (provide 'SuperCollider-utils)
 ;;; 014_SuperCollider-utils.el ends here
