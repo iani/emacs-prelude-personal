@@ -998,7 +998,7 @@ Adapted from helm-switch-to-buffers."
        (key-chord-define sclang-mode-map "11" 'sclang-2-windows)
        (key-chord-define sclang-mode-map "''" 'sclang-plusgt)
        (key-chord-define sclang-mode-map ";;" 'sclang-ltplus)
-       (key-chord-define sclang-mode-map "\\" 'sclang-xgt)))
+       (key-chord-define sclang-mode-map "\\\\" 'sclang-xgt)))
 
 #+END_SRC
 
