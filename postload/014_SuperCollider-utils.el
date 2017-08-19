@@ -1,4 +1,4 @@
-;;; SuperCollider-utils --- 2017-08-19 04:26:24 AM
+;;; SuperCollider-utils --- 2017-08-19 10:55:09 AM
     ;;; Commentary:
     ;;; emacs commands for doing useful things in supercollider.
     ;;; Includes newest version of snippets library.
@@ -205,7 +205,8 @@
     "Go to the next snippet."
     (interactive)
     (goto-char (sclang-end-of-snippet))
-    (goto-char (line-end-position 2)))
+    (goto-char (line-end-position 2))
+    (goto-char (line-beginning-position)))
 
   (defun sclang-goto-previous-snippet ()
     "Go to the previous snippet."
@@ -213,8 +214,16 @@
     (goto-char (line-end-position))
     (let ((pos (search-backward-regexp "^//:" nil t)))
       (if (and pos (> pos 1)) (goto-char (1- pos)))
-      (re-search-backward "^//:")
-      (goto-char (1+ (line-end-position)))))
+      (setq pos (search-backward-regexp "^//:" nil t))
+      (cond
+       (pos
+        (goto-char pos)
+        (goto-char (1+ (line-end-position)))
+        (goto-char (line-beginning-position)))
+       (t
+        (goto-char (point-min))))
+      ;; (re-search-backward "^//:")
+      ))
 
   (eval-after-load 'sclang
     '(progn

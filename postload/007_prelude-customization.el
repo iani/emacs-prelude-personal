@@ -1,4 +1,4 @@
-;;; prelude-customization --- 2017-08-19 04:26:23 AM
+;;; prelude-customization --- 2017-08-19 10:55:08 AM
   (setq prelude-whitespace nil)
 
   ;; undo prelude shift-meta-up/down keybindings which interfere with org-mode
