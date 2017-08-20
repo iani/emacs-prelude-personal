@@ -761,7 +761,8 @@ Adapted from helm-switch-to-buffers."
               (local-set-key (kbd "H-b H-a")  'hs-show-all)
               (local-set-key (kbd "H-b l")  'hs-hide-level)
               (local-set-key (kbd "H-b H-l")  'hs-show-level)
-              (hs-minor-mode 1)))
+              (hs-minor-mode 1)
+              (visual-line-mode 1)))
 #+END_SRC
 
 * SuperCollider-utils

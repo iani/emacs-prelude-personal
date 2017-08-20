@@ -1,4 +1,4 @@
-;;; SuperCollider --- 2017-08-19 10:55:09 AM
+;;; SuperCollider --- 2017-08-20 10:13:45 AM
   ;; (add-to-list 'load-path "~/.emacs.d/personal/packages/sclang/")
   ;; (load-file "~/.emacs.d/personal/packages/sclang/sclang.el")
   ;; (load-file "~/.emacs.d/personal/packages/sc-snippets/sc-snippets.el")
@@ -59,6 +59,7 @@
               (local-set-key (kbd "H-b H-a")  'hs-show-all)
               (local-set-key (kbd "H-b l")  'hs-hide-level)
               (local-set-key (kbd "H-b H-l")  'hs-show-level)
-              (hs-minor-mode 1)))
+              (hs-minor-mode 1)
+              (visual-line-mode 1)))
 (provide 'SuperCollider)
 ;;; 013_SuperCollider.el ends here
