@@ -1,4 +1,4 @@
-;;; EmacsLispModes --- 2017-08-20 10:13:45 AM
+;;; EmacsLispModes --- 2017-08-20 01:00:04 PM
   ;;; Commentary:
   ;;; useful minor modes for emacs-lisp
 
@@ -22,4 +22,4 @@
   ;; H-C-i:
   (define-key emacs-lisp-mode-map (kbd "H-i") 'icicle-imenu-command)
 (provide 'EmacsLispModes)
-;;; 011_EmacsLispModes.el ends here
+;;; 010_EmacsLispModes.el ends here

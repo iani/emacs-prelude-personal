@@ -168,7 +168,11 @@
  '(hl-sexp-face ((t (:background "gray10")))))
 #+END_SRC
 
-* prelude-customization
+* COMMENT prelude-customization
+
+Unfortunately this does not work.
+Only solution so far is to switch off prelude mode when in org mode.
+
 
 #+BEGIN_SRC emacs-lisp
   (setq prelude-whitespace nil)
@@ -959,7 +963,7 @@ Adapted from helm-switch-to-buffers."
 
   (defun sclang-end-of-snippet ()
     "Return the point position of the end of the current snippet."
-    (save-excursion 
+    (save-excursion
       (let ((pos (search-forward-regexp "^//:" nil t)))
         (if pos (line-beginning-position) (point-max)))))
 
@@ -1011,6 +1015,62 @@ Adapted from helm-switch-to-buffers."
        (key-chord-define sclang-mode-map "\\\\" 'sclang-xgt)))
 #+END_SRC
 
+* COMMENT customize-prelude-mode-keymap
+
+Unfortunately this does not work.
+Only solution so far is to switch off prelude mode when in org mode.
+
+#+BEGIN_SRC emacs-lisp
+  ;;; Commentary:
+
+  ;;; move meta-shift-up/down bindings to control-meta-shift-up/down
+  ;;; because the prior settings interfere with org-mode table bindings.
+
+  (setq prelude-mode-map
+    (let ((map (make-sparse-keymap)))
+      (define-key map (kbd "C-c o") 'crux-open-with)
+      (define-key map (kbd "C-c g") 'prelude-google)
+      (define-key map (kbd "C-c G") 'prelude-github)
+      (define-key map (kbd "C-c y") 'prelude-youtube)
+      (define-key map (kbd "C-c U") 'prelude-duckduckgo)
+      ;; mimic popular IDEs binding, note that it doesn't work in a terminal session
+      (define-key map (kbd "C-a") 'crux-move-beginning-of-line)
+      (define-key map [(shift return)] 'crux-smart-open-line)
+      (define-key map (kbd "M-o") 'crux-smart-open-line)
+      (define-key map [(control shift return)] 'crux-smart-open-line-above)
+      (define-key map [(control meta shift up)]  'move-text-up)
+      (define-key map [(control meta shift down)]  'move-text-down)
+      (define-key map (kbd "C-c n") 'crux-cleanup-buffer-or-region)
+      (define-key map (kbd "C-c f")  'crux-recentf-ido-find-file)
+      (define-key map (kbd "C-M-z") 'crux-indent-defun)
+      (define-key map (kbd "C-c u") 'crux-view-url)
+      (define-key map (kbd "C-c e") 'crux-eval-and-replace)
+      (define-key map (kbd "C-c s") 'crux-swap-windows)
+      (define-key map (kbd "C-c D") 'crux-delete-file-and-buffer)
+      (define-key map (kbd "C-c d") 'crux-duplicate-current-line-or-region)
+      (define-key map (kbd "C-c M-d") 'crux-duplicate-and-comment-current-line-or-region)
+      (define-key map (kbd "C-c r") 'crux-rename-buffer-and-file)
+      (define-key map (kbd "C-c t") 'crux-visit-term-buffer)
+      (define-key map (kbd "C-c k") 'crux-kill-other-buffers)
+      (define-key map (kbd "C-c TAB") 'crux-indent-rigidly-and-copy-to-clipboard)
+      (define-key map (kbd "C-c I") 'crux-find-user-init-file)
+      (define-key map (kbd "C-c S") 'crux-find-shell-init-file)
+      (define-key map (kbd "C-c i") 'imenu-anywhere)
+      ;; extra prefix for projectile
+      (define-key map (kbd "s-p") 'projectile-command-map)
+      ;; make some use of the Super key
+      (define-key map (kbd "s-g") 'god-local-mode)
+      (define-key map (kbd "s-r") 'crux-recentf-ido-find-file)
+      (define-key map (kbd "s-j") 'crux-top-join-line)
+      (define-key map (kbd "s-k") 'crux-kill-whole-line)
+      (define-key map (kbd "s-m m") 'magit-status)
+      (define-key map (kbd "s-m l") 'magit-log)
+      (define-key map (kbd "s-m f") 'magit-log-buffer-file)
+      (define-key map (kbd "s-m b") 'magit-blame)
+      (define-key map (kbd "s-o") 'crux-smart-open-line-above)
+
+      map))
+#+END_SRC
 * org-mode
 
 #+BEGIN_SRC emacs-lisp
@@ -1078,33 +1138,85 @@ Adapted from helm-switch-to-buffers."
   ;; It adds some org-mode specific key bindings.
   (eval-after-load 'org
     '(progn
-       ;; Note: This keybinding is in analogy to the default keybinding:
-       ;; C-c . -> org-time-stamp
-       (define-key org-mode-map (kbd "C-c C-.") 'org-set-date)
-       (define-key org-mode-map (kbd "C-M-{") 'backward-paragraph)
-       (define-key org-mode-map (kbd "C-M-}") 'forward-paragraph)
-       (define-key org-mode-map (kbd "C-c C-S") 'org-schedule)
-       (define-key org-mode-map (kbd "C-c C-s") 'sclang-main-stop)
-       (define-key org-mode-map (kbd "C-c >") 'sclang-show-post-buffer)
-       ;; own additions after org-config-examples below:
-       (define-key org-mode-map (kbd "C-M-f") 'org-forward-heading-same-level)
-       (define-key org-mode-map (kbd "C-M-b") 'org-backward-heading-same-level)
-       (define-key org-mode-map (kbd "C-M-u") 'outline-up-heading)
-       (define-key org-mode-map (kbd "C-M-n") 'org-next-src-block)
-       (define-key org-mode-map (kbd "C-M-p") 'org-show-properties-block)
-       (define-key org-mode-map (kbd "C-M-/") 'org-sclang-eval-babel-block)
-          ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-       ;; from: http://orgmode.org/worg/org-configs/org-config-examples.html
-       ;; section navigation
-       (define-key org-mode-map (kbd "M-n") 'outline-next-visible-heading)
-       (define-key org-mode-map (kbd "M-p") 'outline-previous-visible-heading)
-       ;; table
-       (define-key org-mode-map (kbd "C-M-w") 'org-table-copy-region)
-       (define-key org-mode-map (kbd "C-M-y") 'org-table-paste-rectangle)
-       (define-key org-mode-map (kbd "C-M-l") 'org-table-sort-lines)
-       ;; display images
-       (define-key org-mode-map (kbd "M-I") 'org-toggle-iimage-in-org)
-       ))
+         ;; Note: This keybinding is in analogy to the default keybinding:
+         ;; C-c . -> org-time-stamp
+         (define-key org-mode-map (kbd "C-c C-.") 'org-set-date)
+         (define-key org-mode-map (kbd "C-M-{") 'backward-paragraph)
+         (define-key org-mode-map (kbd "C-M-}") 'forward-paragraph)
+         (define-key org-mode-map (kbd "C-c C-S") 'org-schedule)
+         (define-key org-mode-map (kbd "C-c C-s") 'sclang-main-stop)
+         (define-key org-mode-map (kbd "C-c >") 'sclang-show-post-buffer)
+         ;; own additions after org-config-examples below:
+         (define-key org-mode-map (kbd "C-M-f") 'org-forward-heading-same-level)
+         (define-key org-mode-map (kbd "C-M-b") 'org-backward-heading-same-level)
+         (define-key org-mode-map (kbd "C-M-u") 'outline-up-heading)
+         (define-key org-mode-map (kbd "C-M-n") 'org-next-src-block)
+         (define-key org-mode-map (kbd "C-M-p") 'org-show-properties-block)
+         (define-key org-mode-map (kbd "C-M-/") 'org-sclang-eval-babel-block)
+            ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+         ;; from: http://orgmode.org/worg/org-configs/org-config-examples.html
+         ;; section navigation
+         (define-key org-mode-map (kbd "M-n") 'outline-next-visible-heading)
+         (define-key org-mode-map (kbd "M-p") 'outline-previous-visible-heading)
+         ;; table
+         (define-key org-mode-map (kbd "C-M-w") 'org-table-copy-region)
+         (define-key org-mode-map (kbd "C-M-y") 'org-table-paste-rectangle)
+         (define-key org-mode-map (kbd "C-M-l") 'org-table-sort-lines)
+         ;; display images
+         (define-key org-mode-map (kbd "M-I") 'org-toggle-iimage-in-org)
+         ;; Following are the prelude-mode binding, minus the conflicting table bindings.
+         ;; prelude-mode is turned off for org mode, below.
+         (define-key org-mode-map (kbd "C-c o") 'prelude-open-with)
+         (define-key org-mode-map (kbd "C-c g") 'prelude-google)
+         (define-key org-mode-map (kbd "C-c G") 'prelude-github)
+         (define-key org-mode-map (kbd "C-c y") 'prelude-youtube)
+         (define-key org-mode-map (kbd "C-c U") 'prelude-duckduckgo)
+         ;;     ;; mimic popular IDEs binding, note that it doesn't work in a terminal session
+         (define-key org-mode-map [(shift return)] 'prelude-smart-open-line)
+         (define-key org-mode-map (kbd "M-o") 'prelude-smart-open-line)
+         (define-key org-mode-map [(control shift return)] 'prelude-smart-open-line-above)
+         (define-key org-mode-map [(control shift up)]  'move-text-up)
+         (define-key org-mode-map [(control shift down)]  'move-text-down)
+         (define-key org-mode-map [(control meta shift up)]  'move-text-up)
+         (define-key org-mode-map [(control meta shift down)]  'move-text-down)
+         ;;     ;; the following 2 break structure editing with meta-shift-up / down in org mode
+         ;;     ;;    (define-key map [(meta shift up)]  'move-text-up)
+         ;;     ;;    (define-key map [(meta shift down)]  'move-text-down)
+         ;;     ;; new substitutes for above:  (these are overwritten by other modes...)
+         ;;     ;; (define-key map (kbd "C-c [")  'move-text-up)
+         ;;     ;; (define-key map (kbd "C-c ]")  'move-text-down)
+         ;;     ;; (define-key map [(control meta shift up)]  'move-text-up)
+         ;;     ;; (define-key map [(control meta shift down)]  'move-text-down)
+         (define-key org-mode-map (kbd "C-c n") 'prelude-cleanup-buffer-or-region)
+         (define-key org-mode-map (kbd "C-c f")  'prelude-recentf-ido-find-file)
+         (define-key org-mode-map (kbd "C-M-z") 'prelude-indent-defun)
+         (define-key org-mode-map (kbd "C-c u") 'prelude-view-url)
+         (define-key org-mode-map (kbd "C-c e") 'prelude-eval-and-replace)
+         (define-key org-mode-map (kbd "C-c s") 'prelude-swap-windows)
+         (define-key org-mode-map (kbd "C-c D") 'prelude-delete-file-and-buffer)
+         (define-key org-mode-map (kbd "C-c d") 'prelude-duplicate-current-line-or-region)
+         (define-key org-mode-map (kbd "C-c M-d") 'prelude-duplicate-and-comment-current-line-or-region)
+         (define-key org-mode-map (kbd "C-c r") 'prelude-rename-buffer-and-file)
+         (define-key org-mode-map (kbd "C-c t") 'prelude-visit-term-buffer)
+         (define-key org-mode-map (kbd "C-c k") 'prelude-kill-other-buffers)
+         ;;     ;; another annoying overwrite of a useful org-mode command:
+         ;;     ;; (define-key map (kbd "C-c TAB") 'prelude-indent-rigidly-and-copy-to-clipboard)
+         (define-key org-mode-map (kbd "C-c I") 'prelude-find-user-init-file)
+         (define-key org-mode-map (kbd "C-c S") 'prelude-find-shell-init-file)
+         (define-key org-mode-map (kbd "C-c i") 'prelude-goto-symbol)
+         ;;     ;; extra prefix for projectile
+         (define-key org-mode-map (kbd "s-p") 'projectile-command-map)
+         ;;     ;; make some use of the Super key
+         (define-key org-mode-map (kbd "s-g") 'god-local-mode)
+         (define-key org-mode-map (kbd "s-r") 'prelude-recentf-ido-find-file)
+         (define-key org-mode-map (kbd "s-j") 'prelude-top-join-line)
+         (define-key org-mode-map (kbd "s-k") 'prelude-kill-whole-line)
+         (define-key org-mode-map (kbd "s-m m") 'magit-status)
+         (define-key org-mode-map (kbd "s-m l") 'magit-log)
+         (define-key org-mode-map (kbd "s-m f") 'magit-log-buffer-file)
+         (define-key org-mode-map (kbd "s-m b") 'magit-blame)
+         (define-key org-mode-map (kbd "s-o") 'prelude-smart-open-line-above)
+         ))
 
   (defun org-next-src-block ()
     "Jump to the next src block using SEARCH-FORWARD."
@@ -1130,7 +1242,7 @@ Adapted from helm-switch-to-buffers."
   ;; org-mode-hook is run every time that org-mode is turned on for a buffer
   ;; It customizes some settings in the mode.
   (add-hook
-   'org-mode-hook 
+   'org-mode-hook
    (lambda ()
      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
      ;; own stuff:
@@ -1140,7 +1252,12 @@ Adapted from helm-switch-to-buffers."
      (setq org-src-lang-modes (add-to-list 'org-src-lang-modes '("javascript" . sclang)))
      (setq org-hide-leading-stars t)
      ;; (org-indent-mode) ;; this results in added leading spaces in org-edit-special
-     (visual-line-mode)))
+     (visual-line-mode)
+     ;; turn off prelude mode because its key bindings interfere with table bindings.
+     ;; Instead, the prelude-mode keybindings have been copied to org-mode above,
+     ;; minus the unwanted keybindings for tables.
+     (prelude-off)
+     ))
 
   (defun org-customize-mode ()
     "Customize some display options for ORG-MODE.
@@ -1300,7 +1417,7 @@ Adapted from helm-switch-to-buffers."
          buffers-to-delete)
       (mapc
        (lambda (path)
-         (if 
+         (if
              (file-directory-p path)
              (delete-directory path t))
          (if (string-match-p
@@ -1322,11 +1439,11 @@ Adapted from helm-switch-to-buffers."
     "Helper function for org-hugo-export.
   First compute the path based on levels and previous input.
   Then export the file using the path.
-  Files are automatically stored in nested folders corresponding 
+  Files are automatically stored in nested folders corresponding
   to the level of the section that is the source of the file.
   The path for the nested folders is stored in variable FOLDER-COMPONENTS.
   Level 1 corresponds to root level of the base folder path.
-  Therefore for level 1 the string to add to the folder path is the 
+  Therefore for level 1 the string to add to the folder path is the
   empty string \"\".
   Level 2 has default contents (\"section1/\"), Etc.
   The default names section1, section2 etc. can be overwritten
@@ -1346,7 +1463,7 @@ Adapted from helm-switch-to-buffers."
       (when (or foldername filename)
         (setq index (+ 1 index))
         ;; add missing default levels to folder-components list
-        (when(< (length folder-components) level)        
+        (when(< (length folder-components) level)
           (setq folder-components
                 (append folder-components
                         (--map (list (format "section%d/" it) (format "section%d/" it))

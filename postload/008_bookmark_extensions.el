@@ -1,4 +1,4 @@
-;;; bookmark_extensions --- 2017-08-20 10:13:44 AM
+;;; bookmark_extensions --- 2017-08-20 01:00:04 PM
 
 ;;; Commentary:
 ;;; Better editing of bookmarks perhaps the advantage
@@ -7,4 +7,4 @@
 (prelude-load-require-packages '(bm autobookmarks bookmark+))
 
 (provide 'bookmark_extensions)
-;;; 009_bookmark_extensions.el ends here
+;;; 008_bookmark_extensions.el ends here

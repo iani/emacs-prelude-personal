@@ -1,4 +1,4 @@
-;;; org-split-hugo --- 2017-08-20 10:13:47 AM
+;;; org-split-hugo --- 2017-08-20 01:00:06 PM
 
   ;;; Commentary:
   ;;; Utilities for blog + website editing with HUGO
@@ -59,7 +59,7 @@
          buffers-to-delete)
       (mapc
        (lambda (path)
-         (if 
+         (if
              (file-directory-p path)
              (delete-directory path t))
          (if (string-match-p
@@ -81,11 +81,11 @@
     "Helper function for org-hugo-export.
   First compute the path based on levels and previous input.
   Then export the file using the path.
-  Files are automatically stored in nested folders corresponding 
+  Files are automatically stored in nested folders corresponding
   to the level of the section that is the source of the file.
   The path for the nested folders is stored in variable FOLDER-COMPONENTS.
   Level 1 corresponds to root level of the base folder path.
-  Therefore for level 1 the string to add to the folder path is the 
+  Therefore for level 1 the string to add to the folder path is the
   empty string \"\".
   Level 2 has default contents (\"section1/\"), Etc.
   The default names section1, section2 etc. can be overwritten
@@ -105,7 +105,7 @@
       (when (or foldername filename)
         (setq index (+ 1 index))
         ;; add missing default levels to folder-components list
-        (when(< (length folder-components) level)        
+        (when(< (length folder-components) level)
           (setq folder-components
                 (append folder-components
                         (--map (list (format "section%d/" it) (format "section%d/" it))
@@ -192,4 +192,4 @@
        (define-key org-mode-map (kbd "C-c C-h C-/") 'org-hugo-select-filenames)))
 
 (provide 'org-split-hugo)
-;;; 017_org-split-hugo.el ends here
+;;; 016_org-split-hugo.el ends here

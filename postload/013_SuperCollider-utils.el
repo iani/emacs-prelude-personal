@@ -1,4 +1,4 @@
-;;; SuperCollider-utils --- 2017-08-20 10:13:46 AM
+;;; SuperCollider-utils --- 2017-08-20 01:00:05 PM
     ;;; Commentary:
     ;;; emacs commands for doing useful things in supercollider.
     ;;; Includes newest version of snippets library.
@@ -190,7 +190,7 @@
 
   (defun sclang-end-of-snippet ()
     "Return the point position of the end of the current snippet."
-    (save-excursion 
+    (save-excursion
       (let ((pos (search-forward-regexp "^//:" nil t)))
         (if pos (line-beginning-position) (point-max)))))
 
@@ -241,4 +241,4 @@
        (key-chord-define sclang-mode-map ";;" 'sclang-ltplus)
        (key-chord-define sclang-mode-map "\\\\" 'sclang-xgt)))
 (provide 'SuperCollider-utils)
-;;; 014_SuperCollider-utils.el ends here
+;;; 013_SuperCollider-utils.el ends here
