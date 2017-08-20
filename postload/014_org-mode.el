@@ -1,4 +1,4 @@
-;;; org-mode --- 2017-08-20 01:00:05 PM
+;;; org-mode --- 2017-08-20 07:53:30 PM
 
   ;;; Commentary:
 
@@ -128,7 +128,8 @@
          ;;     ;; (define-key map (kbd "C-c TAB") 'prelude-indent-rigidly-and-copy-to-clipboard)
          (define-key org-mode-map (kbd "C-c I") 'prelude-find-user-init-file)
          (define-key org-mode-map (kbd "C-c S") 'prelude-find-shell-init-file)
-         (define-key org-mode-map (kbd "C-c i") 'prelude-goto-symbol)
+         ;; replace not functioning 'prelude-goto-symbol with useful imenu-anywhere
+         (define-key org-mode-map (kbd "C-c i") 'imenu-anywhere)
          ;;     ;; extra prefix for projectile
          (define-key org-mode-map (kbd "s-p") 'projectile-command-map)
          ;;     ;; make some use of the Super key
@@ -182,6 +183,8 @@
      ;; Instead, the prelude-mode keybindings have been copied to org-mode above,
      ;; minus the unwanted keybindings for tables.
      (prelude-off)
+     ;; disable whitespace mode, which was previously disabled by prelude-mode
+     (whitespace-mode -1)
      ))
 
   (defun org-customize-mode ()
