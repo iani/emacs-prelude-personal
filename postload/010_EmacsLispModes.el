@@ -1,4 +1,4 @@
-;;; EmacsLispModes --- 2017-08-20 07:53:29 PM
+;;; EmacsLispModes --- 2017-08-21 11:06:05 AM
   ;;; Commentary:
   ;;; useful minor modes for emacs-lisp
 

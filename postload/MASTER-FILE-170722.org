@@ -1902,7 +1902,14 @@ If UNLINK-P is not nil, then delete the link instead."
 
 #+END_SRC
 
-* last-actions-at-open
+* use-workgroups2
+
+#+BEGIN_SRC emacs-lisp
+  (prelude-require-package 'workgroups2)
+  (workgroups-mode t)
+
+#+END_SRC
+* COMMENT toggle-fullscreen
 
 #+BEGIN_SRC emacs-lisp
 (toggle-frame-fullscreen)

@@ -1,4 +1,4 @@
-;;; projectile --- 2017-08-20 07:53:32 PM
+;;; projectile --- 2017-08-21 11:06:07 AM
   ;;; Commentary:
   ;;; some useful extensions to projectile
   ;;; helm-projectile
