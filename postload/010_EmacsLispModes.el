@@ -1,4 +1,4 @@
-;;; EmacsLispModes --- 2017-08-21 11:06:05 AM
+;;; EmacsLispModes --- 2017-08-22 09:22:51 AM
   ;;; Commentary:
   ;;; useful minor modes for emacs-lisp
 
@@ -8,12 +8,19 @@
   ;;; note: smartparens is preferable to paredit.
   (require 'smartparens-config)
 
+  (defun whitespace-off ()
+    "Make turning whitespace mode off a command callable from key."
+    (interactive)
+    (whitespace-mode -1))
+
+
   (add-hook 'emacs-lisp-mode-hook 'hl-sexp-mode)
   (add-hook 'emacs-lisp-mode-hook 'hs-minor-mode)
   (global-set-key (kbd "H-l h") 'hs-hide-level)
   (global-set-key (kbd "H-l s") 'hs-show-all)
 
   (add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode)
+  (add-hook 'emacs-lisp-mode-hook 'whitespace-off)
 
   (add-hook 'emacs-lisp-mode-hook 'smartparens-mode)
   ;; (add-hook 'emacs-lisp-mode-hook 'turn-on-whitespace-mode)

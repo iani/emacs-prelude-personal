@@ -574,12 +574,19 @@ Adapted from helm-switch-to-buffers."
   ;;; note: smartparens is preferable to paredit.
   (require 'smartparens-config)
 
+  (defun whitespace-off ()
+    "Make turning whitespace mode off a command callable from key."
+    (interactive)
+    (whitespace-mode -1))
+
+
   (add-hook 'emacs-lisp-mode-hook 'hl-sexp-mode)
   (add-hook 'emacs-lisp-mode-hook 'hs-minor-mode)
   (global-set-key (kbd "H-l h") 'hs-hide-level)
   (global-set-key (kbd "H-l s") 'hs-show-all)
 
   (add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode)
+  (add-hook 'emacs-lisp-mode-hook 'whitespace-off)
 
   (add-hook 'emacs-lisp-mode-hook 'smartparens-mode)
   ;; (add-hook 'emacs-lisp-mode-hook 'turn-on-whitespace-mode)
@@ -1074,7 +1081,6 @@ Only solution so far is to switch off prelude mode when in org mode.
 * org-mode
 
 #+BEGIN_SRC emacs-lisp
-
   ;;; Commentary:
 
   ;; customize some org mode settings
@@ -1134,6 +1140,53 @@ Only solution so far is to switch off prelude mode when in org mode.
         (insert (format-time-string "%e %b %Y"))
       (insert (format-time-string "%e %b %Y %H:%M"))))
 
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; make heading movement commands skip initial * marks
+  (defun org-jump-forward-heading-same-level ()
+    "Jump forward heading same level, and skip to beginning of heading itself."
+    (interactive)
+    (org-forward-heading-same-level 1)
+    (re-search-forward " "))
+
+  (defun org-jump-backward-heading-same-level ()
+    "Jump backward heading same level, and skip to beginning of heading itself."
+    (interactive)
+    (org-backward-heading-same-level 1)
+    (re-search-forward " "))
+
+  (defun jump-outline-up-heading ()
+    "Jump upward heading, and skip to beginning of heading itself."
+    (interactive)
+    (outline-up-heading 1)
+    (re-search-forward " "))
+
+  (defun jump-outline-next-visible-heading ()
+    "Jump to next visible heading, and skip to beginning of heading itself."
+    (interactive)
+    (outline-next-visible-heading 1)
+    (re-search-forward " "))
+
+  (defun jump-outline-previous-visible-heading ()
+    "Jump to previous visible heading, and skip to beginning of heading itself."
+    (interactive)
+    (outline-previous-visible-heading 1)
+    (re-search-forward " "))
+
+  (defun jump-outline-previous-visible-heading-and-cycle ()
+    "Jump to previous visible heading, and hide subtree."
+    (interactive)
+    (outline-previous-visible-heading 1)
+    (re-search-forward " ")
+    (org-cycle))
+
+  (defun jump-outline-next-visible-heading-and-cycle ()
+    "Jump to previous visible heading, and hide subtree."
+    (interactive)
+    (outline-next-visible-heading 1)
+    (re-search-forward " ")
+    (org-cycle))
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
   ;; This is run once after loading org for the first time
   ;; It adds some org-mode specific key bindings.
   (eval-after-load 'org
@@ -1147,17 +1200,19 @@ Only solution so far is to switch off prelude mode when in org mode.
          (define-key org-mode-map (kbd "C-c C-s") 'sclang-main-stop)
          (define-key org-mode-map (kbd "C-c >") 'sclang-show-post-buffer)
          ;; own additions after org-config-examples below:
-         (define-key org-mode-map (kbd "C-M-f") 'org-forward-heading-same-level)
-         (define-key org-mode-map (kbd "C-M-b") 'org-backward-heading-same-level)
-         (define-key org-mode-map (kbd "C-M-u") 'outline-up-heading)
-         (define-key org-mode-map (kbd "C-M-n") 'org-next-src-block)
-         (define-key org-mode-map (kbd "C-M-p") 'org-show-properties-block)
+         (define-key org-mode-map (kbd "C-M-S-n") 'org-next-src-block)
+         (define-key org-mode-map (kbd "C-M-S-p") 'org-show-properties-block)
          (define-key org-mode-map (kbd "C-M-/") 'org-sclang-eval-babel-block)
             ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
          ;; from: http://orgmode.org/worg/org-configs/org-config-examples.html
          ;; section navigation
-         (define-key org-mode-map (kbd "M-n") 'outline-next-visible-heading)
-         (define-key org-mode-map (kbd "M-p") 'outline-previous-visible-heading)
+         (define-key org-mode-map (kbd "M-n") 'jump-outline-next-visible-heading)
+         (define-key org-mode-map (kbd "C-M-n") 'jump-outline-next-visible-heading-and-cycle)
+         (define-key org-mode-map (kbd "M-p") 'jump-outline-previous-visible-heading)
+         (define-key org-mode-map (kbd "C-M-p") 'jump-outline-previous-visible-heading-and-cycle)
+         (define-key org-mode-map (kbd "C-M-f") 'org-jump-forward-heading-same-level)
+         (define-key org-mode-map (kbd "C-M-b") 'org-jump-backward-heading-same-level)
+         (define-key org-mode-map (kbd "C-M-u") 'jump-outline-up-heading)
          ;; table
          (define-key org-mode-map (kbd "C-M-w") 'org-table-copy-region)
          (define-key org-mode-map (kbd "C-M-y") 'org-table-paste-rectangle)
@@ -1188,7 +1243,7 @@ Only solution so far is to switch off prelude mode when in org mode.
          ;;     ;; (define-key map [(control meta shift up)]  'move-text-up)
          ;;     ;; (define-key map [(control meta shift down)]  'move-text-down)
          (define-key org-mode-map (kbd "C-c n") 'prelude-cleanup-buffer-or-region)
-         (define-key org-mode-map (kbd "C-c f")  'prelude-recentf-ido-find-file)
+         (define-key org-mode-map (kbd "C-c f") 'prelude-recentf-ido-find-file)
          (define-key org-mode-map (kbd "C-M-z") 'prelude-indent-defun)
          (define-key org-mode-map (kbd "C-c u") 'prelude-view-url)
          (define-key org-mode-map (kbd "C-c e") 'prelude-eval-and-replace)
@@ -1909,8 +1964,9 @@ If UNLINK-P is not nil, then delete the link instead."
   (workgroups-mode t)
 
 #+END_SRC
-* COMMENT toggle-fullscreen
+* turn-whitespace-off
 
 #+BEGIN_SRC emacs-lisp
-(toggle-frame-fullscreen)
+  (whitespace-mode -1)
+  ;; (toggle-frame-fullscreen)
 #+END_SRC
