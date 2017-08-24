@@ -1,4 +1,4 @@
-;;; use-workgroups2 --- 2017-08-22 06:44:19 PM
+;;; use-workgroups2 --- 2017-08-24 09:36:42 AM
   (prelude-require-package 'workgroups2)
   (workgroups-mode t)
 
