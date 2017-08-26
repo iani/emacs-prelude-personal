@@ -1,4 +1,4 @@
-;;; org_calfw --- 2017-08-24 09:36:38 AM
+;;; org_calfw --- 2017-08-27 05:37:19 AM
   ;;; Commentary:
   ;;; use calfw package to display agenda in calendar-grid format
   ;;; Provide commands for generation of entries on current date on calendar grid
@@ -62,6 +62,12 @@
         (org-journal-new-entry prefix org-overriding-default-time)
         (org-insert-time-stamp org-overriding-default-time t))))
 
+  (defun org-jump-to-refile-target ()
+    "Make org-refile with prefix available as command."
+    (interactive)
+    (org-refile '(4)))
+
+  (global-set-key (kbd "M-C-g") 'org-jump-to-refile-target)
   (global-set-key (kbd "C-c c c") 'org-calfw-here)
   (global-set-key (kbd "C-c C J") 'cfw:org-journal-entry-for-now)
   ;; journal entry for Now (current date and time at time of command)

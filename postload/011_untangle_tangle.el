@@ -1,4 +1,4 @@
-;;; untangle_tangle --- 2017-08-24 09:36:36 AM
+;;; untangle_tangle --- 2017-08-27 05:37:17 AM
   ;;; Commentary:
   ;;; org-el-untangle:
   ;;; import muliple el files from one folder into one org mode file.

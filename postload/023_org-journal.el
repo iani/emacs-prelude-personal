@@ -1,4 +1,4 @@
-;;; org-journal --- 2017-08-24 09:36:41 AM
+;;; org-journal --- 2017-08-27 05:37:22 AM
   ;;; Commentary:
   ;;; use org-journal for capture globally.
   ;;; https://github.com/bastibe/org-journal
@@ -15,10 +15,30 @@
     (interactive)
     (org-journal-new-entry nil (apply 'encode-time (org-parse-time-string (org-read-date t t)))))
 
+  ;; Overwrite custom setting of var:
   (setq org-journal-dir "/Users/iani/Documents/000WORKFILES/PERSONAL/journal")
 
-  ;; Include all journal files in agenda:
-  (setq org-agenda-files `("/Users/iani/Documents/000WORKFILES/PERSONAL/DIARY.org" ,org-journal-dir))
+  ;; adding own custom var to journal group, using template from journal mode.
+  (defcustom org-todo-dir "/Users/iani/Documents/000WORKFILES/PERSONAL/TODOS"
+    "Directory containing journal entries.
+    Setting this will update auto-mode-alist using
+    `(org-journal-update-auto-mode-alist)`"
+    :type 'string :group 'org-journal
+    :set (lambda (symbol value)
+           (set-default symbol value)
+           (org-journal-update-auto-mode-alist)))
+
+  ;; provide custom refile targets for todo entries
+  (setq org-refile-targets
+        (mapcar (lambda (x) (cons x '(:maxlevel . 2)))
+                (file-expand-wildcards (concat org-todo-dir "/*.org"))))
+
+  ;; Include all journal and todo files in agenda:
+  (setq org-agenda-files `("/Users/iani/Documents/000WORKFILES/PERSONAL/DIARY.org"
+                           ,org-journal-dir
+                           ,org-todo-dir))
+
+
 
   (defun org-journal-at-date-from-user (no-entry)
     "Creat journal entry with date from user, NO-ENTRY prefix enters timestamp without section."
