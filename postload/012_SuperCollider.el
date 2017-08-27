@@ -1,4 +1,4 @@
-;;; SuperCollider --- 2017-08-27 06:35:48 PM
+;;; SuperCollider --- 2017-08-28 06:39:02 AM
   ;; (add-to-list 'load-path "~/.emacs.d/personal/packages/sclang/")
   ;; (load-file "~/.emacs.d/personal/packages/sclang/sclang.el")
   ;; (load-file "~/.emacs.d/personal/packages/sc-snippets/sc-snippets.el")

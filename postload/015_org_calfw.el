@@ -1,9 +1,9 @@
-;;; org_calfw --- 2017-08-27 06:35:49 PM
-  ;;; Commentary:
-  ;;; use calfw package to display agenda in calendar-grid format
-  ;;; Provide commands for generation of entries on current date on calendar grid
+;;; org_calfw --- 2017-08-28 06:39:05 AM
+    ;;; Commentary:
+    ;;; use calfw package to display agenda in calendar-grid format
+    ;;; Provide commands for generation of entries on current date on calendar grid
 
-  ;;; Code:
+    ;;; Code:
   ;; (require 'calfw-org)
   ;; (require 'calfw-cal)
 
@@ -54,17 +54,22 @@
     (with-current-buffer  (get-buffer-create cfw:calendar-buffer-name)
       (let* ((pos (cfw:cursor-to-nearest-date))
              (org-overriding-default-time (apply 'encode-time (decode-time))
-              ;; (encode-time 0 0 7
-              ;;              (calendar-extract-day pos)
-              ;;              (calendar-extract-month pos)
-              ;;              (calendar-extract-year pos))
-              ))
+                                          ;; (encode-time 0 0 7
+                                          ;;              (calendar-extract-day pos)
+                                          ;;              (calendar-extract-month pos)
+                                          ;;              (calendar-extract-year pos))
+                                          ))
         (org-journal-new-entry prefix org-overriding-default-time)
         (org-insert-time-stamp org-overriding-default-time t))))
 
   (defun org-jump-to-refile-target ()
-    "Make org-refile with prefix available as command."
+    "Make org-refile with prefix available as command.
+    Also, always update refile targets before running org-refile.
+    This ensures that files changed / created recently will be taken into account."
     (interactive)
+    (setq org-refile-targets
+          (mapcar (lambda (x) (cons x '(:maxlevel . 2)))
+                  (file-expand-wildcards (concat org-todo-dir "/*.org"))))
     (org-refile '(4)))
 
   (global-set-key (kbd "M-C-g") 'org-jump-to-refile-target)
@@ -84,6 +89,6 @@
   ;;   cfw:calendar-mode-map "c" 'cfw:org-journal-at-date-from-cursor)
 
   (provide '018_calfw)
-  ;;; 018_calfw.el ends here
+    ;;; 018_calfw.el ends here
 (provide 'org_calfw)
 ;;; 015_org_calfw.el ends here

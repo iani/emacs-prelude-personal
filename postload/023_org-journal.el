@@ -1,4 +1,4 @@
-;;; org-journal --- 2017-08-27 06:35:52 PM
+;;; org-journal --- 2017-08-28 06:39:12 AM
   ;;; Commentary:
   ;;; use org-journal for capture globally.
   ;;; https://github.com/bastibe/org-journal
@@ -29,6 +29,7 @@
            (org-journal-update-auto-mode-alist)))
 
   ;; provide custom refile targets for todo entries
+  ;; NOTE: This sexp is included in custom function org-jump-to-refile-target.
   (setq org-refile-targets
         (mapcar (lambda (x) (cons x '(:maxlevel . 2)))
                 (file-expand-wildcards (concat org-todo-dir "/*.org"))))
@@ -37,8 +38,6 @@
   (setq org-agenda-files `("/Users/iani/Documents/000WORKFILES/PERSONAL/DIARY.org"
                            ,org-journal-dir
                            ,org-todo-dir))
-
-
 
   (defun org-journal-at-date-from-user (no-entry)
     "Creat journal entry with date from user, NO-ENTRY prefix enters timestamp without section."
