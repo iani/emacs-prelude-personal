@@ -1,7 +1,12 @@
-;;; speedbar --- 2017-08-27 10:08:39 AM
+;;; speedbar --- 2017-08-27 06:35:46 PM
   (prelude-load-require-packages '(deft sr-speedbar))
 
   (setq deft-use-filename-as-title t)
+
+  ;; include org, sc, el files in deft search
+  (setq deft-extensions '( "org" "sc" "scd" "el" "txt" "tex"))
+  ;; search directories recursively in deft
+  (setq deft-recursive t)
 
   ;; (speedbar-add-supported-extension ".sc")
   ;; (speedbar-add-supported-extension ".scd")
@@ -32,9 +37,9 @@
       (sr-speedbar-refresh-turn-off)
       (switch-to-buffer buffer)))
 
-  (defun deft-here (dir)
+  (defun deft-here (&optional dir)
     "Change DEFT-DIRECTORY to a directory selected interactively."
-    (interactive)
+    (interactive "D")
     ;; (setq deft-directory "~/Copy/000WORKFILES/00_META/")
     ;; (message dir)
     ;; (message "file exists? %s" (file-exists-p dir))
@@ -130,6 +135,7 @@
   (global-set-key (kbd "H-L") 'speedbar-log)
   (global-set-key (kbd "H-s w") 'speedbar-workfiles)
   (global-set-key (kbd "H-s d") 'speedbar-dev)
+  (global-set-key (kbd "H-d") 'deft-here)
   (global-set-key (kbd "H-s t") 'sr-speedbar-refresh-toggle)
 
   (defun add-speedbar-keys ()
