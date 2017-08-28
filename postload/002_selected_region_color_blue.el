@@ -1,4 +1,4 @@
-;;; selected_region_color_blue --- 2017-08-28 06:38:54 AM
+;;; selected_region_color_blue --- 2017-08-28 08:15:03 AM
   ;;; Commentary:
   ;;; dark blue is more visible for selected region color
   ;;; than the default color in zenburn or moe-dark

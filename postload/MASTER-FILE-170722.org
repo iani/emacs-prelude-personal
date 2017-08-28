@@ -430,7 +430,7 @@ Adapted from helm-switch-to-buffers."
   (defun speedbar-workfiles ()
     "Open sr-speebar on workfiles root and keep it there."
     (interactive)
-    (speedbar-fixed-dir iz-log-dir))
+    (speedbar-fixed-dir (file-truename "~/Documents/000WORKFILES/")))
 
   (defun speedbar-dev ()
     "Open sr-speebar on workfiles root and keep it there."
@@ -559,7 +559,6 @@ Adapted from helm-switch-to-buffers."
 
   (global-set-key (kbd "C-M-H-s") 'sr-speedbar-open)
   (global-set-key (kbd "C-M-H-s") 'sr-speedbar-open)
-
 #+END_SRC
 
 * COMMENT desktop
@@ -1084,6 +1083,16 @@ Only solution so far is to switch off prelude mode when in org mode.
 
       map))
 #+END_SRC
+
+* calc-time-zones
+
+#+BEGIN_SRC emacs-lisp
+  ;;; Commentary:
+  ;; Add some useful time zones
+  (require 'calc-forms) ;; built-in package
+  (add-to-list 'math-tzone-names '("JST" 9 0))
+  (add-to-list 'math-tzone-names '("EEST" 3 0))
+#+END_SRC
 * org-mode
 
 #+BEGIN_SRC emacs-lisp
@@ -1337,7 +1346,6 @@ Only solution so far is to switch off prelude mode when in org mode.
 
   (global-set-key (kbd "C-c C-x t") 'org-insert-current-date)
 #+END_SRC
-
 * org calfw
 
 #+BEGIN_SRC emacs-lisp

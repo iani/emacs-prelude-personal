@@ -1,8 +1,8 @@
-;;; unset-command-q --- 2017-08-28 06:39:07 AM
+;;; unset-command-q --- 2017-08-28 08:15:07 AM
 ;;; Commentary:
 ;;; disable command-q key to avoid inadvertently quitting EMACS.
 
 ;;; Code:
 (global-set-key (kbd "s-q") nil)
 (provide 'unset-command-q)
-;;; 017_unset-command-q.el ends here
+;;; 018_unset-command-q.el ends here
