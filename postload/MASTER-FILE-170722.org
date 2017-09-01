@@ -1018,7 +1018,6 @@ Adapted from helm-switch-to-buffers."
        (define-key sclang-mode-map (kbd "M-C-n") 'sclang-eval-next-snippet)
        (define-key sclang-mode-map (kbd "M-C-S-n") 'sclang-move-snippet-down)
        (define-key sclang-mode-map (kbd "M-p") 'sclang-goto-previous-snippet)
-       (define-key sclang-mode-map (kbd "M-p") 'sclang-goto-previous-snippet)
        (define-key sclang-mode-map (kbd "M-C-p") 'sclang-eval-previous-snippet)
        (define-key sclang-mode-map (kbd "M-C-S-p") 'sclang-move-snippet-up)
        (key-chord-define sclang-mode-map "11" 'sclang-2-windows)
@@ -1417,9 +1416,7 @@ Only solution so far is to switch off prelude mode when in org mode.
     Also, always update refile targets before running org-refile.
     This ensures that files changed / created recently will be taken into account."
     (interactive)
-    (setq org-refile-targets
-          (mapcar (lambda (x) (cons x '(:maxlevel . 2)))
-                  (file-expand-wildcards (concat org-todo-dir "/*.org"))))
+    (org-iz-make-refile-targets)
     (org-refile '(4)))
 
   (global-set-key (kbd "M-C-g") 'org-jump-to-refile-target)
@@ -1922,10 +1919,10 @@ Version 2015-12-02"
     (org-journal-new-entry nil (apply 'encode-time (org-parse-time-string (org-read-date t t)))))
 
   ;; Overwrite custom setting of var:
-  (setq org-journal-dir "/Users/iani/Documents/000WORKFILES/PERSONAL/journal")
+  (setq org-journal-dir (file-truename "~/Documents/000WORKFILES/PERSONAL/journal"))
 
   ;; adding own custom var to journal group, using template from journal mode.
-  (defcustom org-todo-dir "/Users/iani/Documents/000WORKFILES/PERSONAL/TODOS"
+  (defcustom org-todo-dir (file-truename "~/Documents/000WORKFILES/PERSONAL/TODOS")
     "Directory containing journal entries.
     Setting this will update auto-mode-alist using
     `(org-journal-update-auto-mode-alist)`"
@@ -1934,16 +1931,30 @@ Version 2015-12-02"
            (set-default symbol value)
            (org-journal-update-auto-mode-alist)))
 
+  (defcustom org-projects-dir (file-truename "~/Documents/000WORKFILES/PROJECTS_CURRENT")
+    "Directory containing project entries.
+    Setting this will update auto-mode-alist using
+    `(org-journal-update-auto-mode-alist)`"
+    :type 'string :group 'org-journal
+    :set (lambda (symbol value)
+           (set-default symbol value)
+           (org-journal-update-auto-mode-alist)))
   ;; provide custom refile targets for todo entries
-  ;; NOTE: This sexp is included in custom function org-jump-to-refile-target.
+  ;; NOTE: This function is also used in custom function org-jump-to-refile-target.
+  (defun org-iz-make-refile-targets ()
+  "Provide custom refile targets for todo entries.
+  This function is also used in custom function org-jump-to-refile-target."
   (setq org-refile-targets
-        (mapcar (lambda (x) (cons x '(:maxlevel . 2)))
-                (file-expand-wildcards (concat org-todo-dir "/*.org"))))
+        (append
+         (mapcar (lambda (x) (cons x '(:maxlevel . 2)))
+                 (file-expand-wildcards (concat org-todo-dir "/*.org")))
+         (mapcar (lambda (x) (cons x '(:maxlevel . 2)))
+                 (file-expand-wildcards (concat org-projects-dir "/*.org"))))))
 
   ;; Include all journal and todo files in agenda:
-  (setq org-agenda-files `("/Users/iani/Documents/000WORKFILES/PERSONAL/DIARY.org"
-                           ,org-journal-dir
-                           ,org-todo-dir))
+  (setq org-agenda-files `(,org-journal-dir
+                           ,org-todo-dir
+                           ,org-projects-dir))
 
   (defun org-journal-at-date-from-user (no-entry)
     "Creat journal entry with date from user, NO-ENTRY prefix enters timestamp without section."

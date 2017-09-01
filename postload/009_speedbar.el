@@ -1,4 +1,4 @@
-;;; speedbar --- 2017-08-28 08:15:05 AM
+;;; speedbar --- 2017-09-01 07:56:51 PM
   (prelude-load-require-packages '(deft sr-speedbar))
 
   (setq deft-use-filename-as-title t)
@@ -21,7 +21,7 @@
   (defun speedbar-workfiles ()
     "Open sr-speebar on workfiles root and keep it there."
     (interactive)
-    (speedbar-fixed-dir iz-log-dir))
+    (speedbar-fixed-dir (file-truename "~/Documents/000WORKFILES/")))
 
   (defun speedbar-dev ()
     "Open sr-speebar on workfiles root and keep it there."
@@ -150,6 +150,5 @@
 
   (global-set-key (kbd "C-M-H-s") 'sr-speedbar-open)
   (global-set-key (kbd "C-M-H-s") 'sr-speedbar-open)
-
 (provide 'speedbar)
 ;;; 009_speedbar.el ends here

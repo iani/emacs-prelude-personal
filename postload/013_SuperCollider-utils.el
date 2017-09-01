@@ -1,4 +1,4 @@
-;;; SuperCollider-utils --- 2017-08-28 08:15:06 AM
+;;; SuperCollider-utils --- 2017-09-01 07:56:54 PM
     ;;; Commentary:
     ;;; emacs commands for doing useful things in supercollider.
     ;;; Includes newest version of snippets library.
@@ -232,7 +232,6 @@
        (define-key sclang-mode-map (kbd "M-n") 'sclang-goto-next-snippet)
        (define-key sclang-mode-map (kbd "M-C-n") 'sclang-eval-next-snippet)
        (define-key sclang-mode-map (kbd "M-C-S-n") 'sclang-move-snippet-down)
-       (define-key sclang-mode-map (kbd "M-p") 'sclang-goto-previous-snippet)
        (define-key sclang-mode-map (kbd "M-p") 'sclang-goto-previous-snippet)
        (define-key sclang-mode-map (kbd "M-C-p") 'sclang-eval-previous-snippet)
        (define-key sclang-mode-map (kbd "M-C-S-p") 'sclang-move-snippet-up)

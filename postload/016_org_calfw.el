@@ -1,4 +1,4 @@
-;;; org_calfw --- 2017-08-28 08:15:07 AM
+;;; org_calfw --- 2017-09-01 07:56:57 PM
     ;;; Commentary:
     ;;; use calfw package to display agenda in calendar-grid format
     ;;; Provide commands for generation of entries on current date on calendar grid
@@ -67,9 +67,7 @@
     Also, always update refile targets before running org-refile.
     This ensures that files changed / created recently will be taken into account."
     (interactive)
-    (setq org-refile-targets
-          (mapcar (lambda (x) (cons x '(:maxlevel . 2)))
-                  (file-expand-wildcards (concat org-todo-dir "/*.org"))))
+    (org-iz-make-refile-targets)
     (org-refile '(4)))
 
   (global-set-key (kbd "M-C-g") 'org-jump-to-refile-target)

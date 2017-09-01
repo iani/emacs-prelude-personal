@@ -1,4 +1,4 @@
-;;; org-journal --- 2017-08-28 08:15:09 AM
+;;; org-journal --- 2017-09-01 07:57:05 PM
   ;;; Commentary:
   ;;; use org-journal for capture globally.
   ;;; https://github.com/bastibe/org-journal
@@ -16,10 +16,10 @@
     (org-journal-new-entry nil (apply 'encode-time (org-parse-time-string (org-read-date t t)))))
 
   ;; Overwrite custom setting of var:
-  (setq org-journal-dir "/Users/iani/Documents/000WORKFILES/PERSONAL/journal")
+  (setq org-journal-dir (file-truename "~/Documents/000WORKFILES/PERSONAL/journal"))
 
   ;; adding own custom var to journal group, using template from journal mode.
-  (defcustom org-todo-dir "/Users/iani/Documents/000WORKFILES/PERSONAL/TODOS"
+  (defcustom org-todo-dir (file-truename "~/Documents/000WORKFILES/PERSONAL/TODOS")
     "Directory containing journal entries.
     Setting this will update auto-mode-alist using
     `(org-journal-update-auto-mode-alist)`"
@@ -28,16 +28,30 @@
            (set-default symbol value)
            (org-journal-update-auto-mode-alist)))
 
+  (defcustom org-projects-dir (file-truename "~/Documents/000WORKFILES/PROJECTS_CURRENT")
+    "Directory containing project entries.
+    Setting this will update auto-mode-alist using
+    `(org-journal-update-auto-mode-alist)`"
+    :type 'string :group 'org-journal
+    :set (lambda (symbol value)
+           (set-default symbol value)
+           (org-journal-update-auto-mode-alist)))
   ;; provide custom refile targets for todo entries
-  ;; NOTE: This sexp is included in custom function org-jump-to-refile-target.
+  ;; NOTE: This function is also used in custom function org-jump-to-refile-target.
+  (defun org-iz-make-refile-targets ()
+  "Provide custom refile targets for todo entries.
+  This function is also used in custom function org-jump-to-refile-target."
   (setq org-refile-targets
-        (mapcar (lambda (x) (cons x '(:maxlevel . 2)))
-                (file-expand-wildcards (concat org-todo-dir "/*.org"))))
+        (append
+         (mapcar (lambda (x) (cons x '(:maxlevel . 2)))
+                 (file-expand-wildcards (concat org-todo-dir "/*.org")))
+         (mapcar (lambda (x) (cons x '(:maxlevel . 2)))
+                 (file-expand-wildcards (concat org-projects-dir "/*.org"))))))
 
   ;; Include all journal and todo files in agenda:
-  (setq org-agenda-files `("/Users/iani/Documents/000WORKFILES/PERSONAL/DIARY.org"
-                           ,org-journal-dir
-                           ,org-todo-dir))
+  (setq org-agenda-files `(,org-journal-dir
+                           ,org-todo-dir
+                           ,org-projects-dir))
 
   (defun org-journal-at-date-from-user (no-entry)
     "Creat journal entry with date from user, NO-ENTRY prefix enters timestamp without section."

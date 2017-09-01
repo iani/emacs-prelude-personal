@@ -1,4 +1,4 @@
-;;; org-mode --- 2017-08-28 08:15:07 AM
+;;; org-mode --- 2017-09-01 07:56:56 PM
   ;;; Commentary:
 
   ;; customize some org mode settings
