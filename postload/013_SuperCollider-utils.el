@@ -1,4 +1,4 @@
-;;; SuperCollider-utils --- 2017-09-02 01:26:06 PM
+;;; SuperCollider-utils --- 2017-09-02 02:25:25 PM
   ;;; Commentary:
   ;;; emacs commands for doing useful things in supercollider.
   ;;; Includes newest version of snippets library.
@@ -41,8 +41,15 @@
               (local-set-key (kbd "H-b H-a")  'hs-show-all)
               (local-set-key (kbd "H-b l")  'hs-hide-level)
               (local-set-key (kbd "H-b H-l")  'hs-show-level)
+              (local-set-key (kbd "H-w") 'sclang-clear-and-switch-to-workspace)
               (hs-minor-mode 1)
               (visual-line-mode 1)))
+
+  (defun sclang-clear-and-switch-to-workspace ()
+    "Shortcut for clear post window and switch to workspace."
+    (interactive)
+    (sclang-clear-post-buffer)
+    (sclang-switch-to-workspace))
 
   (defun dired-preview-audio-buffer ()
     "Load file at cursor in dired to sc audio buffer.
