@@ -717,6 +717,9 @@ Adapted from helm-switch-to-buffers."
 * SuperCollider
 
 #+BEGIN_SRC emacs-lisp
+  ;;; Commentary:
+  ;; Basic setup for using SuperCollider in EMACS
+
   ;; (add-to-list 'load-path "~/.emacs.d/personal/packages/sclang/")
   ;; (load-file "~/.emacs.d/personal/packages/sclang/sclang.el")
   ;; (load-file "~/.emacs.d/personal/packages/sc-snippets/sc-snippets.el")
@@ -743,6 +746,20 @@ Adapted from helm-switch-to-buffers."
   (global-set-key (kbd "C-c M-s") 'sclang-start)
   ;; overrides alt-meta switch command
   (global-set-key (kbd "C-c W") 'sclang-switch-to-workspace)
+
+#+END_SRC
+
+* SuperCollider-utils
+
+#+BEGIN_SRC emacs-lisp
+  ;;; Commentary:
+  ;;; emacs commands for doing useful things in supercollider.
+  ;;; Includes newest version of snippets library.
+
+  ;;; Code:
+  ;; (sclang-eval-string string &optional print-p)
+  ;; (defun dired-get-filename (&optional localp no-error-if-not-filep)
+  ;; Requires Buffers class of sc-hacks lib.
 
   ;; Disable switching to default SuperCollider Workspace when recompiling SClang
   (setq sclang-show-workspace-on-startup nil)
@@ -779,19 +796,6 @@ Adapted from helm-switch-to-buffers."
               (local-set-key (kbd "H-b H-l")  'hs-show-level)
               (hs-minor-mode 1)
               (visual-line-mode 1)))
-#+END_SRC
-
-* SuperCollider-utils
-
-#+BEGIN_SRC emacs-lisp
-    ;;; Commentary:
-    ;;; emacs commands for doing useful things in supercollider.
-    ;;; Includes newest version of snippets library.
-
-    ;;; Code:
-  ;; (sclang-eval-string string &optional print-p)
-  ;; (defun dired-get-filename (&optional localp no-error-if-not-filep)
-  ;; Requires Buffers class of sc-hacks lib.
 
   (defun dired-preview-audio-buffer ()
     "Load file at cursor in dired to sc audio buffer.

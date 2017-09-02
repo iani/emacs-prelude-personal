@@ -1,12 +1,48 @@
-;;; SuperCollider-utils --- 2017-09-01 07:56:54 PM
-    ;;; Commentary:
-    ;;; emacs commands for doing useful things in supercollider.
-    ;;; Includes newest version of snippets library.
+;;; SuperCollider-utils --- 2017-09-02 01:26:06 PM
+  ;;; Commentary:
+  ;;; emacs commands for doing useful things in supercollider.
+  ;;; Includes newest version of snippets library.
 
-    ;;; Code:
+  ;;; Code:
   ;; (sclang-eval-string string &optional print-p)
   ;; (defun dired-get-filename (&optional localp no-error-if-not-filep)
   ;; Requires Buffers class of sc-hacks lib.
+
+  ;; Disable switching to default SuperCollider Workspace when recompiling SClang
+  (setq sclang-show-workspace-on-startup nil)
+
+  ;; minor modes SuperCollider
+
+  ;;; note: Replacing paredit with smartparens
+  (prelude-load-require-packages
+   '(smartparens rainbow-delimiters hl-sexp auto-complete))
+
+  (require 'smartparens-config)
+
+  ;;; paredit
+  ;; NOTE: hs-minor, electric-pair: package names?
+
+  ;; (add-hook 'sclang-mode-hook 'sclang-extensions-mode) ;; still problems with this
+  (add-hook 'sclang-mode-hook 'smartparens-mode)
+  (add-hook 'sclang-mode-hook 'rainbow-delimiters-mode)
+  (add-hook 'sclang-mode-hook 'hl-sexp-mode)
+  (add-hook 'sclang-mode-hook 'hs-minor-mode)
+  (add-hook 'sclang-mode-hook 'electric-pair-mode)
+  ;; (add-hook 'sclang-mode-hook 'yas-minor-mode)
+  (add-hook 'sclang-mode-hook 'auto-complete-mode)
+  ;; (add-hook 'sclang-mode-hook 'hl-paren-mode)
+
+  ;; Own bindings for hide-show minor mode:
+  (add-hook 'sclang-mode-hook
+            (lambda()
+              (local-set-key (kbd "H-b b") 'hs-toggle-hiding)
+              (local-set-key (kbd "H-b H-b")  'hs-hide-block)
+              (local-set-key (kbd "H-b a")    'hs-hide-all)
+              (local-set-key (kbd "H-b H-a")  'hs-show-all)
+              (local-set-key (kbd "H-b l")  'hs-hide-level)
+              (local-set-key (kbd "H-b H-l")  'hs-show-level)
+              (hs-minor-mode 1)
+              (visual-line-mode 1)))
 
   (defun dired-preview-audio-buffer ()
     "Load file at cursor in dired to sc audio buffer.

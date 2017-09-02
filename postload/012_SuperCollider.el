@@ -1,4 +1,7 @@
-;;; SuperCollider --- 2017-09-01 07:56:54 PM
+;;; SuperCollider --- 2017-09-02 01:26:05 PM
+  ;;; Commentary:
+  ;; Basic setup for using SuperCollider in EMACS
+
   ;; (add-to-list 'load-path "~/.emacs.d/personal/packages/sclang/")
   ;; (load-file "~/.emacs.d/personal/packages/sclang/sclang.el")
   ;; (load-file "~/.emacs.d/personal/packages/sc-snippets/sc-snippets.el")
@@ -26,40 +29,5 @@
   ;; overrides alt-meta switch command
   (global-set-key (kbd "C-c W") 'sclang-switch-to-workspace)
 
-  ;; Disable switching to default SuperCollider Workspace when recompiling SClang
-  (setq sclang-show-workspace-on-startup nil)
-
-  ;; minor modes SuperCollider
-
-  ;;; note: Replacing paredit with smartparens
-  (prelude-load-require-packages
-   '(smartparens rainbow-delimiters hl-sexp auto-complete))
-
-  (require 'smartparens-config)
-
-  ;;; paredit
-  ;; NOTE: hs-minor, electric-pair: package names?
-
-  ;; (add-hook 'sclang-mode-hook 'sclang-extensions-mode) ;; still problems with this
-  (add-hook 'sclang-mode-hook 'smartparens-mode)
-  (add-hook 'sclang-mode-hook 'rainbow-delimiters-mode)
-  (add-hook 'sclang-mode-hook 'hl-sexp-mode)
-  (add-hook 'sclang-mode-hook 'hs-minor-mode)
-  (add-hook 'sclang-mode-hook 'electric-pair-mode)
-  ;; (add-hook 'sclang-mode-hook 'yas-minor-mode)
-  (add-hook 'sclang-mode-hook 'auto-complete-mode)
-  ;; (add-hook 'sclang-mode-hook 'hl-paren-mode)
-
-  ;; Own bindings for hide-show minor mode:
-  (add-hook 'sclang-mode-hook
-            (lambda()
-              (local-set-key (kbd "H-b b") 'hs-toggle-hiding)
-              (local-set-key (kbd "H-b H-b")  'hs-hide-block)
-              (local-set-key (kbd "H-b a")    'hs-hide-all)
-              (local-set-key (kbd "H-b H-a")  'hs-show-all)
-              (local-set-key (kbd "H-b l")  'hs-hide-level)
-              (local-set-key (kbd "H-b H-l")  'hs-show-level)
-              (hs-minor-mode 1)
-              (visual-line-mode 1)))
 (provide 'SuperCollider)
 ;;; 012_SuperCollider.el ends here
