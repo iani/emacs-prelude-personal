@@ -1,4 +1,4 @@
-;;; org-split-hugo --- 2017-09-02 02:25:26 PM
+;;; org-split-hugo --- 2017-09-02 11:41:03 PM
 
   ;;; Commentary:
   ;;; Utilities for blog + website editing with HUGO
@@ -13,10 +13,8 @@
   ;;; Sections with property "foldername" set a subfolder for saving
   ;;; subsequent file sections.
   ;;; Folder path is constructed by concatenating a cumulative list of subfolders.
-  ;;; "/path" resets the list to '("path")
-  ;;; "+path" appends "path" to the folder list.
-  ;;; "path" replaces (sets) the last element of the folder list by (to) "path".
-  ;;; Use it for all subsequent exported sections (until reset by other section)
+  ;;; The foldername property sets the component of the folder path
+  ;;; in the corresponding depth of subsections in a list of path components.
   ;;; Construct _index.md from the name of the folder section.
   ;;; Increment a folder_index variable to set weight for folder _index.md.
 

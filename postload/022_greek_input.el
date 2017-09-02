@@ -1,4 +1,4 @@
-;;; greek_input --- 2017-09-02 02:25:28 PM
+;;; greek_input --- 2017-09-02 11:41:05 PM
 ;; (global-set-key (kbd "C-c C-\\") 'toggle-input-method)
 
 (setq default-input-method "greek")
