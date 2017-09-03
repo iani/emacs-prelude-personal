@@ -1,0 +1,3 @@
+#+TITLE: Insert Title Here
+#+CATEGORIES: uncategorized
+#+TAGS: no-tag

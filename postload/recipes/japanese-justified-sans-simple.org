@@ -1,0 +1,9 @@
+# xelatex can use fonts available to the OS of your computer.
+#+latex_compiler: xelatex
+# load package for using OS fonts
+#+LaTeX_HEADER: \usepackage{fontspec}
+# Use Hiragino Sans font
+#+LaTeX_HEADER: \setromanfont[Mapping=tex-text]{Hiragino Sans}
+
+# allow large spaces in justified text, to prevent over-long lines
+#+LaTeX_HEADER: \sloppy

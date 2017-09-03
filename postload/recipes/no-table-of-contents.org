@@ -1,0 +1,3 @@
+
+# set toc option to nil, to omit the table of contents
+#+OPTIONS: toc:nil

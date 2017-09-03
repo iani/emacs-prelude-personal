@@ -1,4 +1,4 @@
-;;; org-mode --- 2017-09-02 11:41:02 PM
+;;; org-mode --- 2017-09-03 12:54:49 PM
   ;;; Commentary:
 
   ;; customize some org mode settings
@@ -7,7 +7,7 @@
   ;;; Code:
 
   ;; load util to insert recipes for export customization:
-  (require 'org-export-recipes)
+  ;; (require 'org-export-recipes) ;; is now part of postload!
 
   (setq org-attach-directory (file-truename "~/Documents/org-attachments/"))
   (setq org-agenda-sticky t) ;; open agenda and todo views in separate buffers

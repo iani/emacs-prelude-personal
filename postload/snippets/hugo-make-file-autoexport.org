@@ -1,0 +1,13 @@
+* COMMENT auto-hugo-export test
+
+Insert this snippet in an org-mode buffer.  
+Then evaluate the block below to automatically run =org-split-hugo= whenever you export this buffer:
+
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'after-save-hook
+            (lambda ()
+              (org-split-hugo)
+              (message "hugo export to individual files done"))
+            'append 'local)
+#+END_SRC
+

@@ -1,0 +1,13 @@
+# xelatex can use fonts available to the OS of your computer.
+#+latex_compiler: xelatex
+# load package for using OS fonts
+#+LaTeX_HEADER: \usepackage{fontspec}
+# Use Times font, which can print greek properly
+#+LaTeX_HEADER: \setromanfont[Mapping=tex-text]{Times}
+
+# next 2 lines switch language for contents etc. to greek (eg. "Περιεχόμενα").
+#+LaTeX_HEADER: \usepackage{polyglossia}
+#+LaTeX_HEADER: \setmainlanguage[variant=mono]{greek}
+
+# allow large spaces in justified text, to prevent over-long lines
+#+LaTeX_HEADER: \sloppy

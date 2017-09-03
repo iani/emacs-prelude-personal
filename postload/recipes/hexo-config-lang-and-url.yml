@@ -1,0 +1,14 @@
+# Site
+title: Hiero Tweaks
+subtitle: Adapt Hiero for own use
+description: Cool theme for project documentation
+author: Iannis Zannos
+language: en
+timezone:
+
+# URL
+## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
+url: http://iani.github.io
+root: /hexo-theme-hiero
+permalink: :year/:month/:day/:title/
+permalink_defaults:

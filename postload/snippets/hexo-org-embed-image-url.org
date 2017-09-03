@@ -1,0 +1,1 @@
+#+HTML:<img src="//larigot.avarts.ionio.gr/MEDIA/projects/EASTN/WS5_ZKM_PHOTO_VIDEO/IMG_2277.JPG" alt="Sample Image added via HTML">

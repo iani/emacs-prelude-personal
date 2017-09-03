@@ -1,0 +1,16 @@
+
+# Deployment
+## Docs: http://hexo.io/docs/deployment.html
+deploy:
+  type: git
+  repo: git@github.com:iani/hexo-template-site.git
+  branch: gh-pages
+
+org:
+  emacs: /Applications/Emacs.app/Contents/MacOS/Emacs
+  emacsclient: /Applications/Emacs.app/Contents/MacOS/bin/emacsclient
+  cachedir: ./hexo-org-cache/
+  theme: tango-dark
+  common: |
+          #+OPTIONS: toc:nil num:nil html-postamble:nil
+  htmlize: true
