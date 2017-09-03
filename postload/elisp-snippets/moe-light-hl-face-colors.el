@@ -9,5 +9,8 @@
 (custom-set-faces
  '(region ((t (:background "seashell"))))
  ;; following 2 are for moe-light:
- '(hl-line ((t (:background "papaya whip" :foreground "pale violet red"))))
- '(hl-sexp-face ((t (:background "linen" :foreground "VioletRed4")))))
+ ;; '(hl-line ((t (:background "papaya whip" :foreground "pale violet red"))))
+ '(hl-line ((t (:background "papaya whip"))))
+ ;; '(hl-sexp-face ((t (:background "linen" :foreground "VioletRed4"))))
+ '(hl-sexp-face ((t (:background "linen"))))
+ )

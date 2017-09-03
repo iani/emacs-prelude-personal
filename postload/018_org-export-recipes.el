@@ -1,4 +1,4 @@
-;;; org-export-recipes --- 2017-09-03 12:54:50 PM
+;;; org-export-recipes --- 2017-09-03 03:32:57 PM
   ;;; Commentary:
 
   ;; define concenience function for selecting a recipe file
@@ -40,10 +40,10 @@
   Else insert recipe from recipe folder at top of file."
     (interactive "P")
     (if open-p
-        (load
-         (helm-read-file-name "load snippet:" :initial-input org-lisp-snippet-folder))
-      (find-file
-       (helm-read-file-name "edit snippet:" :initial-input org-lisp-snippet-folder))))
+        (find-file
+       (helm-read-file-name "edit snippet:" :initial-input org-lisp-snippet-folder))
+      (load
+         (helm-read-file-name "load snippet:" :initial-input org-lisp-snippet-folder))))
 
   (global-set-key (kbd "H-c i") 'org-export-insert-recipe)
   (global-set-key (kbd "H-c l") 'org-load-lisp-snippet)

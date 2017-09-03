@@ -1,4 +1,4 @@
-;;; selected_region_color_blue --- 2017-09-03 12:54:43 PM
+;;; selected_region_color_blue --- 2017-09-03 03:32:51 PM
   ;;; Commentary:
 
   ;;; Some useful face color tweaks.

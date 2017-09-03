@@ -1699,10 +1699,10 @@ Only solution so far is to switch off prelude mode when in org mode.
   Else insert recipe from recipe folder at top of file."
     (interactive "P")
     (if open-p
-        (load
-         (helm-read-file-name "load snippet:" :initial-input org-lisp-snippet-folder))
-      (find-file
-       (helm-read-file-name "edit snippet:" :initial-input org-lisp-snippet-folder))))
+        (find-file
+       (helm-read-file-name "edit snippet:" :initial-input org-lisp-snippet-folder))
+      (load
+         (helm-read-file-name "load snippet:" :initial-input org-lisp-snippet-folder))))
 
   (global-set-key (kbd "H-c i") 'org-export-insert-recipe)
   (global-set-key (kbd "H-c l") 'org-load-lisp-snippet)
