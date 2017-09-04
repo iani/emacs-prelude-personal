@@ -1032,6 +1032,7 @@ Adapted from helm-switch-to-buffers."
 
   (eval-after-load 'sclang
     '(progn
+       (define-key sclang-mode-map (kbd "C-S-c C-S-c") 'sclang-clear-post-buffer)
        (define-key sclang-mode-map (kbd "M-C-x") 'sclang-eval-current-snippet)
        (define-key sclang-mode-map (kbd "M-C-.") 'sclang-duplicate-current-snippet)
        (define-key sclang-mode-map (kbd "M-n") 'sclang-goto-next-snippet)
