@@ -1,4 +1,4 @@
-;;; window_and_buffer_switching --- 2017-09-03 03:33:00 PM
+;;; window_and_buffer_switching --- 2017-09-04 09:48:13 AM
   ;;; Commentary:
   ;;; move amngst windows and switch window position with cursor keys
 

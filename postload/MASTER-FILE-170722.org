@@ -804,9 +804,10 @@ Adapted from helm-switch-to-buffers."
               (local-set-key (kbd "H-b H-a")  'hs-show-all)
               (local-set-key (kbd "H-b l")  'hs-hide-level)
               (local-set-key (kbd "H-b H-l")  'hs-show-level)
-              (local-set-key (kbd "H-w") 'sclang-clear-and-switch-to-workspace)
               (hs-minor-mode 1)
               (visual-line-mode 1)))
+
+  (global-set-key (kbd "H-w") 'sclang-clear-and-switch-to-workspace)
 
   (defun sclang-clear-and-switch-to-workspace ()
     "Shortcut for clear post window and switch to workspace."

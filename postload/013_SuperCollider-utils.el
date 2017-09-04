@@ -1,4 +1,4 @@
-;;; SuperCollider-utils --- 2017-09-03 03:32:55 PM
+;;; SuperCollider-utils --- 2017-09-04 09:48:08 AM
   ;;; Commentary:
   ;;; emacs commands for doing useful things in supercollider.
   ;;; Includes newest version of snippets library.
@@ -41,9 +41,10 @@
               (local-set-key (kbd "H-b H-a")  'hs-show-all)
               (local-set-key (kbd "H-b l")  'hs-hide-level)
               (local-set-key (kbd "H-b H-l")  'hs-show-level)
-              (local-set-key (kbd "H-w") 'sclang-clear-and-switch-to-workspace)
               (hs-minor-mode 1)
               (visual-line-mode 1)))
+
+  (global-set-key (kbd "H-w") 'sclang-clear-and-switch-to-workspace)
 
   (defun sclang-clear-and-switch-to-workspace ()
     "Shortcut for clear post window and switch to workspace."
