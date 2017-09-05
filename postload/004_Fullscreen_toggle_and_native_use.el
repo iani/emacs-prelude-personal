@@ -1,4 +1,4 @@
-;;; Fullscreen_toggle_and_native_use --- 2017-09-05 08:46:45 AM
+;;; Fullscreen_toggle_and_native_use --- 2017-09-05 03:28:33 PM
 ;;; Commentary:
 ;;; enable native fullscreen mode and define key for toggling.
 

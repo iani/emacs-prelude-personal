@@ -1,4 +1,4 @@
-;;; SuperCollider-utils --- 2017-09-05 08:46:51 AM
+;;; SuperCollider-utils --- 2017-09-05 03:28:36 PM
   ;;; Commentary:
   ;;; emacs commands for doing useful things in supercollider.
   ;;; Includes newest version of snippets library.
@@ -143,17 +143,26 @@
       (replace-match "\n://:")))
 
   (defun sclang-get-current-snippet ()
-    "Return region between //: comments in sclang, as string."
+    "Return region between //: comments in sclang, as string.
+  If the beginning of line is '//:+', then fork the snippet as routine.
+  If the beginning of line is '//:*', then wrap the snippet in loop and fork."
     (save-excursion
       (goto-char (line-end-position)) ;; fix when starting from point-min
       (let (
             (snippet-begin (search-backward-regexp "^//:" nil t))
             snippet-end
             snippet
+            snippet-head
             (prefix ""))
         (unless snippet-begin
           (setq snippet-begin (point-min))
           (setq prefix "//:\n"))
+        (setq sclang-snippet-is-routine nil)
+        (setq sclang-snippet-is-loop nil)
+        (goto-char snippet-begin)
+        (setq snippet-head (buffer-substring-no-properties (point) (+ 4 (point))))
+        (if (equal snippet-head "//:+") (setq sclang-snippet-is-routine t))
+        (if (equal snippet-head "//:*") (setq sclang-snippet-is-loop t))
         (goto-char (line-end-position))
         (setq snippet-end (search-forward-regexp "^//:" nil t))
         (if snippet-end
@@ -206,10 +215,19 @@
 
   (defun sclang-eval-current-snippet ()
     "Evaluate the current snippet in sclang.
-    A snippet is a block of code enclosed between comments
-    starting at the beginning of line and with a : following immediately after //."
+  A snippet is a block of code enclosed between comments
+  starting at the beginning of line and with a : following immediately after '//'.
+  If the beginning of line is '//:+', then fork the snippet as routine.
+  If the beginning of line is '//:*', then wrap the snippet in loop and fork."
     (interactive)
-    (sclang-eval-string (sclang-get-current-snippet)))
+    (let* (sclang-snippet-is-routine
+           sclang-snippet-is-loop
+           (snippet (sclang-get-current-snippet)))
+      (if sclang-snippet-is-routine
+          (setq snippet (format "{\n %s\n }.fork" snippet)))
+      (if sclang-snippet-is-loop
+          (setq snippet (format "{\n loop {\n %s \n} \n }.fork" snippet)))
+      (sclang-eval-string snippet t)))
 
   (defun sclang-eval-next-snippet ()
     "Go to the next snippet and evaluate it."
@@ -269,9 +287,45 @@
       ;; (re-search-backward "^//:")
       ))
 
+  (defun sclang-insert-snippet-separator (&optional before)
+    "Insert snippet separator //: at beginning of line."
+    (interactive "P")
+    (cond
+     (before
+      (goto-char (line-beginning-position))
+      (insert "//:\n"))
+     (t
+      (goto-char (line-end-position))
+      (insert "\n//:"))
+     ))
+
+  (defun sclang-insert-snippet-separator+ (&optional before)
+    "Insert snippet separator //:+ at beginning of line."
+    (interactive "P")
+    (cond (before
+           (goto-char (line-beginning-position))
+           (insert "//:+\n"))
+          (t
+           (goto-char (line-end-position))
+           (insert "\n//:+"))
+          ))
+
+  (defun sclang-insert-snippet-separator* (&optional before)
+    "Insert snippet separator //:* at beginning of line."
+    (interactive "P")
+    (cond (before
+           (goto-char (line-beginning-position))
+           (insert "//:*\n"))
+          (t
+           (goto-char (line-end-position))
+           (insert "\n//:*"))
+          ))
   (eval-after-load 'sclang
     '(progn
-       (define-key sclang-mode-map (kbd "C-S-c C-S-c") 'sclang-clear-post-buffer)
+       (define-key sclang-mode-map (kbd "H-/") 'sclang-insert-snippet-separator)
+       (define-key sclang-mode-map (kbd "H-=") 'sclang-insert-snippet-separator+)
+       (define-key sclang-mode-map (kbd "H-8") 'sclang-insert-snippet-separator*)
+       (define-key sclang-mode-map (kbd "C-S-c c") 'sclang-clear-post-buffer)
        (define-key sclang-mode-map (kbd "M-C-x") 'sclang-eval-current-snippet)
        (define-key sclang-mode-map (kbd "M-C-.") 'sclang-duplicate-current-snippet)
        (define-key sclang-mode-map (kbd "M-n") 'sclang-goto-next-snippet)

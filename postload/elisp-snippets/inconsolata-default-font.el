@@ -1,7 +1,7 @@
 ;;; experimental
 
 (custom-set-faces
- '(default ((t (:family "Anonymous Pro for Powerline" :foundry "nil"
+ '(default ((t (:family "Inconsolata" :foundry "nil"
                         :width normal :height 120
                         :weight normal :slant normal :underline nil :overline nil
                         :strike-through nil :box nil
