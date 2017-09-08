@@ -1,4 +1,4 @@
-;;; org_calfw --- 2017-09-05 03:28:38 PM
+;;; org_calfw --- 2017-09-08 02:55:45 PM
     ;;; Commentary:
     ;;; use calfw package to display agenda in calendar-grid format
     ;;; Provide commands for generation of entries on current date on calendar grid

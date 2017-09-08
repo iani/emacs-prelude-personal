@@ -1,4 +1,4 @@
-;;; org-mode --- 2017-09-05 03:28:37 PM
+;;; org-mode --- 2017-09-08 02:55:44 PM
   ;;; Commentary:
 
   ;; customize some org mode settings
@@ -17,8 +17,8 @@
   ;; customize looks
   (custom-set-faces
    '(org-block-end-line ((t (:background "#3a3a3a" :foreground "gray99"))) t)
-   '(org-level-1 ((t (:weight bold :height 1.1))))
-   '(org-level-2 ((t (:weight bold :height 1.1))))
+   '(org-level-1 ((t (:family "Anonymous Pro for Powerline" :height 1.1 :weight bold))))
+   '(org-level-2 ((t (:family "Anonymous Pro for Powerline" :height 1.1 :weight bold))))
    '(org-level-3 ((t (:weight bold :height 1.1))))
    '(org-level-4 ((t (:weight bold :height 1.1))))
    '(org-level-5 ((t (:weight bold :height 1.1))))

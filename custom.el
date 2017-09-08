@@ -6,7 +6,7 @@
  '(bmkp-last-as-first-bookmark-file "~/.emacs.d/savefile/bookmarks")
  '(custom-safe-themes
    (quote
-    ("67e998c3c23fe24ed0fb92b9de75011b92f35d3e89344157ae0d544d50a63a72" "6952b5d43bbd4f1c6727ff61bc9bf5677d385e101433b78ada9c3f0e3787af06" default)))
+    ("26185fd0b4314dacb6a96803bb3e8e090aba27ef5c53df3dcc4949596f8cdca7" "4cbec5d41c8ca9742e7c31cc13d8d4d5a18bd3a0961c18eb56d69972bbcf3071" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "67e998c3c23fe24ed0fb92b9de75011b92f35d3e89344157ae0d544d50a63a72" "6952b5d43bbd4f1c6727ff61bc9bf5677d385e101433b78ada9c3f0e3787af06" default)))
  '(fci-rule-color "#383838")
  '(nrepl-message-colors
    (quote
@@ -44,6 +44,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(default ((t (:family "Inconsolata" :foundry "nil" :width normal :height 120 :weight normal :slant normal :underline nil :overline nil :strike-through nil :box nil :inverse-video nil :foreground "#DCDCCC" :background "#3F3F3F" :stipple nil :inherit nil))))
  '(hl-line ((t (:background "gray0"))))
  '(hl-sexp-face ((t (:background "gray10"))))
  '(info-title-3 ((t (:inherit info-title-4 :foreground "white" :height 1.2))))

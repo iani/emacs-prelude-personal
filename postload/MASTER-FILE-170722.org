@@ -790,7 +790,7 @@ Adapted from helm-switch-to-buffers."
   ;;; paredit
   ;; NOTE: hs-minor, electric-pair: package names?
 
-  ;; (add-hook 'sclang-mode-hook 'sclang-extensions-mode) ;; still problems with this
+  ;; (add-hook 'sclang-mode-hook 'sclang-extegnsions-mode) ;; still problems with this
   (add-hook 'sclang-mode-hook 'smartparens-mode)
   (add-hook 'sclang-mode-hook 'rainbow-delimiters-mode)
   (add-hook 'sclang-mode-hook 'hl-sexp-mode)
@@ -1195,8 +1195,8 @@ Only solution so far is to switch off prelude mode when in org mode.
   ;; customize looks
   (custom-set-faces
    '(org-block-end-line ((t (:background "#3a3a3a" :foreground "gray99"))) t)
-   '(org-level-1 ((t (:weight bold :height 1.1))))
-   '(org-level-2 ((t (:weight bold :height 1.1))))
+   '(org-level-1 ((t (:family "Anonymous Pro for Powerline" :height 1.1 :weight bold))))
+   '(org-level-2 ((t (:family "Anonymous Pro for Powerline" :height 1.1 :weight bold))))
    '(org-level-3 ((t (:weight bold :height 1.1))))
    '(org-level-4 ((t (:weight bold :height 1.1))))
    '(org-level-5 ((t (:weight bold :height 1.1))))

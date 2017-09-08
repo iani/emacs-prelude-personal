@@ -1,4 +1,4 @@
-;;; SuperCollider-utils --- 2017-09-05 03:28:36 PM
+;;; SuperCollider-utils --- 2017-09-08 02:55:43 PM
   ;;; Commentary:
   ;;; emacs commands for doing useful things in supercollider.
   ;;; Includes newest version of snippets library.
@@ -22,7 +22,7 @@
   ;;; paredit
   ;; NOTE: hs-minor, electric-pair: package names?
 
-  ;; (add-hook 'sclang-mode-hook 'sclang-extensions-mode) ;; still problems with this
+  ;; (add-hook 'sclang-mode-hook 'sclang-extegnsions-mode) ;; still problems with this
   (add-hook 'sclang-mode-hook 'smartparens-mode)
   (add-hook 'sclang-mode-hook 'rainbow-delimiters-mode)
   (add-hook 'sclang-mode-hook 'hl-sexp-mode)
