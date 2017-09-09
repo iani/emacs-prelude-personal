@@ -1,4 +1,4 @@
-;;; dark_theme_hl_colors_and_inconsolata_font --- 2017-09-08 02:55:35 PM
+;;; Theming+Faces --- 2017-09-09 01:52:43 PM
   ;;; Commentary:
 
   ;;; Default font: Inconsolata.
@@ -14,6 +14,8 @@
                           :strike-through nil :box nil
                           :inverse-video nil :foreground "#DCDCCC"
                           :background "#3F3F3F" :stipple nil :inherit nil))))
+   '(helm-selection ((t
+                      (:underline nil :background "MediumOrchid1"))))
    '(region ((t (:background "thistle4" :foreground nil))))
    ;; following 2 are for moe-light:
    ;; '(hl-line ((t (:background "DarkSlateGray4" :foreground "yellow1"))))
@@ -21,5 +23,8 @@
    ;; '(hl-sexp-face ((t (:background "linen" :foreground "VioletRed4"))))
    '(hl-sexp-face ((t (:background "gray10"))))
    )
-(provide 'dark_theme_hl_colors_and_inconsolata_font)
-;;; 002_dark_theme_hl_colors_and_inconsolata_font.el ends here
+
+  (powerline-moe-theme)
+  (moe-dark)
+(provide 'Theming+Faces)
+;;; 002_Theming+Faces.el ends here

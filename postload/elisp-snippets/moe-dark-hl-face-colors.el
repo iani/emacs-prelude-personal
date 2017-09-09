@@ -8,6 +8,8 @@
 
 (custom-set-faces
  ;; the dark blue setting works for moe-light.
+ '(helm-selection ((t
+                    (:underline nil :background "MediumOrchid1"))))
  '(region ((t (:background "thistle4" :foreground nil))))
  ;; following 2 are for moe-light:
  ;; '(hl-line ((t (:background "DarkSlateGray4" :foreground "yellow1"))))
