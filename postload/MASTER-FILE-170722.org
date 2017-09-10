@@ -89,7 +89,7 @@ dark theme hl colors and inconsolata font
                           :inverse-video nil :foreground "#DCDCCC"
                           :background "#3F3F3F" :stipple nil :inherit nil))))
    '(helm-selection ((t
-                      (:underline nil :background "MediumOrchid1"))))
+                      (:underline nil :background "MediumOrchid1" :foreground "white"))))
    '(region ((t (:background "thistle4" :foreground nil))))
    ;; following 2 are for moe-light:
    ;; '(hl-line ((t (:background "DarkSlateGray4" :foreground "yellow1"))))
@@ -895,12 +895,6 @@ Adapted from helm-switch-to-buffers."
     (interactive)
     (insert "*>"))
 
-  (defun sclang-extensions-gui ()
-    "Open gui for browsing user extensions classes and methods.
-    Type return on a selected item to open the file where it is defined."
-    (interactive)
-    (sclang-eval-string "Class.extensionsGui;"))
-
   (defun scundelify ()
     "Blah."
     (interactive)
@@ -1100,6 +1094,7 @@ Adapted from helm-switch-to-buffers."
        (define-key sclang-mode-map (kbd "H-/") 'sclang-insert-snippet-separator)
        (define-key sclang-mode-map (kbd "H-=") 'sclang-insert-snippet-separator+)
        (define-key sclang-mode-map (kbd "H-8") 'sclang-insert-snippet-separator*)
+       ;; (define-key sclang-mode-map (kbd "C-h C-e") 'sclang-extensions-gui)
        (define-key sclang-mode-map (kbd "C-S-c c") 'sclang-clear-post-buffer)
        (define-key sclang-mode-map (kbd "M-C-x") 'sclang-eval-current-snippet)
        (define-key sclang-mode-map (kbd "M-C-.") 'sclang-duplicate-current-snippet)
@@ -1115,6 +1110,35 @@ Adapted from helm-switch-to-buffers."
        (key-chord-define sclang-mode-map "\\\\" 'sclang-xgt)))
 #+END_SRC
 
+* SuperCollider-extensionsGui
+
+#+BEGIN_SRC emacs-lisp
+  ;;; Commentary:
+
+  ;;; help-function for adding true paths of sc-lang extensions subfolders.
+  ;;; Also define sclang-extensions-gui local keybinding for sclang
+
+  ;;; Code:
+
+  (defun sclang-extensions-gui ()
+    "Open gui for browsing user extensions classes and methods.
+    Type return on a selected item to open the file where it is defined."
+    (interactive)
+    (sclang-eval-string "Class.extensionsGui;"))
+
+  (defun sclang-add-libs-to-extensions-gui ()
+    "Add all 1st level subfolders of sclang user etensions to Library.
+  Resolve symbolic links."
+    (mapc (lambda (path)
+            (message (file-truename path)))
+          (file-expand-wildcards "/Users/iani/Library/Application Support/SuperCollider/Extensions/*")
+          ;; (file-truename "/Users/iani/Library/Application Support/SuperCollider/Extensions/sc-hacks")
+          ))
+
+  (eval-after-load 'sclang
+      '(progn
+         (define-key sclang-mode-map (kbd "C-h Cy-e") 'sclang-extensions-gui)))
+#+END_SRC
 * COMMENT customize-prelude-mode-keymap
 
 Unfortunately this does not work.

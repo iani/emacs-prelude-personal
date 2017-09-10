@@ -1,4 +1,4 @@
-;;; SuperCollider-utils --- 2017-09-09 01:52:47 PM
+;;; SuperCollider-utils --- 2017-09-09 09:16:16 PM
   ;;; Commentary:
   ;;; emacs commands for doing useful things in supercollider.
   ;;; Includes newest version of snippets library.
@@ -325,6 +325,7 @@
        (define-key sclang-mode-map (kbd "H-/") 'sclang-insert-snippet-separator)
        (define-key sclang-mode-map (kbd "H-=") 'sclang-insert-snippet-separator+)
        (define-key sclang-mode-map (kbd "H-8") 'sclang-insert-snippet-separator*)
+       (define-key sclang-mode-map (kbd "C-h C-e") 'sclang-extensions-gui)
        (define-key sclang-mode-map (kbd "C-S-c c") 'sclang-clear-post-buffer)
        (define-key sclang-mode-map (kbd "M-C-x") 'sclang-eval-current-snippet)
        (define-key sclang-mode-map (kbd "M-C-.") 'sclang-duplicate-current-snippet)

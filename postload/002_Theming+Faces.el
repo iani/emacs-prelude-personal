@@ -1,4 +1,4 @@
-;;; Theming+Faces --- 2017-09-09 01:52:43 PM
+;;; Theming+Faces --- 2017-09-09 09:16:11 PM
   ;;; Commentary:
 
   ;;; Default font: Inconsolata.
@@ -15,7 +15,7 @@
                           :inverse-video nil :foreground "#DCDCCC"
                           :background "#3F3F3F" :stipple nil :inherit nil))))
    '(helm-selection ((t
-                      (:underline nil :background "MediumOrchid1"))))
+                      (:underline nil :background "MediumOrchid1" :foreground "white"))))
    '(region ((t (:background "thistle4" :foreground nil))))
    ;; following 2 are for moe-light:
    ;; '(hl-line ((t (:background "DarkSlateGray4" :foreground "yellow1"))))
