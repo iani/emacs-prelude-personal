@@ -45,6 +45,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:family "Inconsolata" :foundry "nil" :width normal :height 120 :weight normal :slant normal :underline nil :overline nil :strike-through nil :box nil :inverse-video nil :foreground "#DCDCCC" :background "#3F3F3F" :stipple nil :inherit nil))))
+ '(helm-selection ((t (:underline nil :background "MediumOrchid1" :foreground "white"))))
  '(hl-line ((t (:background "gray0"))))
  '(hl-sexp-face ((t (:background "gray10"))))
  '(info-title-3 ((t (:inherit info-title-4 :foreground "white" :height 1.2))))

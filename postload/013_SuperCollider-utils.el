@@ -1,4 +1,4 @@
-;;; SuperCollider-utils --- 2017-09-09 09:16:16 PM
+;;; SuperCollider-utils --- 2017-09-15 08:57:21 PM
   ;;; Commentary:
   ;;; emacs commands for doing useful things in supercollider.
   ;;; Includes newest version of snippets library.
@@ -119,12 +119,6 @@
     "Insert *>"
     (interactive)
     (insert "*>"))
-
-  (defun sclang-extensions-gui ()
-    "Open gui for browsing user extensions classes and methods.
-    Type return on a selected item to open the file where it is defined."
-    (interactive)
-    (sclang-eval-string "Class.extensionsGui;"))
 
   (defun scundelify ()
     "Blah."
@@ -325,7 +319,7 @@
        (define-key sclang-mode-map (kbd "H-/") 'sclang-insert-snippet-separator)
        (define-key sclang-mode-map (kbd "H-=") 'sclang-insert-snippet-separator+)
        (define-key sclang-mode-map (kbd "H-8") 'sclang-insert-snippet-separator*)
-       (define-key sclang-mode-map (kbd "C-h C-e") 'sclang-extensions-gui)
+       ;; (define-key sclang-mode-map (kbd "C-h C-e") 'sclang-extensions-gui)
        (define-key sclang-mode-map (kbd "C-S-c c") 'sclang-clear-post-buffer)
        (define-key sclang-mode-map (kbd "M-C-x") 'sclang-eval-current-snippet)
        (define-key sclang-mode-map (kbd "M-C-.") 'sclang-duplicate-current-snippet)

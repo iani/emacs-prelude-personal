@@ -1126,18 +1126,9 @@ Adapted from helm-switch-to-buffers."
     (interactive)
     (sclang-eval-string "Class.extensionsGui;"))
 
-  (defun sclang-add-libs-to-extensions-gui ()
-    "Add all 1st level subfolders of sclang user etensions to Library.
-  Resolve symbolic links."
-    (mapc (lambda (path)
-            (message (file-truename path)))
-          (file-expand-wildcards "/Users/iani/Library/Application Support/SuperCollider/Extensions/*")
-          ;; (file-truename "/Users/iani/Library/Application Support/SuperCollider/Extensions/sc-hacks")
-          ))
-
   (eval-after-load 'sclang
       '(progn
-         (define-key sclang-mode-map (kbd "C-h Cy-e") 'sclang-extensions-gui)))
+         (define-key sclang-mode-map (kbd "C-h C-e") 'sclang-extensions-gui)))
 #+END_SRC
 * COMMENT customize-prelude-mode-keymap
 
@@ -1317,6 +1308,11 @@ Only solution so far is to switch off prelude mode when in org mode.
     (outline-next-visible-heading 1)
     (re-search-forward " ")
     (org-cycle))
+
+  (defun org-find-next-src-block ()
+    "Search for next #+BEGIN_SRC block header."
+    (interactive)
+    (re-search-forward "\\#\\+BEGIN_SRC " nil t))
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
   ;; This is run once after loading org for the first time
@@ -1342,6 +1338,7 @@ Only solution so far is to switch off prelude mode when in org mode.
        ;; section navigation
        (define-key org-mode-map (kbd "M-n") 'jump-outline-next-visible-heading)
        (define-key org-mode-map (kbd "C-M-n") 'jump-outline-next-visible-heading-and-cycle)
+       (define-key org-mode-map (kbd "C-M-N") 'org-find-next-src-block)
        (define-key org-mode-map (kbd "M-p") 'jump-outline-previous-visible-heading)
        (define-key org-mode-map (kbd "C-M-p") 'jump-outline-previous-visible-heading-and-cycle)
        (define-key org-mode-map (kbd "C-M-f") 'org-jump-forward-heading-same-level)
