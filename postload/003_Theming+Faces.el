@@ -1,4 +1,4 @@
-;;; Theming+Faces --- 2017-09-15 08:57:17 PM
+;;; Theming+Faces --- 2017-09-17 12:45:36 PM
   ;;; Commentary:
 
   ;;; Default font: Inconsolata.
@@ -27,4 +27,4 @@
   (powerline-moe-theme)
   (moe-dark)
 (provide 'Theming+Faces)
-;;; 002_Theming+Faces.el ends here
+;;; 003_Theming+Faces.el ends here

@@ -1,4 +1,4 @@
-;;; Fullscreen_toggle_and_native_use --- 2017-09-15 08:57:17 PM
+;;; Fullscreen_toggle_and_native_use --- 2017-09-17 12:45:37 PM
 ;;; Commentary:
 ;;; enable native fullscreen mode and define key for toggling.
 
@@ -6,4 +6,4 @@
 (setq ns-use-native-fullscreen nil)
 (global-set-key (kbd "H-t") 'toggle-frame-fullscreen)
 (provide 'Fullscreen_toggle_and_native_use)
-;;; 004_Fullscreen_toggle_and_native_use.el ends here
+;;; 005_Fullscreen_toggle_and_native_use.el ends here

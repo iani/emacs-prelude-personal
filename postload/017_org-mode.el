@@ -1,4 +1,4 @@
-;;; org-mode --- 2017-09-15 08:57:22 PM
+;;; org-mode --- 2017-09-17 12:45:44 PM
   ;;; Commentary:
 
   ;; customize some org mode settings
@@ -257,4 +257,4 @@
 
   (global-set-key (kbd "C-c C-x t") 'org-insert-current-date)
 (provide 'org-mode)
-;;; 016_org-mode.el ends here
+;;; 017_org-mode.el ends here

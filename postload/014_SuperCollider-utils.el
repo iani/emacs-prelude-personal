@@ -1,4 +1,4 @@
-;;; SuperCollider-utils --- 2017-09-15 08:57:21 PM
+;;; SuperCollider-utils --- 2017-09-17 12:45:42 PM
   ;;; Commentary:
   ;;; emacs commands for doing useful things in supercollider.
   ;;; Includes newest version of snippets library.
@@ -314,9 +314,24 @@
            (goto-char (line-end-position))
            (insert "\n//:*"))
           ))
+
+  (defun sclang-server-plot-tree ()
+    "Open plotTree for default server."
+    (interactive)
+    (sclang-eval-string "Server.default.plotTree"))
+
+  (defun sclang-server-meter ()
+    "Open i/o meter for default server."
+    (interactive)
+    (sclang-eval-string "Server.default.meter"))
+
   (eval-after-load 'sclang
     '(progn
-       (define-key sclang-mode-map (kbd "H-/") 'sclang-insert-snippet-separator)
+       ;; these are disabled by sclang-bindings:
+       ;; (define-key sclang-mode-map (kbd "C-c C-p t") 'sclang-server-plot-tree)
+       ;; (define-key sclang-mode-map (kbd "C-c C-p m") 'sclang-server-meter)
+       (define-key sclang-mode-map (kbd "C-h C-t") 'sclang-server-plot-tree)
+       (define-key sclang-mode-map (kbd "C-h C-m") 'sclang-server-meter)
        (define-key sclang-mode-map (kbd "H-=") 'sclang-insert-snippet-separator+)
        (define-key sclang-mode-map (kbd "H-8") 'sclang-insert-snippet-separator*)
        ;; (define-key sclang-mode-map (kbd "C-h C-e") 'sclang-extensions-gui)
@@ -334,4 +349,4 @@
        (key-chord-define sclang-mode-map ";;" 'sclang-ltplus)
        (key-chord-define sclang-mode-map "\\\\" 'sclang-xgt)))
 (provide 'SuperCollider-utils)
-;;; 013_SuperCollider-utils.el ends here
+;;; 014_SuperCollider-utils.el ends here

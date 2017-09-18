@@ -1,4 +1,4 @@
-;;; dired-hide-details --- 2017-09-15 08:57:24 PM
+;;; dired-hide-details --- 2017-09-17 12:45:47 PM
   ;;; Commentary:
   ;; HIDE DETAILS WHEN FIRST OPENING DIRED
 
@@ -11,4 +11,4 @@
 
   (prelude-load-require-package 'dired+)
 (provide 'dired-hide-details)
-;;; 022_dired-hide-details.el ends here
+;;; 023_dired-hide-details.el ends here

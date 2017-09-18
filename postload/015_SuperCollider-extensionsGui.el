@@ -1,4 +1,4 @@
-;;; SuperCollider-extensionsGui --- 2017-09-15 08:57:21 PM
+;;; SuperCollider-extensionsGui --- 2017-09-17 12:45:43 PM
   ;;; Commentary:
 
   ;;; help-function for adding true paths of sc-lang extensions subfolders.
@@ -16,4 +16,4 @@
       '(progn
          (define-key sclang-mode-map (kbd "C-h C-e") 'sclang-extensions-gui)))
 (provide 'SuperCollider-extensionsGui)
-;;; 014_SuperCollider-extensionsGui.el ends here
+;;; 015_SuperCollider-extensionsGui.el ends here

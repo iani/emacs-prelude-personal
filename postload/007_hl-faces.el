@@ -1,6 +1,6 @@
-;;; hl-faces --- 2017-09-15 08:57:18 PM
+;;; hl-faces --- 2017-09-17 12:45:38 PM
 (custom-set-faces
  '(hl-line ((t (:background "gray0"))))
  '(hl-sexp-face ((t (:background "gray10")))))
 (provide 'hl-faces)
-;;; 006_hl-faces.el ends here
+;;; 007_hl-faces.el ends here

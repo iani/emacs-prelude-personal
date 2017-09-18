@@ -1,4 +1,4 @@
-;;; multiple-cursors --- 2017-09-15 08:57:18 PM
+;;; multiple-cursors --- 2017-09-17 12:45:38 PM
 
   (prelude-load-require-packages '(multiple-cursors mc-extras ace-mc))
 
@@ -30,4 +30,4 @@
 
   (mc/cua-rectangle-setup)
 (provide 'multiple-cursors)
-;;; 005_multiple-cursors.el ends here
+;;; 006_multiple-cursors.el ends here

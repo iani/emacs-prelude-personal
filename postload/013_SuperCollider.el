@@ -1,4 +1,4 @@
-;;; SuperCollider --- 2017-09-15 08:57:20 PM
+;;; SuperCollider --- 2017-09-17 12:45:42 PM
   ;;; Commentary:
   ;; Basic setup for using SuperCollider in EMACS
 
@@ -30,4 +30,4 @@
   (global-set-key (kbd "C-c W") 'sclang-switch-to-workspace)
 
 (provide 'SuperCollider)
-;;; 012_SuperCollider.el ends here
+;;; 013_SuperCollider.el ends here
