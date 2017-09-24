@@ -13,9 +13,9 @@
     ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
  '(package-selected-packages
    (quote
-    (workgroups2 multi-term w3m ztree perspective-projectile smartparens-config markdown-mode org-journal buffer-move dired+ calfw-cal calfw calfw-org auto-complete electric-pair hs hl-sexp paredit-mode sr-speedbar deft icicles litable paredit mc-extras
-                 (quote multiple-cursors)
-                 bookmark+ autobookmarks bm org org-mode easy-hugo powerline moe-theme geiser json-mode js2-mode rainbow-mode elisp-slime-nav rainbow-delimiters company smex ido-completing-read+ flx-ido vkill exec-path-from-shell zop-to-char zenburn-theme which-key volatile-highlights undo-tree smartrep smartparens smart-mode-line operate-on-number move-text magit projectile ov imenu-anywhere guru-mode grizzl god-mode gitignore-mode gitconfig-mode git-timemachine gist flycheck expand-region epl editorconfig easy-kill diminish diff-hl discover-my-major dash crux browse-kill-ring beacon anzu ace-window)))
+    (less-css-mode csv-mode workgroups2 multi-term w3m ztree perspective-projectile smartparens-config markdown-mode org-journal buffer-move dired+ calfw-cal calfw calfw-org auto-complete electric-pair hs hl-sexp paredit-mode sr-speedbar deft icicles litable paredit mc-extras
+                   (quote multiple-cursors)
+                   bookmark+ autobookmarks bm org org-mode easy-hugo powerline moe-theme geiser json-mode js2-mode rainbow-mode elisp-slime-nav rainbow-delimiters company smex ido-completing-read+ flx-ido vkill exec-path-from-shell zop-to-char zenburn-theme which-key volatile-highlights undo-tree smartrep smartparens smart-mode-line operate-on-number move-text magit projectile ov imenu-anywhere guru-mode grizzl god-mode gitignore-mode gitconfig-mode git-timemachine gist flycheck expand-region epl editorconfig easy-kill diminish diff-hl discover-my-major dash crux browse-kill-ring beacon anzu ace-window)))
  '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
  '(vc-annotate-background "#2B2B2B")
  '(vc-annotate-color-map
@@ -45,6 +45,9 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:family "Inconsolata" :foundry "nil" :width normal :height 120 :weight normal :slant normal :underline nil :overline nil :strike-through nil :box nil :inverse-video nil :foreground "#DCDCCC" :background "#3F3F3F" :stipple nil :inherit nil))))
+ '(font-lock-comment-delimiter-face ((t (:slant italic :foreground "wheat"))))
+ '(font-lock-comment-face ((t (:slant italic :foreground "coral1"))))
+ '(font-lock-variable-name-face ((t (:foreground "turquoise2"))))
  '(helm-selection ((t (:underline nil :background "MediumOrchid1" :foreground "white"))))
  '(hl-line ((t (:background "gray0"))))
  '(hl-sexp-face ((t (:background "gray10"))))

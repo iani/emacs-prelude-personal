@@ -1,4 +1,4 @@
-;;; moe_theme_and_powerline --- 2017-09-17 12:45:36 PM
+;;; moe_theme_powerline_delimiter_faces --- 2017-09-24 11:37:37 PM
   ;;; Commentary:
   ;;; moe-theme
 
@@ -14,7 +14,7 @@
    '(font-lock-variable-name-face ((t
                                     (:foreground "turquoise2"))))
    '(font-lock-comment-delimiter-face ((t
-                              (:slant italic :foreground "wheat"))))
+                              (:slant italic :foreground "SeaGreen4"))))
    '(font-lock-comment-face ((t
                               (:slant italic :foreground "coral1"))))
    '(mode-line ((t (
@@ -22,5 +22,5 @@
                                 :foreground "tomato"
                                 :box (:line-width 1 :color "turquoise3")
                                 :weight light :height 118 :family "Monospace")))))
-(provide 'moe_theme_and_powerline)
-;;; 002_moe_theme_and_powerline.el ends here
+(provide 'moe_theme_powerline_delimiter_faces)
+;;; 002_moe_theme_powerline_delimiter_faces.el ends here

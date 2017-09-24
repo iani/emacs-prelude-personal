@@ -38,7 +38,7 @@
 
 #+END_SRC
 
-* moe theme and powerline
+* moe theme powerline delimiter faces
 
 #+BEGIN_SRC emacs-lisp
   ;;; Commentary:
@@ -56,7 +56,7 @@
    '(font-lock-variable-name-face ((t
                                     (:foreground "turquoise2"))))
    '(font-lock-comment-delimiter-face ((t
-                              (:slant italic :foreground "wheat"))))
+                              (:slant italic :foreground "SeaGreen4"))))
    '(font-lock-comment-face ((t
                               (:slant italic :foreground "coral1"))))
    '(mode-line ((t (
