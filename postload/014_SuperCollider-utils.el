@@ -1,4 +1,4 @@
-;;; SuperCollider-utils --- 2017-09-25 06:02:06 AM
+;;; SuperCollider-utils --- 2017-09-27 10:23:50 PM
   ;;; Commentary:
   ;;; emacs commands for doing useful things in supercollider.
   ;;; Includes newest version of snippets library.
@@ -330,13 +330,30 @@
     (interactive)
     (sclang-eval-string "Server.default.scope"))
 
+  (defun sclang-server-freqscope ()
+    "Open frequency scope for default server."
+    (interactive)
+    (sclang-eval-string "Server.default.freqscope"))
+
+  (defun sclang-startupfiles-gui ()
+    "Open StartupFile gui."
+    (interactive)
+    (sclang-eval-string "StartupFiles.gui"))
+
+  (defun sclang-audiofiles-gui ()
+    "Open AudioFiles gui."
+    (interactive)
+    (sclang-eval-string "AudioFiles.gui"))
   (eval-after-load 'sclang
     '(progn
        ;; these are disabled by sclang-bindings:
        ;; (define-key sclang-mode-map (kbd "C-c C-p t") 'sclang-server-plot-tree)
        ;; (define-key sclang-mode-map (kbd "C-c C-p m") 'sclang-server-meter)
        (define-key sclang-mode-map (kbd "C-h C-t") 'sclang-server-plot-tree)
-       (define-key sclang-mode-map (kbd "C-h C-m") 'sclang-server-meter)
+       ;; (define-key sclang-mode-map (kbd "C-h C-m") 'sclang-server-meter)
+       (define-key sclang-mode-map (kbd "C-h C-l") 'sclang-startupfiles-gui)
+       (define-key sclang-mode-map (kbd "C-h C-a") 'sclang-audiofiles-gui)
+       (define-key sclang-mode-map (kbd "C-h C-f") 'sclang-server-freqscope)
        (define-key sclang-mode-map (kbd "C-h C-s") 'sclang-server-scope)
        (define-key sclang-mode-map (kbd "H-=") 'sclang-insert-snippet-separator+)
        (define-key sclang-mode-map (kbd "H-8") 'sclang-insert-snippet-separator*)
