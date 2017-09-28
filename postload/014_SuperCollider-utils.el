@@ -1,4 +1,4 @@
-;;; SuperCollider-utils --- 2017-09-27 10:23:50 PM
+;;; SuperCollider-utils --- 2017-09-28 01:44:52 PM
   ;;; Commentary:
   ;;; emacs commands for doing useful things in supercollider.
   ;;; Includes newest version of snippets library.
@@ -350,7 +350,7 @@
        ;; (define-key sclang-mode-map (kbd "C-c C-p t") 'sclang-server-plot-tree)
        ;; (define-key sclang-mode-map (kbd "C-c C-p m") 'sclang-server-meter)
        (define-key sclang-mode-map (kbd "C-h C-t") 'sclang-server-plot-tree)
-       ;; (define-key sclang-mode-map (kbd "C-h C-m") 'sclang-server-meter)
+       (define-key sclang-mode-map (kbd "C-h C-m") 'sclang-server-meter)
        (define-key sclang-mode-map (kbd "C-h C-l") 'sclang-startupfiles-gui)
        (define-key sclang-mode-map (kbd "C-h C-a") 'sclang-audiofiles-gui)
        (define-key sclang-mode-map (kbd "C-h C-f") 'sclang-server-freqscope)
@@ -362,10 +362,10 @@
        (define-key sclang-mode-map (kbd "M-C-x") 'sclang-eval-current-snippet)
        (define-key sclang-mode-map (kbd "M-C-.") 'sclang-duplicate-current-snippet)
        (define-key sclang-mode-map (kbd "M-n") 'sclang-goto-next-snippet)
-       (define-key sclang-mode-map (kbd "M-C-n") 'sclang-eval-next-snippet)
+       (define-key sclang-mode-map (kbd "M-N") 'sclang-eval-next-snippet)
        (define-key sclang-mode-map (kbd "M-C-S-n") 'sclang-move-snippet-down)
        (define-key sclang-mode-map (kbd "M-p") 'sclang-goto-previous-snippet)
-       (define-key sclang-mode-map (kbd "M-C-p") 'sclang-eval-previous-snippet)
+       (define-key sclang-mode-map (kbd "M-P") 'sclang-eval-previous-snippet)
        (define-key sclang-mode-map (kbd "M-C-S-p") 'sclang-move-snippet-up)
        (key-chord-define sclang-mode-map "11" 'sclang-2-windows)
        (key-chord-define sclang-mode-map "''" 'sclang-plusgt)
