@@ -1,4 +1,4 @@
-;;; SuperCollider-extensionsGui --- 2017-09-28 01:44:52 PM
+;;; SuperCollider-extensionsGui --- 2017-09-29 11:26:02 PM
   ;;; Commentary:
 
   ;;; help-function for adding true paths of sc-lang extensions subfolders.

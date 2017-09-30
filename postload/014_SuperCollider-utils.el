@@ -1,4 +1,4 @@
-;;; SuperCollider-utils --- 2017-09-28 01:44:52 PM
+;;; SuperCollider-utils --- 2017-09-29 11:26:01 PM
   ;;; Commentary:
   ;;; emacs commands for doing useful things in supercollider.
   ;;; Includes newest version of snippets library.
@@ -187,7 +187,7 @@
                               (buffer-substring-no-properties snippet-begin snippet-end)))
         (kill-region snippet-begin snippet-end))))
 
-  (defun sclang-move-snippet-down ()
+  (defun sclang-transpose-snippet-down ()
     "Transpose this snippet with the one following it."
     (interactive)
     (sclang-cut-current-snippet)
@@ -198,7 +198,7 @@
     (re-search-backward "^//:")
     (goto-char (line-end-position 2)))
 
-  (defun sclang-move-snippet-up ()
+  (defun sclang-transpose-snippet-up ()
     "Transpose this snippet with the one preceding it."
     (interactive)
     (sclang-cut-current-snippet)
@@ -223,40 +223,6 @@
           (setq snippet (format "{\n loop {\n %s \n} \n }.fork" snippet)))
       (sclang-eval-string snippet t)))
 
-  (defun sclang-eval-next-snippet ()
-    "Go to the next snippet and evaluate it."
-    (interactive)
-    (sclang-goto-next-snippet)
-    (sclang-eval-current-snippet))
-
-  (defun sclang-eval-previous-snippet ()
-    "Go to the previous snippet and evaluate it."
-    (interactive)
-    (sclang-goto-previous-snippet)
-    (sclang-eval-current-snippet))
-
-  (defun sclang-duplicate-current-snippet ()
-    "Insert a copy the current snippet below itself."
-    (interactive)
-    (let ((snippet (sclang-get-current-snippet)))
-      (goto-char (line-end-position))
-      (goto-char (sclang-end-of-snippet))
-      (if (eq (point) (point-max)) (insert "\n"))
-      (insert snippet)))
-
-  (defun sclang-end-of-snippet ()
-    "Return the point position of the end of the current snippet."
-    (save-excursion
-      (let ((pos (search-forward-regexp "^//:" nil t)))
-        (if pos (line-beginning-position) (point-max)))))
-
-  (defun sclang-beginning-of-snippet ()
-    "Return the point position of the beginning of the current snippet."
-    (save-excursion
-      (goto-char (line-end-position))
-      (let ((pos (search-backward-regexp "^//:" nil t)))
-        (if pos pos (point-min)))))
-
   (defun sclang-goto-next-snippet ()
     "Go to the next snippet."
     (interactive)
@@ -280,6 +246,72 @@
         (goto-char (point-min))))
       ;; (re-search-backward "^//:")
       ))
+
+  (defun sclang-eval-next-snippet ()
+    "Go to the next snippet and evaluate it."
+    (interactive)
+    (sclang-goto-next-snippet)
+    (sclang-eval-current-snippet))
+
+  (defun sclang-eval-previous-snippet ()
+    "Go to the previous snippet and evaluate it."
+    (interactive)
+    (sclang-goto-previous-snippet)
+    (sclang-eval-current-snippet))
+
+  (defun sclang-duplicate-current-snippet ()
+    "Insert a copy the current snippet below itself."
+    (interactive)
+    (let ((snippet (sclang-get-current-snippet)))
+      (goto-char (line-end-position))
+      (goto-char (sclang-end-of-snippet))
+      (if (eq (point) (point-max)) (insert "\n"))
+      (insert snippet)))
+
+  (defun sclang-copy-current-snippet ()
+    "Copy the current snippet into the kill ring."
+    (interactive)
+    (let ((snippet (sclang-get-current-snippet)))
+      (kill-new snippet)))
+
+  (defun sclang-region-select-current-snippet ()
+    "Select region between //: comments in sclang."
+    (save-excursion
+      (goto-char (line-end-position)) ;; fix when starting from point-min
+      (let (
+            (snippet-begin (search-backward-regexp "^//:" nil t))
+            snippet-end
+            snippet
+            snippet-head)
+        (unless snippet-begin
+          (setq snippet-begin (point-min)))
+        (goto-char snippet-begin)
+        (goto-char (line-end-position))
+        (setq snippet-end (search-forward-regexp "^//:" nil t))
+        (if snippet-end
+            (setq snippet-end (line-beginning-position))
+          (setq snippet-end (point-max)))
+        (goto-char snippet-begin)
+        (push-mark snipet-end)
+        (setq mark-active t))))
+
+  (defun sclang-cut-current-snippet ()
+    "Kill the current snippet, storing it in kill-ring."
+    (sclang-region-select-current-snippet)
+    (kill-region (mark) (point)))
+
+  (defun sclang-end-of-snippet ()
+    "Return the point position of the end of the current snippet."
+    (save-excursion
+      (let ((pos (search-forward-regexp "^//:" nil t)))
+        (if pos (line-beginning-position) (point-max)))))
+
+  (defun sclang-beginning-of-snippet ()
+    "Return the point position of the beginning of the current snippet."
+    (save-excursion
+      (goto-char (line-end-position))
+      (let ((pos (search-backward-regexp "^//:" nil t)))
+        (if pos pos (point-min)))))
 
   (defun sclang-insert-snippet-separator (&optional before)
     "Insert snippet separator //: at beginning of line."
@@ -344,32 +376,76 @@
     "Open AudioFiles gui."
     (interactive)
     (sclang-eval-string "AudioFiles.gui"))
+
+  (defun sclang-players-gui ()
+    "Open Players gui."
+    (interactive)
+    (sclang-eval-string "PlayerGui.gui"))
+
   (eval-after-load 'sclang
-    '(progn
-       ;; these are disabled by sclang-bindings:
-       ;; (define-key sclang-mode-map (kbd "C-c C-p t") 'sclang-server-plot-tree)
-       ;; (define-key sclang-mode-map (kbd "C-c C-p m") 'sclang-server-meter)
-       (define-key sclang-mode-map (kbd "C-h C-t") 'sclang-server-plot-tree)
-       (define-key sclang-mode-map (kbd "C-h C-m") 'sclang-server-meter)
-       (define-key sclang-mode-map (kbd "C-h C-l") 'sclang-startupfiles-gui)
-       (define-key sclang-mode-map (kbd "C-h C-a") 'sclang-audiofiles-gui)
-       (define-key sclang-mode-map (kbd "C-h C-f") 'sclang-server-freqscope)
-       (define-key sclang-mode-map (kbd "C-h C-s") 'sclang-server-scope)
-       (define-key sclang-mode-map (kbd "H-=") 'sclang-insert-snippet-separator+)
-       (define-key sclang-mode-map (kbd "H-8") 'sclang-insert-snippet-separator*)
-       ;; (define-key sclang-mode-map (kbd "C-h C-e") 'sclang-extensions-gui)
-       (define-key sclang-mode-map (kbd "C-S-c c") 'sclang-clear-post-buffer)
-       (define-key sclang-mode-map (kbd "M-C-x") 'sclang-eval-current-snippet)
-       (define-key sclang-mode-map (kbd "M-C-.") 'sclang-duplicate-current-snippet)
-       (define-key sclang-mode-map (kbd "M-n") 'sclang-goto-next-snippet)
-       (define-key sclang-mode-map (kbd "M-N") 'sclang-eval-next-snippet)
-       (define-key sclang-mode-map (kbd "M-C-S-n") 'sclang-move-snippet-down)
-       (define-key sclang-mode-map (kbd "M-p") 'sclang-goto-previous-snippet)
-       (define-key sclang-mode-map (kbd "M-P") 'sclang-eval-previous-snippet)
-       (define-key sclang-mode-map (kbd "M-C-S-p") 'sclang-move-snippet-up)
-       (key-chord-define sclang-mode-map "11" 'sclang-2-windows)
-       (key-chord-define sclang-mode-map "''" 'sclang-plusgt)
-       (key-chord-define sclang-mode-map ";;" 'sclang-ltplus)
-       (key-chord-define sclang-mode-map "\\\\" 'sclang-xgt)))
+    (progn
+      ;; these are disabled by sclang-bindings:
+      ;; (define-key sclang-mode-map (kbd "C-c C-p t") 'sclang-server-plot-tree)
+      ;; (define-key sclang-mode-map (kbd "C-c C-p m") 'sclang-server-meter)
+       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      ;; sc-hacks gui commands:
+      (define-key sclang-mode-map (kbd "C-h g s") 'sclang-startupfiles-gui)
+      (define-key sclang-mode-map (kbd "C-h g a") 'sclang-audiofiles-gui)
+      (define-key sclang-mode-map (kbd "C-h g p") 'sclang-players-gui)
+      (define-key sclang-mode-map (kbd "C-h g e") 'sclang-extensions-gui)
+      (define-key sclang-mode-map (kbd "C-h C-f") 'sclang-server-freqscope)
+       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      ;; Server state visualisation utilities
+      ;; TODO: Check and re-assign these commands for consistency with
+      ;; default sclang commands C-c C-p x:
+      ;; (define-key sclang-mode-map (kbd "C-h C-t") 'sclang-server-plot-tree)
+      ;; (define-key sclang-mode-map (kbd "C-h C-m") 'sclang-server-meter)
+      ;; (define-key sclang-mode-map (kbd "C-h C-s") 'sclang-server-scope)
+       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+       ;;;;;;;;;;;;;;;;;;       snippet commands      ;;;;;;;;;;;;;;;;;;
+      ;; eval current snippet               M-C-x
+      ;; goto next snippet                  M-n
+      ;; goto previous snippet              M-p
+      ;; eval previous snippet              M-P
+      ;; eval next snippet                  M-N
+      ;; duplicate current snippet          M-D
+      ;; copy current snippet               M-C
+      ;; select region of current snippet   M-R
+      ;; cut current snippet                M-T
+      ;; transpose snippet down             C-M-N
+      ;; transpose snippet up               C-M-P
+
+      (define-key sclang-mode-map (kbd "M-C-x") 'sclang-eval-current-snippet)
+      (define-key sclang-mode-map (kbd "M-n") 'sclang-goto-next-snippet)
+      (define-key sclang-mode-map (kbd "M-p") 'sclang-goto-previous-snippet)
+      (define-key sclang-mode-map (kbd "M-N") 'sclang-eval-next-snippet)
+      (define-key sclang-mode-map (kbd "M-P") 'sclang-eval-previous-snippet)
+      (define-key sclang-mode-map (kbd "M-D") 'sclang-duplicate-current-snippet)
+      (define-key sclang-mode-map (kbd "M-C") 'sclang-copy-current-snippet)
+      (define-key sclang-mode-map (kbd "M-R") 'sclang-region-select-current-snippet)
+      (define-key sclang-mode-map (kbd "M-T") 'sclang-cut-current-snippet)
+      (define-key sclang-mode-map (kbd "C-M-N") 'sclang-transpose-snippet-down)
+      (define-key sclang-mode-map (kbd "C-M-P") 'sclang-transpose-snippet-up)
+
+
+      ;; (define-key sclang-mode-map (kbd "M-C-.") 'sclang-duplicate-current-snippet)
+      ;; (define-key sclang-mode-map (kbd "M-n") 'sclang-goto-next-snippet)
+      ;; (define-key sclang-mode-map (kbd "M-N") 'sclang-eval-next-snippet)
+      ;; (define-key sclang-mode-map (kbd "M-C-S-n") 'sclang-move-snippet-down)
+      ;; (define-key sclang-mode-map (kbd "M-p") 'sclang-goto-previous-snippet)
+      ;; (define-key sclang-mode-map (kbd "M-P") 'sclang-eval-previous-snippet)
+      ;; (define-key sclang-mode-map (kbd "M-C-S-p") 'sclang-move-snippet-up)X
+
+      (define-key sclang-mode-map (kbd "H-=") 'sclang-insert-snippet-separator+)
+      (define-key sclang-mode-map (kbd "H-8") 'sclang-insert-snippet-separator*)
+
+       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      ;; Miscellaneous
+      (define-key sclang-mode-map (kbd "C-S-c c") 'sclang-clear-post-buffer)
+
+      (key-chord-define sclang-mode-map "11" 'sclang-2-windows)
+      (key-chord-define sclang-mode-map "''" 'sclang-plusgt)
+      (key-chord-define sclang-mode-map ";;" 'sclang-ltplus)
+      (key-chord-define sclang-mode-map "\\\\" 'sclang-xgt)))
 (provide 'SuperCollider-utils)
 ;;; 014_SuperCollider-utils.el ends here
