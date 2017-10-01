@@ -152,6 +152,12 @@ dark theme hl colors and inconsolata font
  '(rainbow-delimiters-depth-9-face ((t (:foreground "red")))))
 #+END_SRC
 
+* load-some-useful-package-avy-jump-etc
+
+#+BEGIN_SRC emacs-lisp
+  (prelude-load-require-packages '(avy-zap avy-menu auto-async-byte-compile anzu ace-window ace-popup-menu ace-isearch))
+
+#+END_SRC
 * multiple-cursors
 
 #+BEGIN_SRC emacs-lisp
@@ -2094,10 +2100,12 @@ Only solution so far is to switch off prelude mode when in org mode.
 * greek input
 
 #+BEGIN_SRC emacs-lisp
-;; (global-set-key (kbd "C-c C-\\") 'toggle-input-method)
+  ;; (global-set-key (kbd "C-c C-\\") 'toggle-input-method)
 
-(setq default-input-method "greek")
-(global-set-key (kbd "s-;") 'toggle-input-method)
+  (setq default-input-method "greek")
+  (global-set-key (kbd "s-;") 'toggle-input-method)
+  (global-set-key (kbd "s-\\") 'toggle-input-method)
+
 #+END_SRC
 
 * window and buffer switching
