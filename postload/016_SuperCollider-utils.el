@@ -1,4 +1,4 @@
-;;; SuperCollider-utils --- 2017-10-03 10:57:23 AM
+;;; SuperCollider-utils --- 2017-10-03 08:54:37 PM
   ;;; Commentary:
   ;;; emacs commands for doing useful things in supercollider.
   ;;; Includes newest version of snippets library.
@@ -448,4 +448,4 @@
       (key-chord-define sclang-mode-map ";;" 'sclang-ltplus)
       (key-chord-define sclang-mode-map "\\\\" 'sclang-xgt)))
 (provide 'SuperCollider-utils)
-;;; 015_SuperCollider-utils.el ends here
+;;; 016_SuperCollider-utils.el ends here

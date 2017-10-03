@@ -158,6 +158,32 @@ dark theme hl colors and inconsolata font
   (prelude-load-require-packages '(avy-zap avy-menu auto-async-byte-compile anzu ace-window ace-popup-menu ace-isearch))
 
 #+END_SRC
+* whitespace and visual line fixes
+
+#+BEGIN_SRC emacs-lisp
+  ;;; Commentary:
+  ;;; turn off whitespace and turn on visual line modes,
+  ;;; for these main modes:
+  ;;; js, css, web, html, markdown
+
+  (defun whitespace-off ()
+    "Make turning whitespace mode off a command callable from key."
+    (interactive)
+    (whitespace-mode -1))
+
+  (add-hook 'markdown-mode-hook 'whitespace-off)
+  (add-hook 'css-mode-hook 'whitespace-off)
+  (add-hook 'html-mode-hook 'whitespace-off)
+  (add-hook 'web-mode-hook 'whitespace-off)
+  (add-hook 'js-mode-hook 'whitespace-off)
+
+  (add-hook 'markdown-mode-hook 'visual-line-mode)
+  (add-hook 'css-mode-hook 'visual-line-mode)
+  (add-hook 'html-mode-hook 'visual-line-mode)
+  (add-hook 'web-mode-hook 'visual-line-mode)
+  (add-hook 'js-mode-hook 'visual-line-mode)
+
+#+END_SRC
 * multiple-cursors
 
 #+BEGIN_SRC emacs-lisp
@@ -612,12 +638,6 @@ Adapted from helm-switch-to-buffers."
   ;;; note: smartparens is preferable to paredit.
   (require 'smartparens-config)
 
-  (defun whitespace-off ()
-    "Make turning whitespace mode off a command callable from key."
-    (interactive)
-    (whitespace-mode -1))
-
-
   (add-hook 'emacs-lisp-mode-hook 'hl-sexp-mode)
   (add-hook 'emacs-lisp-mode-hook 'hs-minor-mode)
   (global-set-key (kbd "H-l h") 'hs-hide-level)
@@ -631,7 +651,6 @@ Adapted from helm-switch-to-buffers."
   (add-hook 'emacs-lisp-mode-hook 'auto-complete-mode)
   (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
 
-  (add-hook 'markdown-mode-hook 'whitespace-off)
   ;; H-C-i:
   (define-key emacs-lisp-mode-map (kbd "H-i") 'icicle-imenu-command)
 #+END_SRC
@@ -1681,7 +1700,6 @@ Only solution so far is to switch off prelude mode when in org mode.
 * org-split-hugo
 
 #+BEGIN_SRC emacs-lisp
-
   ;;; Commentary:
   ;;; Utilities for blog + website editing with HUGO
 
@@ -1823,8 +1841,10 @@ Only solution so far is to switch off prelude mode when in org mode.
                  (header-file (concat dir "_index.md")))
               (find-file header-file)
               (erase-buffer)
-              (insert (format "+++\ntitle = \"%s\"\nweight = %d\n+++"
+              (insert (format "+++\ntitle = \"%s\"\nweight = %d\n+++\n\n"
                               section-name index))
+              (insert "__See next page ->__\n")
+
               (save-buffer)
               (kill-buffer)))))))
 
@@ -1870,7 +1890,6 @@ Only solution so far is to switch off prelude mode when in org mode.
        (define-key org-mode-map (kbd "C-c C-h C-e") 'org-hugo-export)
        (define-key org-mode-map (kbd "C-c C-h C-a") 'org-hugo-autosplit)
        (define-key org-mode-map (kbd "C-c C-h C-/") 'org-hugo-select-filenames)))
-
 #+END_SRC
 
 * org-export-recipes

@@ -1,5 +1,4 @@
-;;; org-split-hugo --- 2017-10-03 10:57:25 AM
-
+;;; org-split-hugo --- 2017-10-03 08:54:38 PM
   ;;; Commentary:
   ;;; Utilities for blog + website editing with HUGO
 
@@ -141,8 +140,10 @@
                  (header-file (concat dir "_index.md")))
               (find-file header-file)
               (erase-buffer)
-              (insert (format "+++\ntitle = \"%s\"\nweight = %d\n+++"
+              (insert (format "+++\ntitle = \"%s\"\nweight = %d\n+++\n\n"
                               section-name index))
+              (insert "__See next page ->__\n")
+
               (save-buffer)
               (kill-buffer)))))))
 
@@ -188,6 +189,5 @@
        (define-key org-mode-map (kbd "C-c C-h C-e") 'org-hugo-export)
        (define-key org-mode-map (kbd "C-c C-h C-a") 'org-hugo-autosplit)
        (define-key org-mode-map (kbd "C-c C-h C-/") 'org-hugo-select-filenames)))
-
 (provide 'org-split-hugo)
-;;; 020_org-split-hugo.el ends here
+;;; 021_org-split-hugo.el ends here

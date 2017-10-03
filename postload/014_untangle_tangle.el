@@ -1,4 +1,4 @@
-;;; untangle_tangle --- 2017-10-03 10:57:23 AM
+;;; untangle_tangle --- 2017-10-03 08:54:37 PM
   ;;; Commentary:
   ;;; org-el-untangle:
   ;;; import muliple el files from one folder into one org mode file.
@@ -108,4 +108,4 @@
        ;; C-c . -> org-time-stamp
        (define-key org-mode-map (kbd "C-c C-M-e") 'org-el-export-all-sections)))
 (provide 'untangle_tangle)
-;;; 013_untangle_tangle.el ends here
+;;; 014_untangle_tangle.el ends here
