@@ -421,7 +421,7 @@ Adapted from helm-switch-to-buffers."
 * helm-swoop
 
 #+BEGIN_SRC emacs-lisp
-  ;; (global-ace-isearch-mode +1)
+  (global-ace-isearch-mode +1)
   (prelude-load-require-package 'helm-swoop)
   (global-set-key (kbd "C-S-s") 'helm-swoop)
 #+END_SRC
@@ -600,7 +600,7 @@ Adapted from helm-switch-to-buffers."
 ;; (setq desktop-save-mode 1)
 #+END_SRC
 
-* EmacsLispModes
+* EmacsLispModes and whitespace off
 
 #+BEGIN_SRC emacs-lisp
   ;;; Commentary:
@@ -630,6 +630,8 @@ Adapted from helm-switch-to-buffers."
   ;; (add-hook 'emacs-lisp-mode-hook 'turn-on-whitespace-mode)
   (add-hook 'emacs-lisp-mode-hook 'auto-complete-mode)
   (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
+
+  (add-hook 'markdown-mode-hook 'whitespace-off)
   ;; H-C-i:
   (define-key emacs-lisp-mode-map (kbd "H-i") 'icicle-imenu-command)
 #+END_SRC

@@ -1,4 +1,4 @@
-;;; EmacsLispModes --- 2017-10-01 01:03:11 PM
+;;; EmacsLispModes_and_whitespace_off --- 2017-10-03 10:57:22 AM
   ;;; Commentary:
   ;;; useful minor modes for emacs-lisp
 
@@ -26,7 +26,9 @@
   ;; (add-hook 'emacs-lisp-mode-hook 'turn-on-whitespace-mode)
   (add-hook 'emacs-lisp-mode-hook 'auto-complete-mode)
   (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
+
+  (add-hook 'markdown-mode-hook 'whitespace-off)
   ;; H-C-i:
   (define-key emacs-lisp-mode-map (kbd "H-i") 'icicle-imenu-command)
-(provide 'EmacsLispModes)
-;;; 012_EmacsLispModes.el ends here
+(provide 'EmacsLispModes_and_whitespace_off)
+;;; 012_EmacsLispModes_and_whitespace_off.el ends here
