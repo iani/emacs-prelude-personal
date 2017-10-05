@@ -1466,7 +1466,7 @@ Only solution so far is to switch off prelude mode when in org mode.
   (eval-after-load 'org
     '(progn
        ;; alias for org-cycle, more convenient than TAB
-       (define-key org-mode-map (kbd "C-H-c") 'org-cycle)
+       (define-key org-mode-map (kbd "C-M-]") 'org-cycle)
        ;; Note: This keybinding is in analogy to the default keybinding:
        ;; C-c . -> org-time-stamp
        (define-key org-mode-map (kbd "C-c C-.") 'org-set-date)

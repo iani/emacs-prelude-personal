@@ -1,4 +1,4 @@
-;;; Cursor_Beep --- 2017-10-03 08:54:35 PM
+;;; Cursor_Beep --- 2017-10-05 05:02:50 PM
 
 ;;; Commentary:
 ;;; basic theming, cursor style.

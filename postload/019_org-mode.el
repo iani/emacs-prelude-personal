@@ -1,4 +1,4 @@
-;;; org-mode --- 2017-10-03 08:54:38 PM
+;;; org-mode --- 2017-10-05 05:02:53 PM
   ;;; Commentary:
 
   ;; customize some org mode settings
@@ -120,7 +120,7 @@
   (eval-after-load 'org
     '(progn
        ;; alias for org-cycle, more convenient than TAB
-       (define-key org-mode-map (kbd "C-H-c") 'org-cycle)
+       (define-key org-mode-map (kbd "C-M-]") 'org-cycle)
        ;; Note: This keybinding is in analogy to the default keybinding:
        ;; C-c . -> org-time-stamp
        (define-key org-mode-map (kbd "C-c C-.") 'org-set-date)

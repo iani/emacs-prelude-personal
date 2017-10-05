@@ -1,4 +1,4 @@
-;;; SuperCollider-utils --- 2017-10-03 08:54:37 PM
+;;; SuperCollider-utils --- 2017-10-05 05:02:53 PM
   ;;; Commentary:
   ;;; emacs commands for doing useful things in supercollider.
   ;;; Includes newest version of snippets library.
