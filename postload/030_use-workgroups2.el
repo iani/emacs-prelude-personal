@@ -1,6 +1,6 @@
-;;; use-workgroups2 --- 2017-10-05 05:02:57 PM
+;;; use-workgroups2 --- 2017-10-06 09:25:44 PM
   (prelude-require-package 'workgroups2)
   (workgroups-mode t)
 
 (provide 'use-workgroups2)
-;;; 031_use-workgroups2.el ends here
+;;; 030_use-workgroups2.el ends here

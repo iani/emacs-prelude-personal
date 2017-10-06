@@ -1,4 +1,4 @@
-;;; EmacsLispModes_and_whitespace_off --- 2017-10-05 05:02:52 PM
+;;; EmacsLispModes_and_whitespace_off --- 2017-10-06 09:25:39 PM
   ;;; Commentary:
   ;;; useful minor modes for emacs-lisp
 

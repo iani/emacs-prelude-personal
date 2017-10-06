@@ -1,4 +1,4 @@
-;;; SuperCollider-utils --- 2017-10-05 05:02:53 PM
+;;; SuperCollider-utils --- 2017-10-06 09:25:40 PM
   ;;; Commentary:
   ;;; emacs commands for doing useful things in supercollider.
   ;;; Includes newest version of snippets library.
@@ -105,20 +105,20 @@
     (delete-other-windows)
     (sclang-show-post-buffer))
 
-  (defun sclang-plusgt ()
-    "Insert +>."
-    (interactive)
-    (insert "+>"))
+  ;; (defun sclang-plusgt ()
+  ;;   "Insert +>."
+  ;;   (interactive)
+  ;;   (insert "+>"))
 
-  (defun sclang-ltplus ()
-    "Insert <+."
-    (interactive)
-    (insert "<+"))
+  ;; (defun sclang-ltplus ()
+  ;;   "Insert <+."
+  ;;   (interactive)
+  ;;   (insert "<+"))
 
-  (defun sclang-xgt ()
-    "Insert *>"
-    (interactive)
-    (insert "*>"))
+  ;; (defun sclang-xgt ()
+  ;;   "Insert *>"
+  ;;   (interactive)
+  ;;   (insert "*>"))
 
   (defun scundelify ()
     "Blah."
@@ -382,6 +382,17 @@
     (interactive)
     (sclang-eval-string "PlayerGui.gui"))
 
+  (defun sclang-extensions-gui ()
+    "Open gui for browsing user extensions classes and methods.
+    Type return on a selected item to open the file where it is defined."
+    (interactive)
+    (sclang-eval-string "Class.extensionsGui;"))
+
+  (defun sclang-nevent-gui ()
+    "Open gui displaying contents of current Nenvir."
+    (interactive)
+    (sclang-eval-string "NeventGui.gui;"))
+
   (eval-after-load 'sclang
     (progn
       ;; these are disabled by sclang-bindings:
@@ -393,15 +404,17 @@
       (define-key sclang-mode-map (kbd "C-h g a") 'sclang-audiofiles-gui)
       (define-key sclang-mode-map (kbd "C-h g p") 'sclang-players-gui)
       (define-key sclang-mode-map (kbd "C-h g e") 'sclang-extensions-gui)
-      (define-key sclang-mode-map (kbd "C-h C-f") 'sclang-server-freqscope)
+      (define-key sclang-mode-map (kbd "C-h g n") 'sclang-nevent-gui)
+
        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;; Server state visualisation utilities
       ;; TODO: Check and re-assign these commands for consistency with
       ;; default sclang commands C-c C-p x:
-      ;; (define-key sclang-mode-map (kbd "C-h C-t") 'sclang-server-plot-tree)
-      ;; (define-key sclang-mode-map (kbd "C-h C-m") 'sclang-server-meter)
-      ;; (define-key sclang-mode-map (kbd "C-h C-s") 'sclang-server-scope)
-       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      (define-key sclang-mode-map (kbd "C-c P p") 'sclang-server-plot-tree)
+      (define-key sclang-mode-map (kbd "C-c P m") 'sclang-server-meter)
+      (define-key sclang-mode-map (kbd "C-c P s") 'sclang-server-scope)
+      (define-key sclang-mode-map (kbd "C-c P f") 'sclang-server-freqscope)
+   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
        ;;;;;;;;;;;;;;;;;;       snippet commands      ;;;;;;;;;;;;;;;;;;
       ;; eval current snippet               M-C-x
       ;; goto next snippet                  M-n
@@ -444,8 +457,9 @@
       (define-key sclang-mode-map (kbd "C-S-c c") 'sclang-clear-post-buffer)
 
       (key-chord-define sclang-mode-map "11" 'sclang-2-windows)
-      (key-chord-define sclang-mode-map "''" 'sclang-plusgt)
-      (key-chord-define sclang-mode-map ";;" 'sclang-ltplus)
-      (key-chord-define sclang-mode-map "\\\\" 'sclang-xgt)))
+      ;; (key-chord-define sclang-mode-map "''" 'sclang-plusgt)
+      ;; (key-chord-define sclang-mode-map ";;" 'sclang-ltplus)
+      ;; (key-chord-define sclang-mode-map "\\\\" 'sclang-xgt)
+      ))
 (provide 'SuperCollider-utils)
 ;;; 016_SuperCollider-utils.el ends here

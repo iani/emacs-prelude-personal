@@ -912,20 +912,20 @@ Adapted from helm-switch-to-buffers."
     (delete-other-windows)
     (sclang-show-post-buffer))
 
-  (defun sclang-plusgt ()
-    "Insert +>."
-    (interactive)
-    (insert "+>"))
+  ;; (defun sclang-plusgt ()
+  ;;   "Insert +>."
+  ;;   (interactive)
+  ;;   (insert "+>"))
 
-  (defun sclang-ltplus ()
-    "Insert <+."
-    (interactive)
-    (insert "<+"))
+  ;; (defun sclang-ltplus ()
+  ;;   "Insert <+."
+  ;;   (interactive)
+  ;;   (insert "<+"))
 
-  (defun sclang-xgt ()
-    "Insert *>"
-    (interactive)
-    (insert "*>"))
+  ;; (defun sclang-xgt ()
+  ;;   "Insert *>"
+  ;;   (interactive)
+  ;;   (insert "*>"))
 
   (defun scundelify ()
     "Blah."
@@ -1189,6 +1189,17 @@ Adapted from helm-switch-to-buffers."
     (interactive)
     (sclang-eval-string "PlayerGui.gui"))
 
+  (defun sclang-extensions-gui ()
+    "Open gui for browsing user extensions classes and methods.
+    Type return on a selected item to open the file where it is defined."
+    (interactive)
+    (sclang-eval-string "Class.extensionsGui;"))
+
+  (defun sclang-nevent-gui ()
+    "Open gui displaying contents of current Nenvir."
+    (interactive)
+    (sclang-eval-string "NeventGui.gui;"))
+
   (eval-after-load 'sclang
     (progn
       ;; these are disabled by sclang-bindings:
@@ -1200,15 +1211,17 @@ Adapted from helm-switch-to-buffers."
       (define-key sclang-mode-map (kbd "C-h g a") 'sclang-audiofiles-gui)
       (define-key sclang-mode-map (kbd "C-h g p") 'sclang-players-gui)
       (define-key sclang-mode-map (kbd "C-h g e") 'sclang-extensions-gui)
-      (define-key sclang-mode-map (kbd "C-h C-f") 'sclang-server-freqscope)
+      (define-key sclang-mode-map (kbd "C-h g n") 'sclang-nevent-gui)
+
        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;; Server state visualisation utilities
       ;; TODO: Check and re-assign these commands for consistency with
       ;; default sclang commands C-c C-p x:
-      ;; (define-key sclang-mode-map (kbd "C-h C-t") 'sclang-server-plot-tree)
-      ;; (define-key sclang-mode-map (kbd "C-h C-m") 'sclang-server-meter)
-      ;; (define-key sclang-mode-map (kbd "C-h C-s") 'sclang-server-scope)
-       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      (define-key sclang-mode-map (kbd "C-c P p") 'sclang-server-plot-tree)
+      (define-key sclang-mode-map (kbd "C-c P m") 'sclang-server-meter)
+      (define-key sclang-mode-map (kbd "C-c P s") 'sclang-server-scope)
+      (define-key sclang-mode-map (kbd "C-c P f") 'sclang-server-freqscope)
+   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
        ;;;;;;;;;;;;;;;;;;       snippet commands      ;;;;;;;;;;;;;;;;;;
       ;; eval current snippet               M-C-x
       ;; goto next snippet                  M-n
@@ -1251,31 +1264,12 @@ Adapted from helm-switch-to-buffers."
       (define-key sclang-mode-map (kbd "C-S-c c") 'sclang-clear-post-buffer)
 
       (key-chord-define sclang-mode-map "11" 'sclang-2-windows)
-      (key-chord-define sclang-mode-map "''" 'sclang-plusgt)
-      (key-chord-define sclang-mode-map ";;" 'sclang-ltplus)
-      (key-chord-define sclang-mode-map "\\\\" 'sclang-xgt)))
+      ;; (key-chord-define sclang-mode-map "''" 'sclang-plusgt)
+      ;; (key-chord-define sclang-mode-map ";;" 'sclang-ltplus)
+      ;; (key-chord-define sclang-mode-map "\\\\" 'sclang-xgt)
+      ))
 #+END_SRC
 
-* SuperCollider-extensionsGui
-
-#+BEGIN_SRC emacs-lisp
-  ;;; Commentary:
-
-  ;;; help-function for adding true paths of sc-lang extensions subfolders.
-  ;;; Also define sclang-extensions-gui local keybinding for sclang
-
-  ;;; Code:
-
-  (defun sclang-extensions-gui ()
-    "Open gui for browsing user extensions classes and methods.
-    Type return on a selected item to open the file where it is defined."
-    (interactive)
-    (sclang-eval-string "Class.extensionsGui;"))
-
-  (eval-after-load 'sclang
-      '(progn
-         (define-key sclang-mode-map (kbd "C-h C-e") 'sclang-extensions-gui)))
-#+END_SRC
 * COMMENT customize-prelude-mode-keymap
 
 Unfortunately this does not work.
