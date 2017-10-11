@@ -1,4 +1,4 @@
-;;; window_and_buffer_switching_ace_window --- 2017-10-07 08:19:02 PM
+;;; window_and_buffer_switching_ace_window --- 2017-10-11 05:41:41 PM
   ;;; Commentary:
   ;;; move amngst windows and switch window position with cursor keys
 
@@ -13,7 +13,7 @@
   (global-set-key (kbd "s-S-<down>")   'buf-move-down)
   (global-set-key (kbd "s-S-<left>")   'buf-move-left)
   (global-set-key (kbd "s-S-<right>")  'buf-move-right)
-  (global-set-key (kbd "H-w")  'ace-window)
+  (global-set-key (kbd "H-C-o")  'ace-window)
   (global-set-key (kbd "C-x o")  'ace-window)
   (setq aw-keys '(?a ?b ?c ?d ?e ?f ?g ?h ?i ?j ?k ?l ?m ?n ?o ?p ?q))
 
@@ -24,4 +24,4 @@
   ;;  :config (setq aw-keys '(?a ?o ?e ?u ?i ?d ?h ?t ?n ?s))
   ;;  :bind ("C-x o") . ace-window)
 (provide 'window_and_buffer_switching_ace_window)
-;;; 027_window_and_buffer_switching_ace_window.el ends here
+;;; 028_window_and_buffer_switching_ace_window.el ends here

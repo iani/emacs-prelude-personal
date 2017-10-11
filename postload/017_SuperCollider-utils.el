@@ -1,4 +1,4 @@
-;;; SuperCollider-utils --- 2017-10-06 09:25:40 PM
+;;; SuperCollider-utils --- 2017-10-11 05:41:37 PM
   ;;; Commentary:
   ;;; emacs commands for doing useful things in supercollider.
   ;;; Includes newest version of snippets library.
@@ -52,17 +52,16 @@
     (sclang-clear-post-buffer)
     (sclang-switch-to-workspace))
 
-  (defun dired-preview-audio-buffer ()
-    "Load file at cursor in dired to sc audio buffer.
-    If called with prefix, play the buffer as soon as it is loaded."
-    (interactive)
-    (message (dired-get-filename))
+  (defun dired-load-audio-buffer (&optional preview)
+    "Load file at cursor in dired to sc audio buffer. If PREVIEW then play when loaded."
+    (interactive "P")
     (sclang-eval-string
-     (format "LoadFile.previewAudio(\"%s\")"
-             (dired-get-filename))
+     (format "AudioFiles.previewAudio(\"%s\", %s)"
+             (dired-get-filename)
+             (if preview "true" "false"))
      t))
 
-  (defun dired-load-sc-file (&optional loadNow)
+  (defun dired-add-startup-file (&optional loadNow)
     "Load file at cursor in dired to sc audio buffer.
     If called with prefix, play the buffer as soon as it is loaded."
     (interactive "P")
@@ -70,17 +69,16 @@
       (dolist (path paths)
         (message path)
         (sclang-eval-string
-         (format "LoadFile(\"%s\");\nLoadFile.save;\n" path))
-        (if loadNow
-            (sclang-eval-string
-             (format "\"%s\".load", path))))))
+         (format "StartupFiles.add(\"%s\", %s);\n"
+                 path
+                 (if loadNow "true" "false"))))))
 
   (eval-after-load 'dired
     '(progn
        ;; Note: This keybinding is in analogy to the default keybinding:
        ;; C-c . -> org-time-stamp
-       (define-key dired-mode-map (kbd "C-c C-b") 'dired-preview-audio-buffer)
-       (define-key dired-mode-map (kbd "C-c C-l") 'dired-load-sc-file)))
+       (define-key dired-mode-map (kbd "C-c C-b") 'dired-load-audio-buffer)
+       (define-key dired-mode-map (kbd "C-c C-s") 'dired-add-startup-file)))
 
   ;; (global-set-key (kbd "H-d b") 'dired-load-audio-buffer)
 
@@ -462,4 +460,4 @@
       ;; (key-chord-define sclang-mode-map "\\\\" 'sclang-xgt)
       ))
 (provide 'SuperCollider-utils)
-;;; 016_SuperCollider-utils.el ends here
+;;; 017_SuperCollider-utils.el ends here

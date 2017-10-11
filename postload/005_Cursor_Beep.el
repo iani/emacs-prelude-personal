@@ -1,4 +1,4 @@
-;;; Cursor_Beep --- 2017-10-06 09:25:37 PM
+;;; Cursor_Beep --- 2017-10-11 05:41:33 PM
 
 ;;; Commentary:
 ;;; basic theming, cursor style.
@@ -16,4 +16,4 @@
 (set-cursor-color "tomato")
 
 (provide 'Cursor_Beep)
-;;; 004_Cursor_Beep.el ends here
+;;; 005_Cursor_Beep.el ends here

@@ -1,4 +1,4 @@
-;;; EmacsLispModes_and_whitespace_off --- 2017-10-06 09:25:39 PM
+;;; EmacsLispModes_and_whitespace_off --- 2017-10-11 05:41:36 PM
   ;;; Commentary:
   ;;; useful minor modes for emacs-lisp
 
@@ -24,4 +24,4 @@
   ;; H-C-i:
   (define-key emacs-lisp-mode-map (kbd "H-i") 'icicle-imenu-command)
 (provide 'EmacsLispModes_and_whitespace_off)
-;;; 013_EmacsLispModes_and_whitespace_off.el ends here
+;;; 014_EmacsLispModes_and_whitespace_off.el ends here

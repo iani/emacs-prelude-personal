@@ -1,4 +1,4 @@
-;;; whitespace_and_visual_line_fixes --- 2017-10-06 09:25:38 PM
+;;; whitespace_and_visual_line_fixes --- 2017-10-11 05:41:34 PM
   ;;; Commentary:
   ;;; turn off whitespace and turn on visual line modes,
   ;;; for these main modes:
@@ -22,4 +22,4 @@
   (add-hook 'js-mode-hook 'visual-line-mode)
 
 (provide 'whitespace_and_visual_line_fixes)
-;;; 007_whitespace_and_visual_line_fixes.el ends here
+;;; 008_whitespace_and_visual_line_fixes.el ends here
