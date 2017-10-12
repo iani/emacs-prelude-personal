@@ -1,4 +1,4 @@
-;;; SuperCollider-utils --- 2017-10-12 04:23:08 AM
+;;; SuperCollider-utils --- 2017-10-12 10:56:23 PM
   ;;; Commentary:
   ;;; emacs commands for doing useful things in supercollider.
   ;;; Includes newest version of snippets library.
@@ -53,25 +53,26 @@
     (sclang-switch-to-workspace))
 
   (defun dired-load-audio-buffer (&optional preview)
-    "Load file at cursor in dired to sc audio buffer. If PREVIEW then play when loaded."
+    "Load file at cursor in dired to sc audio buffer.  If PREVIEW then play when loaded."
     (interactive "P")
     (sclang-eval-string
-     (format "AudioFiles.previewAudio(\"%s\", %s)"
-             (dired-get-filename)
-             (if preview "true" "false"))
+     (if preview
+         (format "\"%s\",previewBuffer"
+                 (dired-get-filename))
+       (format "\"%s\".loadBuffer"
+               (dired-get-filename)))
      t))
 
-  (defun dired-add-startup-file (&optional loadNow)
-    "Load file at cursor in dired to sc audio buffer.
-    If called with prefix, play the buffer as soon as it is loaded."
+  (defun dired-add-startup-file (&optional preview)
+    "Add the file to the list of startup files.  If PREVIEW then only test loading but do not add."
     (interactive "P")
     (let ((paths (dired-get-marked-files)))
       (dolist (path paths)
         (message path)
         (sclang-eval-string
-         (format "StartupFiles.add(\"%s\", %s);\n"
-                 path
-                 (if loadNow "true" "false"))))))
+         (if preview
+             (format "%s.previewCode;\n" path))
+         (format "%s.addCode;\n" path)))))
 
   (eval-after-load 'dired
     '(progn
