@@ -1,4 +1,4 @@
-;;; speedbar --- 2017-10-11 05:41:36 PM
+;;; speedbar --- 2017-10-12 04:23:07 AM
   (prelude-load-require-packages '(deft sr-speedbar))
 
   (setq deft-use-filename-as-title t)

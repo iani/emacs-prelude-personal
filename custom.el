@@ -47,6 +47,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:family "Inconsolata" :foundry "nil" :width normal :height 120 :weight normal :slant normal :underline nil :overline nil :strike-through nil :box nil :inverse-video nil :foreground "#DCDCCC" :background "#3F3F3F" :stipple nil :inherit nil))))
+ '(aw-leading-char-face ((t (:height 5.0 :weight bold :foreground "white" :background "red" :inherit (aw-mode-line-face)))))
  '(font-lock-comment-delimiter-face ((t (:slant italic :foreground "wheat"))))
  '(font-lock-comment-face ((t (:slant italic :foreground "coral1"))))
  '(font-lock-variable-name-face ((t (:foreground "turquoise2"))))

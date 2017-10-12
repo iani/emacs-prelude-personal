@@ -1,4 +1,4 @@
-;;; moe_theme_powerline_delimiter_faces --- 2017-10-11 05:41:33 PM
+;;; moe_theme_powerline_delimiter_faces --- 2017-10-12 04:23:03 AM
   ;;; Commentary:
   ;;; moe-theme
 
@@ -23,7 +23,7 @@
                                 :box (:line-width 1 :color "turquoise3")
                                 :weight light :height 118 :family "Monospace"))))
    '(aw-leading-char-face ((t
-                          (:height 5.0 :weight bold :foreground "white" :background "red" :inherit
+                          (:weight bold :foreground "white" :background "red" :inherit
                                    (aw-mode-line-face))))))
 (provide 'moe_theme_powerline_delimiter_faces)
 ;;; 003_moe_theme_powerline_delimiter_faces.el ends here

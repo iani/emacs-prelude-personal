@@ -71,7 +71,7 @@
                                 :box (:line-width 1 :color "turquoise3")
                                 :weight light :height 118 :family "Monospace"))))
    '(aw-leading-char-face ((t
-                          (:height 5.0 :weight bold :foreground "white" :background "red" :inherit
+                          (:weight bold :foreground "white" :background "red" :inherit
                                    (aw-mode-line-face))))))
 #+END_SRC
 
