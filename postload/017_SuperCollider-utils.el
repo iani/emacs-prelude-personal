@@ -1,4 +1,4 @@
-;;; SuperCollider-utils --- 2017-10-12 10:56:23 PM
+;;; SuperCollider-utils --- 2017-10-13 12:09:59 AM
   ;;; Commentary:
   ;;; emacs commands for doing useful things in supercollider.
   ;;; Includes newest version of snippets library.
@@ -71,8 +71,9 @@
         (message path)
         (sclang-eval-string
          (if preview
-             (format "%s.previewCode;\n" path))
-         (format "%s.addCode;\n" path)))))
+             (format "\"%s\".previewCode;\n" path)
+           (format "\"%s\".addCode;\n" path))
+         t))))
 
   (eval-after-load 'dired
     '(progn

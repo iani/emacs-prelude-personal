@@ -887,8 +887,9 @@ Adapted from helm-switch-to-buffers."
         (message path)
         (sclang-eval-string
          (if preview
-             (format "%s.previewCode;\n" path))
-         (format "%s.addCode;\n" path)))))
+             (format "\"%s\".previewCode;\n" path)
+           (format "\"%s\".addCode;\n" path))
+         t))))
 
   (eval-after-load 'dired
     '(progn
