@@ -167,6 +167,16 @@ dark theme hl colors and inconsolata font
   (prelude-load-require-packages '(avy-zap avy-menu auto-async-byte-compile anzu ace-window ace-popup-menu ace-isearch))
 
 #+END_SRC
+* god and evil modes
+  :PROPERTIES:
+  :DATE:     <2017-10-19 Πεμ 10:03>
+  :END:
+
+#+BEGIN_SRC emacs-lisp
+  (global-set-key (kbd "<f5>") 'god-mode)
+  (global-set-key (kbd "<f6>") 'evil-mode)
+#+END_SRC
+
 * whitespace and visual line fixes
 
 #+BEGIN_SRC emacs-lisp
@@ -816,7 +826,7 @@ Adapted from helm-switch-to-buffers."
 
 #+BEGIN_SRC emacs-lisp
   ;;; Commentary:
-  ;;; emacs commands for doing useful things in supercollider.
+  ;;; emacs  commands for doing useful things in supercollider.
   ;;; Includes newest version of snippets library.
 
   ;;; Code:
@@ -906,7 +916,7 @@ Adapted from helm-switch-to-buffers."
     (let*
         ((element (cadr (org-element-at-point)))
          (code (plist-get element :value)))
-      (sclang-eval-string code)))
+      (sclang-eval-string code t)))
 
   (eval-after-load 'org
     '(progn
@@ -1244,7 +1254,8 @@ Adapted from helm-switch-to-buffers."
       ;; transpose snippet down             C-M-N
       ;; transpose snippet up               C-M-P
 
-      (define-key sclang-mode-map (kbd "M-C-x") 'sclang-eval-current-snippet)
+      (define-key sclang-mode-map (kbd "M-X") 'sclang-eval-current-snippet)
+      (define-key sclang-mode-map (kbd "C-M-x") 'sclang-eval-current-snippet)
       (define-key sclang-mode-map (kbd "M-n") 'sclang-goto-next-snippet)
       (define-key sclang-mode-map (kbd "M-p") 'sclang-goto-previous-snippet)
       (define-key sclang-mode-map (kbd "M-N") 'sclang-eval-next-snippet)
@@ -1354,6 +1365,11 @@ Only solution so far is to switch off prelude mode when in org mode.
   ;; define some useful functions
 
   ;;; Code:
+
+  ;;; pretty bullets
+  ;;;   (prelude-load-require-package 'org-bullets)
+  (require 'org-bullets)
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 
   ;; load util to insert recipes for export customization:
   ;; (require 'org-export-recipes) ;; is now part of postload!
@@ -1487,7 +1503,7 @@ Only solution so far is to switch off prelude mode when in org mode.
        ;; section navigation
        (define-key org-mode-map (kbd "M-n") 'jump-outline-next-visible-heading)
        (define-key org-mode-map (kbd "C-M-n") 'jump-outline-next-visible-heading-and-cycle)
-       (define-key org-mode-map (kbd "C-M-N") 'org-find-next-src-block)
+       ;; (define-key org-mode-map (kbd "C-M-N") 'org-find-next-src-block)
        (define-key org-mode-map (kbd "M-p") 'jump-outline-previous-visible-heading)
        (define-key org-mode-map (kbd "C-M-p") 'jump-outline-previous-visible-heading-and-cycle)
        (define-key org-mode-map (kbd "C-M-f") 'org-jump-forward-heading-same-level)
@@ -1606,6 +1622,35 @@ Only solution so far is to switch off prelude mode when in org mode.
 
   (global-set-key (kbd "C-c C-x t") 'org-insert-current-date)
 #+END_SRC
+* org-mode: Use uppercase UUIDs in Linux for consistency with MacOS when syncing with rslsync
+  :PROPERTIES:
+  :DATE:     <2017-11-01 Τετ 10:56>
+  :ID:       31EB3CBA-7864-4E53-A386-3E85C61F1EDA
+  :END:
+
+  #+BEGIN_SRC emacs-lisp
+    (defun org-id-get (&optional pom create prefix)
+      "Get the ID property of the entry at point-or-marker POM.
+
+    This is a modified version that returns the ID using uppercase letters,
+    for consistency with MacOS when syncing attachment folders over rslsync.
+
+    If POM is nil, refer to the entry at point.
+    If the entry does not have an ID, the function returns nil.
+    However, when CREATE is non nil, create an ID if none is present already.
+    PREFIX will be passed through to `org-id-new'.
+    In any case, the ID of the entry is returned."
+      (org-with-point-at pom
+        (let ((id (org-entry-get nil "ID")))
+          (cond
+           ((and id (stringp id) (string-match "\\S-" id))
+            id)
+           (create
+            (setq id (org-id-new prefix))
+            (org-entry-put pom "ID" id)
+            (org-id-add-location id (buffer-file-name (buffer-base-buffer)))
+            (upcase id))))))
+  #+END_SRC
 * org calfw
 
 #+BEGIN_SRC emacs-lisp
@@ -2149,7 +2194,7 @@ Only solution so far is to switch off prelude mode when in org mode.
   (global-set-key (kbd "s-S-<down>")   'buf-move-down)
   (global-set-key (kbd "s-S-<left>")   'buf-move-left)
   (global-set-key (kbd "s-S-<right>")  'buf-move-right)
-  (global-set-key (kbd "H-C-o")  'ace-window)
+  (global-set-key (kbd "C-O")  'ace-window)
   (global-set-key (kbd "C-x o")  'ace-window)
   (setq aw-keys '(?a ?b ?c ?d ?e ?f ?g ?h ?i ?j ?k ?l ?m ?n ?o ?p ?q))
 
