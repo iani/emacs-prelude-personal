@@ -1,4 +1,4 @@
-;;; org-split-hugo --- 2017-11-01 11:21:19 πμ
+;;; org-split-hugo --- 2017-11-02 11:01:28 πμ
 ;;; Commentary:
 ;;; Utilities for blog + website editing with HUGO
 
@@ -190,4 +190,4 @@ Add yaml header for hugo."
      (define-key org-mode-map (kbd "C-c C-h C-a") 'org-hugo-autosplit)
      (define-key org-mode-map (kbd "C-c C-h C-/") 'org-hugo-select-filenames)))
 (provide 'org-split-hugo)
-;;; 023_org-split-hugo.el ends here
+;;; 022_org-split-hugo.el ends here

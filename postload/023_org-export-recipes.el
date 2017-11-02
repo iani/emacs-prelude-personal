@@ -1,4 +1,4 @@
-;;; org-export-recipes --- 2017-11-01 11:21:19 πμ
+;;; org-export-recipes --- 2017-11-02 11:01:28 πμ
 ;;; Commentary:
 
 ;; define concenience function for selecting a recipe file
@@ -48,4 +48,4 @@ Else insert recipe from recipe folder at top of file."
 (global-set-key (kbd "H-c i") 'org-export-insert-recipe)
 (global-set-key (kbd "H-c l") 'org-load-lisp-snippet)
 (provide 'org-export-recipes)
-;;; 024_org-export-recipes.el ends here
+;;; 023_org-export-recipes.el ends here

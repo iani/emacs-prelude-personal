@@ -483,7 +483,7 @@ Adapted from helm-switch-to-buffers."
 
 #+END_SRC
 
-* speedbar
+* COMMENT speedbar
 
 #+BEGIN_SRC emacs-lisp
   (prelude-load-require-packages '(deft sr-speedbar))
@@ -2371,7 +2371,7 @@ If UNLINK-P is not nil, then delete the link instead."
 
 #+END_SRC
 
-* use-workgroups2
+* COMMENT use-workgroups2
 
 #+BEGIN_SRC emacs-lisp
   (prelude-require-package 'workgroups2)

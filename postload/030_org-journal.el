@@ -1,4 +1,4 @@
-;;; org-journal --- 2017-11-01 11:21:20 πμ
+;;; org-journal --- 2017-11-02 11:01:29 πμ
 ;;; Commentary:
 ;;; use org-journal for capture globally.
 ;;; https://github.com/bastibe/org-journal
@@ -73,4 +73,4 @@ This function is also used in custom function org-jump-to-refile-target."
 (global-set-key (kbd "C-c c j") 'org-journal-at-date-from-user)
 (global-set-key (kbd "C-c c J") 'org-journal-new-entry-from-org-timestamp)
 (provide 'org-journal)
-;;; 031_org-journal.el ends here
+;;; 030_org-journal.el ends here

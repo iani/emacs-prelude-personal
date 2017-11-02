@@ -1,4 +1,4 @@
-;;; SuperCollider-utils --- 2017-11-01 11:21:17 πμ
+;;; SuperCollider-utils --- 2017-11-02 11:01:27 πμ
 ;;; Commentary:
 ;;; emacs  commands for doing useful things in supercollider.
 ;;; Includes newest version of snippets library.
@@ -463,4 +463,4 @@ If the beginning of line is '//:*', then wrap the snippet in loop and fork."
     ;; (key-chord-define sclang-mode-map "\\\\" 'sclang-xgt)
     ))
 (provide 'SuperCollider-utils)
-;;; 018_SuperCollider-utils.el ends here
+;;; 017_SuperCollider-utils.el ends here

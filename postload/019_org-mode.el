@@ -1,4 +1,4 @@
-;;; org-mode --- 2017-11-01 11:21:18 πμ
+;;; org-mode --- 2017-11-02 11:01:28 πμ
 ;;; Commentary:
 
 ;; customize some org mode settings
@@ -262,4 +262,4 @@ If called with ARG, do not insert time."
 
 (global-set-key (kbd "C-c C-x t") 'org-insert-current-date)
 (provide 'org-mode)
-;;; 020_org-mode.el ends here
+;;; 019_org-mode.el ends here
