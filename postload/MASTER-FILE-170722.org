@@ -2394,3 +2394,12 @@ If UNLINK-P is not nil, then delete the link instead."
   (whitespace-mode -1)
   ;; (toggle-frame-fullscreen)
 #+END_SRC
+* 1 window and helm recentfile
+  :PROPERTIES:
+  :DATE:     <2017-12-15 Fri 09:55>
+  :END:
+
+#+BEGIN_SRC emacs-lisp
+  (delete-other-windows)
+  (helm-recentf)
+#+END_SRC
