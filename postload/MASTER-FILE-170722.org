@@ -1661,6 +1661,26 @@ Only solution so far is to switch off prelude mode when in org mode.
             (org-id-add-location id (buffer-file-name (buffer-base-buffer)))
             (upcase id))))))
   #+END_SRC
+* org-mode todo states
+  :PROPERTIES:
+  :DATE:     <2017-12-22 Fri 01:42>
+  :END:
+
+#+BEGIN_SRC emacs-lisp
+(setq org-todo-keywords
+       '((sequence "TODO(t)" "|" "DONE(d@)" "CANCELED(c@)")))
+#+END_SRC
+* projectile-find-file workfiles
+
+#+BEGIN_SRC emacs-lisp
+  (defun projectile-find-file-workfiles ()
+      "Set current project to workfiles and Find file in projectile."
+    (interactive)
+      (let ((projectile-project-root (file-truename "~/BitTorrent Sync/000WORKFILES")))
+     (helm-projectile-find-file)))
+
+  (global-set-key (kbd "C-M-S-f") 'projectile-find-file-workfiles)
+#+END_SRC
 * org calfw
 
 #+BEGIN_SRC emacs-lisp

@@ -1,4 +1,4 @@
-;;; org-split-hugo --- 2017-12-15 09:58:37 AM
+;;; org-split-hugo --- 2017-12-22 01:59:33 AM
   ;;; Commentary:
   ;;; Utilities for blog + website editing with HUGO
 
@@ -190,4 +190,4 @@
        (define-key org-mode-map (kbd "C-c C-h C-a") 'org-hugo-autosplit)
        (define-key org-mode-map (kbd "C-c C-h C-/") 'org-hugo-select-filenames)))
 (provide 'org-split-hugo)
-;;; 023_org-split-hugo.el ends here
+;;; 025_org-split-hugo.el ends here
