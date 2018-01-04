@@ -5,9 +5,10 @@
  ;; If there is more than one, they won't work right.
  '(bmkp-last-as-first-bookmark-file "~/.emacs.d/savefile/bookmarks")
  '(org-export-backends (quote (ascii html icalendar latex texinfo)))
+ '(org-imenu-depth 10)
  '(package-selected-packages
    (quote
-    (osx-plist flymake-haskell-multi haskell-emacs haskell-mode org-bullets markdown-mode deft evil workgroups2 org-journal buffer-move dired+ easy-hugo calfw-cal calfw-org calfw auto-complete hl-sexp icicles litable sr-speedbar bookmark+ autobookmarks bm helm-swoop ace-mc mc-extras multiple-cursors ace-isearch ace-popup-menu auto-async-byte-compile avy-menu avy-zap multi-term powerline moe-theme zop-to-char zenburn-theme which-key volatile-highlights undo-tree smex smartrep smartparens smart-mode-line rainbow-mode rainbow-delimiters ov operate-on-number move-text magit key-chord json-mode js2-mode imenu-anywhere ido-completing-read+ helm-projectile helm-descbinds helm-ag guru-mode grizzl god-mode gitignore-mode gitconfig-mode git-timemachine gist geiser flycheck flx-ido expand-region elisp-slime-nav editorconfig easy-kill discover-my-major diminish diff-hl crux company browse-kill-ring beacon anzu ace-window))))
+    (tiny-menu osx-plist flymake-haskell-multi haskell-emacs haskell-mode org-bullets markdown-mode deft evil workgroups2 org-journal buffer-move dired+ easy-hugo calfw-cal calfw-org calfw auto-complete hl-sexp icicles litable sr-speedbar bookmark+ autobookmarks bm helm-swoop ace-mc mc-extras multiple-cursors ace-isearch ace-popup-menu auto-async-byte-compile avy-menu avy-zap multi-term powerline moe-theme zop-to-char zenburn-theme which-key volatile-highlights undo-tree smex smartrep smartparens smart-mode-line rainbow-mode rainbow-delimiters ov operate-on-number move-text magit key-chord json-mode js2-mode imenu-anywhere ido-completing-read+ helm-projectile helm-descbinds helm-ag guru-mode grizzl god-mode gitignore-mode gitconfig-mode git-timemachine gist geiser flycheck flx-ido expand-region elisp-slime-nav editorconfig easy-kill discover-my-major diminish diff-hl crux company browse-kill-ring beacon anzu ace-window))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

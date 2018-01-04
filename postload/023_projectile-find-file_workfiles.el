@@ -1,4 +1,4 @@
-;;; projectile-find-file_workfiles --- 2017-12-22 01:59:33 AM
+;;; projectile-find-file_workfiles --- 2018-01-04 10:39:31 AM
   (defun projectile-find-file-workfiles ()
       "Set current project to workfiles and Find file in projectile."
     (interactive)
