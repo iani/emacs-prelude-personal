@@ -1,4 +1,4 @@
-;;; tiny_menu --- 2018-01-04 10:39:33 AM
+;;; tiny_menu --- 2018-01-05 11:08:13 PM
   ;;; Commentary:
 
   ;; test code for using tiny-menu
@@ -54,18 +54,55 @@
       (org-refile '(4))
       (icy-mode -1)))
 
-  (setq tiny-menu-items
-        '(("org-things"   ("Things"
-                           ((?t "Tag"     org-tags-view)
-                            (?i "ID"      air-org-goto-custom-id)
-                            (?k "Keyword" org-search-view)
-                            (?l "Refile Goto Local" air-refile-goto-current-buffer)
-                            )))
-          ("org-links"    ("Links"
-                           ((?c "Capture"   org-store-link)
-                            (?l "Insert"    org-insert-link)
-                            (?i "Custom ID" air-org-insert-custom-id-link))))))
+  (defun air-turn-icicles-on ()
+    "Turn icicle mode on."
+    (interactive)
+    (icy-mode 1))
 
-  (global-set-key (kbd "C-H-M-t") 'tiny-menu)
+  (defun air-turn-icicles-off ()
+    "Turn icicle mode off."
+    (interactive)
+    (icy-mode 0))
+  (defun air-tiny-menu ()
+    "My custom tiny menu."
+    (interactive)
+    (let ((tiny-menu-items
+           '(("agenda" ("agenda"
+                        ((?a "agenda" org-agenda-list)
+                         (?A "agenda menu" org-agenda)
+                         (?t "todo" org-todo-list))))
+             ("files" ("files"
+                       ((?l "org jump local" air-refile-goto-current-buffer)
+                        (?r "recent files" helm-recentf)
+                        (?j "projects refile jump" org-jump-to-refile-target)
+                        (?w "Workfiles find file" projectile-find-file-workfiles)
+                        (?W "Workfiles projectile commander" projectile-commander-workfiles))))
+             ("stuff"   ("stuff"
+                         ((?t "Tag"     org-tags-view)
+                          (?i "ID"      air-org-goto-custom-id)
+                          (?k "Keyword" org-search-view)
+                          (?s "SuperCollider" sclang-start))))
+             ("icicles"   ("icicles"
+                           ((?1 "icy on" air-turn-icicles-on)
+                            (?0 "icy off" air-turn-icicles-off))))
+             ("org-links"    ("Links"
+                              ((?c "Capture"   org-store-link)
+                               (?l "Insert"    org-insert-link)
+                               (?i "Custom ID" air-org-insert-custom-id-link)))))))
+      (tiny-menu)))
+
+  ;; (setq tiny-menu-items
+  ;;       '(("org-things"   ("Things"
+  ;;                          ((?t "Tag"     org-tags-view)
+  ;;                           (?i "ID"      air-org-goto-custom-id)
+  ;;                           (?k "Keyword" org-search-view)
+  ;;                           (?l "Refile Goto Local" air-refile-goto-current-buffer)
+  ;;                           )))
+  ;;         ("org-links"    ("Links"
+  ;;                          ((?c "Capture"   org-store-link)
+  ;;                           (?l "Insert"    org-insert-link)
+  ;;                           (?i "Custom ID" air-org-insert-custom-id-link))))))
+
+  (global-set-key (kbd "C-H-M-t") 'air-tiny-menu)
 (provide 'tiny_menu)
 ;;; 028_tiny_menu.el ends here

@@ -1677,7 +1677,13 @@ Only solution so far is to switch off prelude mode when in org mode.
       "Set current project to workfiles and Find file in projectile."
     (interactive)
       (let ((projectile-project-root (file-truename "~/BitTorrent Sync/000WORKFILES")))
-     (helm-projectile-find-file)))
+        (helm-projectile-find-file)))
+
+  (defun projectile-commander-workfiles ()
+    "Set current project to workfiles and call projectile-commander."
+    (interactive)
+    (let ((projectile-project-root (file-truename "~/BitTorrent Sync/000WORKFILES")))
+      (projectile-commander)))
 
   (global-set-key (kbd "C-M-S-f") 'projectile-find-file-workfiles)
 #+END_SRC
@@ -2090,19 +2096,56 @@ Only solution so far is to switch off prelude mode when in org mode.
       (org-refile '(4))
       (icy-mode -1)))
 
-  (setq tiny-menu-items
-        '(("org-things"   ("Things"
-                           ((?t "Tag"     org-tags-view)
-                            (?i "ID"      air-org-goto-custom-id)
-                            (?k "Keyword" org-search-view)
-                            (?l "Refile Goto Local" air-refile-goto-current-buffer)
-                            )))
-          ("org-links"    ("Links"
-                           ((?c "Capture"   org-store-link)
-                            (?l "Insert"    org-insert-link)
-                            (?i "Custom ID" air-org-insert-custom-id-link))))))
+  (defun air-turn-icicles-on ()
+    "Turn icicle mode on."
+    (interactive)
+    (icy-mode 1))
 
-  (global-set-key (kbd "C-H-M-t") 'tiny-menu)
+  (defun air-turn-icicles-off ()
+    "Turn icicle mode off."
+    (interactive)
+    (icy-mode 0))
+  (defun air-tiny-menu ()
+    "My custom tiny menu."
+    (interactive)
+    (let ((tiny-menu-items
+           '(("agenda" ("agenda"
+                        ((?a "agenda" org-agenda-list)
+                         (?A "agenda menu" org-agenda)
+                         (?t "todo" org-todo-list))))
+             ("files" ("files"
+                       ((?l "org jump local" air-refile-goto-current-buffer)
+                        (?r "recent files" helm-recentf)
+                        (?j "projects refile jump" org-jump-to-refile-target)
+                        (?w "Workfiles find file" projectile-find-file-workfiles)
+                        (?W "Workfiles projectile commander" projectile-commander-workfiles))))
+             ("stuff"   ("stuff"
+                         ((?t "Tag"     org-tags-view)
+                          (?i "ID"      air-org-goto-custom-id)
+                          (?k "Keyword" org-search-view)
+                          (?s "SuperCollider" sclang-start))))
+             ("icicles"   ("icicles"
+                           ((?1 "icy on" air-turn-icicles-on)
+                            (?0 "icy off" air-turn-icicles-off))))
+             ("org-links"    ("Links"
+                              ((?c "Capture"   org-store-link)
+                               (?l "Insert"    org-insert-link)
+                               (?i "Custom ID" air-org-insert-custom-id-link)))))))
+      (tiny-menu)))
+
+  ;; (setq tiny-menu-items
+  ;;       '(("org-things"   ("Things"
+  ;;                          ((?t "Tag"     org-tags-view)
+  ;;                           (?i "ID"      air-org-goto-custom-id)
+  ;;                           (?k "Keyword" org-search-view)
+  ;;                           (?l "Refile Goto Local" air-refile-goto-current-buffer)
+  ;;                           )))
+  ;;         ("org-links"    ("Links"
+  ;;                          ((?c "Capture"   org-store-link)
+  ;;                           (?l "Insert"    org-insert-link)
+  ;;                           (?i "Custom ID" air-org-insert-custom-id-link))))))
+
+  (global-set-key (kbd "C-H-M-t") 'air-tiny-menu)
 #+END_SRC
 
   :PROPERTIES:
@@ -2489,12 +2532,12 @@ If UNLINK-P is not nil, then delete the link instead."
   (whitespace-mode -1)
   ;; (toggle-frame-fullscreen)
 #+END_SRC
-* 1 window and helm recentfile
+* last actions 1 window air tiny menu
   :PROPERTIES:
   :DATE:     <2017-12-15 Fri 09:55>
   :END:
 
 #+BEGIN_SRC emacs-lisp
   (delete-other-windows)
-  (helm-recentf)
+  (air-tiny-menu)
 #+END_SRC

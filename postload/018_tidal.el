@@ -1,4 +1,4 @@
-;;; tidal --- 2018-01-04 10:39:30 AM
+;;; tidal --- 2018-01-05 11:08:09 PM
 
 (require 'haskell-mode)
 (require 'tidal)
