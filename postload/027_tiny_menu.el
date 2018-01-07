@@ -1,4 +1,4 @@
-;;; tiny_menu --- 2018-01-05 11:08:13 PM
+;;; tiny_menu --- 2018-01-07 01:09:15 PM
   ;;; Commentary:
 
   ;; test code for using tiny-menu
@@ -7,6 +7,86 @@
   ;;; Code:
 
   (prelude-load-require-package 'tiny-menu)
+
+  (defun projectile--call-workfiles-command (command)
+    "Let project root be workfiles path and call COMMAND interactively."
+    (let ((projectile-project-root (file-truename "~/BitTorrent Sync/000WORKFILES"))
+          (projectile-project-name "workfiles"))
+      (call-interactively command)))
+
+  ;; ag did not work!
+  ;; (defun projectile-ag-workfiles ()
+  ;;   "Set current project to workfiles and call projectile-commander."
+  ;;   (interactive)
+  ;;   (projectile--call-workfiles-command 'projectile-ag))
+
+  (defun projectile-commander-workfiles ()
+    "Set current project to workfiles and call projectile-commander."
+    (interactive)
+    (projectile--call-workfiles-command 'projectile-commander))
+
+  (defun projectile-vc-workfiles ()
+    "Set current project to workfiles and call projectile-commander."
+    (interactive)
+    (projectile--call-workfiles-command 'projectile-vc))
+
+  (defun projectile-find-file-workfiles ()
+    "Set current project to workfiles and call projectile-commander."
+    (interactive)
+    (projectile--call-workfiles-command 'projectile-find-file))
+
+  (defun projectile-recent-files-workfiles ()
+    "Set current project to workfiles and call projectile-commander."
+    (interactive)
+    (projectile--call-workfiles-command 'projectile-recentf))
+
+  (defun projectile-root-dired-workfiles ()
+    "Set current project to workfiles and call projectile-commander."
+    (interactive)
+    (projectile--call-workfiles-command 'projectile-dired))
+
+  (defun projectile-dired-workfiles ()
+    "Set current project to workfiles and call projectile-commander."
+    (interactive)
+    (projectile--call-workfiles-command 'projectile-find-dir))
+
+  (defun projectile--call-projects-command (command)
+    "Let project root be current projects path and call COMMAND interactively."
+    (let ((projectile-project-root (file-truename "~/BitTorrent Sync/000WORKFILES/PROJECTS_CURRENT"))
+          (projectile-project-name "current projects"))
+      (call-interactively command)))
+
+  (defun projectile-commander-projects ()
+    "Set current project to projects and call projectile-commander."
+    (interactive)
+    (projectile--call-projects-command 'projectile-commander))
+
+  (defun projectile-vc-projects ()
+    "Set current project to projects and call projectile-commander."
+    (interactive)
+    (projectile--call-projects-command 'projectile-vc))
+
+  (defun projectile-find-file-projects ()
+    "Set current project to projects and call projectile-commander."
+    (interactive)
+    (projectile--call-projects-command 'projectile-find-file))
+
+  (defun projectile-recent-files-projects ()
+    "Set current project to projects and call projectile-commander."
+    (interactive)
+    (projectile--call-projects-command 'projectile-recentf))
+
+  (defun projectile-root-dired-projects ()
+    "Set current project to projects and call projectile-commander."
+    (interactive)
+    (projectile--call-projects-command 'projectile-dired))
+
+  (defun projectile-dired-projects ()
+    "Set current project to projects and call projectile-commander."
+    (interactive)
+    (projectile--call-projects-command 'projectile-find-dir))
+
+  (global-set-key (kbd "C-M-S-f") 'projectile-find-file-workfiles)
 
   (defun air--org-global-custom-ids ()
     "Find custom ID fields in all org agenda files."
@@ -71,6 +151,20 @@
                         ((?a "agenda" org-agenda-list)
                          (?A "agenda menu" org-agenda)
                          (?t "todo" org-todo-list))))
+             ("workfiles" ("workfiles"
+                           ((?c "commander" projectile-commander-workfiles)
+                            (?v "magit" projectile-vc-workfiles)
+                            (?f "find file" projectile-find-file-workfiles)
+                            (?r "recent" projectile-recent-files-workfiles)
+                            (?d "dired" projectile-dired-workfiles)
+                            (?D "root dired" projectile-root-dired-workfiles))))
+             ("projects" ("projects"
+                          ((?c "commander" projectile-commander-projects)
+                           (?v "magit" projectile-vc-projects)
+                           (?f "find file" projectile-find-file-projects)
+                           (?r "recent" projectile-recent-files-projects)
+                           (?d "dired" projectile-dired-projects)
+                           (?D "root dired" projectile-root-dired-projects))))
              ("files" ("files"
                        ((?l "org jump local" air-refile-goto-current-buffer)
                         (?r "recent files" helm-recentf)
@@ -105,4 +199,4 @@
 
   (global-set-key (kbd "C-H-M-t") 'air-tiny-menu)
 (provide 'tiny_menu)
-;;; 028_tiny_menu.el ends here
+;;; 027_tiny_menu.el ends here

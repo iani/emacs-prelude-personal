@@ -1,9 +1,9 @@
-;;; EmacsLispModes_and_whitespace_off --- 2018-01-05 11:08:08 PM
+;;; EmacsLispModes_and_whitespace_off --- 2018-01-07 01:09:12 PM
   ;;; Commentary:
   ;;; useful minor modes for emacs-lisp
 
   ;;; Code:
-  (prelude-load-require-packages '(smartparens cl litable icicles))
+  (prelude-load-require-packages '(smartparens cl litable icicles hl-sexp))
 
   ;;; note: smartparens is preferable to paredit.
   (require 'smartparens-config)

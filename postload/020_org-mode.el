@@ -1,4 +1,4 @@
-;;; org-mode --- 2018-01-05 11:08:10 PM
+;;; org-mode --- 2018-01-07 01:09:13 PM
   ;;; Commentary:
 
   ;; customize some org mode settings
@@ -253,12 +253,12 @@
      (whitespace-mode -1)
      ))
 
-  (defun org-customize-mode ()
-    "Customize some display options for ORG-MODE.
-  - map javascript to sclang-mode in babel blocks.
-  - hide extra leading stars for sections.
-  - turn on visual line mode."
-  )
+  ;; (defun org-customize-mode ()
+  ;;   "Customize some display options for ORG-MODE.
+  ;; - map javascript to sclang-mode in babel blocks.
+  ;; - hide extra leading stars for sections.
+  ;; - turn on visual line mode."
+  ;; )
 
   (global-set-key (kbd "C-c C-x t") 'org-insert-current-date)
 (provide 'org-mode)
