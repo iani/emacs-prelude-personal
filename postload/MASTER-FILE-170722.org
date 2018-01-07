@@ -1294,9 +1294,9 @@ Adapted from helm-switch-to-buffers."
 
 #+BEGIN_SRC emacs-lisp
 
-(require 'haskell-mode)
-(require 'tidal)
-(setq tidal-interpreter "/usr/local/bin/ghci")
+  (prelude-load-require-package 'haskell-mode)
+  (prelude-load-require-package 'tidal)
+  (setq tidal-interpreter "/usr/local/bin/ghci")
 
 #+END_SRC
 

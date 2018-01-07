@@ -1,8 +1,8 @@
-;;; tidal --- 2018-01-07 01:09:13 PM
+;;; tidal --- 2018-01-07 01:19:02 PM
 
-(require 'haskell-mode)
-(require 'tidal)
-(setq tidal-interpreter "/usr/local/bin/ghci")
+  (prelude-load-require-package 'haskell-mode)
+  (prelude-load-require-package 'tidal)
+  (setq tidal-interpreter "/usr/local/bin/ghci")
 
 (provide 'tidal)
 ;;; 018_tidal.el ends here
