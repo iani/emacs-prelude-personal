@@ -1,4 +1,4 @@
-;;; customize_location_set_coordinates_for_corfu --- 2018-01-07 01:18:58 PM
+;;; customize_location_set_coordinates_for_corfu --- 2018-01-08 11:14:41 AM
   (setq calendar-latitude [39 37 north])
   (setq calendar-longitude [19 54 east])
 (provide 'customize_location_set_coordinates_for_corfu)

@@ -1,4 +1,4 @@
-;;; moe_theme_powerline_delimiter_faces --- 2018-01-07 01:18:58 PM
+;;; moe_theme_powerline_delimiter_faces --- 2018-01-08 11:14:42 AM
   ;;; Commentary:
   ;;; moe-theme
 

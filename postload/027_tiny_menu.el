@@ -1,4 +1,4 @@
-;;; tiny_menu --- 2018-01-07 01:19:05 PM
+;;; tiny_menu --- 2018-01-08 11:14:49 AM
   ;;; Commentary:
 
   ;; test code for using tiny-menu
@@ -6,13 +6,15 @@
 
   ;;; Code:
 
+  ;; (let ((projectile-switch-project-action 'projectile-find-file))
+  ;;   (projectile-switch-project-by-name "/Users/iani/BitTorrent Sync/000WORKFILES/"))
+
   (prelude-load-require-package 'tiny-menu)
 
   (defun projectile--call-workfiles-command (command)
     "Let project root be workfiles path and call COMMAND interactively."
-    (let ((projectile-project-root (file-truename "~/BitTorrent Sync/000WORKFILES"))
-          (projectile-project-name "workfiles"))
-      (call-interactively command)))
+    (let ((projectile-switch-project-action command))
+      (projectile-switch-project-by-name "~/BitTorrent Sync/000WORKFILES/")))
 
   ;; ag did not work!
   ;; (defun projectile-ag-workfiles ()
@@ -51,10 +53,9 @@
     (projectile--call-workfiles-command 'projectile-find-dir))
 
   (defun projectile--call-projects-command (command)
-    "Let project root be current projects path and call COMMAND interactively."
-    (let ((projectile-project-root (file-truename "~/BitTorrent Sync/000WORKFILES/PROJECTS_CURRENT"))
-          (projectile-project-name "current projects"))
-      (call-interactively command)))
+    "Let project root be workfiles path and call COMMAND interactively."
+    (let ((projectile-switch-project-action command))
+      (projectile-switch-project-by-name "~/BitTorrent Sync/000WORKFILES/PROJECTS_CURRENT")))
 
   (defun projectile-commander-projects ()
     "Set current project to projects and call projectile-commander."
