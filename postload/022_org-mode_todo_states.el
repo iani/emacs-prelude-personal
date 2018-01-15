@@ -1,4 +1,4 @@
-;;; org-mode_todo_states --- 2018-01-08 11:14:48 AM
+;;; org-mode_todo_states --- 2018-01-15 01:38:41 μμ
 (setq org-todo-keywords
        '((sequence "TODO(t)" "|" "DONE(d@)" "CANCELED(c@)")))
 (provide 'org-mode_todo_states)

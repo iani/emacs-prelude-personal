@@ -1,16 +1,16 @@
-;;; projectile --- 2018-01-08 11:14:50 AM
-  ;;; Commentary:
-  ;;; some useful extensions to projectile
-  ;;; helm-projectile
-  ;;; Note: neither perspective nor helm-perspective work for me.
+;;; projectile --- 2018-01-15 01:38:43 μμ
+;;; Commentary:
+;;; some useful extensions to projectile
+;;; helm-projectile
+;;; Note: neither perspective nor helm-perspective work for me.
 
-  ;;; Code:
-  ;; (prelude-load-require-packages '(perspective helm-projectile persp-projectile))
-  (prelude-load-require-packages '(helm-projectile))
-  (helm-projectile-on)
-  (setq projectile-switch-project-action #'projectile-commander)
-  ;; (persp-mode)
-  ;; (require 'persp-projectile)
-  ;; (define-key projectile-mode-map (kbd "s-s") 'projectile-persp-switch-project)
+;;; Code:
+;; (prelude-load-require-packages '(perspective helm-projectile persp-projectile))
+(prelude-load-require-packages '(helm-projectile))
+(helm-projectile-on)
+(setq projectile-switch-project-action #'projectile-commander)
+;; (persp-mode)
+;; (require 'persp-projectile)
+;; (define-key projectile-mode-map (kbd "s-s") 'projectile-persp-switch-project)
 (provide 'projectile)
 ;;; 029_projectile.el ends here

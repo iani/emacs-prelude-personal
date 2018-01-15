@@ -2047,10 +2047,18 @@ Only solution so far is to switch off prelude mode when in org mode.
   ;;   (interactive)
   ;;   (projectile--call-workfiles-command 'projectile-ag))
 
+  ;; (defun safe-projectile-ag ()
+  ;;   (call-interactively 'projectile-ag))
+
   (defun projectile-commander-workfiles ()
     "Set current project to workfiles and call projectile-commander."
     (interactive)
     (projectile--call-workfiles-command 'projectile-commander))
+
+  ;; (defun projectile-ag-workfiles ()
+  ;;   "Set current project to workfiles and call projectile-commander."
+  ;;   (interactive)
+  ;;   (projectile--call-workfiles-command 'safe-projectile-ag))
 
   (defun projectile-vc-workfiles ()
     "Set current project to workfiles and call projectile-commander."
@@ -2087,10 +2095,10 @@ Only solution so far is to switch off prelude mode when in org mode.
     (interactive)
     (projectile--call-projects-command 'projectile-commander))
 
-  (defun projectile-vc-projects ()
+  (defun projectile-ag-projects ()
     "Set current project to projects and call projectile-commander."
     (interactive)
-    (projectile--call-projects-command 'projectile-vc))
+    (projectile--call-projects-command 'projectile-ag))
 
   (defun projectile-find-file-projects ()
     "Set current project to projects and call projectile-commander."
@@ -2169,47 +2177,51 @@ Only solution so far is to switch off prelude mode when in org mode.
     "Turn icicle mode off."
     (interactive)
     (icy-mode 0))
+
   (defun air-tiny-menu ()
-    "My custom tiny menu."
-    (interactive)
-    (let ((tiny-menu-items
-           '(("agenda" ("agenda"
-                        ((?a "agenda" org-agenda-list)
-                         (?A "agenda menu" org-agenda)
-                         (?t "todo" org-todo-list))))
-             ("workfiles" ("workfiles"
-                           ((?c "commander" projectile-commander-workfiles)
-                            (?v "magit" projectile-vc-workfiles)
-                            (?f "find file" projectile-find-file-workfiles)
-                            (?r "recent" projectile-recent-files-workfiles)
-                            (?d "dired" projectile-dired-workfiles)
-                            (?D "root dired" projectile-root-dired-workfiles))))
-             ("projects" ("projects"
-                          ((?c "commander" projectile-commander-projects)
-                           (?v "magit" projectile-vc-projects)
-                           (?f "find file" projectile-find-file-projects)
-                           (?r "recent" projectile-recent-files-projects)
-                           (?d "dired" projectile-dired-projects)
-                           (?D "root dired" projectile-root-dired-projects))))
-             ("files" ("files"
-                       ((?l "org jump local" air-refile-goto-current-buffer)
-                        (?r "recent files" helm-recentf)
-                        (?j "projects refile jump" org-jump-to-refile-target)
-                        (?w "Workfiles find file" projectile-find-file-workfiles)
-                        (?W "Workfiles projectile commander" projectile-commander-workfiles))))
-             ("stuff"   ("stuff"
-                         ((?t "Tag"     org-tags-view)
-                          (?i "ID"      air-org-goto-custom-id)
-                          (?k "Keyword" org-search-view)
-                          (?s "SuperCollider" sclang-start))))
-             ("icicles"   ("icicles"
-                           ((?1 "icy on" air-turn-icicles-on)
-                            (?0 "icy off" air-turn-icicles-off))))
-             ("org-links"    ("Links"
-                              ((?c "Capture"   org-store-link)
-                               (?l "Insert"    org-insert-link)
-                               (?i "Custom ID" air-org-insert-custom-id-link)))))))
-      (tiny-menu)))
+      "My custom tiny menu."
+      (interactive)
+      (let ((tiny-menu-items
+             '(("agenda" ("agenda"
+                          ((?a "agenda" org-agenda-list)
+                           (?A "agenda menu" org-agenda)
+                           (?t "todo" org-todo-list))))
+               ("workfiles" ("workfiles"
+                             ((?c "commander" projectile-commander-workfiles)
+                              ;; (?s "ag" projectile-ag-workfiles)
+                              (?v "magit" projectile-vc-workfiles)
+                              (?f "find file" projectile-find-file-workfiles)
+                              (?r "recent" projectile-recent-files-workfiles)
+                              (?d "dired" projectile-dired-workfiles)
+                              (?D "root dired" projectile-root-dired-workfiles))))
+               ("projects" ("projects"
+                            ((?c "commander" projectile-commander-projects)
+                             ;; (?s "ag" projectile-ag-projects)
+                             (?v "magit" projectile-vc-projects)
+                             (?f "find file" projectile-find-file-projects)
+                             (?r "recent" projectile-recent-files-projects)
+                             (?d "dired" projectile-dired-projects)
+                             (?D "root dired" projectile-root-dired-projects))))
+               ("files" ("files"
+                         ((?i "icy imenu" icicle-imenu)
+                          (?l "org jump local" air-refile-goto-current-buffer)
+                          (?r "recent files" helm-recentf)
+                          (?j "projects refile jump" org-jump-to-refile-target)
+                          (?w "Workfiles find file" projectile-find-file-workfiles)
+                          (?W "Workfiles projectile commander" projectile-commander-workfiles))))
+               ("stuff"   ("stuff"
+                           ((?t "Tag"     org-tags-view)
+                            (?i "ID"      air-org-goto-custom-id)
+                            (?k "Keyword" org-search-view)
+                            (?s "SuperCollider" sclang-start))))
+               ("icicles"   ("icicles"
+                             ((?1 "icy on" air-turn-icicles-on)
+                              (?0 "icy off" air-turn-icicles-off))))
+               ("org-links"    ("Links"
+                                ((?c "Capture"   org-store-link)
+                                 (?l "Insert"    org-insert-link)
+                                 (?i "Custom ID" air-org-insert-custom-id-link)))))))
+        (tiny-menu)))
 
   ;; (setq tiny-menu-items
   ;;       '(("org-things"   ("Things"
@@ -2537,20 +2549,21 @@ Version 2015-12-02"
                            ,org-projects-dir))
 
   (defun org-journal-at-date-from-user (no-entry)
-    "Creat journal entry with date from user, NO-ENTRY prefix enters timestamp without section."
+    "Creat journal entry with date from user, NO-ENTRY prefix just opens the file without creating entry."
     (interactive "P")
     (let ((time (org-read-date t t)) timestamp)
       (org-journal-new-entry no-entry time)
       (setq timestamp (format-time-string (cdr org-time-stamp-formats) time))
-      (if no-entry
-          (insert "\n" timestamp))
-      (progn
-        (insert
-         "\n :PROPERTIES:\n :DATE: "
-         timestamp
-         " \n :END:\n")
+      ;; (if no-entry
+      ;;     (insert "\n" timestamp))
+      (unless no-entry
+       (progn
+         (insert
+          "\n :PROPERTIES:\n :DATE: "
+          timestamp
+          " \n :END:\n")
          (previous-line 4)
-         (end-of-line))))
+         (end-of-line)))))
 
   ;; Make new-entry keyboard command available also in org-mode:
   (global-set-key (kbd "C-c c j") 'org-journal-at-date-from-user)
