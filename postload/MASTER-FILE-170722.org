@@ -2023,6 +2023,27 @@ Only solution so far is to switch off prelude mode when in org mode.
 #+END_SRC
 
 * tiny menu
+
+Design draft for next version:
+
+| ! | 1st_level      | 2nd_level       |
+|   | search/files   | org-headers     |
+|   |                | recent files    |
+|   |                | projectile      |
+|   |                | dired           |
+|   |                | set bookmark    |
+|   |                | goto bookmark   |
+|   |                | icy on          |
+|   |                | icy off         |
+|   | journal/agenda | agenda          |
+|   |                | journal entry   |
+|   | supercollider  | boot server     |
+|   |                | quit server     |
+|   |                | kill servers    |
+|   |                | set io channels |
+|   |                | start recording |
+|   |                | stop recording  |
+
 #+BEGIN_SRC emacs-lisp
   ;;; Commentary:
 
