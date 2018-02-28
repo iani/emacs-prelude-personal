@@ -1,4 +1,4 @@
-;;; org-journal --- 2018-02-28 10:59:02 AM
+;;; org-journal --- 2018-02-28 11:03:24 AM
 ;;; Commentary:
 ;;; use org-journal for capture globally.
 ;;; https://github.com/bastibe/org-journal
