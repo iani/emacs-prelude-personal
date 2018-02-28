@@ -62,7 +62,7 @@
    '(font-lock-variable-name-face ((t
                                     (:foreground "turquoise2"))))
    '(font-lock-comment-delimiter-face ((t
-                              (:slant italic :foreground "SeaGreen4"))))
+                              (:slant italic :foreground "SeaGreen1"))))
    '(font-lock-comment-face ((t
                               (:slant italic :foreground "coral1"))))
    '(mode-line ((t (

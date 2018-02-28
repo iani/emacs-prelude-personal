@@ -1,4 +1,4 @@
-;;; moe_theme_powerline_delimiter_faces --- 2018-02-28 11:03:16 AM
+;;; moe_theme_powerline_delimiter_faces --- 2018-02-28 04:14:06 PM
 ;;; Commentary:
 ;;; moe-theme
 
@@ -14,7 +14,7 @@
  '(font-lock-variable-name-face ((t
                                   (:foreground "turquoise2"))))
  '(font-lock-comment-delimiter-face ((t
-                            (:slant italic :foreground "SeaGreen4"))))
+                            (:slant italic :foreground "SeaGreen1"))))
  '(font-lock-comment-face ((t
                             (:slant italic :foreground "coral1"))))
  '(mode-line ((t (
