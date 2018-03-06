@@ -8,7 +8,7 @@
  '(org-imenu-depth 10)
  '(package-selected-packages
    (quote
-    (helm-swoop tidal tiny-menu osx-plist flymake-haskell-multi haskell-emacs haskell-mode org-bullets markdown-mode deft evil workgroups2 org-journal buffer-move dired+ easy-hugo calfw-cal calfw-org calfw auto-complete hl-sexp icicles litable sr-speedbar bookmark+ autobookmarks bm ace-mc mc-extras multiple-cursors ace-isearch ace-popup-menu auto-async-byte-compile avy-menu avy-zap multi-term powerline moe-theme zop-to-char zenburn-theme which-key volatile-highlights undo-tree smex smartrep smartparens smart-mode-line rainbow-mode rainbow-delimiters ov operate-on-number move-text magit key-chord json-mode js2-mode imenu-anywhere ido-completing-read+ helm-projectile helm-descbinds helm-ag guru-mode grizzl god-mode gitignore-mode gitconfig-mode git-timemachine gist geiser flycheck flx-ido expand-region elisp-slime-nav editorconfig easy-kill discover-my-major diminish diff-hl crux company browse-kill-ring beacon anzu ace-window))))
+    (org-mode org-plus-contrib helm-swoop tidal tiny-menu osx-plist flymake-haskell-multi haskell-emacs haskell-mode org-bullets markdown-mode deft evil workgroups2 org-journal buffer-move dired+ easy-hugo calfw-cal calfw-org calfw auto-complete hl-sexp icicles litable sr-speedbar bookmark+ autobookmarks bm ace-mc mc-extras multiple-cursors ace-isearch ace-popup-menu auto-async-byte-compile avy-menu avy-zap multi-term powerline moe-theme zop-to-char zenburn-theme which-key volatile-highlights undo-tree smex smartrep smartparens smart-mode-line rainbow-mode rainbow-delimiters ov operate-on-number move-text magit key-chord json-mode js2-mode imenu-anywhere ido-completing-read+ helm-projectile helm-descbinds helm-ag guru-mode grizzl god-mode gitignore-mode gitconfig-mode git-timemachine gist geiser flycheck flx-ido expand-region elisp-slime-nav editorconfig easy-kill discover-my-major diminish diff-hl crux company browse-kill-ring beacon anzu ace-window))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -25,7 +25,7 @@
  '(info-title-3 ((t (:inherit info-title-4 :foreground "white" :height 1.2))))
  '(info-title-4 ((t (:inherit info-title-4 :foreground "red"))))
  '(mode-line ((t (:background "DarkCyan" :foreground "tomato" :box (:line-width 1 :color "turquoise3") :weight light :height 118 :family "Monospace"))))
- '(org-block-end-line ((t (:background "#3a3a3a" :foreground "gray99"))) t)
+ '(org-block-end-line ((t (:background "#3a3a3a" :foreground "gray99"))))
  '(org-level-1 ((t (:family "Helvetica" :height 1.1 :weight bold))))
  '(org-level-2 ((t (:family "Helvetica" :height 1.1 :weight bold))))
  '(org-level-3 ((t (:weight bold :height 1.1))))

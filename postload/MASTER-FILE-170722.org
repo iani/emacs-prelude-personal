@@ -787,6 +787,27 @@ Adapted from helm-switch-to-buffers."
        (define-key org-mode-map (kbd "C-c C-M-e") 'org-el-export-all-sections)))
 #+END_SRC
 
+* cpp makefile
+
+#+BEGIN_SRC emacs-lisp
+;;; Gcc and makefile support
+
+;; G++ code here
+
+ (global-set-key "\C-xc" 'compile)
+ (setq make-backup-files 'nil)
+ ;;(setq default-major-mode 'text-mode)
+ (setq text-mode-hook 'turn-on-auto-fill)
+ ;;(set-default-font "-misc-fixed-medium-r-normal--15-140-*-*-c-*-*-1")
+ (setq auto-mode-alist (cons '("\\.cxx$" . c++-mode) auto-mode-alist))
+ (setq auto-mode-alist (cons '("\\.hpp$" . c++-mode) auto-mode-alist))
+ (setq auto-mode-alist (cons '("\\.tex$" . latex-mode) auto-mode-alist))
+
+;;(require 'font-lock)
+;;(add-hook 'c-mode-hook 'turn-on-font-lock)
+;;(add-hook 'c++-mode-hook 'turn-on-font-lock)
+
+#+END_SRC
 * SuperCollider
 
 #+BEGIN_SRC emacs-lisp
@@ -1578,7 +1599,16 @@ Only solution so far is to switch off prelude mode when in org mode.
        (define-key org-mode-map (kbd "s-m f") 'magit-log-buffer-file)
        (define-key org-mode-map (kbd "s-m b") 'magit-blame)
        (define-key org-mode-map (kbd "s-o") 'crux-smart-open-line-above)
+       (define-key org-mode-map (kbd "C-c C-M-w") 'org-copy-contents)
        ))
+
+  (defun org-copy-contents ()
+    "Copy contents of current section to kill ring."
+    (interactive)
+    (let* ((element (org-element-at-point))
+           (begin (plist-get (cadr element) :contents-begin))
+           (end (plist-get (cadr element) :contents-end)))
+      (copy-region-as-kill begin end)))
 
   (defun org-next-src-block ()
     "Jump to the next src block using SEARCH-FORWARD."
@@ -1632,6 +1662,48 @@ Only solution so far is to switch off prelude mode when in org mode.
 
   (global-set-key (kbd "C-c C-x t") 'org-insert-current-date)
 #+END_SRC
+* COMMENT org mode latex export - notes
+  :PROPERTIES:
+  :DATE:     <2018-03-05 Mon 23:11>
+  :END:
+
+N.B. Xelatex enables one to use system fonts. These are necessary for languages such as greek, which requires a character set other than latin.  
+The present section tells org mode to use xelatex.  However this only works for org-version 9 or greater.  Use command =org-version= to find out which version is installed.  To upgrade to version 9 follow these steps: 
+
+- Delete default org code base
+
+Delete the current or default org version code.  In macOS this is found inside the Emacs.app folder at this location: Emacs.app/Contents/Resources/lisp/org  It is necessary to delete this entire folder before upgrading, because if you keep it, it will cause conflicts with version 9 which will either disable latex export or result in errors when definin properties such as =#+TITLE:=, =#+AUTHOR:=, =#+DATE:= in an org file. 
+
+- Add org-mode repository to the emacs-lisp package list variable
+
+Run the following code: 
+
+#+BEGIN_SRC elisp
+(setq package-archives
+      '(("melpa" . "https://melpa.org/packages/")
+        ("gnu" . "https://elpa.gnu.org/packages/")
+        ("org" . "http://orgmode.org/elpa/")))
+(package-initialize)
+#+END_SRC
+
+- Install the org-plus-contrib package either with command =package-install= or with =package-list-packages= and then searching =org-plus-contrib=, then typing i to mark it for installation and then typing x to install the marked packages.
+
+* org mode latex export
+  :PROPERTIES:
+  :DATE:     <2018-03-06 Tue 07:46>
+  :END:
+
+ #+BEGIN_SRC emacs-lisp
+   ;;; NOTE: See notes in master file about upgrading to org-mode version 9.
+   ;;; This is needed to use xelatex.
+
+   ;; Use xelatex as latex compiler, thus enabling use of native fonts for greek etc.
+   (setq org-latex-compiler "xelatex")
+
+   ;; use fontspec package to enable system fonts in xelatex
+   ()
+ #+END_SRC
+
 * org-mode: Use uppercase UUIDs in Linux for consistency with MacOS when syncing with rslsync
   :PROPERTIES:
   :DATE:     <2017-11-01 Τετ 10:56>
