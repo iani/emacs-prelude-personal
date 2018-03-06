@@ -1,0 +1,3 @@
+# Use MS PMincho font
+#+LaTeX_HEADER: \setromanfont[Mapping=tex-text]{MS PMincho}
+

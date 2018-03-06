@@ -1,0 +1,10 @@
+Each file in this folder except for the files whose names start with "how-to" contains lines that help customise various aspects of latex export, such as set the fonts or margins or line-spacing.  The name of each file explains its customization purpose.  To use it, copy its contents at the beginning (preferably) of your org-mode file, and change the default parameters such as font name, magnitude of line-spacing according to your preference. 
+
+You may either open the folder in dired and edit the files to get their contents, or you may use deft to select a file by typing part of its name and then use a shortcut command to copy the contents of that file to the top of your org-mode file.  If you want to use deft, follow the workflow explained below: 
+
+1. Go to the org-mode window/buffer whose contents you want to customize.
+3. Type C-c C-M-r to run the command org-deft-latex-recipes.  This will erase all other windows but the org-mode window that you are on, and then open a new deft window next to it. 
+5. On the deft window, type a file search string until you select or navigate to the line of the file that you want to insert to your org mode file.
+6. Type C-i to run the command =deft-insert-file-other-buffer=.  This will insert the contents of the file that you selected to the top of the org-mode buffer in the other window.
+
+For more info on deft, see: https://github.com/jrblevin/deft

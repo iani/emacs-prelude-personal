@@ -1,0 +1,3 @@
+# Use Hiragino Sans font
+#+LaTeX_HEADER: \setromanfont[Mapping=tex-text]{Hiragino Sans}
+

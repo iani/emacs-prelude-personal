@@ -203,6 +203,16 @@ dark theme hl colors and inconsolata font
   (add-hook 'js-mode-hook 'visual-line-mode)
 
 #+END_SRC
+* turn off auto fill in text mode
+
+Do not turn on auto-fill mode in text or org-mode or related modes.
+The culprit in the latest version of emacs is file /Resources/lisp/textmodes/text-mode.el.
+
+For more info, see: https://stackoverflow.com/questions/9878623/how-can-i-disable-auto-fill-mode-in-emacs
+
+#+BEGIN_SRC emacs-lisp
+(setq text-mode-hook nil)
+#+END_SRC
 * multiple-cursors
 
 #+BEGIN_SRC emacs-lisp
@@ -486,14 +496,6 @@ Adapted from helm-switch-to-buffers."
 * COMMENT speedbar
 
 #+BEGIN_SRC emacs-lisp
-  (prelude-load-require-packages '(deft sr-speedbar))
-
-  (setq deft-use-filename-as-title t)
-
-  ;; include org, sc, el files in deft search
-  (setq deft-extensions '( "org" "sc" "scd" "el" "txt" "tex"))
-  ;; search directories recursively in deft
-  (setq deft-recursive t)
 
   ;; (speedbar-add-supported-extension ".sc")
   ;; (speedbar-add-supported-extension ".scd")
@@ -1509,6 +1511,14 @@ Only solution so far is to switch off prelude mode when in org mode.
     "Search for next #+BEGIN_SRC block header."
     (interactive)
     (re-search-forward "\\#\\+BEGIN_SRC " nil t))
+
+  (defun org-deft-latex-recipes ()
+    "Use deft to customize org-latex export of current org-mode buffer."
+    (interactive)
+    (delete-other-windows)
+    (split-window-right)
+    (deft))
+
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
   ;; This is run once after loading org for the first time
@@ -1517,6 +1527,8 @@ Only solution so far is to switch off prelude mode when in org mode.
     '(progn
        ;; alias for org-cycle, more convenient than TAB
        (define-key org-mode-map (kbd "C-M-]") 'org-cycle)
+       ;; Use deft to customize org-latex export of current org-mode buffer
+       (define-key org-mode-map (kbd "C-c M-r") 'org-deft-latex-recipes)
        ;; Note: This keybinding is in analogy to the default keybinding:
        ;; C-c . -> org-time-stamp
        (define-key org-mode-map (kbd "C-c C-.") 'org-set-date)
@@ -1697,11 +1709,52 @@ Run the following code:
    ;;; NOTE: See notes in master file about upgrading to org-mode version 9.
    ;;; This is needed to use xelatex.
 
+   ;; First load this package to initialize variables:
+   (require 'ox-latex)
+
    ;; Use xelatex as latex compiler, thus enabling use of native fonts for greek etc.
    (setq org-latex-compiler "xelatex")
 
    ;; use fontspec package to enable system fonts in xelatex
-   ()
+   (add-to-list 'org-latex-packages-alist '("" "fontspec"))
+   ;; allow more flexible spaces between words for justified text
+   (add-to-list 'org-latex-packages-alist "\\sloppy")
+
+   ;; Browse recipes using deft
+   (prelude-load-require-packages '(deft))
+   (eval-after-load 'deft
+     '(progn
+        (define-key deft-mode-map (kbd "C-i") 'deft-insert-file-other-buffer)))
+
+   (defun deft-insert-file-other-buffer ()
+     "Copy contents of file selected in deft window to kill ring."
+     (interactive)
+     (let ((filename (deft-filename-at-point)))
+       (unless filename
+         (goto-char (line-beginning-position))
+         (setq filename (deft-filename-at-point)))
+       (when filename
+         (message "test %s" filename)
+         (other-window 1)
+         (goto-char (point-min))
+         (insert-file-contents filename))))
+
+   (setq deft-use-filename-as-title t)
+
+   ;; include org, sc, el, txt, tex files in deft search
+   (setq deft-extensions '( "org" "sc" "scd" "el" "txt" "tex"))
+
+   ;; use latex-recipes as deft directory
+   (setq deft-directory (concat (directory-file-name
+                                 (file-name-directory
+                                  (directory-file-name
+                                   (file-name-directory (directory-file-name load-file-name)))))
+                                "/latex-recipes/"))
+
+   (setq deft-use-filter-string-for-filename t) ;; create file names from user input - not timestamps
+
+   ;; search directories recursively in deft
+   (setq deft-recursive t)
  #+END_SRC
 
 * org-mode: Use uppercase UUIDs in Linux for consistency with MacOS when syncing with rslsync
