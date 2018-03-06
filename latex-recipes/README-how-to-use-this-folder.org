@@ -1,0 +1,44 @@
+* Setting up org-mode for multilingual export in latex with OS native fonts
+  :PROPERTIES:
+  :DATE:     <2018-03-06 Tue 10:38>
+  :END:
+
+Xelatex is one of several alternative latex compilers which can use system fonts in addition to the built-in fonts of latex. These are necessary for languages such as greek, which requires a character set other than latin.  
+
+To export an org mode file containing texts with non-latin character sets (greek or other), you need to use an alternative latex processor such as xelatex.  The present file explains how to do this with org-mode version 9 or greater.  Due to incompatibilities between org-mode versions 8 to 9, please follow the instructions here, otherwise export with xelatex may be broken partly or entirely.
+
+The present section tells org mode to use xelatex.  However this only works for org-version 9 or greater.  Use command =org-version= to find out which version is installed.  To upgrade to version 9 follow these steps: 
+
+**  Step 1: Delete default org code base
+
+ Delete the current or default org version code.  In macOS this is found inside the Emacs.app folder at this location: Emacs/Contents/Resources/lisp/org  It is necessary to delete this entire folder before upgrading, because if you keep it, it will cause conflicts with version 9 which will either disable latex export or result in errors when definin properties such as =#+TITLE:=, =#+AUTHOR:=, =#+DATE:= in an org file. 
+
+** Step 2: Add org-mode repository to the emacs-lisp package list variable
+
+ Run the following code: 
+
+ #+BEGIN_SRC elisp
+ (setq package-archives
+       '(("melpa" . "https://melpa.org/packages/")
+         ("gnu" . "https://elpa.gnu.org/packages/")
+         ("org" . "http://orgmode.org/elpa/")))
+ (package-initialize)
+ #+END_SRC
+
+ 
+** Step 3. Install the org-plus-contrib package
+
+Use either command =package-install= or =package-list-packages= and search =org-plus-contrib=, type i to mark it for installation and then x to install the marked packages.
+
+* Shortcuts for selecting and inserting the recipes in this folder
+
+Each file in this folder except for the files whose names start with "how-to" contains lines that help customise various aspects of latex export, such as set the fonts or margins or line-spacing. The name of each file explains its customization purpose.  To use it, copy its contents at the beginning (preferably) of your org-mode file, and change the default parameters such as font name, magnitude of line-spacing according to your preference.
+
+You may either open the folder in dired and edit the files to get their contents, or you may use deft to select a file by typing part of its name and then use a shortcut command to copy the contents of that file to the top of your org-mode file.  If you want to use deft, follow the workflow explained below: 
+
+1. Go to the org-mode window/buffer whose contents you want to customize.
+3. Type C-c C-M-r to run the command org-deft-latex-recipes.  This will erase all other windows but the org-mode window that you are on, and then open a new deft window next to it. 
+5. On the deft window, type a file search string until you select or navigate to the line of the file that you want to insert to your org mode file.
+6. Type C-i to run the command =deft-insert-file-other-buffer=.  This will insert the contents of the file that you selected to the top of the org-mode buffer in the other window.
+
+For more info on deft, see: https://github.com/jrblevin/deft and: https://jblevins.org/projects/deft/
