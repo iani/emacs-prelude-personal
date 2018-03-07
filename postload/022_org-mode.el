@@ -1,4 +1,4 @@
-;;; org-mode --- 2018-03-06 03:07:35 PM
+;;; org-mode --- 2018-03-07 08:52:46 PM
   ;;; Commentary:
 
   ;; customize some org mode settings
@@ -9,7 +9,9 @@
   ;;; pretty bullets
   ;;;   (prelude-load-require-package 'org-bullets)
   (require 'org-bullets)
-  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+  (add-hook 'org-mode-hook (lambda () ;; custom bullets: on, auto-fill: off
+                             (org-bullets-mode 1)
+                             (auto-fill-mode -1)))
 
   ;; load util to insert recipes for export customization:
   ;; (require 'org-export-recipes) ;; is now part of postload!

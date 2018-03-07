@@ -1,0 +1,37 @@
+# Use Times font, which can print greek properly
+#+LaTeX_HEADER: \setromanfont[Mapping=tex-text]{Times}
+#+LATEX_HEADER: \setkomavar{firsthead}{}
+#+OPTIONS: toc:nil
+
+#+LATEX_CLASS: letter
+
+#+LATEX_HEADER: \usepackage{tikz}
+
+\setkomafont{fromname}{\sffamily \LARGE}
+\setkomafont{fromaddress}{\sffamily}
+\setkomafont{pagenumber}{\sffamily}
+\setkomafont{subject}{\bfseries}
+\setkomafont{backaddress}{\mdseries}
+
+\LoadLetterOption{DIN}
+\setkomavar{subject}{Re: This is an extremely serious topic.}
+\setkomavar{fromname}{Ιωάννης Ζάννος}
+\setkomavar{fromaddress}{Ionian University\\Dept. of Audiovisual Arts\\Πλατεία Τσιριγώτη 7\\49100 Κέρκυρα\\Greece}
+\setkomavar{fromphone}{+49 0000 0\,00\,00\,00}
+\setkomavar{fromemail}{from.name@mail.com}
+\setkomavar{backaddressseparator}{\enspace\textperiodcentered\enspace}
+\setkomavar{signature}{Ιωάννης Ζάννος}
+\setkomavar{place}{Κέρκυρα}
+\setkomavar{date}{\today}
+\setkomavar{enclseparator}{: }
+
+\begin{letter}{Mrs Mabel, Penultimate St. 7\\Reykiavik\\Island}
+
+\opening{Dear Mrs~Canary,}
+
+This is a very simple basic example of a letter including (a) greek text and (b) inline custom elements such as subject, address, greeting, and closing. 
+
+The example does not yet include a logo.  The logo plus other formating details are still to be added.  This will require either creating a variant of the koma script class or adding further format directives in the org source of the present file.
+
+\closing{Yours sincerely,}
+\end{letter}

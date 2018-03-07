@@ -1,5 +1,4 @@
-# geometry package necessary for these adjustments:
-
+# Note: geometry package necessary for these adjustments
 # margins
 #+LaTeX_HEADER: \usepackage[margin=0.75in]{geometry}
 # line spacing

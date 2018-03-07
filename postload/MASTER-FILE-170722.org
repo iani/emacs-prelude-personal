@@ -1402,7 +1402,9 @@ Only solution so far is to switch off prelude mode when in org mode.
   ;;; pretty bullets
   ;;;   (prelude-load-require-package 'org-bullets)
   (require 'org-bullets)
-  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+  (add-hook 'org-mode-hook (lambda () ;; custom bullets: on, auto-fill: off
+                             (org-bullets-mode 1)
+                             (auto-fill-mode -1)))
 
   ;; load util to insert recipes for export customization:
   ;; (require 'org-export-recipes) ;; is now part of postload!
@@ -1714,6 +1716,10 @@ Run the following code:
 
    ;; Use xelatex as latex compiler, thus enabling use of native fonts for greek etc.
    (setq org-latex-compiler "xelatex")
+
+   ;; Add some latex classes.  Testing stage.  Keepin this simple for now.
+   (add-to-list 'org-latex-classes '("letter" "\\documentclass[11pt]{scrlttr2}"))
+   ;; See example letter in folder ../latex-examples
 
    ;; use fontspec package to enable system fonts in xelatex
    (add-to-list 'org-latex-packages-alist '("" "fontspec"))

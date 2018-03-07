@@ -1,0 +1,3 @@
+# next 2 lines switch language to greek.
+#+LaTeX_HEADER: \usepackage{polyglossia}
+#+LaTeX_HEADER: \setmainlanguage[variant=mono]{greek}

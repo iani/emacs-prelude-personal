@@ -1,1 +1,4 @@
 postload-extras
+*.tex
+*.pdf
+*.log

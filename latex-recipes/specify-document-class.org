@@ -1,0 +1,2 @@
+# The named latex class must be defined in variable 'org-latex-classes
+#+LaTeX_CLASS: report

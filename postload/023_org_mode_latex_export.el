@@ -1,4 +1,4 @@
-;;; org_mode_latex_export --- 2018-03-06 03:07:35 PM
+;;; org_mode_latex_export --- 2018-03-07 08:52:46 PM
    ;;; NOTE: See notes in master file about upgrading to org-mode version 9.
    ;;; This is needed to use xelatex.
 
@@ -7,6 +7,10 @@
 
    ;; Use xelatex as latex compiler, thus enabling use of native fonts for greek etc.
    (setq org-latex-compiler "xelatex")
+
+   ;; Add some latex classes.  Testing stage.  Keepin this simple for now.
+   (add-to-list 'org-latex-classes '("letter" "\\documentclass[11pt]{scrlttr2}"))
+   ;; See example letter in folder ../latex-examples
 
    ;; use fontspec package to enable system fonts in xelatex
    (add-to-list 'org-latex-packages-alist '("" "fontspec"))

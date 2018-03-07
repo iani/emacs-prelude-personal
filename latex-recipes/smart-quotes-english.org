@@ -1,0 +1,3 @@
+# Use smart english quotes. Note: Both lines below are needed for this.
+#+LaTeX_HEADER: \usepackage [autostyle, english = american]{csquotes}
+#+LaTeX_HEADER: \MakeOuterQuote{"}
