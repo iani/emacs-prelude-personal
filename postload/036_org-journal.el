@@ -1,4 +1,4 @@
-;;; org-journal --- 2018-03-08 04:12:29 AM
+;;; org-journal --- 2018-03-08 09:32:24 AM
   ;;; Commentary:
   ;;; use org-journal for capture globally.
   ;;; https://github.com/bastibe/org-journal
@@ -18,8 +18,11 @@
     (interactive)
     (org-journal-new-entry nil (apply 'encode-time (org-parse-time-string (org-read-date t t)))))
 
-  ;; Overwrite custom setting of var:
+  ;; Use own path for journal dir:
   (setq org-journal-dir (file-truename "~/Documents/000WORKFILES/PERSONAL/journal"))
+
+  ;; Use own path for diary dir:
+  (setq diary-file (concat (file-name-directory org-journal-dir) "diary"))
 
   ;; adding own custom var to journal group, using template from journal mode.
   (defcustom org-todo-dir (file-truename "~/Documents/000WORKFILES/PERSONAL/TODOS")

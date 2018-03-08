@@ -1,4 +1,4 @@
-;;; tiny_menu --- 2018-03-08 04:12:27 AM
+;;; tiny_menu --- 2018-03-08 09:32:23 AM
   ;;; Commentary:
 
   ;; test code for using tiny-menu
@@ -117,12 +117,12 @@
       (interactive)
       (let ((tiny-menu-items
              '(("search/files" ("search/files"
-                                ((?g "goto-section" air-goto-section)
-                                 (?r "recent files" crux-recentf-ido-find-file)
+                                ((?r "recent files" crux-recentf-ido-find-file)
                                  (?p "projectile" helm-projectile-switch-project)
-                                 (?d "dired" dired)
-                                 (?g "goto bookmark" bookmark-jump)
+                                 (?b "goto bookmark" bookmark-jump)
                                  (?s "set bookmark" bookmark-set)
+                                 (?d "dired" dired)
+                                 (?g "goto-section" air-goto-section)
                                  (?1 "icy on" air-turn-icicles-on)
                                  (?0 "icy off" air-turn-icicles-off))))
                ("journal/agenda" ("journal/agenda"

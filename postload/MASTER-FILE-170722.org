@@ -44,6 +44,7 @@
   (setq calendar-latitude [39 37 north])
   (setq calendar-longitude [19 54 east])
 #+END_SRC
+
 * moe theme powerline delimiter faces
 
 #+BEGIN_SRC emacs-lisp
@@ -2325,12 +2326,12 @@ Design draft for next version:
       (interactive)
       (let ((tiny-menu-items
              '(("search/files" ("search/files"
-                                ((?g "goto-section" air-goto-section)
-                                 (?r "recent files" crux-recentf-ido-find-file)
+                                ((?r "recent files" crux-recentf-ido-find-file)
                                  (?p "projectile" helm-projectile-switch-project)
-                                 (?d "dired" dired)
-                                 (?g "goto bookmark" bookmark-jump)
+                                 (?b "goto bookmark" bookmark-jump)
                                  (?s "set bookmark" bookmark-set)
+                                 (?d "dired" dired)
+                                 (?g "goto-section" air-goto-section)
                                  (?1 "icy on" air-turn-icicles-on)
                                  (?0 "icy off" air-turn-icicles-off))))
                ("journal/agenda" ("journal/agenda"
@@ -2696,8 +2697,11 @@ Design draft for next version:
     (interactive)
     (org-journal-new-entry nil (apply 'encode-time (org-parse-time-string (org-read-date t t)))))
 
-  ;; Overwrite custom setting of var:
+  ;; Use own path for journal dir:
   (setq org-journal-dir (file-truename "~/Documents/000WORKFILES/PERSONAL/journal"))
+
+  ;; Use own path for diary dir:
+  (setq diary-file (concat (file-name-directory org-journal-dir) "diary"))
 
   ;; adding own custom var to journal group, using template from journal mode.
   (defcustom org-todo-dir (file-truename "~/Documents/000WORKFILES/PERSONAL/TODOS")
