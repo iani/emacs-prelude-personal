@@ -1,4 +1,4 @@
-;;; org-journal --- 2018-03-07 08:52:50 PM
+;;; org-journal --- 2018-03-08 04:12:29 AM
   ;;; Commentary:
   ;;; use org-journal for capture globally.
   ;;; https://github.com/bastibe/org-journal
@@ -9,6 +9,9 @@
 
   ;; Create files with .org ending to automatically enable org-mode when loading them:
   (setq org-journal-file-format "%Y%m%d.org")
+
+  ;; allow input of dates before 1970
+  (setq org-read-date-force-compatible-dates nil)
 
   (defun org-journal-new-entry-from-org-timestamp ()
     "Like org-journal-new-entry except read time interactively using org-read-date."

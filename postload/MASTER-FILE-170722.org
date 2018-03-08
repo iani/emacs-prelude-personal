@@ -1416,7 +1416,8 @@ Only solution so far is to switch off prelude mode when in org mode.
 
   ;; customize looks
   (custom-set-faces
-   '(org-block-end-line ((t (:background "#3a5a5f" :foreground "gray99"))) t)
+   '(org-block-end-line ((t (:background "#2a2a2f" :foreground "gray99"))) t)
+   '(org-block-begin-line ((t (:background "#3a2a2f" :foreground "gray99"))) t)
    '(org-level-1 ((t (:family "Helvetica" :height 1.1 :weight bold))))
    '(org-level-2 ((t (:family "Helvetica" :height 1.1 :weight bold))))
    ;; '(org-level-1 ((t (:family "Courier New" :height 1.1 :weight bold))))
@@ -2647,29 +2648,30 @@ Design draft for next version:
 * COMMENT copy-file-path
 
 #+BEGIN_SRC emacs-lisp
+  (defun crux-copy-file-path (&optional dir-path-only-p)
   "Copy the current buffer's file path or dired path to `kill-ring'.
-Result is full path.
-If `universal-argument' is called first, copy only the dir path.
-URL `http://ergoemacs.org/emacs/emacs_copy_file_path.html'
-Version 2015-12-02"
-  (interactive "P")
-  (let ((ξfpath
-         (if (equal major-mode 'dired-mode)
-             (expand-file-name default-directory)
-           (if (null (buffer-file-name))
-               (user-error "Current buffer is not associated with a file.")
-             (buffer-file-name)))))
-    (kill-new
-     (if (null φdir-path-only-p)
+  Result is full path.
+  If `universal-argument' is called first, copy only the dir path.
+  URL `http://ergoemacs.org/emacs/emacs_copy_file_path.html'
+  Version 2015-12-02"
+    (interactive "P")
+    (let ((ξfpath
+           (if (equal major-mode 'dired-mode)
+               (expand-file-name default-directory)
+             (if (null (buffer-file-name))
+                 (user-error "Current buffer is not associated with a file.")
+               (buffer-file-name)))))
+      (kill-new
+       (if (null dir-path-only-p)
+           (progn
+             (message "File path copied: 「%s」" ξfpath)
+             ξfpath
+             )
          (progn
-           (message "File path copied: 「%s」" ξfpath)
-           ξfpath
-           )
-       (progn
-         (message "Directory path copied: 「%s」" (file-name-directory ξfpath))
-         (file-name-directory ξfpath))))))
+           (message "Directory path copied: 「%s」" (file-name-directory ξfpath))
+           (file-name-directory ξfpath))))))
 
-(global-set-key (kbd "C-c q p") 'xah-copy-file-path)
+  (global-set-key (kbd "C-c P") 'crux-copy-file-path)
 #+END_SRC
 
 * org-journal
@@ -2685,6 +2687,9 @@ Version 2015-12-02"
 
   ;; Create files with .org ending to automatically enable org-mode when loading them:
   (setq org-journal-file-format "%Y%m%d.org")
+
+  ;; allow input of dates before 1970
+  (setq org-read-date-force-compatible-dates nil)
 
   (defun org-journal-new-entry-from-org-timestamp ()
     "Like org-journal-new-entry except read time interactively using org-read-date."

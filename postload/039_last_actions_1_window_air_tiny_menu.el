@@ -1,4 +1,4 @@
-;;; last_actions_1_window_air_tiny_menu --- 2018-03-07 08:52:51 PM
+;;; last_actions_1_window_air_tiny_menu --- 2018-03-08 04:12:31 AM
   (delete-other-windows)
   (air-tiny-menu)
 (provide 'last_actions_1_window_air_tiny_menu)
