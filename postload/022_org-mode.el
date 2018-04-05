@@ -1,4 +1,4 @@
-;;; org-mode --- 2018-03-08 09:32:21 AM
+;;; org-mode --- 2018-04-05 04:37:57 PM
   ;;; Commentary:
 
   ;; customize some org mode settings
@@ -23,6 +23,8 @@
 
   ;; customize looks
   (custom-set-faces
+   ;; #ef2929
+   '(org-priority ((t (:background "#ff5959" :foreground "gray99"))) t)
    '(org-block-end-line ((t (:background "#2a2a2f" :foreground "gray99"))) t)
    '(org-block-begin-line ((t (:background "#3a2a2f" :foreground "gray99"))) t)
    '(org-level-1 ((t (:family "Helvetica" :height 1.1 :weight bold))))

@@ -1,7 +1,7 @@
-;;; tiny_menu --- 2018-03-08 09:32:23 AM
+;;; tiny_menu --- 2018-04-05 04:37:59 PM
   ;;; Commentary:
 
-  ;; test code for using tiny-menu
+  ;; 2 tiny-menus for functions that I do not want to place on command-keys,
   ;; from: https://blog.aaronbieber.com/2016/07/31/org-navigation-revisited.html
 
   ;;; Code:
@@ -119,18 +119,49 @@
              '(("search/files" ("search/files"
                                 ((?r "recent files" crux-recentf-ido-find-file)
                                  (?p "projectile" helm-projectile-switch-project)
+                                 (?s "rgrep search" rgrep)
                                  (?b "goto bookmark" bookmark-jump)
                                  (?s "set bookmark" bookmark-set)
+                                 (?e "ebib" ebib)
                                  (?d "dired" dired)
+                                 (?l "latex recipes" org-deft-latex-recipes)
                                  (?g "goto-section" air-goto-section)
-                                 (?1 "icy on" air-turn-icicles-on)
-                                 (?0 "icy off" air-turn-icicles-off))))
+                                 (?i "icicle imenu" icicle-imenu)
+                                 ;; (?1 "icy on" air-turn-icicles-on)
+                                 ;; (?0 "icy off" air-turn-icicles-off)
+                                 )))
                ("journal/agenda" ("journal/agenda"
                                   ((?a "agenda" org-agenda-list)
                                    (?t "todos" org-todo-list)
                                    (?m "agenda menu" org-agenda)
                                    (?n "new journal entry" org-journal-at-date-from-user)
                                    (?g "goto journal entry" air-journal-goto-date))))
+               )))
+        (tiny-menu)))
+
+  (defun org-latex-switch-to-pdflatex ()
+    "Set org mode default package and compiler vars to use pdflatex."
+    (interactive)
+    (setq org-latex-compiler "pdflatex")
+    ;; do not use fontspec because it is incompatible with pdflatex
+    (setq org-latex-packages-alist '("\\sloppy")))
+
+  (defun org-latex-switch-to-xelatex ()
+    "Set org mode default package and compiler vars to use xelatex."
+    (interactive)
+    (setq org-latex-compiler "xelatex")
+    (setq org-latex-packages-alist
+          ;; add fontspec per default, to permit use of system fonts.
+          '("\\sloppy" ("" "fontspec"))))
+
+  (defun air-tiny-menu2 ()
+      "My custom tiny menu 2: latex and other stuff"
+      (interactive)
+      (let ((tiny-menu-items
+             '(("latex" ("latex"
+                                ((?l "latex recipes" org-deft-latex-recipes)
+                                 (?p "use pdflatex" org-latex-switch-to-pdflatex)
+                                 (?x "use xelatex" org-latex-switch-to-xelatex))))
                ("sc lang" ("sc lang"
                            ((?s "start" sclang-start)
                             (?q "quit" sclang-stop)
@@ -150,65 +181,11 @@
                              (?s "scope" sclang-server-scope)
                              (?f "freqscope" sclang-server-freqscope)))))))
         (tiny-menu)))
-  ;; (defun air-tiny-menu ()
-  ;;     "My custom tiny menu."
-  ;;     (interactive)
-  ;;     (let ((tiny-menu-items
-  ;;            '(("agenda" ("agenda"
-  ;;                         ((?a "agenda" org-agenda-list)
-  ;;                          (?A "agenda menu" org-agenda)
-  ;;                          (?t "todo" org-todo-list))))
-  ;;              ("workfiles" ("workfiles"
-  ;;                            ((?c "commander" projectile-commander-workfiles)
-  ;;                             ;; (?s "ag" projectile-ag-workfiles)
-  ;;                             (?v "magit" projectile-vc-workfiles)
-  ;;                             (?f "find file" projectile-find-file-workfiles)
-  ;;                             (?r "recent" projectile-recent-files-workfiles)
-  ;;                             (?d "dired" projectile-dired-workfiles)
-  ;;                             (?D "root dired" projectile-root-dired-workfiles))))
-  ;;              ("projects" ("projects"
-  ;;                           ((?c "commander" projectile-commander-projects)
-  ;;                            ;; (?s "ag" projectile-ag-projects)
-  ;;                            (?v "magit" projectile-vc-projects)
-  ;;                            (?f "find file" projectile-find-file-projects)
-  ;;                            (?r "recent" projectile-recent-files-projects)
-  ;;                            (?d "dired" projectile-dired-projects)
-  ;;                            (?D "root dired" projectile-root-dired-projects))))
-  ;;              ("files" ("files"
-  ;;                        ((?i "icy imenu" icicle-imenu)
-  ;;                         (?l "org jump local" air-refile-goto-current-buffer)
-  ;;                         (?r "recent files" helm-recentf)
-  ;;                         (?j "projects refile jump" org-jump-to-refile-target)
-  ;;                         (?w "Workfiles find file" projectile-find-file-workfiles)
-  ;;                         (?W "Workfiles projectile commander" projectile-commander-workfiles))))
-  ;;              ("stuff"   ("stuff"
-  ;;                          ((?t "Tag"     org-tags-view)
-  ;;                           (?i "ID"      air-org-goto-custom-id)
-  ;;                           (?k "Keyword" org-search-view)
-  ;;                           (?s "SuperCollider" sclang-start))))
-  ;;              ("icicles"   ("icicles"
-  ;;                            ((?1 "icy on" air-turn-icicles-on)
-  ;;                             (?0 "icy off" air-turn-icicles-off))))
-  ;;              ("org-links"    ("Links"
-  ;;                               ((?c "Capture"   org-store-link)
-  ;;                                (?l "Insert"    org-insert-link)
-  ;;                                (?i "Custom ID" air-org-insert-custom-id-link)))))))
-  ;;       (tiny-menu)))
-
-  ;; (setq tiny-menu-items
-  ;;       '(("org-things"   ("Things"
-  ;;                          ((?t "Tag"     org-tags-view)
-  ;;                           (?i "ID"      air-org-goto-custom-id)
-  ;;                           (?k "Keyword" org-search-view)
-  ;;                           (?l "Refile Goto Local" air-refile-goto-current-buffer)
-  ;;                           )))
-  ;;         ("org-links"    ("Links"
-  ;;                          ((?c "Capture"   org-store-link)
-  ;;                           (?l "Insert"    org-insert-link)
-  ;;                           (?i "Custom ID" air-org-insert-custom-id-link))))))
 
   ;; (global-set-key (kbd "C-H-M-t") 'air-tiny-menu)
+  ;; Note: I could use s-m because:
   ;; s-m is set by prelude/magit to magit commands that I do not use or plan to use directly.
   (global-set-key (kbd "H-m") 'air-tiny-menu)
+  (global-set-key (kbd "H-M") 'air-tiny-menu2)
 (provide 'tiny_menu)
-;;; 030_tiny_menu.el ends here
+;;; 031_tiny_menu.el ends here

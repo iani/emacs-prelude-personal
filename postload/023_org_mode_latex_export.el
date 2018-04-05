@@ -1,4 +1,4 @@
-;;; org_mode_latex_export --- 2018-03-08 09:32:22 AM
+;;; org_mode_latex_export --- 2018-04-05 04:37:58 PM
    ;;; NOTE: See notes in master file about upgrading to org-mode version 9.
    ;;; This is needed to use xelatex.
 

@@ -1,4 +1,4 @@
-;;; Theming+Faces --- 2018-03-08 09:32:19 AM
+;;; Theming+Faces --- 2018-04-05 04:37:54 PM
   ;;; Commentary:
 
   ;;; Default font: Inconsolata.
@@ -8,12 +8,18 @@
   ;;; Code:
 
   (custom-set-faces
-   '(default ((t (:family "Inconsolata" :foundry "nil"
-                          :width normal :height 120
-                          :weight normal :slant normal :underline nil :overline nil
-                          :strike-through nil :box nil
-                          :inverse-video nil :foreground "#DCDCCC"
-                          :background "#3F3F3F" :stipple nil :inherit nil))))
+   ;; NOTE: Liberation mono font has fixed width also for greek:
+   ;; Org table columns using both greek and latin characters thus align properly with this font.
+   ;; Inconsolata and Source Code Pro result in misaligned table columns when mixing greek and latin characters.
+   '(default ((t (:family
+                  ;; "Liberation Mono for Powerline"
+                  "Courier New"
+                  :foundry "nil"
+                  :width normal :height 110
+                  :weight normal :slant normal :underline nil :overline nil
+                  :strike-through nil :box nil
+                  :inverse-video nil :foreground "#DCDCCC"
+                  :background "#3F3F3F" :stipple nil :inherit nil))))
    '(helm-selection ((t
                       (:underline nil :background "MediumOrchid1" :foreground "white"))))
    '(region ((t (:background "thistle4" :foreground nil))))
