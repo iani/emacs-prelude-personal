@@ -1,4 +1,4 @@
-;;; tiny_menu --- 2018-04-05 04:37:59 PM
+;;; tiny_menu --- 2018-04-13 10:13:29 PM
   ;;; Commentary:
 
   ;; 2 tiny-menus for functions that I do not want to place on command-keys,
@@ -155,32 +155,33 @@
           '("\\sloppy" ("" "fontspec"))))
 
   (defun air-tiny-menu2 ()
-      "My custom tiny menu 2: latex and other stuff"
-      (interactive)
-      (let ((tiny-menu-items
-             '(("latex" ("latex"
-                                ((?l "latex recipes" org-deft-latex-recipes)
-                                 (?p "use pdflatex" org-latex-switch-to-pdflatex)
-                                 (?x "use xelatex" org-latex-switch-to-xelatex))))
-               ("sc lang" ("sc lang"
-                           ((?s "start" sclang-start)
-                            (?q "quit" sclang-stop)
-                            (?r "recompile" sclang-recompile)
-                            (?w "workspace" sclang-switch-to-workspace)
-                            (?p "post window" sclang-show-post-buffer)
-                            (?c "clear post window" sclang-clear-post-buffer))))
-               ("sc server" ("sc server"
-                             ((?i "set io channels" sclang-set-io-channels)
-                              (?b "boot" sclang-server-boot)
-                              (?q "quit server" sclang-server-quit)
-                              (?k "kill all servers" sclang-kill-all-servers))))
-               ("sc utils" ("sc utils"
-                            ((?1 "start recording" sclang-start-recording)
-                             (?0 "stop recording" sclang-stop-recording)
-                             (?m "meter" sclang-server-meter)
-                             (?s "scope" sclang-server-scope)
-                             (?f "freqscope" sclang-server-freqscope)))))))
-        (tiny-menu)))
+    "My custom tiny menu 2: latex and other stuff"
+    (interactive)
+    (let ((tiny-menu-items
+           '(("latex" ("latex"
+                       ((?c "compile pdf with custom headers" org-compile-latex-with-custom-headers)
+                        (?l "latex recipes" org-deft-latex-recipes)
+                        (?p "use pdflatex" org-latex-switch-to-pdflatex)
+                        (?x "use xelatex" org-latex-switch-to-xelatex))))
+             ("sc lang" ("sc lang"
+                         ((?s "start" sclang-start)
+                          (?q "quit" sclang-stop)
+                          (?r "recompile" sclang-recompile)
+                          (?w "workspace" sclang-switch-to-workspace)
+                          (?p "post window" sclang-show-post-buffer)
+                          (?c "clear post window" sclang-clear-post-buffer))))
+             ("sc server" ("sc server"
+                           ((?i "set io channels" sclang-set-io-channels)
+                            (?b "boot" sclang-server-boot)
+                            (?q "quit server" sclang-server-quit)
+                            (?k "kill all servers" sclang-kill-all-servers))))
+             ("sc utils" ("sc utils"
+                          ((?1 "start recording" sclang-start-recording)
+                           (?0 "stop recording" sclang-stop-recording)
+                           (?m "meter" sclang-server-meter)
+                           (?s "scope" sclang-server-scope)
+                           (?f "freqscope" sclang-server-freqscope)))))))
+      (tiny-menu)))
 
   ;; (global-set-key (kbd "C-H-M-t") 'air-tiny-menu)
   ;; Note: I could use s-m because:
@@ -188,4 +189,4 @@
   (global-set-key (kbd "H-m") 'air-tiny-menu)
   (global-set-key (kbd "H-M") 'air-tiny-menu2)
 (provide 'tiny_menu)
-;;; 031_tiny_menu.el ends here
+;;; 032_tiny_menu.el ends here

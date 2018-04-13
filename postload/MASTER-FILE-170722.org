@@ -1713,10 +1713,13 @@ Run the following code:
 
 - Install the org-plus-contrib package either with command =package-install= or with =package-list-packages= and then searching =org-plus-contrib=, then typing i to mark it for installation and then typing x to install the marked packages.
 
-* org mode latex export
+* org mode latex export old defaults
   :PROPERTIES:
   :DATE:     <2018-03-06 Tue 07:46>
   :END:
+
+The present code is rendered obsolete by the next section which defines an alternative method for cusotmizing latex headers and footers, and uses latexmk to enable use of bibtex for biliographies/references.
+However, the deft-insert-file-other-buffer function should be modified to insert recipe snippets in latex code for use with the next section.
 
  #+BEGIN_SRC emacs-lisp
    ;;; NOTE: See notes in master file about upgrading to org-mode version 9.
@@ -1773,6 +1776,99 @@ Run the following code:
    ;; search directories recursively in deft
    (setq deft-recursive t)
  #+END_SRC
+
+*  org compile latex with custom headers
+
+#+BEGIN_SRC emacs-lisp
+  (defun org-compile-latex-with-custom-headers (&optional pdflatexp)
+    "Export body, insert header+footer from sections, compile to pdf.
+  If PDFLATEXP use pdflatex else use xelatex.
+  Use latexmk as ORG-LATEX-PDF-PROCESS. This usually works for compiling bibtex
+  and producing a bibliography section."
+    (interactive "P")
+    (let ((output (org-export-as
+                   'latex nil nil t nil
+                   ;; backend subtreep visible-only body-only ext-plist
+                   ))
+          (file (concat
+                 (file-name-sans-extension (buffer-file-name))
+                 ".tex"))
+          (pdf-file (concat
+                     (file-name-sans-extension (buffer-file-name))
+                     ".pdf"))
+          (header (get-custom-latex-from-section "latex-header"))
+          (footer (get-custom-latex-from-section "latex-footer")))
+      (with-temp-buffer
+        (insert header)
+        (insert output)
+        (insert footer)
+        (let ((coding-system-for-write 'utf-8)
+              (org-latex-pdf-process
+               (if pdflatexp
+                   '("latexmk -g -pdf -pdflatex=\"pdflatex\" -outdir=%o %f")
+                 '("latexmk -g -pdf -pdflatex=\"xelatex\" -outdir=%o %f"))))
+          (write-file file)
+          (org-latex-compile (buffer-file-name))
+          (shell-command (concat "open " pdf-file))))))
+
+  (defun org-latex-compile-interactive ()
+    "Interactive version of org-latex-compile. Uses current buffer as default"
+    (interactive)
+    (org-latex-compile (buffer-file-name)))
+
+  (defcustom latex-blocks-alist
+    '(
+      ("latex-header" . "\\documentclass{article}
+  \\begin{document}")
+      ("latex-footer" . "\\end{document}"))
+    "Alist of default latex block strings for header/footer.")
+
+  ;; (cdr (assoc "latex-header" latex-blocks-alist))
+  ;; (cdr (assoc "latex-footer" latex-blocks-alist))
+
+  (defun get-custom-latex-from-section (&optional section-name)
+    "Provide header or footer latex code from section matching SECTION-NAME.
+  Get default code from LATEX-BLOCKS-ALIST."
+    ;; (interactive)
+    (setq section-name (or section-name "latex-header"))
+    ;; (message "section-name is %s" section-name)
+    (let ((code (or
+                 (cdr (assoc section-name latex-blocks-alist))
+                 "")))
+      ;; (message "code is %s" code)
+      (org-map-entries
+       (lambda ()
+         (let ((element (cadr (org-element-at-point))))
+           (when (string= section-name (plist-get element :title))
+             (setq code (get-contents-or-babel element)))
+           )))
+      ;; (message "testing. code is:\n%s" code)
+      code))
+
+  (defun get-contents-or-babel (element)
+    "Get contents of section or babel block as string from ELEMENT."
+    (let* ((result (buffer-substring-no-properties
+                    (plist-get element :contents-begin)
+                    (plist-get element :contents-end)))
+           (src-block-beginning
+            (string-match "^#\\\+BEGIN_SRC +[a-z-]+" result))
+           (src-content-beginning
+            (match-end 0)))
+      ;; (message "the contents I will search are:\n%s" result)
+      ;; (message "src-block-beginning %s src-content-beginning %s"
+      ;;          src-block-beginning
+      ;;          src-content-beginning)
+      (when src-block-beginning
+        (setq result (substring
+                      result
+                      src-content-beginning
+                      (or
+                       ;; if no end of block was found, use end of section contents
+                       (string-match "^#\\\+END_SRC" result)
+                       (string-width result)))))
+      result))
+#+END_SRC
+
 
 * org mode and reference management ebib reftex
   :PROPERTIES:
@@ -2384,32 +2480,33 @@ Design draft for next version:
           '("\\sloppy" ("" "fontspec"))))
 
   (defun air-tiny-menu2 ()
-      "My custom tiny menu 2: latex and other stuff"
-      (interactive)
-      (let ((tiny-menu-items
-             '(("latex" ("latex"
-                                ((?l "latex recipes" org-deft-latex-recipes)
-                                 (?p "use pdflatex" org-latex-switch-to-pdflatex)
-                                 (?x "use xelatex" org-latex-switch-to-xelatex))))
-               ("sc lang" ("sc lang"
-                           ((?s "start" sclang-start)
-                            (?q "quit" sclang-stop)
-                            (?r "recompile" sclang-recompile)
-                            (?w "workspace" sclang-switch-to-workspace)
-                            (?p "post window" sclang-show-post-buffer)
-                            (?c "clear post window" sclang-clear-post-buffer))))
-               ("sc server" ("sc server"
-                             ((?i "set io channels" sclang-set-io-channels)
-                              (?b "boot" sclang-server-boot)
-                              (?q "quit server" sclang-server-quit)
-                              (?k "kill all servers" sclang-kill-all-servers))))
-               ("sc utils" ("sc utils"
-                            ((?1 "start recording" sclang-start-recording)
-                             (?0 "stop recording" sclang-stop-recording)
-                             (?m "meter" sclang-server-meter)
-                             (?s "scope" sclang-server-scope)
-                             (?f "freqscope" sclang-server-freqscope)))))))
-        (tiny-menu)))
+    "My custom tiny menu 2: latex and other stuff"
+    (interactive)
+    (let ((tiny-menu-items
+           '(("latex" ("latex"
+                       ((?c "compile pdf with custom headers" org-compile-latex-with-custom-headers)
+                        (?l "latex recipes" org-deft-latex-recipes)
+                        (?p "use pdflatex" org-latex-switch-to-pdflatex)
+                        (?x "use xelatex" org-latex-switch-to-xelatex))))
+             ("sc lang" ("sc lang"
+                         ((?s "start" sclang-start)
+                          (?q "quit" sclang-stop)
+                          (?r "recompile" sclang-recompile)
+                          (?w "workspace" sclang-switch-to-workspace)
+                          (?p "post window" sclang-show-post-buffer)
+                          (?c "clear post window" sclang-clear-post-buffer))))
+             ("sc server" ("sc server"
+                           ((?i "set io channels" sclang-set-io-channels)
+                            (?b "boot" sclang-server-boot)
+                            (?q "quit server" sclang-server-quit)
+                            (?k "kill all servers" sclang-kill-all-servers))))
+             ("sc utils" ("sc utils"
+                          ((?1 "start recording" sclang-start-recording)
+                           (?0 "stop recording" sclang-stop-recording)
+                           (?m "meter" sclang-server-meter)
+                           (?s "scope" sclang-server-scope)
+                           (?f "freqscope" sclang-server-freqscope)))))))
+      (tiny-menu)))
 
   ;; (global-set-key (kbd "C-H-M-t") 'air-tiny-menu)
   ;; Note: I could use s-m because:
@@ -2643,7 +2740,7 @@ Design draft for next version:
 
 #+RESULTS:
 
-* COMMENT copy-file-path
+* copy-file-path
 
 #+BEGIN_SRC emacs-lisp
   (defun crux-copy-file-path (&optional dir-path-only-p)

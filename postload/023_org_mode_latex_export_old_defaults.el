@@ -1,4 +1,4 @@
-;;; org_mode_latex_export --- 2018-04-05 04:37:58 PM
+;;; org_mode_latex_export_old_defaults --- 2018-04-13 10:13:28 PM
    ;;; NOTE: See notes in master file about upgrading to org-mode version 9.
    ;;; This is needed to use xelatex.
 
@@ -52,5 +52,5 @@
 
    ;; search directories recursively in deft
    (setq deft-recursive t)
-(provide 'org_mode_latex_export)
-;;; 023_org_mode_latex_export.el ends here
+(provide 'org_mode_latex_export_old_defaults)
+;;; 023_org_mode_latex_export_old_defaults.el ends here
