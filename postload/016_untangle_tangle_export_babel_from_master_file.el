@@ -1,4 +1,4 @@
-;;; untangle_tangle_export_babel_from_master_file --- 2018-04-13 10:13:27 PM
+;;; untangle_tangle_export_babel_from_master_file --- 2018-04-15 07:57:24 AM
   ;;; Commentary:
   ;;; org-el-untangle:
   ;;; import muliple el files from one folder into one org mode file.
@@ -68,7 +68,8 @@
       ;;; Prevent duplicate entries due to renumbering.
       (mapc 'delete-file (file-expand-wildcards (concat root-dir "*.el")))
       (org-map-entries 'org-el-export-1-section)
-      (mapc 'kill-buffer buffers)))
+      ;; (mapc 'kill-buffer buffers)
+      ))
 
   (defun org-el-export-1-section ()
     "Export this sections' emacs-lisp block to a separate file.
@@ -89,18 +90,15 @@
         ;; (message "%s" body-element)
         (setq title (replace-regexp-in-string " " "_" title))
         (setq filename (format "%03d_%s.el" index title))
-        (find-file filename)
-        (erase-buffer)
-        (insert (format ";;; %s --- %s"
-                        title
-                        (format-time-string "%F %r\n")))
-        (goto-char (point-max))
-        (insert (plist-get body-element :value))
-        (goto-char (point-max))
-        (insert (format "(provide '%s)\n;;; %s ends here" title filename))
-        (save-buffer)
-        (setq buffers (cons (current-buffer) buffers))
-        (kill-buffer))))
+        (with-temp-buffer
+          (insert (format ";;; %s --- %s"
+                          title
+                          (format-time-string "%F %r\n")))
+          (goto-char (point-max))
+          (insert (plist-get body-element :value))
+          (goto-char (point-max))
+          (insert (format "(provide '%s)\n;;; %s ends here" title filename))
+          (write-file filename)))))
 
   (eval-after-load 'org
     '(progn

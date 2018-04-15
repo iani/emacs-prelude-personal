@@ -1,4 +1,4 @@
-;;; tiny_menu --- 2018-04-13 10:13:29 PM
+;;; tiny_menu --- 2018-04-15 07:57:25 AM
   ;;; Commentary:
 
   ;; 2 tiny-menus for functions that I do not want to place on command-keys,
@@ -124,7 +124,7 @@
                                  (?s "set bookmark" bookmark-set)
                                  (?e "ebib" ebib)
                                  (?d "dired" dired)
-                                 (?l "latex recipes" org-deft-latex-recipes)
+                                 ;; (?l "latex recipes" org-deft-latex-recipes)
                                  (?g "goto-section" air-goto-section)
                                  (?i "icicle imenu" icicle-imenu)
                                  ;; (?1 "icy on" air-turn-icicles-on)
@@ -159,10 +159,10 @@
     (interactive)
     (let ((tiny-menu-items
            '(("latex" ("latex"
-                       ((?c "compile pdf with custom headers" org-compile-latex-with-custom-headers)
-                        (?l "latex recipes" org-deft-latex-recipes)
-                        (?p "use pdflatex" org-latex-switch-to-pdflatex)
-                        (?x "use xelatex" org-latex-switch-to-xelatex))))
+                       ((?c "->pdf" org-compile-latex-with-custom-headers)
+                        (?r "recipes" org-deft-latex-recipes)
+                        (?p "pdflatex!" org-latex-switch-to-pdflatex)
+                        (?x "xelatex!" org-latex-switch-to-xelatex))))
              ("sc lang" ("sc lang"
                          ((?s "start" sclang-start)
                           (?q "quit" sclang-stop)
@@ -189,4 +189,4 @@
   (global-set-key (kbd "H-m") 'air-tiny-menu)
   (global-set-key (kbd "H-M") 'air-tiny-menu2)
 (provide 'tiny_menu)
-;;; 032_tiny_menu.el ends here
+;;; 031_tiny_menu.el ends here

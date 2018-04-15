@@ -1,4 +1,4 @@
-;;; org-mode --- 2018-04-13 10:13:28 PM
+;;; org-mode --- 2018-04-15 07:57:24 AM
   ;;; Commentary:
 
   ;; customize some org mode settings
@@ -9,6 +9,7 @@
   ;;; pretty bullets
   ;;;   (prelude-load-require-package 'org-bullets)
   (require 'org-bullets)
+
   (add-hook 'org-mode-hook (lambda () ;; custom bullets: on, auto-fill: off
                              (org-bullets-mode 1)
                              (auto-fill-mode -1)))
@@ -124,13 +125,6 @@
     (interactive)
     (re-search-forward "\\#\\+BEGIN_SRC " nil t))
 
-  (defun org-deft-latex-recipes ()
-    "Use deft to customize org-latex export of current org-mode buffer."
-    (interactive)
-    (delete-other-windows)
-    (split-window-right)
-    (deft))
-
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
   ;; This is run once after loading org for the first time
@@ -140,7 +134,7 @@
        ;; alias for org-cycle, more convenient than TAB
        (define-key org-mode-map (kbd "C-M-]") 'org-cycle)
        ;; Use deft to customize org-latex export of current org-mode buffer
-       (define-key org-mode-map (kbd "C-c M-r") 'org-deft-latex-recipes)
+       ;; (define-key org-mode-map (kbd "C-c M-r") 'org-deft-latex-recipes)
        ;; Note: This keybinding is in analogy to the default keybinding:
        ;; C-c . -> org-time-stamp
        (define-key org-mode-map (kbd "C-c C-.") 'org-set-date)

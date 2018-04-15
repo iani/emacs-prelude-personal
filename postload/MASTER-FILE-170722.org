@@ -501,154 +501,6 @@ Adapted from helm-switch-to-buffers."
 
 #+END_SRC
 
-* COMMENT speedbar
-
-#+BEGIN_SRC emacs-lisp
-
-  ;; (speedbar-add-supported-extension ".sc")
-  ;; (speedbar-add-supported-extension ".scd")
-  ;; (speedbar-add-supported-extension ".js")
-  ;; (speedbar-add-supported-extension ".sh")
-  ;; (speedbar-add-supported-extension ".html")
-  ;; (speedbar-add-supported-extension ".css")
-  ;; (speedbar-add-supported-extension ".tex")
-
-  (setq speedbar-show-unknown-files t)
-
-  (defun speedbar-workfiles ()
-    "Open sr-speebar on workfiles root and keep it there."
-    (interactive)
-    (speedbar-fixed-dir (file-truename "~/Documents/000WORKFILES/")))
-
-  (defun speedbar-dev ()
-    "Open sr-speebar on workfiles root and keep it there."
-    (interactive)
-    (speedbar-fixed-dir (file-truename "~/Documents/001DEV/")))
-
-  (defun speedbar-fixed-dir (dir)
-    (let ((buffer (current-buffer)))
-      (sr-speedbar-refresh-turn-on)
-      (dired dir)
-      (sr-speedbar-open)
-      (speedbar-refresh)
-      (sr-speedbar-refresh-turn-off)
-      (switch-to-buffer buffer)))
-
-  (defun deft-here (&optional dir)
-    "Change DEFT-DIRECTORY to a directory selected interactively."
-    (interactive "D")
-    ;; (setq deft-directory "~/Copy/000WORKFILES/00_META/")
-    ;; (message dir)
-    ;; (message "file exists? %s" (file-exists-p dir))
-    (setq deft-directory
-          (if (file-directory-p dir) dir (file-name-directory dir)))
-    (switch-to-buffer deft-buffer)
-    (deft-mode))
-
-  (defun speedbar-deft-here ()
-    ;; copied from speedbar-item-delete
-    "Open deft current directory."
-    (interactive)
-    (let ((f (speedbar-line-file)))
-      (if (not f) (error "Not a file"))
-      (if (speedbar-y-or-n-p (format "Open Deft on %s? " f) t)
-          (progn
-            (deft-here f)
-            (dframe-message "Okie dokie.")
-            (let ((p (point)))
-              ;; (speedbar-refresh)
-              (goto-char p))))))
-
-  (defun speedbar-dired-here ()
-    ;; copied from speedbar-item-delete
-    "Open deft current directory."
-    (interactive)
-    (let ((f (speedbar-line-file)))
-      (if (not f) (error "Not a file"))
-      (if (speedbar-y-or-n-p (format "Dired %s? " f) t)
-          (progn
-            (dired-here f)
-            (dframe-message "Okie dokie.")
-            (let ((p (point)))
-              ;; (speedbar-refresh)
-              (goto-char p))))))
-
-  (defun dired-here (dir)
-    "Dired dir or directory of dir if it is a file."
-    (interactive)
-    ;; (setq deft-directory "~/Copy/000WORKFILES/00_META/")
-    ;; (message dir)
-    ;; (message "file exists? %s" (file-exists-p dir))
-    (setq dir
-          (if (file-directory-p dir) dir (file-name-directory dir)))
-    (dired dir))
-
-  (defun speedbar-log-here ()
-    ;; copied from speedbar-item-delete
-    "Create org-log entry on selected file."
-    (interactive)
-    (let ((f (speedbar-line-file)))
-      (if (not f) (error "Not a file"))
-      (if (speedbar-y-or-n-p (format "Create log entry on %s? " f) t)
-          (progn
-            ;; (org-log-here f)
-            ;; defined in org-notes
-            (dframe-message "Okie dokie.")
-            (let ((p (point)))
-              ;; (speedbar-refresh)
-              (goto-char p))))))
-
-  (defun speedbar-agenda-here ()
-    ;; copied from speedbar-item-delete
-    "Create org-log entry on selected file."
-    (interactive)
-    (let ((f (speedbar-line-file)))
-      (if (not f) (error "Not a file"))
-      (setq org-agenda-files (list f))
-      ;; (org-log-here f t)
-      (org-agenda)
-      (dframe-message "Okie dokie.")
-      (let ((p (point)))
-        ;; (speedbar-refresh)
-        (goto-char p))))
-
-  ;; (defun org-make-agenda-)
-
-  (defun speedbar-calfw-here ()
-    ;; copied from speedbar-item-delete
-    "Create org-log entry on selected file."
-    (interactive)
-    (let ((f (speedbar-line-file)))
-      (if (not f) (error "Not a file"))
-      (setq org-agenda-files (list f))
-      ;; (org-log-here f t)
-      (cfw:open-org-calendar)
-      ;; (cfw:refresh-calendar-buffer nil)
-      (dframe-message "Okie dokie.")
-      (let ((p (point)))
-        ;; (speedbar-refresh)
-        (goto-char p))))
-
-  (global-set-key (kbd "H-L") 'speedbar-log)
-  (global-set-key (kbd "H-s w") 'speedbar-workfiles)
-  (global-set-key (kbd "H-s d") 'speedbar-dev)
-  (global-set-key (kbd "H-d") 'deft-here)
-  (global-set-key (kbd "H-s t") 'sr-speedbar-refresh-toggle)
-
-  (defun add-speedbar-keys ()
-    (local-set-key (kbd "C-c a") 'speedbar-agenda-here)
-    (local-set-key (kbd "C-c c") 'speedbar-calfw-here)
-    (local-set-key (kbd "s") 'isearch-forward)
-    (local-set-key (kbd "d") 'speedbar-deft-here)
-    (local-set-key (kbd "C-d") 'speedbar-dired-here)
-    (local-set-key (kbd "l") 'speedbar-log-here))
-
-  (add-hook 'speedbar-mode-hook 'add-speedbar-keys)
-
-  (global-set-key (kbd "C-M-H-s") 'sr-speedbar-open)
-  (global-set-key (kbd "C-M-H-s") 'sr-speedbar-open)
-#+END_SRC
-
 * COMMENT desktop
 
 #+BEGIN_SRC emacs-lisp
@@ -756,7 +608,8 @@ Adapted from helm-switch-to-buffers."
       ;;; Prevent duplicate entries due to renumbering.
       (mapc 'delete-file (file-expand-wildcards (concat root-dir "*.el")))
       (org-map-entries 'org-el-export-1-section)
-      (mapc 'kill-buffer buffers)))
+      ;; (mapc 'kill-buffer buffers)
+      ))
 
   (defun org-el-export-1-section ()
     "Export this sections' emacs-lisp block to a separate file.
@@ -777,18 +630,15 @@ Adapted from helm-switch-to-buffers."
         ;; (message "%s" body-element)
         (setq title (replace-regexp-in-string " " "_" title))
         (setq filename (format "%03d_%s.el" index title))
-        (find-file filename)
-        (erase-buffer)
-        (insert (format ";;; %s --- %s"
-                        title
-                        (format-time-string "%F %r\n")))
-        (goto-char (point-max))
-        (insert (plist-get body-element :value))
-        (goto-char (point-max))
-        (insert (format "(provide '%s)\n;;; %s ends here" title filename))
-        (save-buffer)
-        (setq buffers (cons (current-buffer) buffers))
-        (kill-buffer))))
+        (with-temp-buffer
+          (insert (format ";;; %s --- %s"
+                          title
+                          (format-time-string "%F %r\n")))
+          (goto-char (point-max))
+          (insert (plist-get body-element :value))
+          (goto-char (point-max))
+          (insert (format "(provide '%s)\n;;; %s ends here" title filename))
+          (write-file filename)))))
 
   (eval-after-load 'org
     '(progn
@@ -1410,6 +1260,7 @@ Only solution so far is to switch off prelude mode when in org mode.
   ;;; pretty bullets
   ;;;   (prelude-load-require-package 'org-bullets)
   (require 'org-bullets)
+
   (add-hook 'org-mode-hook (lambda () ;; custom bullets: on, auto-fill: off
                              (org-bullets-mode 1)
                              (auto-fill-mode -1)))
@@ -1525,13 +1376,6 @@ Only solution so far is to switch off prelude mode when in org mode.
     (interactive)
     (re-search-forward "\\#\\+BEGIN_SRC " nil t))
 
-  (defun org-deft-latex-recipes ()
-    "Use deft to customize org-latex export of current org-mode buffer."
-    (interactive)
-    (delete-other-windows)
-    (split-window-right)
-    (deft))
-
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
   ;; This is run once after loading org for the first time
@@ -1541,7 +1385,7 @@ Only solution so far is to switch off prelude mode when in org mode.
        ;; alias for org-cycle, more convenient than TAB
        (define-key org-mode-map (kbd "C-M-]") 'org-cycle)
        ;; Use deft to customize org-latex export of current org-mode buffer
-       (define-key org-mode-map (kbd "C-c M-r") 'org-deft-latex-recipes)
+       ;; (define-key org-mode-map (kbd "C-c M-r") 'org-deft-latex-recipes)
        ;; Note: This keybinding is in analogy to the default keybinding:
        ;; C-c . -> org-time-stamp
        (define-key org-mode-map (kbd "C-c C-.") 'org-set-date)
@@ -1713,73 +1557,23 @@ Run the following code:
 
 - Install the org-plus-contrib package either with command =package-install= or with =package-list-packages= and then searching =org-plus-contrib=, then typing i to mark it for installation and then typing x to install the marked packages.
 
-* org mode latex export old defaults
-  :PROPERTIES:
-  :DATE:     <2018-03-06 Tue 07:46>
-  :END:
-
-The present code is rendered obsolete by the next section which defines an alternative method for cusotmizing latex headers and footers, and uses latexmk to enable use of bibtex for biliographies/references.
-However, the deft-insert-file-other-buffer function should be modified to insert recipe snippets in latex code for use with the next section.
-
- #+BEGIN_SRC emacs-lisp
-   ;;; NOTE: See notes in master file about upgrading to org-mode version 9.
-   ;;; This is needed to use xelatex.
-
-   ;; First load this package to initialize variables:
-   (require 'ox-latex)
-
-   ;; Use xelatex as latex compiler, thus enabling use of native fonts for greek etc.
-   (setq org-latex-compiler "xelatex")
-
-   ;; Add some latex classes.  Testing stage.  Keepin this simple for now.
-   (add-to-list 'org-latex-classes '("letter" "\\documentclass[11pt]{scrlttr2}"))
-   ;; See example letter in folder ../latex-examples
-
-   ;; use fontspec package to enable system fonts in xelatex
-   (add-to-list 'org-latex-packages-alist '("" "fontspec"))
-   ;; allow more flexible spaces between words for justified text
-   (add-to-list 'org-latex-packages-alist "\\sloppy")
-
-   ;; Browse recipes using deft
-   (prelude-load-require-packages '(deft))
-   (eval-after-load 'deft
-     '(progn
-        (define-key deft-mode-map (kbd "C-i") 'deft-insert-file-other-buffer)))
-
-   (defun deft-insert-file-other-buffer ()
-     "Copy contents of file selected in deft window to kill ring."
-     (interactive)
-     (let ((filename (deft-filename-at-point)))
-       (unless filename
-         (goto-char (line-beginning-position))
-         (setq filename (deft-filename-at-point)))
-       (when filename
-         (message "test %s" filename)
-         (other-window 1)
-         (goto-char (point-min))
-         (insert-file-contents filename))))
-
-   (setq deft-use-filename-as-title t)
-
-   ;; include org, sc, el, txt, tex files in deft search
-   (setq deft-extensions '( "org" "sc" "scd" "el" "txt" "tex"))
-
-   ;; use latex-recipes as deft directory
-   (setq deft-directory (concat (directory-file-name
-                                 (file-name-directory
-                                  (directory-file-name
-                                   (file-name-directory (directory-file-name load-file-name)))))
-                                "/latex-recipes/"))
-
-   (setq deft-use-filter-string-for-filename t) ;; create file names from user input - not timestamps
-
-   ;; search directories recursively in deft
-   (setq deft-recursive t)
- #+END_SRC
-
-*  org compile latex with custom headers
+* org compile latex with custom headers
 
 #+BEGIN_SRC emacs-lisp
+  ;; (defun org-insert-latex-headers-from-deft ()
+  ;;   "Choose latex headers from recipe list using deft, and append them to the currently edited file."
+  ;;   (with-current-buffer
+  ;;     ))
+
+  ;; First load this package to initialize variables:
+  (require 'ox-latex)
+
+  ;; Use xelatex as latex compiler, thus enabling use of native fonts for greek etc.
+  (setq org-latex-compiler "xelatex")
+
+  (defvar org-current-buffer nil
+    "Set by org-insert-latex-recipe to enable insertion of headers by deft.")
+
   (defun org-compile-latex-with-custom-headers (&optional pdflatexp)
     "Export body, insert header+footer from sections, compile to pdf.
   If PDFLATEXP use pdflatex else use xelatex.
@@ -1810,11 +1604,6 @@ However, the deft-insert-file-other-buffer function should be modified to insert
           (write-file file)
           (org-latex-compile (buffer-file-name))
           (shell-command (concat "open " pdf-file))))))
-
-  (defun org-latex-compile-interactive ()
-    "Interactive version of org-latex-compile. Uses current buffer as default"
-    (interactive)
-    (org-latex-compile (buffer-file-name)))
 
   (defcustom latex-blocks-alist
     '(
@@ -1867,6 +1656,79 @@ However, the deft-insert-file-other-buffer function should be modified to insert
                        (string-match "^#\\\+END_SRC" result)
                        (string-width result)))))
       result))
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; use deft to select and insert custom headers for latex export
+
+  (defun org-deft-latex-recipes ()
+    "Select latex recipe with deft and insert its headers to current buffer."
+    (interactive)
+    (setq org-current-buffer (current-buffer))
+    (deft))
+
+  ;; Browse recipes using deft.  Deft setup:
+  (prelude-load-require-packages '(deft))
+  (eval-after-load 'deft
+    '(progn
+       (define-key deft-mode-map (kbd "C-i") 'deft-insert-latex-headers)))
+
+  (setq deft-use-filename-as-title t)
+
+  ;; include org, sc, el, txt, tex files in deft search
+  (setq deft-extensions '( "org" "txt"))
+
+  ;; use latex-recipes as deft directory
+  (setq deft-directory (concat (directory-file-name
+                                (file-name-directory
+                                 (directory-file-name
+                                  (file-name-directory (directory-file-name load-file-name)))))
+                               "/latex-recipes/"))
+
+  (setq deft-use-filter-string-for-filename t) ;; create file names from user input - not timestamps
+
+  ;; search directories recursively in deft
+  (setq deft-recursive t)
+
+  ;; Functions for getting headers from deft
+  (defun deft-insert-latex-headers ()
+    "Get latex headers from current file and append them to ORG-CURRENT-BUFFER.
+  ORG-CURRENT-BUFFER is set from org-latex-insert-headers-recipe."
+    (interactive)
+    (if (null org-current-buffer)
+        (message "there is no current buffer to insert headers.")
+      (let ((filename (deft-filename-at-point))
+            (headers "") (header "") (footer "") header-file-buffer)
+        (find-file filename)
+        (setq header-file-buffer (current-buffer))
+        (setq header (get-latex-section "latex-header"))
+        (setq footer (get-latex-section "latex-footer"))
+        (switch-to-buffer org-current-buffer)
+        (kill-buffer header-file-buffer)
+        (save-excursion
+          (goto-char (point-max))
+          (insert header "\n" footer)
+          (push-mark))
+        (message
+         "Type C-x C-x to see headers from %s"
+         (file-name-nondirectory filename)))))
+
+  (defun get-latex-section (&optional section-name)
+    "Get entire section with name matching SECTION-NAME."
+    ;; (interactive)
+    (setq section-name (or section-name "latex-header"))
+    ;; (message "section-name is %s" section-name)
+    (let ((code (or
+                 (cdr (assoc section-name latex-blocks-alist))
+                 "")))
+      ;; (message "code is %s" code)
+      (org-map-entries
+       (lambda ()
+         (let ((element (cadr (org-element-at-point))))
+           (when (string= section-name (plist-get element :title))
+             (org-copy-subtree)
+             (setq code (current-kill 0)))
+           )))
+      code))
 #+END_SRC
 
 
@@ -2449,7 +2311,7 @@ Design draft for next version:
                                  (?s "set bookmark" bookmark-set)
                                  (?e "ebib" ebib)
                                  (?d "dired" dired)
-                                 (?l "latex recipes" org-deft-latex-recipes)
+                                 ;; (?l "latex recipes" org-deft-latex-recipes)
                                  (?g "goto-section" air-goto-section)
                                  (?i "icicle imenu" icicle-imenu)
                                  ;; (?1 "icy on" air-turn-icicles-on)
@@ -2484,10 +2346,10 @@ Design draft for next version:
     (interactive)
     (let ((tiny-menu-items
            '(("latex" ("latex"
-                       ((?c "compile pdf with custom headers" org-compile-latex-with-custom-headers)
-                        (?l "latex recipes" org-deft-latex-recipes)
-                        (?p "use pdflatex" org-latex-switch-to-pdflatex)
-                        (?x "use xelatex" org-latex-switch-to-xelatex))))
+                       ((?c "->pdf" org-compile-latex-with-custom-headers)
+                        (?r "recipes" org-deft-latex-recipes)
+                        (?p "pdflatex!" org-latex-switch-to-pdflatex)
+                        (?x "xelatex!" org-latex-switch-to-xelatex))))
              ("sc lang" ("sc lang"
                          ((?s "start" sclang-start)
                           (?q "quit" sclang-stop)

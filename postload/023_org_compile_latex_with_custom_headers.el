@@ -1,4 +1,18 @@
-;;; org_compile_latex_with_custom_headers --- 2018-04-13 10:13:29 PM
+;;; org_compile_latex_with_custom_headers --- 2018-04-15 07:57:24 AM
+  ;; (defun org-insert-latex-headers-from-deft ()
+  ;;   "Choose latex headers from recipe list using deft, and append them to the currently edited file."
+  ;;   (with-current-buffer
+  ;;     ))
+
+  ;; First load this package to initialize variables:
+  (require 'ox-latex)
+
+  ;; Use xelatex as latex compiler, thus enabling use of native fonts for greek etc.
+  (setq org-latex-compiler "xelatex")
+
+  (defvar org-current-buffer nil
+    "Set by org-insert-latex-recipe to enable insertion of headers by deft.")
+
   (defun org-compile-latex-with-custom-headers (&optional pdflatexp)
     "Export body, insert header+footer from sections, compile to pdf.
   If PDFLATEXP use pdflatex else use xelatex.
@@ -29,11 +43,6 @@
           (write-file file)
           (org-latex-compile (buffer-file-name))
           (shell-command (concat "open " pdf-file))))))
-
-  (defun org-latex-compile-interactive ()
-    "Interactive version of org-latex-compile. Uses current buffer as default"
-    (interactive)
-    (org-latex-compile (buffer-file-name)))
 
   (defcustom latex-blocks-alist
     '(
@@ -86,5 +95,78 @@
                        (string-match "^#\\\+END_SRC" result)
                        (string-width result)))))
       result))
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; use deft to select and insert custom headers for latex export
+
+  (defun org-deft-latex-recipes ()
+    "Select latex recipe with deft and insert its headers to current buffer."
+    (interactive)
+    (setq org-current-buffer (current-buffer))
+    (deft))
+
+  ;; Browse recipes using deft.  Deft setup:
+  (prelude-load-require-packages '(deft))
+  (eval-after-load 'deft
+    '(progn
+       (define-key deft-mode-map (kbd "C-i") 'deft-insert-latex-headers)))
+
+  (setq deft-use-filename-as-title t)
+
+  ;; include org, sc, el, txt, tex files in deft search
+  (setq deft-extensions '( "org" "txt"))
+
+  ;; use latex-recipes as deft directory
+  (setq deft-directory (concat (directory-file-name
+                                (file-name-directory
+                                 (directory-file-name
+                                  (file-name-directory (directory-file-name load-file-name)))))
+                               "/latex-recipes/"))
+
+  (setq deft-use-filter-string-for-filename t) ;; create file names from user input - not timestamps
+
+  ;; search directories recursively in deft
+  (setq deft-recursive t)
+
+  ;; Functions for getting headers from deft
+  (defun deft-insert-latex-headers ()
+    "Get latex headers from current file and append them to ORG-CURRENT-BUFFER.
+  ORG-CURRENT-BUFFER is set from org-latex-insert-headers-recipe."
+    (interactive)
+    (if (null org-current-buffer)
+        (message "there is no current buffer to insert headers.")
+      (let ((filename (deft-filename-at-point))
+            (headers "") (header "") (footer "") header-file-buffer)
+        (find-file filename)
+        (setq header-file-buffer (current-buffer))
+        (setq header (get-latex-section "latex-header"))
+        (setq footer (get-latex-section "latex-footer"))
+        (switch-to-buffer org-current-buffer)
+        (kill-buffer header-file-buffer)
+        (save-excursion
+          (goto-char (point-max))
+          (insert header "\n" footer)
+          (push-mark))
+        (message
+         "Type C-x C-x to see headers from %s"
+         (file-name-nondirectory filename)))))
+
+  (defun get-latex-section (&optional section-name)
+    "Get entire section with name matching SECTION-NAME."
+    ;; (interactive)
+    (setq section-name (or section-name "latex-header"))
+    ;; (message "section-name is %s" section-name)
+    (let ((code (or
+                 (cdr (assoc section-name latex-blocks-alist))
+                 "")))
+      ;; (message "code is %s" code)
+      (org-map-entries
+       (lambda ()
+         (let ((element (cadr (org-element-at-point))))
+           (when (string= section-name (plist-get element :title))
+             (org-copy-subtree)
+             (setq code (current-kill 0)))
+           )))
+      code))
 (provide 'org_compile_latex_with_custom_headers)
-;;; 024_org_compile_latex_with_custom_headers.el ends here
+;;; 023_org_compile_latex_with_custom_headers.el ends here
