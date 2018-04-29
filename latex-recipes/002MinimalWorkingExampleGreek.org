@@ -1,0 +1,18 @@
+Hello World!
+
+/Καλημέρα/ Κόσμε. *Καλημέρα.*
+
+* COMMENT latex-header
+
+#+BEGIN_SRC latex
+\documentclass{article}
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+\begin{document}
+#+END_SRC
+
+* COMMENT latex-footer
+
+#+BEGIN_SRC latex
+\end{document}
+#+END_SRC

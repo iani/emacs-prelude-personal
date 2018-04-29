@@ -1,4 +1,4 @@
-;;; org_compile_latex_with_custom_headers --- 2018-04-15 07:57:24 AM
+;;; org_compile_latex_with_custom_headers --- 2018-04-29 10:25:33 AM
   ;; (defun org-insert-latex-headers-from-deft ()
   ;;   "Choose latex headers from recipe list using deft, and append them to the currently edited file."
   ;;   (with-current-buffer
@@ -42,7 +42,8 @@
                  '("latexmk -g -pdf -pdflatex=\"xelatex\" -outdir=%o %f"))))
           (write-file file)
           (org-latex-compile (buffer-file-name))
-          (shell-command (concat "open " pdf-file))))))
+          (message "Opening: %s" (shell-quote-argument pdf-file))
+          (shell-command (concat "open " (shell-quote-argument pdf-file)))))))
 
   (defcustom latex-blocks-alist
     '(

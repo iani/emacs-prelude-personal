@@ -1,0 +1,20 @@
+Hello World.
+
+世界、お早うございます。
+
+Ελληνικά όμως;  Τα ελληνικα δεν μπορουν να αποδοθουν σωστα με το font Osaka.
+
+* COMMENT latex-header
+
+#+BEGIN_SRC latex
+\documentclass{article}
+\usepackage{fontspec}
+\setmainfont{Osaka}
+\begin{document}
+#+END_SRC
+
+* COMMENT latex-footer
+
+#+BEGIN_SRC latex
+\end{document}
+#+END_SRC

@@ -1,0 +1,22 @@
+This is a minimaal example for a bibliography, using the default style of biblatex, and the =\printbibliography= command.
+
+I doubt that there is any useful information here\cite{wikibook}.
+
+All we know is limited, apart from knowing the answer we all know. Or do we? Wombat and Koala have discovered some interesting things\cite{wombat2016}.
+
+If you want to add a space between the text and the citation, use
+=\nobreakspace=.  For example: Some people are too nosy. What can happen to them is described by Laura Lion\nobreakspace\cite[9]{lion2010}.
+* COMMENT latex-header
+
+#+BEGIN_SRC latex
+\documentclass{article}
+\usepackage{biblatex}
+\addbibresource{bibliography.bib}
+\begin{document}
+#+END_SRC
+* COMMENT latex-footer
+
+#+BEGIN_SRC latex
+\printbibliography
+\end{document}
+#+END_SRC

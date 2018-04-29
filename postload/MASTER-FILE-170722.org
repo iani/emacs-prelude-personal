@@ -608,7 +608,7 @@ Adapted from helm-switch-to-buffers."
       ;;; Prevent duplicate entries due to renumbering.
       (mapc 'delete-file (file-expand-wildcards (concat root-dir "*.el")))
       (org-map-entries 'org-el-export-1-section)
-      ;; (mapc 'kill-buffer buffers)
+      (message "Export of emacs-lisp blocks finished!")
       ))
 
   (defun org-el-export-1-section ()
@@ -1603,7 +1603,8 @@ Run the following code:
                  '("latexmk -g -pdf -pdflatex=\"xelatex\" -outdir=%o %f"))))
           (write-file file)
           (org-latex-compile (buffer-file-name))
-          (shell-command (concat "open " pdf-file))))))
+          (message "Opening: %s" (shell-quote-argument pdf-file))
+          (shell-command (concat "open " (shell-quote-argument pdf-file)))))))
 
   (defcustom latex-blocks-alist
     '(

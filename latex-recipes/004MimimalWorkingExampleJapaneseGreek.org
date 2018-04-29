@@ -3,14 +3,14 @@ Hello World.
 
 世界、お早うございます。
 
-Ελληνικά όμως;
+Ελληνικά όμως;  Τα Ελληνικά αποδίδονται σωστά με την παρούσα ρύθμιση.
 
 * COMMENT latex-header
 
 #+BEGIN_SRC latex
   \documentclass{article}
   \usepackage{xeCJK}
-  \setmainfont{Times}
+  \setmainfont{Times New Roman}
   \setCJKmainfont[BoldFont=STHeiti,ItalicFont=STKaiti]{STSong}
   \begin{document}
 #+END_SRC

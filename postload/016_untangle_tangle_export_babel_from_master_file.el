@@ -1,4 +1,4 @@
-;;; untangle_tangle_export_babel_from_master_file --- 2018-04-15 07:57:24 AM
+;;; untangle_tangle_export_babel_from_master_file --- 2018-04-29 10:25:32 AM
   ;;; Commentary:
   ;;; org-el-untangle:
   ;;; import muliple el files from one folder into one org mode file.
@@ -68,7 +68,7 @@
       ;;; Prevent duplicate entries due to renumbering.
       (mapc 'delete-file (file-expand-wildcards (concat root-dir "*.el")))
       (org-map-entries 'org-el-export-1-section)
-      ;; (mapc 'kill-buffer buffers)
+      (message "Export of emacs-lisp blocks finished!")
       ))
 
   (defun org-el-export-1-section ()

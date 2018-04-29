@@ -1,4 +1,4 @@
-;;; tiny_menu --- 2018-04-15 07:57:25 AM
+;;; tiny_menu --- 2018-04-29 10:25:34 AM
   ;;; Commentary:
 
   ;; 2 tiny-menus for functions that I do not want to place on command-keys,
