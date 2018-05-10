@@ -1,0 +1,34 @@
+# Minimal example with english, greek and japanese.
+
+* Hello World
+
+** 日本語
+ 世界、お早うございます。 *世界、お早うございます。* /世界、お早うございます。/
+
+** Ελληνικά
+ Ελληνικά όμως;  Τα Ελληνικά αποδίδονται σωστά με την παρούσα ρύθμιση.
+
+**  Linux Libertine Font
+ We are using Linux Libertine O font for roman and greek, because it is clearly better than Times New Roman.
+
+** First paragraphs unindented
+Note that the first paragraph after each section heading is not indented while all following paragraphs are.  This is an intentional default setting of LaTeX article style, and follows an established practice (see for example: https://www.vappingo.com/word-blog/when-to-indent-paragraphs/).  
+
+To override this default one can use this package: =\usepackage{indentfirst}=.  More info on the topic is found here: https://tex.stackexchange.com/questions/39227/no-indent-in-the-first-paragraph-in-a-section.
+
+* COMMENT latex-header
+
+#+BEGIN_SRC latex
+\documentclass{article}
+\usepackage{url}
+\usepackage{xeCJK}
+\setmainfont{Linux Libertine O} % libertine definitely better than Times New Roman
+\setCJKmainfont[BoldFont=STHeiti,ItalicFont=STKaiti]{STSong}
+\begin{document}
+#+END_SRC
+
+* COMMENT latex-footer
+
+#+BEGIN_SRC latex
+\end{document}
+#+END_SRC

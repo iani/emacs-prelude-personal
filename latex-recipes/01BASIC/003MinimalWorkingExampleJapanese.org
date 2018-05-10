@@ -1,3 +1,4 @@
+# Minimal example with english and japanese.
 Hello World.
 
 世界、お早うございます。

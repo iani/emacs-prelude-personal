@@ -1,4 +1,4 @@
-;;; tiny_menu --- 2018-04-29 10:25:34 AM
+;;; tiny_menu --- 2018-05-08 10:56:26 PM
   ;;; Commentary:
 
   ;; 2 tiny-menus for functions that I do not want to place on command-keys,
@@ -159,10 +159,11 @@
     (interactive)
     (let ((tiny-menu-items
            '(("latex" ("latex"
-                       ((?c "->pdf" org-compile-latex-with-custom-headers)
-                        (?r "recipes" org-deft-latex-recipes)
-                        (?p "pdflatex!" org-latex-switch-to-pdflatex)
-                        (?x "xelatex!" org-latex-switch-to-xelatex))))
+                       ((?r "recipes" org-deft-latex-recipes)
+                        (?c "org->xelatex" org-compile-xelatex-with-custom-headers)
+                        (?C "org->pdflatex" org-compile-pdflatex-with-custom-headers)
+                        (?p "pdflatex->pdf" latex-compile-file-with-pdflatex)
+                        (?x "xelatex->pdf" latex-compile-file-with-xelatex))))
              ("sc lang" ("sc lang"
                          ((?s "start" sclang-start)
                           (?q "quit" sclang-stop)

@@ -1,4 +1,6 @@
-This is a minimaal example for a bibliography, using the default style of biblatex, and the =\printbibliography= command.
+# Minimal example with bibliography in default biblatex style.
+
+This is a minimal example for a bibliography, using the default style of biblatex, and the =\printbibliography= command.
 
 I doubt that there is any useful information here\cite{wikibook}.
 

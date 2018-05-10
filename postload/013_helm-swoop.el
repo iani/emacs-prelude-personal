@@ -1,4 +1,4 @@
-;;; helm-swoop --- 2018-04-29 10:25:32 AM
+;;; helm-swoop --- 2018-05-08 10:56:24 PM
   (global-ace-isearch-mode +1)
   (prelude-load-require-package 'helm-swoop)
   (global-set-key (kbd "C-S-s") 'helm-swoop)

@@ -1,4 +1,4 @@
-
+# Minimal example using a linked biblatex bibliography file.
 * Using linked bibliography files
 
 If you prefer using a single global bibliography bibtex (.bib) file but still want to use a local file name for the =\addbibresource= path, you can use a symbolic link from the global file to a local file name in the same directory as the org file which is being rendered.  =\addbibresource= works also with linked files as source.

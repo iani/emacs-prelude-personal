@@ -31,6 +31,8 @@
 
 This is a very simple basic example of a letter including (a) greek text and (b) inline custom elements such as subject, address, greeting, and closing. 
 
+Now I tried from org.  Let us see, then.
+
 The example does not yet include a logo.  The logo plus other formating details are still to be added.  This will require either creating a variant of the koma script class or adding further format directives in the org source of the present file.
 
 \closing{Yours sincerely,}

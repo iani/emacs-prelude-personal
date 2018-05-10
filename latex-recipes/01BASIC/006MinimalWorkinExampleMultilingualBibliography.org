@@ -1,0 +1,45 @@
+# Minimal multilingual example both for body and for bibliography.
+* Multilingual text in body and bibliography
+
+This example uses =xelatex= to render english, greek and japanese text.  It uses =Times New Roman= as main font, and =STSong= as japanese font.  For japanese, it uses the command =setCJKmainfont= combined with the package =xeCJK=.  This allows one to use =Time New Roman= for english and greek with =setmainfont=, while switching automatically to STSong to render japanese text.  Japanese text is distinguished from the rest by the =xeCJK= package.  There is no need to insert any LaTeX commands for distinguishing english, greek or japanese text.  LaTeX distinguishes these by itself in the background.
+
+This setting is valid for rendering both the main text of the file (the present text) and the bibliography section.  This means that both the main text and the bibliography may contain english, greek and japanese text.
+
+* Ελληνικά
+I doubt that there is any useful information here\nobreakspace\cite{wikibook}.
+
+All we know is limited, apart from knowing the answer we all know. Or do we? Wombat and Koala have discovered some interesting things\nobreakspace\cite{wombat2016}.
+
+Some people are too nosy. What can happen to them is described by Laura Lion\nobreakspace\cite[9]{lion2010}.
+
+Ελληνικά.
+
+*Ελληνικά.*
+
+/Ελληνικά./
+
+* 日本語
+
+日本語。
+
+*日本語。*
+
+/日本語。/
+
+* COMMENT latex-header
+
+#+BEGIN_SRC latex
+  \documentclass{article}
+  \usepackage{xeCJK}
+  \setmainfont{Times New Roman}
+  \setCJKmainfont[BoldFont=STHeiti,ItalicFont=STKaiti]{STSong}
+  \usepackage{biblatex}
+  \addbibresource{bibliography-ml.bib}
+  \begin{document}
+#+END_SRC
+* COMMENT latex-footer
+
+#+BEGIN_SRC latex
+\printbibliography
+\end{document}
+#+END_SRC

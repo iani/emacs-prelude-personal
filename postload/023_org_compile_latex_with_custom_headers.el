@@ -1,4 +1,4 @@
-;;; org_compile_latex_with_custom_headers --- 2018-04-29 10:25:33 AM
+;;; org_compile_latex_with_custom_headers --- 2018-05-08 10:56:25 PM
   ;; (defun org-insert-latex-headers-from-deft ()
   ;;   "Choose latex headers from recipe list using deft, and append them to the currently edited file."
   ;;   (with-current-buffer
@@ -13,12 +13,19 @@
   (defvar org-current-buffer nil
     "Set by org-insert-latex-recipe to enable insertion of headers by deft.")
 
+  (defun org-compile-pdflatex-with-custom-headers ()
+    "Export with pdflatex using custom latex headers if available."
+    (org-compile-latex-with-custom-headers t))
+
+  (defun org-compile-xelatex-with-custom-headers ()
+    "Export with xelatex using custom latex headers if available."
+    (org-compile-latex-with-custom-headers))
+
   (defun org-compile-latex-with-custom-headers (&optional pdflatexp)
     "Export body, insert header+footer from sections, compile to pdf.
   If PDFLATEXP use pdflatex else use xelatex.
   Use latexmk as ORG-LATEX-PDF-PROCESS. This usually works for compiling bibtex
   and producing a bibliography section."
-    (interactive "P")
     (let ((output (org-export-as
                    'latex nil nil t nil
                    ;; backend subtreep visible-only body-only ext-plist
@@ -38,12 +45,41 @@
         (let ((coding-system-for-write 'utf-8)
               (org-latex-pdf-process
                (if pdflatexp
-                   '("latexmk -g -pdf -pdflatex=\"pdflatex\" -outdir=%o %f")
-                 '("latexmk -g -pdf -pdflatex=\"xelatex\" -outdir=%o %f"))))
+                   '("latexmk -shell-escape -g -pdf -pdflatex=\"pdflatex\" -outdir=%o %f")
+                 '("latexmk -shell-escape -g -pdf -pdflatex=\"xelatex\" -outdir=%o %f"))))
           (write-file file)
+          (message "latex compile command is:\n %s" org-latex-pdf-process)
           (org-latex-compile (buffer-file-name))
           (message "Opening: %s" (shell-quote-argument pdf-file))
           (shell-command (concat "open " (shell-quote-argument pdf-file)))))))
+
+  (defun latex-compile-file-with-xelatex ()
+    "Compile tex file with xelatex and open resulting pdf file."
+    (interactive)
+    (latex-compile-file-with-latexmk))
+
+  (defun latex-compile-file-with-pdflatex ()
+    "Compile tex file with pdflatex and open resulting pdf file."
+    (interactive)
+    (latex-compile-file-with-latexmk t))
+
+  (defun latex-compile-file-with-latexmk (&optional pdflatexp)
+    "Compile tex file using latexmk.
+  If PDFLATEXP then use pdflatex instead of xelatex.
+  Open resulting pdf file with default macos open method."
+    ;; (interactive)
+    (let* ((file (buffer-file-name))
+           (pdf-file (concat
+                      (file-name-sans-extension file)
+                      ".pdf"))
+          (org-latex-pdf-process
+           (if pdflatexp
+               '("latexmk -shell-escape -g -pdf -pdflatex=\"pdflatex\" -outdir=%o %f")
+             '("latexmk -shell-escape -g -pdf -pdflatex=\"xelatex\" -outdir=%o %f"))))
+      (message "latex compile command is:\n %s" org-latex-pdf-process)
+      (org-latex-compile file)
+      (message "Opening: %s" (shell-quote-argument pdf-file))
+      (shell-command (concat "open " (shell-quote-argument pdf-file)))))
 
   (defcustom latex-blocks-alist
     '(
@@ -110,7 +146,8 @@
   (prelude-load-require-packages '(deft))
   (eval-after-load 'deft
     '(progn
-       (define-key deft-mode-map (kbd "C-i") 'deft-insert-latex-headers)))
+       (define-key deft-mode-map (kbd "C-i") 'deft-insert-latex-headers)
+       (setq deft-current-sort-method 'title)))
 
   (setq deft-use-filename-as-title t)
 
