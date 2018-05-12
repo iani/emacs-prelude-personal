@@ -1,5 +1,15 @@
 # Minimal example with bibliography in default biblatex style.
 
+#+BIBLIOGRAPHY: bibliography plain option:-d
+
+#+BEGIN_SRC emacs-lisp
+(setq reftex-default-bibliography '("~/bibliography.bib"))
+#+END_SRC
+
+#+RESULTS:
+| ~/bibliography.bib |
+* Section
+
 This is a minimal example for a bibliography, using the default style of biblatex, and the =\printbibliography= command.
 
 I doubt that there is any useful information here\cite{wikibook}.
@@ -8,6 +18,10 @@ All we know is limited, apart from knowing the answer we all know. Or do we? Wom
 
 If you want to add a space between the text and the citation, use
 =\nobreakspace=.  For example: Some people are too nosy. What can happen to them is described by Laura Lion\nobreakspace\cite[9]{lion2010}.
+** Subsection
+
+Sections are added here only to test reftex.
+
 * COMMENT latex-header
 
 #+BEGIN_SRC latex

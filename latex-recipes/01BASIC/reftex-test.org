@@ -1,0 +1,22 @@
+
+* Testing reftex
+
+Section.
+
+** Subsection
+
+Test.
+
+\cite{purwins_trends_2009}
+
+\cite{barroso_composition_2007}
+
+\cite{roads_composers_1985}
+
+#+BEGIN_SRC emacs-lisp
+(setq reftex-default-bibliography '("~/bibliography.bib"))
+#+END_SRC
+
+#+RESULTS:
+| ~/bibliography.bib |
+
