@@ -3,6 +3,8 @@
 
 If you prefer using a single global bibliography bibtex (.bib) file but still want to use a local file name for the =\addbibresource= path, you can use a symbolic link from the global file to a local file name in the same directory as the org file which is being rendered.  =\addbibresource= works also with linked files as source.
 
+Please verify that the link to which the =addbibresource= command directs is valid before attempting to compile this file with LaTeX.
+
 * Ελληνικά
 I doubt that there is any useful information here\nobreakspace\cite{wikibook}.
 
@@ -27,7 +29,6 @@ Some people are too nosy. What can happen to them is described by Laura Lion\nob
 * COMMENT latex-header
 
 #+BEGIN_SRC latex
-  \documentclass{article}
   \usepackage{xeCJK}
   \setmainfont{Times New Roman}
   \setCJKmainfont[BoldFont=STHeiti,ItalicFont=STKaiti]{STSong}

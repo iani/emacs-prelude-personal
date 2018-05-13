@@ -19,7 +19,6 @@ To override this default one can use this package: =\usepackage{indentfirst}=.  
 * COMMENT latex-header
 
 #+BEGIN_SRC latex
-\documentclass{article}
 \usepackage{url}
 \usepackage{xeCJK}
 \setmainfont{Linux Libertine O} % libertine definitely better than Times New Roman

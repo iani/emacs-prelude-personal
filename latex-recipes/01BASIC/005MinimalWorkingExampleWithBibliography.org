@@ -2,12 +2,6 @@
 
 #+BIBLIOGRAPHY: bibliography plain option:-d
 
-#+BEGIN_SRC emacs-lisp
-(setq reftex-default-bibliography '("~/bibliography.bib"))
-#+END_SRC
-
-#+RESULTS:
-| ~/bibliography.bib |
 * Section
 
 This is a minimal example for a bibliography, using the default style of biblatex, and the =\printbibliography= command.
@@ -25,7 +19,6 @@ Sections are added here only to test reftex.
 * COMMENT latex-header
 
 #+BEGIN_SRC latex
-\documentclass{article}
 \usepackage{biblatex}
 \addbibresource{bibliography.bib}
 \begin{document}

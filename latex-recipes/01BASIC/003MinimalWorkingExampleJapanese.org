@@ -8,7 +8,6 @@ Hello World.
 * COMMENT latex-header
 
 #+BEGIN_SRC latex
-\documentclass{article}
 \usepackage{fontspec}
 \setmainfont{Osaka}
 \begin{document}

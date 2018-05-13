@@ -1,4 +1,4 @@
-;;; org-mode --- 2018-05-08 10:56:25 PM
+;;; org-mode --- 2018-05-13 11:43:26 PM
   ;;; Commentary:
 
   ;; customize some org mode settings
@@ -144,6 +144,7 @@
        (define-key org-mode-map (kbd "C-c C-s") 'sclang-main-stop)
        (define-key org-mode-map (kbd "C-c >") 'sclang-show-post-buffer)
        ;; own additions after org-config-examples below:
+       (define-key org-mode-map (kbd "C-c ]") 'org-ref-insert-cite-with-completion)
        (define-key org-mode-map (kbd "C-M-S-n") 'org-next-src-block)
        (define-key org-mode-map (kbd "C-M-S-p") 'org-show-properties-block)
        (define-key org-mode-map (kbd "C-M-/") 'org-sclang-eval-babel-block)

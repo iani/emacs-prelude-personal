@@ -61,7 +61,6 @@ Compare the size of the heading when the section is unnumbered.
 * COMMENT latex-header
 
 #+BEGIN_SRC latex
-\documentclass{article}
 \usepackage{smc2018}
 \usepackage{times}
 \usepackage{ifpdf}

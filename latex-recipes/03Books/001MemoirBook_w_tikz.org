@@ -1,6 +1,4 @@
 
-#+LaTeX_CLASS: memoirbook
-
 * The First Fascinating Fact
 ``Lorem ipsum'' is not even really Latin. But, nonetheless, lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
@@ -155,8 +153,6 @@ Proin hendrerit vestibulum orci ut hendrerit. Sed ornare, magna et convallis eui
 
 * COMMENT latex-header
 #+BEGIN_SRC latex
-\documentclass[9pt]{memoir}
-
 \usepackage[osf]{mathpazo}
 \usepackage[mathcal,mathbf]{euler}
 \usepackage{amsmath,amssymb,amsthm}
@@ -305,23 +301,15 @@ Proin hendrerit vestibulum orci ut hendrerit. Sed ornare, magna et convallis eui
 \end{document}
 #+END_SRC
 
-* COMMENT use this emacs-lisp block to add memoirbook class to latex exporter
+* COMMENT latex-class
 
 #+BEGIN_SRC emacs-lisp
-(add-to-list 'org-latex-classes
-         '("memoirbook"
-           "\\documentclass[10pt]{memoir}"
-           ("\\chapter{%s}" . "\\chapter*{%s}")
-           ("\\section{%s}" . "\\section*{%s}")
-           ("\\subsection{%s}" . "\\subsection*{%s}")       
-           ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-           ("\\paragraph{%s}" . "\\paragraph*{%s}")
-           ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))
-         )
+  '("memoir"
+    "\\documentclass[9pt]{memoir}"
+    ("\\chapter{%s}" . "\\chapter*{%s}")
+    ("\\section{%s}" . "\\section*{%s}")
+    ("\\subsection{%s}" . "\\subsection*{%s}")       
+    ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+    ("\\paragraph{%s}" . "\\paragraph*{%s}")
+    ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))
 #+END_SRC
-
-#+RESULTS:
-| memoirbook | \documentclass[10pt]{memoir}  | (\chapter{%s} . \chapter*{%s}) | (\section{%s} . \section*{%s})       | (\subsection{%s} . \subsection*{%s})       | (\subsubsection{%s} . \subsubsection*{%s}) | (\paragraph{%s} . \paragraph*{%s})         | (\subparagraph{%s} . \subparagraph*{%s}) |
-| article    | \documentclass[11pt]{article} | (\section{%s} . \section*{%s}) | (\subsection{%s} . \subsection*{%s}) | (\subsubsection{%s} . \subsubsection*{%s}) | (\paragraph{%s} . \paragraph*{%s})         | (\subparagraph{%s} . \subparagraph*{%s})   |                                          |
-| report     | \documentclass[11pt]{report}  | (\part{%s} . \part*{%s})       | (\chapter{%s} . \chapter*{%s})       | (\section{%s} . \section*{%s})             | (\subsection{%s} . \subsection*{%s})       | (\subsubsection{%s} . \subsubsection*{%s}) |                                          |
-| book       | \documentclass[11pt]{book}    | (\part{%s} . \part*{%s})       | (\chapter{%s} . \chapter*{%s})       | (\section{%s} . \section*{%s})             | (\subsection{%s} . \subsection*{%s})       | (\subsubsection{%s} . \subsubsection*{%s}) |                                          |

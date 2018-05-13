@@ -1,10 +1,12 @@
 (TeX-add-style-hook
  "007MinimalWorkingExampleWithBibliographyLinktest"
  (lambda ()
-   (add-to-list 'LaTeX-verbatim-macros-with-braces-local "url")
+   (TeX-add-to-alist 'LaTeX-provided-class-options
+                     '(("article" "10pt")))
    (add-to-list 'LaTeX-verbatim-macros-with-braces-local "path")
-   (add-to-list 'LaTeX-verbatim-macros-with-delims-local "url")
+   (add-to-list 'LaTeX-verbatim-macros-with-braces-local "url")
    (add-to-list 'LaTeX-verbatim-macros-with-delims-local "path")
+   (add-to-list 'LaTeX-verbatim-macros-with-delims-local "url")
    (TeX-run-style-hooks
     "latex2e"
     "article"
@@ -12,9 +14,9 @@
     "xeCJK"
     "biblatex")
    (LaTeX-add-labels
-    "sec:orgc40254e"
-    "sec:org9fd2490"
-    "sec:orge673d40")
+    "sec:orgd222635"
+    "sec:org218f05a"
+    "sec:org1643479")
    (LaTeX-add-bibliographies
     "bibliography-LINKED"))
  :latex)

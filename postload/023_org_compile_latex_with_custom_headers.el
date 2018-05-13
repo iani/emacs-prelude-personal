@@ -1,4 +1,4 @@
-;;; org_compile_latex_with_custom_headers --- 2018-05-08 10:56:25 PM
+;;; org_compile_latex_with_custom_headers --- 2018-05-13 11:43:26 PM
   ;; (defun org-insert-latex-headers-from-deft ()
   ;;   "Choose latex headers from recipe list using deft, and append them to the currently edited file."
   ;;   (with-current-buffer
@@ -17,7 +17,7 @@
     "Export with pdflatex using custom latex headers if available."
     (org-compile-latex-with-custom-headers t))
 
-  (defun org-compile-xelatex-with-custom-headers ()
+  (defun  org-compile-xelatex-with-custom-headers ()
     "Export with xelatex using custom latex headers if available."
     (org-compile-latex-with-custom-headers))
 
@@ -26,7 +26,10 @@
   If PDFLATEXP use pdflatex else use xelatex.
   Use latexmk as ORG-LATEX-PDF-PROCESS. This usually works for compiling bibtex
   and producing a bibliography section."
-    (let ((output (org-export-as
+    (let* (
+           (document-class (get-class-from-section "latex-class"))
+           (org-latex-default-class (car document-class))
+           (output (org-export-as
                    'latex nil nil t nil
                    ;; backend subtreep visible-only body-only ext-plist
                    ))
@@ -37,17 +40,24 @@
                      (file-name-sans-extension (buffer-file-name))
                      ".pdf"))
           (header (get-custom-latex-from-section "latex-header"))
-          (footer (get-custom-latex-from-section "latex-footer")))
+          (footer (get-custom-latex-from-section "latex-footer"))
+          )
+      ;; (message "document class inside org-compile is:\n%s" document-class)
+      ;; (message "")
       (with-temp-buffer
+        (insert (cadr document-class) "\n")
         (insert header)
         (insert output)
         (insert footer)
         (let ((coding-system-for-write 'utf-8)
+
               (org-latex-pdf-process
                (if pdflatexp
                    '("latexmk -shell-escape -g -pdf -pdflatex=\"pdflatex\" -outdir=%o %f")
                  '("latexmk -shell-escape -g -pdf -pdflatex=\"xelatex\" -outdir=%o %f"))))
           (write-file file)
+          (message "org-latex-default-class is:\n%s" org-latex-default-class)
+          (message "org latex classes are:\n%s" org-latex-classes)
           (message "latex compile command is:\n %s" org-latex-pdf-process)
           (org-latex-compile (buffer-file-name))
           (message "Opening: %s" (shell-quote-argument pdf-file))
@@ -92,7 +102,7 @@
   ;; (cdr (assoc "latex-footer" latex-blocks-alist))
 
   (defun get-custom-latex-from-section (&optional section-name)
-    "Provide header or footer latex code from section matching SECTION-NAME.
+    "Provide header or footer latex code from section named SECTION-NAME.
   Get default code from LATEX-BLOCKS-ALIST."
     ;; (interactive)
     (setq section-name (or section-name "latex-header"))
@@ -109,6 +119,27 @@
            )))
       ;; (message "testing. code is:\n%s" code)
       code))
+
+  (defun get-class-from-section (&optional section-name)
+    "Get latex class from section named SECTION-NAME.
+  If class was found, add it to org-latex-classes.
+  Return class."
+    ;; (interactive)
+    (setq section-name (or section-name "latex-class"))
+    (let ((code "") class)
+      (org-map-entries
+       (lambda ()
+         (let ((element (cadr (org-element-at-point))))
+           (when (string= section-name (plist-get element :title))
+             (setq code (get-contents-or-babel element))
+             (setq class (eval (car (read-from-string code))))
+             ))))
+      (if
+          class
+          (add-to-list 'org-latex-classes class)
+        (setq class '("article" "\\documentclass[10pt]{article}")))
+      (message "I AM SETTING CLASS TO THIS:\n%s" class)
+      class))
 
   (defun get-contents-or-babel (element)
     "Get contents of section or babel block as string from ELEMENT."

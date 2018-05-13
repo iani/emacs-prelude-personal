@@ -1,4 +1,4 @@
-;;; tiny_menu --- 2018-05-08 10:56:26 PM
+;;; tiny_menus --- 2018-05-13 11:43:27 PM
   ;;; Commentary:
 
   ;; 2 tiny-menus for functions that I do not want to place on command-keys,
@@ -189,5 +189,5 @@
   ;; s-m is set by prelude/magit to magit commands that I do not use or plan to use directly.
   (global-set-key (kbd "H-m") 'air-tiny-menu)
   (global-set-key (kbd "H-M") 'air-tiny-menu2)
-(provide 'tiny_menu)
-;;; 031_tiny_menu.el ends here
+(provide 'tiny_menus)
+;;; 031_tiny_menus.el ends here

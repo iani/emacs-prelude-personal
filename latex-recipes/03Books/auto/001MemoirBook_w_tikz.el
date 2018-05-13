@@ -22,14 +22,14 @@
    (TeX-add-symbols
     "swelledrule")
    (LaTeX-add-labels
-    "sec:org779e596"
-    "sec:org7962e5e"
+    "sec:orge719e46"
+    "sec:org6007440"
     "tab:the-numbers"
-    "sec:orgae8232d"
-    "sec:org3171ddb"
-    "sec:orgba6333c"
-    "sec:org97d6de7"
-    "sec:org29b73e7"
-    "sec:org2bb6e37"))
+    "sec:orga5c8848"
+    "sec:org3201d74"
+    "sec:org157c746"
+    "sec:org640612e"
+    "sec:org1561400"
+    "sec:orga9e6ad6"))
  :latex)
 

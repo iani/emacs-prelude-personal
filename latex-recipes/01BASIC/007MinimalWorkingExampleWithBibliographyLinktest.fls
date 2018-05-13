@@ -1,0 +1,10 @@
+PWD /Users/iani/BitTorrent Sync/Dev/EMACS/emacs-prelude-personal/latex-recipes/01BASIC
+INPUT /usr/local/texlive/2017/texmf.cnf
+INPUT /usr/local/texlive/2017/texmf-dist/web2c/texmf.cnf
+INPUT /usr/local/texlive/2017/texmf-var/web2c/xetex/xelatex.fmt
+INPUT /Users/iani/.emacs.d/personal/latex-recipes/01BASIC/007MinimalWorkingExampleWithBibliographyLinktest.tex
+OUTPUT /Users/iani/.emacs.d/personal/latex-recipes/01BASIC//007MinimalWorkingExampleWithBibliographyLinktest.log
+INPUT /usr/local/texlive/2017/texmf-dist/tex/latex/base/article.cls
+INPUT /usr/local/texlive/2017/texmf-dist/tex/latex/base/article.cls
+INPUT /usr/local/texlive/2017/texmf-dist/tex/latex/base/size10.clo
+INPUT /usr/local/texlive/2017/texmf-dist/tex/latex/base/size10.clo

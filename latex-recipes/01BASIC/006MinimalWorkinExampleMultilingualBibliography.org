@@ -1,7 +1,7 @@
 # Minimal multilingual example both for body and for bibliography.
 * Multilingual text in body and bibliography
 
-This example uses =xelatex= to render english, greek and japanese text.  It uses =Times New Roman= as main font, and =STSong= as japanese font.  For japanese, it uses the command =setCJKmainfont= combined with the package =xeCJK=.  This allows one to use =Time New Roman= for english and greek with =setmainfont=, while switching automatically to STSong to render japanese text.  Japanese text is distinguished from the rest by the =xeCJK= package.  There is no need to insert any LaTeX commands for distinguishing english, greek or japanese text.  LaTeX distinguishes these by itself in the background.
+This example uses =xelatex= to render english, greek and japanese text.  As main font (for latin and greek) it uses =Linux Libertine O=, and for Japanese it uses =STSong=, with =STHeiti= for bold and =STKaiti= for italics.  For japanese, it uses the command =setCJKmainfont= combined with the package =xeCJK=.  The =xeCJK= package recognizes japanese text and switches to =CJKmainfont= automatically. Thus, there is no need to insert any LaTeX commands for distinguishing english, greek or japanese text since the =xeCJK= package distinguishes these by itself in the background.
 
 This setting is valid for rendering both the main text of the file (the present text) and the bibliography section.  This means that both the main text and the bibliography may contain english, greek and japanese text.
 
@@ -29,9 +29,8 @@ Some people are too nosy. What can happen to them is described by Laura Lion\nob
 * COMMENT latex-header
 
 #+BEGIN_SRC latex
-  \documentclass{article}
   \usepackage{xeCJK}
-  \setmainfont{Times New Roman}
+  \setmainfont{Linux Libertine O}
   \setCJKmainfont[BoldFont=STHeiti,ItalicFont=STKaiti]{STSong}
   \usepackage{biblatex}
   \addbibresource{bibliography-ml.bib}
