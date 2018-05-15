@@ -1,4 +1,4 @@
-;;; SuperCollider --- 2018-05-15 04:32:03 PM
+;;; SuperCollider --- 2018-05-15 08:58:55 PM
   ;;; Commentary:
   ;; Basic setup for using SuperCollider in EMACS
 
