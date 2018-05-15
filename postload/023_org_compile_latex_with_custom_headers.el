@@ -1,4 +1,4 @@
-;;; org_compile_latex_with_custom_headers --- 2018-05-13 11:43:26 PM
+;;; org_compile_latex_with_custom_headers --- 2018-05-15 04:32:04 PM
   ;; (defun org-insert-latex-headers-from-deft ()
   ;;   "Choose latex headers from recipe list using deft, and append them to the currently edited file."
   ;;   (with-current-buffer
@@ -42,8 +42,6 @@
           (header (get-custom-latex-from-section "latex-header"))
           (footer (get-custom-latex-from-section "latex-footer"))
           )
-      ;; (message "document class inside org-compile is:\n%s" document-class)
-      ;; (message "")
       (with-temp-buffer
         (insert (cadr document-class) "\n")
         (insert header)
@@ -98,33 +96,25 @@
       ("latex-footer" . "\\end{document}"))
     "Alist of default latex block strings for header/footer.")
 
-  ;; (cdr (assoc "latex-header" latex-blocks-alist))
-  ;; (cdr (assoc "latex-footer" latex-blocks-alist))
-
   (defun get-custom-latex-from-section (&optional section-name)
     "Provide header or footer latex code from section named SECTION-NAME.
   Get default code from LATEX-BLOCKS-ALIST."
-    ;; (interactive)
     (setq section-name (or section-name "latex-header"))
-    ;; (message "section-name is %s" section-name)
     (let ((code (or
                  (cdr (assoc section-name latex-blocks-alist))
                  "")))
-      ;; (message "code is %s" code)
       (org-map-entries
        (lambda ()
          (let ((element (cadr (org-element-at-point))))
            (when (string= section-name (plist-get element :title))
              (setq code (get-contents-or-babel element)))
            )))
-      ;; (message "testing. code is:\n%s" code)
       code))
 
   (defun get-class-from-section (&optional section-name)
     "Get latex class from section named SECTION-NAME.
   If class was found, add it to org-latex-classes.
   Return class."
-    ;; (interactive)
     (setq section-name (or section-name "latex-class"))
     (let ((code "") class)
       (org-map-entries
@@ -150,10 +140,6 @@
             (string-match "^#\\\+BEGIN_SRC +[a-z-]+" result))
            (src-content-beginning
             (match-end 0)))
-      ;; (message "the contents I will search are:\n%s" result)
-      ;; (message "src-block-beginning %s src-content-beginning %s"
-      ;;          src-block-beginning
-      ;;          src-content-beginning)
       (when src-block-beginning
         (setq result (substring
                       result
@@ -222,13 +208,10 @@
 
   (defun get-latex-section (&optional section-name)
     "Get entire section with name matching SECTION-NAME."
-    ;; (interactive)
     (setq section-name (or section-name "latex-header"))
-    ;; (message "section-name is %s" section-name)
     (let ((code (or
                  (cdr (assoc section-name latex-blocks-alist))
                  "")))
-      ;; (message "code is %s" code)
       (org-map-entries
        (lambda ()
          (let ((element (cadr (org-element-at-point))))

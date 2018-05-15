@@ -1,4 +1,4 @@
-;;; multiple-cursors --- 2018-05-13 11:43:24 PM
+;;; multiple-cursors --- 2018-05-15 04:32:02 PM
 
   (prelude-load-require-packages '(multiple-cursors mc-extras ace-mc))
 

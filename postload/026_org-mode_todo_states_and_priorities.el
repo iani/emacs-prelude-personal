@@ -1,4 +1,4 @@
-;;; org-mode_todo_states_and_priorities --- 2018-05-13 11:43:26 PM
+;;; org-mode_todo_states_and_priorities --- 2018-05-15 04:32:04 PM
   (setq org-todo-keywords
          '((sequence "TODO(t)" "|" "DONE(d@)" "CANCELED(c@)")))
   (setq org-lowest-priority 77) ;; Set possible priorities range from A to M

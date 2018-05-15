@@ -1,4 +1,4 @@
-;;; tiny_menus --- 2018-05-13 11:43:27 PM
+;;; tiny_menu_+_hydra --- 2018-05-15 04:32:05 PM
   ;;; Commentary:
 
   ;; 2 tiny-menus for functions that I do not want to place on command-keys,
@@ -9,7 +9,7 @@
   ;; (let ((projectile-switch-project-action 'projectile-find-file))
   ;;   (projectile-switch-project-by-name "/Users/iani/BitTorrent Sync/000WORKFILES/"))
 
-  (prelude-load-require-package 'tiny-menu)
+  (prelude-load-require-packages '(tiny-menu hydra))
 
   (defun air--org-global-custom-ids ()
     "Find custom ID fields in all org agenda files."
@@ -136,9 +136,65 @@
                                    (?m "agenda menu" org-agenda)
                                    (?n "new journal entry" org-journal-at-date-from-user)
                                    (?g "goto journal entry" air-journal-goto-date))))
+               ("hydra" ("hydra"
+                         ((?s "search/mark/goto" hydra-search/body)
+                         (?t "transpose" hydra-transpose/body)
+                         (?z "zoom" hydra-zoom/body)
+                         (?o "org" hydra-org/body)
+                         (?j "goto journal entry" air-journal-goto-date))))
                )))
         (tiny-menu)))
 
+  ;;;;;;;;;;;;;;;; HYDRAS
+  (defhydra hydra-transpose (global-map "C-t")
+    "transposing hydra"
+    ("l" transpose-lines "lines")
+    ("w" transpose-words "words")
+    ("s" transpose-sexps "sexps")
+    ("p" transpose-paragraphs "paragraphs")
+    ("c" transpose-chars "characters")
+    ("w" transpose-frame "windows")
+    )
+
+  (defhydra hydra-zoom (global-map "<f2>")
+    "zoom"
+    ("+" text-scale-increase "in")
+    ("-" text-scale-decrease "out")
+    ("i" text-scale-increase "in")
+    ("o" text-scale-decrease "out")
+    ("0" (text-scale-adjust 0) "reset")
+    ("q" nil "quit" :color blue))
+
+  (defhydra hydra-org (:color red :columns 3)
+    "Org Mode Movements"
+    ("n" outline-next-visible-heading "next heading")
+    ("p" outline-previous-visible-heading "prev heading")
+    ("N" org-forward-heading-same-level "next heading at same level")
+    ("P" org-backward-heading-same-level "prev heading at same level")
+    ("u" outline-up-heading "up heading")
+    ("i" imenu-anywhere "imenu" :exit t))
+
+  (defhydra hydra-search (global-map "M-g" :color blue :columns 5)
+    "search+goto+mark"
+    ("i" imenu-anywhere "imenu")
+    ("I" isearch-forward "isarch forward")
+    ("s" helm-swoop "helm swoop")
+    ("S" helm-multi-swoop "helm multi swoop")
+    ("P" helm-projectile-switch-project "projectile project")
+    ("a" helm-projectile-ag "projectile ag")
+    ("g" helm-projectile-grep "projectile grep")
+    ("c" avy-goto-char "char")
+    ("C" avy-goto-char-2 "char-2")
+    ("w" avy-goto-word-1 "word")
+    ("W" avy-goto-subword-1 "subword")
+    ("l" avy-goto-line "line")
+    ("M-s" avy-goto-symbol-1 "symbol")
+    ("m" easy-mark "easy-mark")
+    ("p" mark-paragraph "mark-paragraph"))
+
+  (global-set-key [S-f2] 'hydra-search/body)
+
+  ;;;;;;;;;;;;;;;; END HYDRAS
   (defun org-latex-switch-to-pdflatex ()
     "Set org mode default package and compiler vars to use pdflatex."
     (interactive)
@@ -155,7 +211,7 @@
           '("\\sloppy" ("" "fontspec"))))
 
   (defun air-tiny-menu2 ()
-    "My custom tiny menu 2: latex and other stuff"
+    "MY custom tiny menu 2: latex and other stuff"
     (interactive)
     (let ((tiny-menu-items
            '(("latex" ("latex"
@@ -189,5 +245,5 @@
   ;; s-m is set by prelude/magit to magit commands that I do not use or plan to use directly.
   (global-set-key (kbd "H-m") 'air-tiny-menu)
   (global-set-key (kbd "H-M") 'air-tiny-menu2)
-(provide 'tiny_menus)
-;;; 031_tiny_menus.el ends here
+(provide 'tiny_menu_+_hydra)
+;;; 031_tiny_menu_+_hydra.el ends here
