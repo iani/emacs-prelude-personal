@@ -1,0 +1,121 @@
+\ProvidesPackage{packages/UASLP_ENG/style}
+
+% School name and location
+\university{Universidad Autónoma de San Luis Potosí}
+\universitycity{San Luis Potosí}
+\universitystate{México}
+
+\definecolor{SchoolColor}{RGB}{9,46,83} % Crimson
+\definecolor{chaptergrey}{RGB}{9,46,83} % for chapter numbers
+
+\hypersetup{
+    colorlinks,
+    citecolor=SchoolColor,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=SchoolColor,
+}
+
+\renewcommand{\frontmatter}{
+	\input{frontmatter/personalize}
+	\maketitle
+	\copyrightpage
+	\abstractpage
+	\tableofcontents
+	\listoffigures % optional
+	\dedicationpage
+	\acknowledgments
+}
+
+\renewcommand{\maketitle}{
+\thispagestyle{empty}
+
+  \begin{tabular}[t]{C{1.7cm} C{11cm} L{1.7cm}}
+  \centering
+    \multirow{3}{*}{\includegraphics[width=.16\columnwidth]{packages/UASLP_ENG/UASLP.png}} & {\bf \Large \@university}  & \multirow{3}{*}[10pt]{  \includegraphics[width=.14\columnwidth]{packages/UASLP_ENG/LOGO_INge.png}}  \\
+                                                &\large  Facultad de Ingeniería  &  \\
+                                                                       &  \bf \@department      & 
+  \end{tabular}
+
+%\centerline{\resizebox{!}{40 mm}{\rotatebox{0}{\includegraphics{packages/UASLP_ENG/UASLP_Logo.jpeg}}} \hspace{5cm} \resizebox{!}{50 mm}{\rotatebox{0}{\includegraphics{packages/UASLP_ENG/LOGO_Facultad.png}}}}
+	\vspace{80pt}
+	\begin{center}
+	\Huge \textcolor{SchoolColor}{\thetitle} \normalsize \\
+	\vspace{80pt}
+	\textsf{\LARGE TESIS}\\
+    \vspace{12pt}
+    \large{Que para obtener el grado de:} \\
+    \vspace{10pt}
+    \textsf{\Large{\@degree\ en  \@field}}\\ 
+    \vspace{20pt}
+    \large{Presenta:}\\
+    \vspace{10pt}
+    \textsf{\LARGE{\@pdOneName \theauthor}}\\
+	\vspace{20pt}
+    \large{Asesor:}\\
+    \vspace{5pt}
+    \textsf{\large{\@advisor }}\\
+	\vspace{35pt}
+	\@universitycity, \@universitystate\\
+	\@degreemonth\ \@degreeyear
+	\end{center} \vspace*{\fill}
+}
+
+\newcommand{\copyrightpage}{
+	\newpage
+	\thispagestyle{empty}
+	\vspace*{\fill}
+	\scshape \noindent \small \copyright \small 2016\hspace{3pt}-- \theauthor \\
+	\noindent all rights reserved.
+	\vspace*{\fill}
+	\newpage
+	\rm
+}
+
+\newcommand{\abstractpage}{
+	\newpage
+	\pagenumbering{roman}
+	\setcounter{page}{3}
+	\pagestyle{fancy}
+	\lhead{Thesis advisor: Professor \@advisor} \rhead{\@author}
+	\renewcommand{\headrulewidth}{0.0pt}
+	\vspace*{35pt}
+	\begin{center}
+	\Large \textcolor{SchoolColor}{\@title} \normalsize \\
+	\vspace*{20pt}
+	\scshape Abstract \\ \rm
+	\end{center}
+	\input{frontmatter/abstract}
+	\vspace*{\fill}
+	\newpage \lhead{} \rhead{}
+	\cfoot{\thepage}
+}
+
+\newcommand{\dedicationpage}{
+	\newpage \thispagestyle{fancy} \vspace*{\fill}
+	\scshape \noindent \input{frontmatter/dedication}
+	\vspace*{\fill} \newpage \rm
+}
+
+\newcommand{\acknowledgments}{
+	\chapter*{Acknowledgments}
+	\noindent
+	\input{frontmatter/thanks}
+	\vspace*{\fill} \newpage
+	\setcounter{page}{1}
+	\pagenumbering{arabic}
+}
+\newcommand{\listofacronyms}{
+\chapter*{List of Acronyms}
+\acuseall
+\printacronyms[include-classes = {acron},heading={none}]
+\vspace*{\fill} \newpage \rm
+\chapter*{List of Symbols}
+\printacronyms[exclude-classes = {acron},heading={none}]
+\vspace*{\fill} \newpage \rm
+}
+\newcommand{\listofcontributions}{
+\chapter*{List of Contributions}
+\input{frontmatter/contributions}
+\vspace*{\fill} \newpage \rm
+}

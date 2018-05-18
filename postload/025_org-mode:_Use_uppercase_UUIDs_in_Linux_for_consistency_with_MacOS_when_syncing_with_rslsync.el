@@ -1,4 +1,4 @@
-;;; org-mode:_Use_uppercase_UUIDs_in_Linux_for_consistency_with_MacOS_when_syncing_with_rslsync --- 2018-05-15 08:58:56 PM
+;;; org-mode:_Use_uppercase_UUIDs_in_Linux_for_consistency_with_MacOS_when_syncing_with_rslsync --- 2018-05-18 10:40:54 AM
     (defun org-id-get (&optional pom create prefix)
       "Get the ID property of the entry at point-or-marker POM.
 

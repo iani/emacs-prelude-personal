@@ -1,4 +1,4 @@
-;;; unset-command-q --- 2018-05-15 08:58:57 PM
+;;; unset-command-q --- 2018-05-18 10:40:55 AM
 ;;; Commentary:
 ;;; disable command-q key to avoid inadvertently quitting EMACS.
 

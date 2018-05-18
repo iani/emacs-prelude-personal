@@ -1,4 +1,4 @@
-;;; Theming+Faces --- 2018-05-15 08:58:53 PM
+;;; Theming+Faces --- 2018-05-18 10:40:51 AM
   ;;; Commentary:
 
   ;;; Default font: Inconsolata.
@@ -28,6 +28,12 @@
    '(hl-line ((t (:background "red4"))))
    ;; '(hl-sexp-face ((t (:background "linen" :foreground "VioletRed4"))))
    '(hl-sexp-face ((t (:background "gray10"))))
+   ;; thinner org-level-2 face for kanji
+   '(org-level-2
+     ((t
+       (:family "Inconsolata" :height 1.1 :weight light :box nil
+                :foreground "#a1db00" :inherit
+                (outline-2)))))
    )
 
   (powerline-moe-theme)
