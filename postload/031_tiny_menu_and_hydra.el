@@ -1,4 +1,4 @@
-;;; tiny_menu_and_hydra --- 2018-05-18 10:40:55 AM
+;;; tiny_menu_and_hydra --- 2018-06-02 09:10:40 AM
   ;;; Commentary:
 
   ;; 2 tiny-menus for functions that I do not want to place on command-keys,

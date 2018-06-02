@@ -1,4 +1,4 @@
-;;; org-mode --- 2018-05-18 10:40:54 AM
+;;; org-mode --- 2018-06-02 09:10:39 AM
   ;;; Commentary:
 
   ;; customize some org mode settings
@@ -29,7 +29,12 @@
    '(org-block-end-line ((t (:background "#2a2a2f" :foreground "gray99"))) t)
    '(org-block-begin-line ((t (:background "#3a2a2f" :foreground "gray99"))) t)
    '(org-level-1 ((t (:family "Helvetica" :height 1.1 :weight bold))))
-   '(org-level-2 ((t (:family "Helvetica" :height 1.1 :weight bold))))
+   ;; thinner org-level-2 face for kanji
+   '(org-level-2
+     ((t
+       (:family "Inconsolata" :height 1.1 :weight light :box nil
+                :foreground "#a1db00" :inherit
+                (outline-2)))))
    ;; '(org-level-1 ((t (:family "Courier New" :height 1.1 :weight bold))))
    ;; '(org-level-2 ((t (:family "Courier New" :height 1.1 :weight bold))))
    '(org-level-3 ((t (:weight bold :height 1.1))))

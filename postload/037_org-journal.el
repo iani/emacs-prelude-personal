@@ -1,4 +1,4 @@
-;;; org-journal --- 2018-05-18 10:40:56 AM
+;;; org-journal --- 2018-06-02 09:10:40 AM
   ;;; Commentary:
   ;;; use org-journal for capture globally.
   ;;; https://github.com/bastibe/org-journal
@@ -70,13 +70,44 @@
       ;; (if no-entry
       ;;     (insert "\n" timestamp))
       (unless no-entry
-       (progn
-         (insert
-          "\n :PROPERTIES:\n :DATE: "
-          timestamp
-          " \n :END:\n")
-         (previous-line 4)
-         (end-of-line)))))
+        (progn
+          (insert
+           "\n :PROPERTIES:\n :DATE: "
+           timestamp
+           " \n :END:\n")
+          (previous-line 4)
+          (end-of-line)))))
+
+  (defun org-journal-at-date-from-calendar (no-entry)
+    "Creat journal entry on calendar cursor date, if NO-ENTRY do not create entry."
+    (interactive "P")
+    (let* ((monthdayyear (calendar-cursor-to-date))
+           (month (car monthdayyear))
+           (day (cadr monthdayyear))
+           (year (caddr monthdayyear))
+           (time (encode-time 0 0 7 day month year))
+           (timestamp (format-time-string (cdr org-time-stamp-formats) time)))
+      (message "Creating entry at: %s" timestamp)
+      (org-journal-new-entry no-entry time)
+      (setq timestamp (format-time-string (cdr org-time-stamp-formats) time))
+      ;; (if no-entry
+      ;;     (insert "\n" timestamp))
+      (unless no-entry
+        (progn
+          (insert
+           "\n :PROPERTIES:\n :DATE: "
+           timestamp
+           " \n :END:\n")
+          (previous-line 2)
+          (end-of-line)
+          (backward-char 4)
+          (org-time-stamp t)))))
+
+  (defun my/bindkey-recompile ()
+    "Bind <F5> to `recompile'."
+    (local-set-key (kbd "J") 'org-journal-at-date-from-calendar))
+
+  (add-hook 'calendar-mode-hook 'my/bindkey-recompile)
 
   ;; Make new-entry keyboard command available also in org-mode:
   (global-set-key (kbd "C-c c j") 'org-journal-at-date-from-user)

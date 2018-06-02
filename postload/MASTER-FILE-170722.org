@@ -117,14 +117,7 @@ dark theme hl colors and inconsolata font
    ;; '(hl-line ((t (:background "DarkSlateGray4" :foreground "yellow1"))))
    '(hl-line ((t (:background "red4"))))
    ;; '(hl-sexp-face ((t (:background "linen" :foreground "VioletRed4"))))
-   '(hl-sexp-face ((t (:background "gray10"))))
-   ;; thinner org-level-2 face for kanji
-   '(org-level-2
-     ((t
-       (:family "Inconsolata" :height 1.1 :weight light :box nil
-                :foreground "#a1db00" :inherit
-                (outline-2)))))
-   )
+   '(hl-sexp-face ((t (:background "gray10")))))
 
   (powerline-moe-theme)
   (moe-dark)
@@ -1286,7 +1279,12 @@ Only solution so far is to switch off prelude mode when in org mode.
    '(org-block-end-line ((t (:background "#2a2a2f" :foreground "gray99"))) t)
    '(org-block-begin-line ((t (:background "#3a2a2f" :foreground "gray99"))) t)
    '(org-level-1 ((t (:family "Helvetica" :height 1.1 :weight bold))))
-   '(org-level-2 ((t (:family "Helvetica" :height 1.1 :weight bold))))
+   ;; thinner org-level-2 face for kanji
+   '(org-level-2
+     ((t
+       (:family "Inconsolata" :height 1.1 :weight light :box nil
+                :foreground "#a1db00" :inherit
+                (outline-2)))))
    ;; '(org-level-1 ((t (:family "Courier New" :height 1.1 :weight bold))))
    ;; '(org-level-2 ((t (:family "Courier New" :height 1.1 :weight bold))))
    '(org-level-3 ((t (:weight bold :height 1.1))))
@@ -2889,13 +2887,44 @@ Design draft for next version:
       ;; (if no-entry
       ;;     (insert "\n" timestamp))
       (unless no-entry
-       (progn
-         (insert
-          "\n :PROPERTIES:\n :DATE: "
-          timestamp
-          " \n :END:\n")
-         (previous-line 4)
-         (end-of-line)))))
+        (progn
+          (insert
+           "\n :PROPERTIES:\n :DATE: "
+           timestamp
+           " \n :END:\n")
+          (previous-line 4)
+          (end-of-line)))))
+
+  (defun org-journal-at-date-from-calendar (no-entry)
+    "Creat journal entry on calendar cursor date, if NO-ENTRY do not create entry."
+    (interactive "P")
+    (let* ((monthdayyear (calendar-cursor-to-date))
+           (month (car monthdayyear))
+           (day (cadr monthdayyear))
+           (year (caddr monthdayyear))
+           (time (encode-time 0 0 7 day month year))
+           (timestamp (format-time-string (cdr org-time-stamp-formats) time)))
+      (message "Creating entry at: %s" timestamp)
+      (org-journal-new-entry no-entry time)
+      (setq timestamp (format-time-string (cdr org-time-stamp-formats) time))
+      ;; (if no-entry
+      ;;     (insert "\n" timestamp))
+      (unless no-entry
+        (progn
+          (insert
+           "\n :PROPERTIES:\n :DATE: "
+           timestamp
+           " \n :END:\n")
+          (previous-line 2)
+          (end-of-line)
+          (backward-char 4)
+          (org-time-stamp t)))))
+
+  (defun my/bindkey-recompile ()
+    "Bind <F5> to `recompile'."
+    (local-set-key (kbd "J") 'org-journal-at-date-from-calendar))
+
+  (add-hook 'calendar-mode-hook 'my/bindkey-recompile)
 
   ;; Make new-entry keyboard command available also in org-mode:
   (global-set-key (kbd "C-c c j") 'org-journal-at-date-from-user)
