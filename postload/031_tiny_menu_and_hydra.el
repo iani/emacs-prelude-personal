@@ -1,4 +1,4 @@
-;;; tiny_menu_and_hydra --- 2018-06-02 09:10:40 AM
+;;; tiny_menu_and_hydra --- 2018-06-30 10:14:49 AM
   ;;; Commentary:
 
   ;; 2 tiny-menus for functions that I do not want to place on command-keys,
@@ -145,6 +145,19 @@
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;; HYDRAS
+
+  (defhydra hydra-cfw (:color pink)
+    "cfw hydra"
+    ("l" transpose-lines "lines")
+    ("w" transpose-words "words")
+    ("s" transpose-sexps "sexps")
+    ("p" transpose-paragraphs "paragraphs")
+    ("c" transpose-chars "characters")
+    ("w" transpose-frame "windows")
+    ("q" nil "quit" :color blue))
+
+  (define-key cfw:calendar-mode-map "G" 'hydra-cfw/body)
+
   (defhydra hydra-transpose (global-map "C-t")
     "transposing hydra"
     ("l" transpose-lines "lines")
@@ -181,9 +194,10 @@
     ("r" helm-recentf "recent files")
     ("j" bookmark-jump "bookmark jump")
     ("P" helm-projectile-switch-project "projectile project")
-    ("i" imenu-anywhere "imenu")
-    ("I" air-goto-section "icicle-imenu")
-    ("C-i" isearch-forward "isarch forward")
+    ("i" icicle-imenu  "icicle-imenu") ;; air-goto-section
+    ("I" imenu-anywhere "imenu-anywhere")
+    ("C-i" air-goto-section "air-goto-section")
+    ("M-i" isearch-forward "isarch forward")
     ("s" helm-swoop "helm swoop")
     ("S" helm-multi-swoop "helm multi swoop")
     ("a" helm-projectile-ag "projectile ag")
@@ -200,6 +214,25 @@
     ("p" mark-paragraph "mark-paragraph"))
 
   (global-set-key [S-f2] 'hydra-search/body)
+
+  (defhydra mc-hydra (global-map "M-m" a:hint nil)
+    "
+       ^Up^            ^Down^        ^Miscellaneous^
+  ----------------------------------------------
+  [_p_]   Previous    [_n_]   Next    [_l_] Edit lines
+  [_P_]   Skip    [_N_]   Skip    [_a_] Mark all
+  [_M-p_] Unmark  [_M-n_] Unmark  [_q_] Quit"
+    ("l" mc/edit-lines :exit t)
+    ("a" mc/mark-all-like-this :exit t)
+    ("n" mc/mark-next-like-this)
+    ("N" mc/skip-to-next-like-this)
+    ("M-n" mc/unmark-next-like-this)
+    ("p" mc/mark-previous-like-this)
+    ("P" mc/skip-to-previous-like-this)
+    ("M-p" mc/unmark-previous-like-this)
+    ("q" nil))
+
+  (global-set-key [S-f3] 'mc-hydra/body)
 
   (defun corral-org-code-backward (&optional wrap-toggle)
     "Wrap double quotes around sexp, moving point to the opening double quote.
@@ -223,7 +256,6 @@
                             'corral-double-quotes-backward
                             'corral-double-quotes-forward
                             wrap-toggle))
-
   (defhydra hydra-corral (global-map "M-'" :columns 4)
     "Corral"
     ("(" corral-parentheses-backward "Back")
@@ -240,25 +272,10 @@
     ("+" corral-org-code-forward "= Forward")
     ("}" corral-braces-forward "Forward")
     ("." hydra-repeat "Repeat"))
-  (global-set-key [S-f2] 'hydra-search/body)
 
-  (defhydra mc-hydra (global-map "M-m" a:hint nil)
-    "
-       ^Up^            ^Down^        ^Miscellaneous^
-  ----------------------------------------------
-  [_p_]   Previous    [_n_]   Next    [_l_] Edit lines
-  [_P_]   Skip    [_N_]   Skip    [_a_] Mark all
-  [_M-p_] Unmark  [_M-n_] Unmark  [_q_] Quit"
-    ("l" mc/edit-lines :exit t)
-    ("a" mc/mark-all-like-this :exit t)
-    ("n" mc/mark-next-like-this)
-    ("N" mc/skip-to-next-like-this)
-    ("M-n" mc/unmark-next-like-this)
-    ("p" mc/mark-previous-like-this)
-    ("P" mc/skip-to-previous-like-this)
-    ("M-p" mc/unmark-previous-like-this)
-    ("q" nil))
-  (global-set-key [S-f2] 'hydra-search/body)
+
+
+  ;; (define-key cfw:calendar-mode-map "G" 'hydra-buffer-menu/body)
 
   ;;;;;;;;;;;;;;;; END HYDRAS
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

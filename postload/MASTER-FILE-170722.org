@@ -1302,7 +1302,7 @@ Only solution so far is to switch off prelude mode when in org mode.
      (if property property "DATE")
      (cond ((equal active nil)
             (format-time-string (cdr org-time-stamp-formats) (current-time)))
-           ((equal active '(4))
+           ((equal active '(64))
             (concat "["
                     (substring
                      (format-time-string (cdr org-time-stamp-formats) (current-time))
@@ -1315,7 +1315,7 @@ Only solution so far is to switch off prelude mode when in org mode.
               (format-time-string (cdr org-time-stamp-formats) (org-read-date t t))
               1 -1)
              "]"))
-           ((equal active '(64))
+           ((equal active '(4))
             (format-time-string (cdr org-time-stamp-formats) (org-read-date t t))))))
 
   (defun org-insert-current-date (arg)
@@ -1881,14 +1881,25 @@ Run the following code:
               (encode-time 0 0 7
                            (calendar-extract-day pos)
                            (calendar-extract-month pos)
-                           (calendar-extract-year pos))))
+                           (calendar-extract-year pos)))
+             (timestamp (format-time-string (cdr org-time-stamp-formats)
+                                            org-overriding-default-time)))
         (org-journal-new-entry prefix org-overriding-default-time)
         (unless prefix
-          (org-insert-time-stamp org-overriding-default-time t)
-          (backward-word)
-          (backward-word)
-          (paredit-forward-kill-word)
-          (paredit-forward-kill-word)))))
+          (insert
+           "\n :PROPERTIES:\n :DATE: "
+           timestamp
+           " \n :END:\n")
+          (previous-line 2)
+          (end-of-line)
+          (backward-char 4)
+          (org-time-stamp t)
+          ;; (org-insert-time-stamp org-overriding-default-time t)
+          ;; (backward-word)
+          ;; (backward-word)
+          ;; (paredit-forward-kill-word)
+          ;; (paredit-forward-kill-word)
+          ))))
 
   (defun cfw:org-journal-entry-for-now (prefix)
     "Run org-journal-new-entry with date+time timestamp from current time."
@@ -2389,6 +2400,19 @@ Design draft for next version:
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;; HYDRAS
+
+  (defhydra hydra-cfw (:color pink)
+    "cfw hydra"
+    ("l" transpose-lines "lines")
+    ("w" transpose-words "words")
+    ("s" transpose-sexps "sexps")
+    ("p" transpose-paragraphs "paragraphs")
+    ("c" transpose-chars "characters")
+    ("w" transpose-frame "windows")
+    ("q" nil "quit" :color blue))
+
+  (define-key cfw:calendar-mode-map "G" 'hydra-cfw/body)
+
   (defhydra hydra-transpose (global-map "C-t")
     "transposing hydra"
     ("l" transpose-lines "lines")
@@ -2425,9 +2449,10 @@ Design draft for next version:
     ("r" helm-recentf "recent files")
     ("j" bookmark-jump "bookmark jump")
     ("P" helm-projectile-switch-project "projectile project")
-    ("i" imenu-anywhere "imenu")
-    ("I" air-goto-section "icicle-imenu")
-    ("C-i" isearch-forward "isarch forward")
+    ("i" icicle-imenu  "icicle-imenu") ;; air-goto-section
+    ("I" imenu-anywhere "imenu-anywhere")
+    ("C-i" air-goto-section "air-goto-section")
+    ("M-i" isearch-forward "isarch forward")
     ("s" helm-swoop "helm swoop")
     ("S" helm-multi-swoop "helm multi swoop")
     ("a" helm-projectile-ag "projectile ag")
@@ -2444,6 +2469,25 @@ Design draft for next version:
     ("p" mark-paragraph "mark-paragraph"))
 
   (global-set-key [S-f2] 'hydra-search/body)
+
+  (defhydra mc-hydra (global-map "M-m" a:hint nil)
+    "
+       ^Up^            ^Down^        ^Miscellaneous^
+  ----------------------------------------------
+  [_p_]   Previous    [_n_]   Next    [_l_] Edit lines
+  [_P_]   Skip    [_N_]   Skip    [_a_] Mark all
+  [_M-p_] Unmark  [_M-n_] Unmark  [_q_] Quit"
+    ("l" mc/edit-lines :exit t)
+    ("a" mc/mark-all-like-this :exit t)
+    ("n" mc/mark-next-like-this)
+    ("N" mc/skip-to-next-like-this)
+    ("M-n" mc/unmark-next-like-this)
+    ("p" mc/mark-previous-like-this)
+    ("P" mc/skip-to-previous-like-this)
+    ("M-p" mc/unmark-previous-like-this)
+    ("q" nil))
+
+  (global-set-key [S-f3] 'mc-hydra/body)
 
   (defun corral-org-code-backward (&optional wrap-toggle)
     "Wrap double quotes around sexp, moving point to the opening double quote.
@@ -2467,7 +2511,6 @@ Design draft for next version:
                             'corral-double-quotes-backward
                             'corral-double-quotes-forward
                             wrap-toggle))
-
   (defhydra hydra-corral (global-map "M-'" :columns 4)
     "Corral"
     ("(" corral-parentheses-backward "Back")
@@ -2484,25 +2527,10 @@ Design draft for next version:
     ("+" corral-org-code-forward "= Forward")
     ("}" corral-braces-forward "Forward")
     ("." hydra-repeat "Repeat"))
-  (global-set-key [S-f2] 'hydra-search/body)
 
-  (defhydra mc-hydra (global-map "M-m" a:hint nil)
-    "
-       ^Up^            ^Down^        ^Miscellaneous^
-  ----------------------------------------------
-  [_p_]   Previous    [_n_]   Next    [_l_] Edit lines
-  [_P_]   Skip    [_N_]   Skip    [_a_] Mark all
-  [_M-p_] Unmark  [_M-n_] Unmark  [_q_] Quit"
-    ("l" mc/edit-lines :exit t)
-    ("a" mc/mark-all-like-this :exit t)
-    ("n" mc/mark-next-like-this)
-    ("N" mc/skip-to-next-like-this)
-    ("M-n" mc/unmark-next-like-this)
-    ("p" mc/mark-previous-like-this)
-    ("P" mc/skip-to-previous-like-this)
-    ("M-p" mc/unmark-previous-like-this)
-    ("q" nil))
-  (global-set-key [S-f2] 'hydra-search/body)
+
+
+  ;; (define-key cfw:calendar-mode-map "G" 'hydra-buffer-menu/body)
 
   ;;;;;;;;;;;;;;;; END HYDRAS
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -2836,7 +2864,9 @@ Design draft for next version:
     (org-journal-new-entry nil (apply 'encode-time (org-parse-time-string (org-read-date t t)))))
 
   ;; Use own path for journal dir:
-  (setq org-journal-dir (file-truename "~/Documents/000WORKFILES/PERSONAL/journal"))
+  ;; (setq org-journal-dir (file-truename "~/Documents/000WORKFILES/PERSONAL/journal"))
+  ;; On 27 Jun 2018 16:01 get stack overflow with above. changing now to this:
+  (setq org-journal-dir (file-truename "~/journal"))
 
   ;; Use own path for diary dir:
   (setq org-agenda-diary-file 'diary-file)
@@ -2906,7 +2936,7 @@ Design draft for next version:
            (timestamp (format-time-string (cdr org-time-stamp-formats) time)))
       (message "Creating entry at: %s" timestamp)
       (org-journal-new-entry no-entry time)
-      (setq timestamp (format-time-string (cdr org-time-stamp-formats) time))
+      ;; (setq timestamp (format-time-string (cdr org-time-stamp-formats) time))
       ;; (if no-entry
       ;;     (insert "\n" timestamp))
       (unless no-entry
@@ -2993,3 +3023,37 @@ If UNLINK-P is not nil, then delete the link instead."
   (delete-other-windows)
   (air-tiny-menu)
 #+END_SRC
+* COMMENT debugging agenda
+
+#+BEGIN_SRC emacs-lisp
+(setq org-agenda-files '("/Volumes/t2a/DebugEmacsAgenda" "/Volumes/t2a/DebugEmacsAgenda/journal"))
+#+END_SRC
+
+#+RESULTS:
+| /Volumes/t2a/DebugEmacsAgenda | /Volumes/t2a/DebugEmacsAgenda/journal |
+
+#+BEGIN_SRC emacs-lisp
+(setq org-agenda-files '("/Users/iani/BitTorrent Sync/000WORKFILES/PERSONAL/journal"))
+#+END_SRC
+
+#+RESULTS:
+| /Users/iani/BitTorrent Sync/000WORKFILES/PERSONAL/journal |
+
+#+BEGIN_SRC emacs-lisp
+(setq org-agenda-files '("/Users/iani/journal"))
+#+END_SRC
+
+#+RESULTS:
+| /Users/iani/journal |
+
+#+BEGIN_SRC emacs-lisp
+
+(setq org-journal-dir (file-truename "~/Documents/000WORKFILES/PERSONAL/journal"))
+
+(setq org-agenda-files `(,org-journal-dir
+                         ,org-todo-dir
+                         ,org-projects-dir))
+#+END_SRC
+
+#+RESULTS:
+| /Users/iani/BitTorrent Sync/000WORKFILES/PERSONAL/journal | /Users/iani/BitTorrent Sync/000WORKFILES/PERSONAL/TODOS | /Users/iani/BitTorrent Sync/000WORKFILES/PROJECTS_CURRENT |

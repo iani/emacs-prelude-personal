@@ -1,4 +1,4 @@
-;;; org-journal --- 2018-06-02 09:10:40 AM
+;;; org-journal --- 2018-06-30 10:14:50 AM
   ;;; Commentary:
   ;;; use org-journal for capture globally.
   ;;; https://github.com/bastibe/org-journal
@@ -19,7 +19,9 @@
     (org-journal-new-entry nil (apply 'encode-time (org-parse-time-string (org-read-date t t)))))
 
   ;; Use own path for journal dir:
-  (setq org-journal-dir (file-truename "~/Documents/000WORKFILES/PERSONAL/journal"))
+  ;; (setq org-journal-dir (file-truename "~/Documents/000WORKFILES/PERSONAL/journal"))
+  ;; On 27 Jun 2018 16:01 get stack overflow with above. changing now to this:
+  (setq org-journal-dir (file-truename "~/journal"))
 
   ;; Use own path for diary dir:
   (setq org-agenda-diary-file 'diary-file)
@@ -89,7 +91,7 @@
            (timestamp (format-time-string (cdr org-time-stamp-formats) time)))
       (message "Creating entry at: %s" timestamp)
       (org-journal-new-entry no-entry time)
-      (setq timestamp (format-time-string (cdr org-time-stamp-formats) time))
+      ;; (setq timestamp (format-time-string (cdr org-time-stamp-formats) time))
       ;; (if no-entry
       ;;     (insert "\n" timestamp))
       (unless no-entry

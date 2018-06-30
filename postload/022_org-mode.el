@@ -1,4 +1,4 @@
-;;; org-mode --- 2018-06-02 09:10:39 AM
+;;; org-mode --- 2018-06-30 10:14:48 AM
   ;;; Commentary:
 
   ;; customize some org mode settings
@@ -52,7 +52,7 @@
      (if property property "DATE")
      (cond ((equal active nil)
             (format-time-string (cdr org-time-stamp-formats) (current-time)))
-           ((equal active '(4))
+           ((equal active '(64))
             (concat "["
                     (substring
                      (format-time-string (cdr org-time-stamp-formats) (current-time))
@@ -65,7 +65,7 @@
               (format-time-string (cdr org-time-stamp-formats) (org-read-date t t))
               1 -1)
              "]"))
-           ((equal active '(64))
+           ((equal active '(4))
             (format-time-string (cdr org-time-stamp-formats) (org-read-date t t))))))
 
   (defun org-insert-current-date (arg)

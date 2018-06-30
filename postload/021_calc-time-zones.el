@@ -1,4 +1,4 @@
-;;; calc-time-zones --- 2018-06-02 09:10:39 AM
+;;; calc-time-zones --- 2018-06-30 10:14:48 AM
   ;;; Commentary:
   ;; Add some useful time zones
   (require 'calc-forms) ;; built-in package

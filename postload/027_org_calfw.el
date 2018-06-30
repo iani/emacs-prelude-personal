@@ -1,4 +1,4 @@
-;;; org_calfw --- 2018-06-02 09:10:39 AM
+;;; org_calfw --- 2018-06-30 10:14:49 AM
     ;;; Commentary:
     ;;; use calfw package to display agenda in calendar-grid format
     ;;; Provide commands for generation of entries on current date on calendar grid
@@ -39,14 +39,25 @@
               (encode-time 0 0 7
                            (calendar-extract-day pos)
                            (calendar-extract-month pos)
-                           (calendar-extract-year pos))))
+                           (calendar-extract-year pos)))
+             (timestamp (format-time-string (cdr org-time-stamp-formats)
+                                            org-overriding-default-time)))
         (org-journal-new-entry prefix org-overriding-default-time)
         (unless prefix
-          (org-insert-time-stamp org-overriding-default-time t)
-          (backward-word)
-          (backward-word)
-          (paredit-forward-kill-word)
-          (paredit-forward-kill-word)))))
+          (insert
+           "\n :PROPERTIES:\n :DATE: "
+           timestamp
+           " \n :END:\n")
+          (previous-line 2)
+          (end-of-line)
+          (backward-char 4)
+          (org-time-stamp t)
+          ;; (org-insert-time-stamp org-overriding-default-time t)
+          ;; (backward-word)
+          ;; (backward-word)
+          ;; (paredit-forward-kill-word)
+          ;; (paredit-forward-kill-word)
+          ))))
 
   (defun cfw:org-journal-entry-for-now (prefix)
     "Run org-journal-new-entry with date+time timestamp from current time."
