@@ -1,4 +1,4 @@
-;;; tiny_menu_and_hydra --- 2018-08-11 01:05:08 PM
+;;; tiny_menu_and_hydra --- 2018-08-22 08:58:10 AM
   ;;; Commentary:
 
   ;; 2 tiny-menus for functions that I do not want to place on command-keys,
@@ -331,4 +331,4 @@
   (global-set-key (kbd "H-m") 'air-tiny-menu)
   (global-set-key (kbd "H-M") 'air-tiny-menu2)
 (provide 'tiny_menu_and_hydra)
-;;; 031_tiny_menu_and_hydra.el ends here
+;;; 032_tiny_menu_and_hydra.el ends here

@@ -1,4 +1,4 @@
-;;; org_compile_latex_with_custom_headers --- 2018-08-11 01:05:07 PM
+;;; org_compile_latex_with_custom_headers --- 2018-08-22 08:58:10 AM
   ;; (defun org-insert-latex-headers-from-deft ()
   ;;   "Choose latex headers from recipe list using deft, and append them to the currently edited file."
   ;;   (with-current-buffer
@@ -221,4 +221,4 @@
            )))
       code))
 (provide 'org_compile_latex_with_custom_headers)
-;;; 023_org_compile_latex_with_custom_headers.el ends here
+;;; 024_org_compile_latex_with_custom_headers.el ends here

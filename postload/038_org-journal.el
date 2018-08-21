@@ -1,4 +1,4 @@
-;;; org-journal --- 2018-08-11 01:05:09 PM
+;;; org-journal --- 2018-08-22 08:58:11 AM
   ;;; Commentary:
   ;;; use org-journal for capture globally.
   ;;; https://github.com/bastibe/org-journal
@@ -115,4 +115,4 @@
   (global-set-key (kbd "C-c c j") 'org-journal-at-date-from-user)
   (global-set-key (kbd "C-c c J") 'org-journal-new-entry-from-org-timestamp)
 (provide 'org-journal)
-;;; 037_org-journal.el ends here
+;;; 038_org-journal.el ends here

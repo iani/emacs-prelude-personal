@@ -10,7 +10,7 @@
  '(company-quickhelp-color-foreground "#DCDCCC")
  '(custom-enabled-themes '(tsdh-light))
  '(custom-safe-themes
-   '("291588d57d863d0394a0d207647d9f24d1a8083bb0c9e8808280b46996f3eb83" "4025fb8d0a40f678a724940dd3d0609546654c3e757ad4844b321b896a6a0ea7" default))
+   '("ee4dcfcb646d4ad11fe1bd90ed111e3e59a78703325fdef347b50a39ccba13d7" "30f7c9e85d7fad93cf4b5a97c319f612754374f134f8202d1c74b0c58404b8df" "291588d57d863d0394a0d207647d9f24d1a8083bb0c9e8808280b46996f3eb83" "4025fb8d0a40f678a724940dd3d0609546654c3e757ad4844b321b896a6a0ea7" default))
  '(fci-rule-color "#383838")
  '(nrepl-message-colors
    '("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3"))
@@ -19,7 +19,7 @@
  '(org-export-backends '(ascii html icalendar latex texinfo))
  '(org-imenu-depth 10)
  '(package-selected-packages
-   '(use-package ox-hugo corral hydra rust-mode image-dired+ org-ref ebib auctex org-mode org-plus-contrib helm-swoop tidal tiny-menu osx-plist flymake-haskell-multi haskell-emacs haskell-mode org-bullets markdown-mode deft evil workgroups2 org-journal buffer-move dired+ easy-hugo calfw-cal calfw-org calfw auto-complete hl-sexp icicles litable sr-speedbar bookmark+ autobookmarks bm ace-mc mc-extras multiple-cursors ace-isearch ace-popup-menu auto-async-byte-compile avy-menu avy-zap multi-term powerline moe-theme zop-to-char zenburn-theme which-key volatile-highlights undo-tree smex smartrep smartparens smart-mode-line rainbow-mode rainbow-delimiters ov operate-on-number move-text magit key-chord json-mode js2-mode imenu-anywhere ido-completing-read+ helm-projectile helm-descbinds helm-ag guru-mode grizzl god-mode gitignore-mode gitconfig-mode git-timemachine gist geiser flycheck flx-ido expand-region elisp-slime-nav editorconfig easy-kill discover-my-major diminish diff-hl crux company browse-kill-ring beacon anzu ace-window))
+   '(ac-c-headers use-package ox-hugo corral hydra rust-mode image-dired+ org-ref ebib auctex org-mode org-plus-contrib helm-swoop tidal tiny-menu osx-plist flymake-haskell-multi haskell-emacs haskell-mode org-bullets markdown-mode deft evil workgroups2 org-journal buffer-move dired+ easy-hugo calfw-cal calfw-org calfw auto-complete hl-sexp icicles litable sr-speedbar bookmark+ autobookmarks bm ace-mc mc-extras multiple-cursors ace-isearch ace-popup-menu auto-async-byte-compile avy-menu avy-zap multi-term powerline moe-theme zop-to-char zenburn-theme which-key volatile-highlights undo-tree smex smartrep smartparens smart-mode-line rainbow-mode rainbow-delimiters ov operate-on-number move-text magit key-chord json-mode js2-mode imenu-anywhere ido-completing-read+ helm-projectile helm-descbinds helm-ag guru-mode grizzl god-mode gitignore-mode gitconfig-mode git-timemachine gist geiser flycheck flx-ido expand-region elisp-slime-nav editorconfig easy-kill discover-my-major diminish diff-hl crux company browse-kill-ring beacon anzu ace-window))
  '(pdf-view-midnight-colors '("#DCDCCC" . "#383838"))
  '(safe-local-variable-values
    '((org-babel-noweb-wrap-end . "»")

@@ -1,4 +1,4 @@
-;;; SuperCollider-utils --- 2018-08-11 01:05:07 PM
+;;; SuperCollider-utils --- 2018-08-22 08:58:10 AM
   ;;; Commentary:
   ;;; emacs  commands for doing useful things in supercollider.
   ;;; Includes newest version of snippets library.
@@ -121,7 +121,7 @@
   ;;   (insert "*>"))
 
   (defun scundelify ()
-    "Blah."
+    "Convert //: snippet blocks to regular style () sc blocks in document."
     (interactive)
     (save-excursion
       (goto-char (point-min))
@@ -135,217 +135,6 @@
       (goto-char (point-min))
       (re-search-forward "\)\n//:" nil t)
       (replace-match "\n://:")))
-
-  (defun sclang-get-current-snippet ()
-    "Return region between //: comments in sclang, as string.
-  If the beginning of line is '//:+', then fork the snippet as routine.
-  If the beginning of line is '//:*', then wrap the snippet in loop and fork."
-    (save-excursion
-      (goto-char (line-end-position)) ;; fix when starting from point-min
-      (let (
-            (snippet-begin (search-backward-regexp "^//:" nil t))
-            snippet-end
-            snippet
-            snippet-head
-            (prefix ""))
-        (unless snippet-begin
-          (setq snippet-begin (point-min))
-          (setq prefix "//:\n"))
-        (setq sclang-snippet-is-routine nil)
-        (setq sclang-snippet-is-loop nil)
-        (goto-char snippet-begin)
-        (setq snippet-head (buffer-substring-no-properties (point) (+ 4 (point))))
-        (if (equal snippet-head "//:+") (setq sclang-snippet-is-routine t))
-        (if (equal snippet-head "//:*") (setq sclang-snippet-is-loop t))
-        (goto-char (line-end-position))
-        (setq snippet-end (search-forward-regexp "^//:" nil t))
-        (if snippet-end
-            (setq snippet-end (line-beginning-position))
-          (setq snippet-end (point-max)))
-        (concat prefix
-                (buffer-substring-no-properties snippet-begin snippet-end)))))
-
-  (defun sclang-cut-current-snippet ()
-    "Return region between //: comments in sclang, as string, and cut it out."
-    (interactive)
-    (save-excursion
-      (goto-char (line-end-position)) ;; fix when starting from point-min
-      (let (
-            (snippet-begin (search-backward-regexp "^//:" nil t))
-            snippet-end
-            snippet
-            (prefix ""))
-        (unless snippet-begin
-          (setq snippet-begin (point-min))
-          (setq prefix "//:\n"))
-        (goto-char (line-end-position))
-        (setq snippet-end (search-forward-regexp "^//:" nil t))
-        (if snippet-end
-            (setq snippet-end (line-beginning-position))
-          (setq snippet-end (point-max)))
-        (setq snippet (concat prefix
-                              (buffer-substring-no-properties snippet-begin snippet-end)))
-        (kill-region snippet-begin snippet-end))))
-
-  (defun sclang-transpose-snippet-down ()
-    "Transpose this snippet with the one following it."
-    (interactive)
-    (sclang-cut-current-snippet)
-    (sclang-goto-next-snippet)
-    (insert "\n")
-    (yank)
-    (delete-blank-lines)
-    (re-search-backward "^//:")
-    (goto-char (line-end-position 2)))
-
-  (defun sclang-transpose-snippet-up ()
-    "Transpose this snippet with the one preceding it."
-    (interactive)
-    (sclang-cut-current-snippet)
-    (re-search-backward "^//:")
-    (yank)
-    (re-search-backward "^//:")
-    (goto-char (line-end-position 2)))
-
-  (defun sclang-eval-current-snippet ()
-    "Evaluate the current snippet in sclang.
-  A snippet is a block of code enclosed between comments
-  starting at the beginning of line and with a : following immediately after '//'.
-  If the beginning of line is '//:+', then fork the snippet as routine.
-  If the beginning of line is '//:*', then wrap the snippet in loop and fork."
-    (interactive)
-    (let* (sclang-snippet-is-routine
-           sclang-snippet-is-loop
-           (snippet (sclang-get-current-snippet)))
-      (if sclang-snippet-is-routine
-          (setq snippet (format "{\n %s\n }.fork" snippet)))
-      (if sclang-snippet-is-loop
-          (setq snippet (format "{\n loop {\n %s \n} \n }.fork" snippet)))
-      (sclang-eval-string snippet t)))
-
-  (defun sclang-goto-next-snippet ()
-    "Go to the next snippet."
-    (interactive)
-    (goto-char (sclang-end-of-snippet))
-    (goto-char (line-end-position 2))
-    (goto-char (line-beginning-position)))
-
-  (defun sclang-goto-previous-snippet ()
-    "Go to the previous snippet."
-    (interactive)
-    (goto-char (line-end-position))
-    (let ((pos (search-backward-regexp "^//:" nil t)))
-      (if (and pos (> pos 1)) (goto-char (1- pos)))
-      (setq pos (search-backward-regexp "^//:" nil t))
-      (cond
-       (pos
-        (goto-char pos)
-        (goto-char (1+ (line-end-position)))
-        (goto-char (line-beginning-position)))
-       (t
-        (goto-char (point-min))))
-      ;; (re-search-backward "^//:")
-      ))
-
-  (defun sclang-eval-next-snippet ()
-    "Go to the next snippet and evaluate it."
-    (interactive)
-    (sclang-goto-next-snippet)
-    (sclang-eval-current-snippet))
-
-  (defun sclang-eval-previous-snippet ()
-    "Go to the previous snippet and evaluate it."
-    (interactive)
-    (sclang-goto-previous-snippet)
-    (sclang-eval-current-snippet))
-
-  (defun sclang-duplicate-current-snippet ()
-    "Insert a copy the current snippet below itself."
-    (interactive)
-    (let ((snippet (sclang-get-current-snippet)))
-      (goto-char (line-end-position))
-      (goto-char (sclang-end-of-snippet))
-      (if (eq (point) (point-max)) (insert "\n"))
-      (insert snippet)))
-
-  (defun sclang-copy-current-snippet ()
-    "Copy the current snippet into the kill ring."
-    (interactive)
-    (let ((snippet (sclang-get-current-snippet)))
-      (kill-new snippet)))
-
-  (defun sclang-region-select-current-snippet ()
-    "Select region between //: comments in sclang."
-    (save-excursion
-      (goto-char (line-end-position)) ;; fix when starting from point-min
-      (let (
-            (snippet-begin (search-backward-regexp "^//:" nil t))
-            snippet-end
-            snippet
-            snippet-head)
-        (unless snippet-begin
-          (setq snippet-begin (point-min)))
-        (goto-char snippet-begin)
-        (goto-char (line-end-position))
-        (setq snippet-end (search-forward-regexp "^//:" nil t))
-        (if snippet-end
-            (setq snippet-end (line-beginning-position))
-          (setq snippet-end (point-max)))
-        (goto-char snippet-begin)
-        (push-mark snipet-end)
-        (setq mark-active t))))
-
-  (defun sclang-cut-current-snippet ()
-    "Kill the current snippet, storing it in kill-ring."
-    (sclang-region-select-current-snippet)
-    (kill-region (mark) (point)))
-
-  (defun sclang-end-of-snippet ()
-    "Return the point position of the end of the current snippet."
-    (save-excursion
-      (let ((pos (search-forward-regexp "^//:" nil t)))
-        (if pos (line-beginning-position) (point-max)))))
-
-  (defun sclang-beginning-of-snippet ()
-    "Return the point position of the beginning of the current snippet."
-    (save-excursion
-      (goto-char (line-end-position))
-      (let ((pos (search-backward-regexp "^//:" nil t)))
-        (if pos pos (point-min)))))
-
-  (defun sclang-insert-snippet-separator (&optional before)
-    "Insert snippet separator //: at beginning of line."
-    (interactive "P")
-    (cond
-     (before
-      (goto-char (line-beginning-position))
-      (insert "//:\n"))
-     (t
-      (goto-char (line-end-position))
-      (insert "\n//:"))
-     ))
-
-  (defun sclang-insert-snippet-separator+ (&optional before)
-    "Insert snippet separator //:+ at beginning of line."
-    (interactive "P")
-    (cond (before
-           (goto-char (line-beginning-position))
-           (insert "//:+\n"))
-          (t
-           (goto-char (line-end-position))
-           (insert "\n//:+"))
-          ))
-
-  (defun sclang-insert-snippet-separator* (&optional before)
-    "Insert snippet separator //:* at beginning of line."
-    (interactive "P")
-    (cond (before
-           (goto-char (line-beginning-position))
-           (insert "//:*\n"))
-          (t
-           (goto-char (line-end-position))
-           (insert "\n//:*"))
-          ))
 
   (defun sclang-server-plot-tree ()
     "Open plotTree for default server."
@@ -393,6 +182,15 @@
     (interactive)
     (sclang-eval-string "NeventGui.gui;"))
 
+  ;; (defhydra hydra-snippets (sclang-mode-map "C-h C-s")
+  ;;   "zoom"
+  ;;   ("+" text-scale-increase "in")
+  ;;   ("-" text-scale-decrease "out")
+  ;;   ("i" text-scale-increase "in")
+  ;;   ("o" text-scale-decrease "out")
+  ;;   ("0" (text-scale-adjust 0) "reset")
+  ;;   ("q" nil "quit" :color blue))
+
   (eval-after-load 'sclang
     (progn
       ;; these are disabled by sclang-bindings:
@@ -405,7 +203,7 @@
       (define-key sclang-mode-map (kbd "C-h g p") 'sclang-players-gui)
       (define-key sclang-mode-map (kbd "C-h g e") 'sclang-extensions-gui)
       (define-key sclang-mode-map (kbd "C-h g n") 'sclang-nevent-gui)
-
+      (define-key sclang-mode-map (kbd "H-s") 'hydra-snippets/body)
        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;; Server state visualisation utilities
       ;; TODO: Check and re-assign these commands for consistency with
