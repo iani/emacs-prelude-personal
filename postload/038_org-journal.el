@@ -1,4 +1,4 @@
-;;; org-journal --- 2018-08-22 08:58:11 AM
+;;; org-journal --- 2018-08-24 12:06:34 PM
   ;;; Commentary:
   ;;; use org-journal for capture globally.
   ;;; https://github.com/bastibe/org-journal
@@ -25,7 +25,8 @@
 
   ;; Use own path for diary dir:
   (setq org-agenda-diary-file 'diary-file)
-  (setq diary-file (concat (file-name-directory org-journal-dir) "diary"))
+  ;; (setq diary-file (concat (file-name-directory org-journal-dir) "diary"))
+  (setq diary-file (file-truename "~/BitTorrent Sync/000WORKFILES/PERSONAL/diary"))
   (setq org-agenda-include-diary t)
 
   ;; adding own custom var to journal group, using template from journal mode.
