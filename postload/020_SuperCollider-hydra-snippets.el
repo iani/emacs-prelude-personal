@@ -1,4 +1,4 @@
-;;; SuperCollider-hydra-snippets --- 2018-08-24 12:06:31 PM
+;;; SuperCollider-hydra-snippets --- 2018-09-20 11:34:49 AM
   (defhydra hydra-snippets (sclang-mode-map "C-h C-s" :color red :columns 3)
     "SC Snippet hydra"
     ("n" sclang-goto-next-snippet "next")
@@ -14,6 +14,8 @@
     ("." sclang-eval-current-snippet "eval")
     ("[" sclang-eval-previous-snippet "eval prev")
     ("]" sclang-eval-next-snippet "eval next")
+    ("e" sclang-extensions-gui "browse classes and methods")
+    ("C-p" sclang-players-gui "players gui")
     ("q" quit "quit" :exit t))
 
   (defun quit ()
@@ -92,13 +94,15 @@
     (re-search-backward "^//:")
     (goto-char (line-end-position 2)))
 
-  (defun sclang-eval-current-snippet ()
+  (defun sclang-eval-current-snippet (&optional player-p)
     "Evaluate the current snippet in sclang.
+    If PLAYER-P, then append +> PLAYERNAME.
+    PLAYERNAME is filename without extension.
     A snippet is a block of code enclosed between comments
     starting at the beginning of line and with a : following immediately after '//'.
     If the beginning of line is '//:+', then fork the snippet as routine.
     If the beginning of line is '//:*', then wrap the snippet in loop and fork."
-    (interactive)
+    (interactive "P")
     (let* (sclang-snippet-is-routine
            sclang-snippet-is-loop
            (snippet (sclang-get-current-snippet)))
@@ -106,7 +110,12 @@
           (setq snippet (format "{\n %s\n }.fork" snippet)))
       (if sclang-snippet-is-loop
           (setq snippet (format "{\n loop {\n %s \n} \n }.fork" snippet)))
-      (sclang-eval-string snippet t)))
+      (sclang-eval-string
+       (if player-p
+           (concat snippet " +> \\"
+                   (file-name-sans-extension
+                    (file-name-nondirectory (buffer-file-name))))
+           snippet) t)))
 
   (defun sclang-goto-next-snippet ()
     "Go to the next snippet."
@@ -206,10 +215,10 @@
         (push-mark snipet-end)
         (setq mark-active t))))
 
-  (defun sclang-cut-current-snippet ()
-    "Kill the current snippet, storing it in kill-ring."
-    (sclang-region-select-current-snippet)
-    (kill-region (mark) (point)))
+  ;; (defun sclang-cut-current-snippet ()
+  ;;   "Kill the current snippet, storing it in kill-ring."
+  ;;   (sclang-region-select-current-snippet)
+  ;;   (kill-region (mark) (point)))
 
   (defun sclang-end-of-snippet ()
     "Return the point position of the end of the current snippet."

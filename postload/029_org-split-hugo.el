@@ -1,4 +1,4 @@
-;;; org-split-hugo --- 2018-08-24 12:06:33 PM
+;;; org-split-hugo --- 2018-09-20 11:34:50 AM
   ;;; Commentary:
   ;;; Utilities for blog + website editing with HUGO. 2 versions are included:
 
@@ -11,7 +11,7 @@
   ;;; Also, index files must be explicitly defined.
   ;;; Note: use ox-hugo-clear-contents to delete previously exported files if needed.
 
-  ;;; 1. Old version, splitting files into org mode files
+  ;;; 2. Old version, splitting files into org mode files
   ;;; This version can deal with nested subsections, but suffers the limitations
   ;;; of using org mode files in hugo.
 
@@ -33,7 +33,7 @@
   ;;; Code:
 
   ;;; provides commands for hugo config, page creation, publish and
-  (prelude-load-require-packages '(easy-hugo dash)) ;; dash list utility functions
+  (prelude-load-require-packages '(easy-hugo dash ox-hugo)) ;; dash list utility functions
 
   ;;; org-check-agenda-file stops the file creation process
   ;;; and therefore must be redefined here.

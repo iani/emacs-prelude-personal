@@ -1,4 +1,4 @@
-;;; SuperCollider-utils --- 2018-08-24 12:06:31 PM
+;;; SuperCollider-utils --- 2018-09-20 11:34:49 AM
   ;;; Commentary:
   ;;; emacs  commands for doing useful things in supercollider.
   ;;; Includes newest version of snippets library.
@@ -164,12 +164,12 @@
   (defun sclang-audiofiles-gui ()
     "Open AudioFiles gui."
     (interactive)
-    (sclang-eval-string "AudioFiles.gui"))
+    (sclang-eval-string "AudioFiles.gui;"))
 
   (defun sclang-players-gui ()
     "Open Players gui."
     (interactive)
-    (sclang-eval-string "PlayerGui.gui"))
+    (sclang-eval-string "PlayerGui();"))
 
   (defun sclang-extensions-gui ()
     "Open gui for browsing user extensions classes and methods.

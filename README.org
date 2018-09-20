@@ -80,6 +80,16 @@ ln -s /full/path/to/emacs-prelude-personal ~/.emacs.d/personal
 
 ** 3. Restart emacs
 
+* Keyboard commands
 
+** general
+ | Hyper-m | air-menu: files, agenda, hydra |
+ | Hyper-M | latex, sc-lang/server/utils    |
+
+** sclang mode only
+
+| Hyper-s | snippet hydra             |
+| C-h C-s | snippet hydra             |
+| C-h g   | various guis (incomplete) |
 
 

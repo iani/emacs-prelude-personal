@@ -870,12 +870,12 @@ Adapted from helm-switch-to-buffers."
   (defun sclang-audiofiles-gui ()
     "Open AudioFiles gui."
     (interactive)
-    (sclang-eval-string "AudioFiles.gui"))
+    (sclang-eval-string "AudioFiles.gui;"))
 
   (defun sclang-players-gui ()
     "Open Players gui."
     (interactive)
-    (sclang-eval-string "PlayerGui.gui"))
+    (sclang-eval-string "PlayerGui();"))
 
   (defun sclang-extensions-gui ()
     "Open gui for browsing user extensions classes and methods.
@@ -986,6 +986,8 @@ Adapted from helm-switch-to-buffers."
     ("." sclang-eval-current-snippet "eval")
     ("[" sclang-eval-previous-snippet "eval prev")
     ("]" sclang-eval-next-snippet "eval next")
+    ("e" sclang-extensions-gui "browse classes and methods")
+    ("C-p" sclang-players-gui "players gui")
     ("q" quit "quit" :exit t))
 
   (defun quit ()
@@ -1064,13 +1066,15 @@ Adapted from helm-switch-to-buffers."
     (re-search-backward "^//:")
     (goto-char (line-end-position 2)))
 
-  (defun sclang-eval-current-snippet ()
+  (defun sclang-eval-current-snippet (&optional player-p)
     "Evaluate the current snippet in sclang.
+    If PLAYER-P, then append +> PLAYERNAME.
+    PLAYERNAME is filename without extension.
     A snippet is a block of code enclosed between comments
     starting at the beginning of line and with a : following immediately after '//'.
     If the beginning of line is '//:+', then fork the snippet as routine.
     If the beginning of line is '//:*', then wrap the snippet in loop and fork."
-    (interactive)
+    (interactive "P")
     (let* (sclang-snippet-is-routine
            sclang-snippet-is-loop
            (snippet (sclang-get-current-snippet)))
@@ -1078,7 +1082,12 @@ Adapted from helm-switch-to-buffers."
           (setq snippet (format "{\n %s\n }.fork" snippet)))
       (if sclang-snippet-is-loop
           (setq snippet (format "{\n loop {\n %s \n} \n }.fork" snippet)))
-      (sclang-eval-string snippet t)))
+      (sclang-eval-string
+       (if player-p
+           (concat snippet " +> \\"
+                   (file-name-sans-extension
+                    (file-name-nondirectory (buffer-file-name))))
+           snippet) t)))
 
   (defun sclang-goto-next-snippet ()
     "Go to the next snippet."
@@ -1178,10 +1187,10 @@ Adapted from helm-switch-to-buffers."
         (push-mark snipet-end)
         (setq mark-active t))))
 
-  (defun sclang-cut-current-snippet ()
-    "Kill the current snippet, storing it in kill-ring."
-    (sclang-region-select-current-snippet)
-    (kill-region (mark) (point)))
+  ;; (defun sclang-cut-current-snippet ()
+  ;;   "Kill the current snippet, storing it in kill-ring."
+  ;;   (sclang-region-select-current-snippet)
+  ;;   (kill-region (mark) (point)))
 
   (defun sclang-end-of-snippet ()
     "Return the point position of the end of the current snippet."
@@ -2018,7 +2027,7 @@ Run the following code:
   ;;; Also, index files must be explicitly defined.
   ;;; Note: use ox-hugo-clear-contents to delete previously exported files if needed.
 
-  ;;; 1. Old version, splitting files into org mode files
+  ;;; 2. Old version, splitting files into org mode files
   ;;; This version can deal with nested subsections, but suffers the limitations
   ;;; of using org mode files in hugo.
 
@@ -2040,7 +2049,7 @@ Run the following code:
   ;;; Code:
 
   ;;; provides commands for hugo config, page creation, publish and
-  (prelude-load-require-packages '(easy-hugo dash)) ;; dash list utility functions
+  (prelude-load-require-packages '(easy-hugo dash ox-hugo)) ;; dash list utility functions
 
   ;;; org-check-agenda-file stops the file creation process
   ;;; and therefore must be redefined here.
