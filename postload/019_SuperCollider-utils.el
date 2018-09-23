@@ -1,4 +1,4 @@
-;;; SuperCollider-utils --- 2018-09-20 11:34:49 AM
+;;; SuperCollider-utils --- 2018-09-23 09:05:16 AM
   ;;; Commentary:
   ;;; emacs  commands for doing useful things in supercollider.
   ;;; Includes newest version of snippets library.
@@ -204,6 +204,7 @@
       (define-key sclang-mode-map (kbd "C-h g e") 'sclang-extensions-gui)
       (define-key sclang-mode-map (kbd "C-h g n") 'sclang-nevent-gui)
       (define-key sclang-mode-map (kbd "H-s") 'hydra-snippets/body)
+      (define-key sclang-mode-map (kbd "H-S") 'hydra-sclang/body)
        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
       ;; Server state visualisation utilities
       ;; TODO: Check and re-assign these commands for consistency with
