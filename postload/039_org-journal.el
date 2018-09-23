@@ -1,7 +1,9 @@
-;;; org-journal --- 2018-09-23 09:05:18 AM
+;;; org-journal --- 2018-09-23 09:54:36 AM
   ;;; Commentary:
-  ;;; use org-journal for capture globally.
-  ;;; https://github.com/bastibe/org-journal
+  ;;; use org-journal for capture globally into files named by date number.
+  ;;; https://github.com/bastibe/org-journal.
+  ;;; Set agenda folders and files.
+  ;;; Define custom agenda commands.
 
   ;;; Code:
 
@@ -111,6 +113,32 @@
     (local-set-key (kbd "J") 'org-journal-at-date-from-calendar))
 
   (add-hook 'calendar-mode-hook 'my/bindkey-recompile)
+
+  ;; Define custom agenda commands for some useful tag searches
+  ;; NOTE: These are the keys used by default agenda dispatch menu:
+  ;; a t T m M e s S / < > # ! C
+  ;;
+  ;; a     Call `org-agenda-list' to display the agenda for current day or week.
+  ;; t     Call `org-todo-list' to display the global todo list.
+  ;; T     Call `org-todo-list' to display the global todo list, select only
+  ;; entries with a specific TODO keyword (the user gets a prompt).
+  ;; m     Call `org-tags-view' to display headlines with tags matching a condition  (the user is prompted for the condition).
+  ;; M     Like `m', but select only TODO entries, no ordinary headlines.
+  ;; e     Export views to associated files.
+  ;; s     Search entries for keywords.
+  ;; S     Search entries for keywords, only with TODO keywords.
+  ;; /     Multi occur across all agenda files and also files listed in `org-agenda-text-search-extra-files'.
+  ;; <     Restrict agenda commands to buffer, subtree, or region. Press several times to get the desired effect.
+  ;; >     Remove a previous restriction.
+  ;; #     List \"stuck\" projects.
+  ;; !     Configure what \"stuck\" means.
+  ;; C     Configure custom agenda commands.
+  ;; Any own keys should be other than the above
+
+  (setq org-agenda-custom-commands
+        '(("E" tags "+eastndc")
+          ("h" tags "+health")
+          ("f" tags "+finance")))
 
   ;; Make new-entry keyboard command available also in org-mode:
   (global-set-key (kbd "C-c c j") 'org-journal-at-date-from-user)

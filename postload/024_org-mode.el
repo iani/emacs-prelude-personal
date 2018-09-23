@@ -1,7 +1,7 @@
-;;; org-mode --- 2018-09-23 09:05:17 AM
+;;; org-mode --- 2018-09-23 09:54:34 AM
   ;;; Commentary:
 
-  ;; customize some org mode settings/
+  ;; customize some org mode settings
 
   ;; define some useful functions
 
