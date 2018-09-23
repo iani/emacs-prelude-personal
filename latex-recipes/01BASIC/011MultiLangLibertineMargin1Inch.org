@@ -1,0 +1,24 @@
+* Notes
+
+- sets margins to 1 inch using geometry package 
+- hyperref enables clickable url links as well as links from table of contents to main text.
+- Linux Libertine font supports latin european and greek text
+- xeCJK with setCJKmainfont enables Japanese text.
+- Document class is 10pt Article per default org-mode settings in emacs setup.
+
+* COMMENT latex-header
+
+#+BEGIN_SRC latex
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\usepackage{xeCJK}
+\setmainfont{Linux Libertine O}
+\setCJKmainfont[BoldFont=STHeiti,ItalicFont=STKaiti]{STSong}
+\begin{document}
+#+END_SRC
+
+* COMMENT latex-footer
+
+#+BEGIN_SRC latex
+\end{document}
+#+END_SRC
