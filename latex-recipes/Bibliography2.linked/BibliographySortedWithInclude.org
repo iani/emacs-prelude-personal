@@ -1,0 +1,45 @@
+# Minimal example with bibliography in default biblatex style.
+
+#+BIBLIOGRAPHY: bibliography plain option:-d
+
+#+INCLUDE: "./include.org"
+
+* Some Random Content
+
+I doubt that there is any useful information here\cite{wikibook}. We add some more citations here to show the unsorted order.  For example: But if it is someone like Zubinski, then things are in trouble\cite{zubinski2019}.
+
+All we know is limited, apart from knowing the answer we all know. Or do we? Wombat and Koala have discovered some interesting things\cite{wombat2016}.
+
+If you want to add a space between the text and the citation, use =\nobreakspace=.  For example: Some people are too nosy. What can happen to them is described by Laura Lion\nobreakspace\cite[9]{lion2010}.
+
+All we know is limited, apart from knowing the answer we all know. Or do we? Wombat and Koala have discovered some interesting things\cite{wombat2016}.
+
+All we know is limited, apart from knowing the answer we all know. Or do we? Wombat and Koala have discovered some interesting things\cite{wombat2016}.
+
+All we know is limited, apart from knowing the answer we all know. Or do we? Wombat and Koala have discovered some interesting things\cite{wombat2016}.
+
+I doubt that there is any useful information here\cite{wikibook}.
+
+** More random content
+
+Sections are added here only to test reftex.
+
+I doubt that there is any useful information here\cite{wikibook}.
+
+Maybe here\cite{lion2010}.
+
+Or here\cite{newref2019} (Note: This should be John Smith and Claus Frobenius).
+
+* COMMENT latex-header
+
+#+BEGIN_SRC latex
+\usepackage[backend=bibtex,sorting=none]{biblatex}
+\addbibresource{bibliography.bib}
+\begin{document}
+#+END_SRC
+* COMMENT latex-footer
+
+#+BEGIN_SRC latex
+\printbibliography
+\end{document}
+#+END_SRC

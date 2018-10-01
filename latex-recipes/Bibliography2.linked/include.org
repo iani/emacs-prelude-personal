@@ -1,0 +1,10 @@
+* Specifying the bib source file for bibliography
+
+A simple way to specify the source file is using the =addbibresource= statement is: =\addbibresource{bibliography.bib}=.  This tells =bibtex= to look for a file named =bibliography.bib= in the same folder as the =tex= source file that is being compiled.  If such a file does not exist, then the present package tries to provide a symbolic link file named =bibliography.bib= which points to a default bib file.  The location of the default bib file can be customized by setting the custom variables =org-latex-bib-folder=, =org-latex-bib-filename= and =org-latex-export-path=, or the variable =org-latex-bib-full-path= directly.
+
+* Sorting References in Order of Appearance
+
+This is a minimal example for a bibliography, using the default style of biblatex, and the =\printbibliography= command.  It shows how to number sort the references in order of appearance in the text, by loading the =biblatex= package with the option =sorting\=none=.
+
+*Note: It is strange perhaps that setting the option "sorting" to "none" actually sorts the bibliography by order of appearance of the references in the text, but omitting this option does not sort the bibliography. Yet that is the case, as one can confim by compiling the two examples in this folder.*  
+

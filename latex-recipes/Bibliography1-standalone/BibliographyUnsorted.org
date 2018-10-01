@@ -1,0 +1,65 @@
+# Minimal example with bibliography in default biblatex style.
+
+#+BIBLIOGRAPHY: bibliography plain option:-d
+
+* Specifying the bib source file for bibliography
+
+A simple way to specify the source file is using the =addbibresource= statement is: =\addbibresource{bibliography.bib}=.  This tells =bibtex= to look for a file named =bibliography.bib= in the same folder as the =tex= source file that is being compiled.  If such a file does not exist, then the present package tries to provide a symbolic link file named =bibliography.bib= which points to a default bib file.  The location of the default bib file can be customized by setting the custom variables =org-latex-bib-folder=, =org-latex-bib-filename= and =org-latex-export-path=, or the variable =org-latex-bib-full-path= directly.
+
+* Sorting References in Order of Appearance
+
+This is a minimal example for a bibliography, using the default style of biblatex, and the =\printbibliography= command.  It shows how to number sort the references in order of appearance in the text, by loading the =biblatex= package with the option =sorting\=none=.
+
+*Note: It is strange perhaps that setting the option "sorting" to "none" actually sorts the bibliography by order of appearance of the references in the text, but omitting this option does not sort the bibliography. Yet that is the case, as one can confim by compiling the two examples in this folder.*  
+
+* Some Random Content
+
+This is a minimal example for a bibliography, using the default style of biblatex, and the =\printbibliography= command.  This example uses the =biblatex= package with the option =backend\=bibtex=.  The references to the bibliography in the text are not numbered according to order of appearance, i.e. the numbers /in the text/ 
+jump from [1] to [3] instead of going [1], [2], [3] etc. 
+
+*NOTE: It is not clear to me how the references are numbered here.  Normally, it is required to number the references by order of appearance.  This can be achieved by adding the option 'sorting' with value 'none'.  This setting is shown in example BibliographySorted.org in the present folder.*
+
+I doubt that there is any useful information here\cite{wikibook}. We add some more citations here to show the unsorted order.  For example: But if it is someone like Zubinski, then things are in trouble\cite{zubinski2019}.
+
+All we know is limited, apart from knowing the answer we all know. Or do we? Wombat and Koala have discovered some interesting things\cite{wombat2016}.
+
+If you want to add a space between the text and the citation, use
+=\nobreakspace=.  For example: Some people are too nosy. What can happen to them is described by Laura Lion\nobreakspace\cite[9]{lion2010}.
+
+All we know is limited, apart from knowing the answer we all know. Or
+do we? Wombat and Koala have discovered some interesting
+things\cite{wombat2016}.
+
+All we know is limited, apart from knowing the answer we all know. Or
+do we? Wombat and Koala have discovered some interesting
+things\cite{wombat2016}.
+
+All we know is limited, apart from knowing the answer we all know. Or
+do we? Wombat and Koala have discovered some interesting
+things\cite{wombat2016}.
+
+I doubt that there is any useful information here\cite{wikibook}.
+
+** More random content
+
+Sections are added here only to test reftex.
+
+I doubt that there is any useful information here\cite{wikibook}.
+
+Maybe here\cite{lion2010}.
+
+Or here\cite{newref2019} (Note: This should be John Smith and Claus Frobenius).
+
+* COMMENT latex-header
+
+#+BEGIN_SRC latex
+\usepackage[backend=bibtex]{biblatex}
+\addbibresource{bibliography.bib}
+\begin{document}
+#+END_SRC
+* COMMENT latex-footer
+
+#+BEGIN_SRC latex
+\printbibliography
+\end{document}
+#+END_SRC
