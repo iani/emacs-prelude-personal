@@ -1,4 +1,4 @@
-;;; load-some-useful-package-avy-jump-etc --- 2018-09-23 09:54:31 AM
+;;; load-some-useful-package-avy-jump-etc --- 2018-10-01 01:16:14 PM
   (prelude-load-require-packages '(avy-zap avy-menu auto-async-byte-compile anzu ace-window ace-popup-menu ace-isearch))
 
 (provide 'load-some-useful-package-avy-jump-etc)
