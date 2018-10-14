@@ -1,4 +1,4 @@
-;;; Using_custom_latex_documnent_styles --- 2018-10-01 01:16:17 PM
+;;; Using_custom_latex_documnent_styles --- 2018-10-14 10:40:32 AM
   ;; (defun org-insert-latex-headers-from-deft ()
   ;;   "Choose latex headers from recipe list using deft, and append them to the currently edited file."
   ;;   (with-current-buffer

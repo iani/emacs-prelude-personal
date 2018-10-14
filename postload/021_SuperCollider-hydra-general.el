@@ -1,4 +1,4 @@
-;;; SuperCollider-hydra-general --- 2018-10-01 01:16:16 PM
+;;; SuperCollider-hydra-general --- 2018-10-14 10:40:31 AM
   ;; mode-map does not work because it is overwritten by global sclang-mode=map settings
   ;; in a different file here.
   (defhydra hydra-sclang (sclang-mode-map "C-h C-g" :color red :columns 3)
@@ -14,6 +14,8 @@
       ("s" sclang-server-scope "scope")
       ("f" sclang-server-freqscope "freqscope")
       ("a" sclang-server-free-all "server free all")
+      ("l" sclang-snippet-list "snippet list")
+      ("L" sclang-player-snippet-list "player snippet list")
       ("e" quit "exit hydra" :exit t))
 
   (defun sclang-osc-trace-on ()
@@ -30,5 +32,15 @@
     "Show server node tree gui."
     (interactive)
     (sclang-eval-string "Server.default.plotTree"))
+
+  (defun sclang-snippet-list ()
+    "Open SnippetList gui."
+    (interactive)
+    (sclang-eval-string "SnippetList.gui"))
+
+  (defun sclang-player-snippet-list ()
+    "Open PlayerSnippetList gui."
+    (interactive)
+    (sclang-eval-string "PlayerSnippetList.gui"))
 (provide 'SuperCollider-hydra-general)
 ;;; 021_SuperCollider-hydra-general.el ends here

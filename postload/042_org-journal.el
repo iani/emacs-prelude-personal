@@ -1,4 +1,4 @@
-;;; org-journal --- 2018-10-01 01:16:19 PM
+;;; org-journal --- 2018-10-14 10:40:34 AM
   ;;; Commentary:
   ;;; use org-journal for capture globally into files named by date number.
   ;;; https://github.com/bastibe/org-journal.
@@ -139,6 +139,7 @@
   (setq org-agenda-custom-commands
         '(("A" tags "+avarts")
           ("E" tags "+eastndc")
+          ("p" tags "+phd")
           ("w" tags "+weinstein")
           ("h" tags "+health")
           ("f" tags "+finance")

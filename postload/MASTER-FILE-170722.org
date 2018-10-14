@@ -1259,6 +1259,8 @@ Adapted from helm-switch-to-buffers."
       ("s" sclang-server-scope "scope")
       ("f" sclang-server-freqscope "freqscope")
       ("a" sclang-server-free-all "server free all")
+      ("l" sclang-snippet-list "snippet list")
+      ("L" sclang-player-snippet-list "player snippet list")
       ("e" quit "exit hydra" :exit t))
 
   (defun sclang-osc-trace-on ()
@@ -1275,6 +1277,16 @@ Adapted from helm-switch-to-buffers."
     "Show server node tree gui."
     (interactive)
     (sclang-eval-string "Server.default.plotTree"))
+
+  (defun sclang-snippet-list ()
+    "Open SnippetList gui."
+    (interactive)
+    (sclang-eval-string "SnippetList.gui"))
+
+  (defun sclang-player-snippet-list ()
+    "Open PlayerSnippetList gui."
+    (interactive)
+    (sclang-eval-string "PlayerSnippetList.gui"))
 #+END_SRC
 * tidal
 
@@ -3338,6 +3350,7 @@ Design draft for next version:
   (setq org-agenda-custom-commands
         '(("A" tags "+avarts")
           ("E" tags "+eastndc")
+          ("p" tags "+phd")
           ("w" tags "+weinstein")
           ("h" tags "+health")
           ("f" tags "+finance")

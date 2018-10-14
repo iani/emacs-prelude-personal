@@ -1,4 +1,4 @@
-;;; Installing_org-mode_version_9_or_greater --- 2018-10-01 01:16:17 PM
+;;; Installing_org-mode_version_9_or_greater --- 2018-10-14 10:40:32 AM
  (setq package-archives
        '(("melpa" . "https://melpa.org/packages/")
          ("gnu" . "https://elpa.gnu.org/packages/")

@@ -1,4 +1,4 @@
-;;; tidal --- 2018-10-01 01:16:16 PM
+;;; tidal --- 2018-10-14 10:40:31 AM
 
   (prelude-load-require-package 'haskell-mode)
   (prelude-load-require-package 'tidal)

@@ -1,4 +1,4 @@
-;;; bookmark_extensions --- 2018-10-01 01:16:15 PM
+;;; bookmark_extensions --- 2018-10-14 10:40:30 AM
 
 ;;; Commentary:
 ;;; Better editing of bookmarks perhaps the advantage
