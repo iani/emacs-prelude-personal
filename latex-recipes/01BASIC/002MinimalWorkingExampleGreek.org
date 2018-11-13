@@ -8,6 +8,7 @@ Hello World!
 #+BEGIN_SRC latex
 \usepackage{fontspec}
 \setmainfont{Times New Roman}
+\usepackage{ulem} %This is needed to enable underlined emphasis (e.g. _underlined_)
 \begin{document}
 #+END_SRC
 

@@ -1,4 +1,4 @@
-;;; tiny_menu_and_hydra --- 2018-11-03 03:10:56 PM
+;;; tiny_menu_and_hydra --- 2018-11-13 12:50:30 PM
     ;;; Commentary:
 
   ;; 2 tiny-menus for functions that I do not want to place on command-keys,
@@ -184,7 +184,8 @@
     ("a" org-agenda "agenda")
     ("j" org-journal-at-date-from-user "journal entry")
     ("J" air-journal-goto-date "journal goto")
-    ("l" org-deft-latex-recipes "latex recipes")
+    ("?" org-post-current-latex-export-template "show latex template")
+    ("l" deft "latex recipes")
     ("x" org-compile-xelatex-with-custom-headers "org-xelatex")
     ("p" org-compile-pdflatex-with-custom-headers "org-pdflatex")
     ("t" org-compile-xelatex-subtree-with-custom-headers "subtree-xelatex")
@@ -193,10 +194,7 @@
     ("P" latex-compile-file-with-pdflatex "pdflatex this")
     ("h" load-theme "load theme")
     ("H" hl-set-faces "set line faces")
-    ("q" nil "quit" :color blue)
-    ;; ("q" quit "exit hydra" :exit t)
-    )
-    ;; ("q" nil "quit" :color red)
+    ("q" nil "quit" :color blue))
 
   (global-set-key (kbd "H-h") 'hydra-global/body)
 
@@ -204,10 +202,21 @@
     "Customize faces for hl selecting dark or light theme."
     (interactive "c type d for dark or l for light")
     (message "you input this: %s" dark-or-light)
+    ;; these  2 faces should work both on dark and light
+    (custom-set-faces
+     '(org-link ((t
+                  (:underline
+                   (:color "#1f0bff" :style line)
+                   :foreground "#FfFbff" :background "#F11111"))))
+     '(highlight ((t
+                   (:foreground "#FaFbff" :background "#119191"))))
+     )
     (if (eq dark-or-light 100)
         (progn
           (message "You selected dark")
           (custom-set-faces
+           '(org-block ((t
+                         (:foreground "#005f87" :background "#17271f"))))
            '(hl-line ((t (:background "gray0"))))
            '(hl-sexp-face ((t (:background "gray10"))))
            '(org-block-end-line ((t (:background "#2a2a2f" :foreground "gray99"))) t)
@@ -215,6 +224,8 @@
       (progn
         (message "You selected light")
         (custom-set-faces
+         '(org-block ((t
+                       (:foreground "#005f87" :background "#A797Af"))))
          '(hl-line ((t (:background "gray90"))))
          '(hl-sexp-face ((t (:background "gray80"))))
          '(org-block-end-line ((t (:background "#AaBaFf" :foreground "gray9"))) t)

@@ -1,4 +1,4 @@
-;;; org_compile_latex_with_custom_headers --- 2018-11-03 03:10:55 PM
+;;; org_compile_latex_with_custom_headers --- 2018-11-13 12:50:29 PM
   ;; (defun org-insert-latex-headers-from-deft ()
   ;;   "Choose latex headers from recipe list using deft, and append them to the currently edited file."
   ;;   (with-current-buffer
@@ -50,55 +50,79 @@
     (interactive)
     (org-compile-latex-with-custom-headers nil t))
 
-  (defun org-compile-latex-with-custom-headers (&optional pdflatexp subtreep)
-    "Export body, insert header+footer from sections, compile to pdf.
-      If PDFLATEXP use pdflatex else use xelatex.
-      Use latexmk as ORG-LATEX-PDF-PROCESS. This usually works for compiling bibtex
-      and producing a bibliography section."
+  (defun things-to-put-in-header-export-function ()
+    "This function needs to be build in another function."
 
-    (let* ((document-class (get-class-from-section "latex-class"))
-           (org-latex-default-class (car document-class))
-           (output (org-export-as
-                    ;; backend subtreep visible-only body-only ext-plist
-                    'latex  subtreep nil          t         nil
-                    ))
-           (source-directory-path
-            (replace-regexp-in-string
-             "/$" "" (file-name-directory (buffer-file-name))))
-           (source-directory-name
-            (file-name-nondirectory source-directory-path))
-           (target-directory-path
-            (concat
-             org-latex-export-path
-             "/"
-             source-directory-name))
-           (file (concat
-                  target-directory-path
-                  "/"
-                  (read-string
-                   "File name base:"
-                   (file-name-nondirectory (file-name-sans-extension (buffer-file-name))))
-                  "_"
-                  (format-time-string "%y%m%d")
-                  ".tex"))
-           (pdf-file (concat
-                      (file-name-sans-extension file)
-                      ".pdf"))
-           (header (get-custom-latex-from-section "latex-header"))
-           (footer (get-custom-latex-from-section "latex-footer"))
-           )
+    ;;; ================================================================
+    ;;; Part 1
+    (let ((filename (deft-filename-at-point))
+          (headers "") (header "") (footer "") header-file-buffer)
+      (find-file filename)
+      (setq header-file-buffer (current-buffer))
+      (setq header (get-latex-section "latex-header"))
+      (setq footer (get-latex-section "latex-footer"))
+      (switch-to-buffer org-current-buffer)
+      (kill-buffer header-file-buffer)
+      (save-excursion
+        (goto-char (point-max))
+        (insert header "\n" footer)
+        (push-mark))
+      (message
+       "Type C-x C-x to see headers from %s"
+       (file-name-nondirectory filename)))
+     ;;; ================================================================
+     ;;; Part 2
 
-      (message source-directory-path)
-      (message target-directory-path)
+    (save-excursion
+      (let* ((cursor-pos (point))
+             (source-file-name (file-name-nondirectory (buffer-file-name)))
 
-      (message "the default source bib path is: \n%s"
-               (concat source-directory-path "/bibliography.bib")
-               )
-      (unless
-          (file-expand-wildcards (concat source-directory-path "/*.bib"))
-        (make-symbolic-link
-         org-latex-bib-full-path
-         (concat source-directory-path "/bibliography.bib")))
+             (document-class (get-class-from-section "latex-class"))
+            (org-latex-default-class (car document-class))
+            (output (org-export-as
+                     ;; backend subtreep visible-only body-only ext-plist
+                     'latex  subtreep nil          t         nil
+                     ))
+            (source-directory-path
+             (replace-regexp-in-string
+              "/$" "" (file-name-directory (buffer-file-name))))
+            (source-directory-name
+             (file-name-nondirectory source-directory-path))
+            (target-directory-path
+             (concat
+              org-latex-export-path
+              "/"
+              source-directory-name))
+            (file (concat
+                   target-directory-path
+                   "/"
+                   (read-string
+                    "File name base:"
+                    (file-name-nondirectory (file-name-sans-extension (buffer-file-name))))
+                   "_"
+                   (format-time-string "%y%m%d")
+                   ".tex"))
+            (pdf-file (concat
+                       (file-name-sans-extension file)
+                       ".pdf"))
+            (header (get-custom-latex-from-section "latex-header"))
+            (footer (get-custom-latex-from-section "latex-footer"))
+            )
+
+       (message source-directory-path)
+       (message target-directory-path)
+
+       (message "the default source bib path is: \n%s"
+                (concat source-directory-path "/bibliography.bib")
+                )
+
+      ;;; TODO: rework bibliography + source directory content transfer to target path
+
+       (unless
+           (file-expand-wildcards (concat source-directory-path "/*.bib"))
+         (make-symbolic-link
+          org-latex-bib-full-path
+          (concat source-directory-path "/bibliography.bib")))
 
        (copy-directory
         source-directory-path
@@ -108,17 +132,97 @@
         t   ;; copy contents only - do not replace directory)
         )
 
+       (with-temp-buffer
+         (insert (cadr document-class) "\n")
+         (insert header)
+         (insert output)
+         (insert footer)
+         (let ((coding-system-for-write 'utf-8)
+               (org-latex-pdf-process
+                (if pdflatexp
+                    '("latexmk -shell-escape -g -pdf -pdflatex=\"pdflatex\" -outdir=%o %f")
+                  '("latexmk -shell-escape -g -pdf -pdflatex=\"xelatex\" -outdir=%o %f"))))
+           (write-file file)
+           (message "org-latex-default-class is:\n%s" org-latex-default-class)
+           (message "org latex classes are:\n%s" org-latex-classes)
+           (message "latex compile command is:\n %s" org-latex-pdf-process)
+           ;; (org-latex-compile (buffer-file-name))
+           (cleanup-bbl-and-compile-latex (buffer-file-name))
+           (message "org-latex compile to PDF done. Opening:\n%s" (shell-quote-argument pdf-file))
+           (shell-command (concat "open " (shell-quote-argument pdf-file)))))))
+    )
+
+  (defun org-compile-latex-with-custom-headers (&optional pdflatexp subtreep)
+    "Export body, insert header+footer from sections, compile to pdf.
+  If PDFLATEXP use pdflatex else use xelatex.
+  Use latexmk as ORG-LATEX-PDF-PROCESS. This usually works for compiling bibtex
+  and producing a bibliography section.
+  If subtreep only compile the current org-subtree of the file.
+
+  Create new filename based on user input, prompting with a file name
+  constructed from the curent file and a datestamp.
+  Save that file in the cache subdirectory of latex-exports.
+  Insert latex header, footer, class definition sections in that file.
+  Restore cursor position from the original file in the new file.
+  Export file to pdf according to the options.
+
+  This command assumes that we are already in the buffer of the file to be exported.
+  "
+    (let* (class header footer ;; these 3 variables are set later in the body of the let form.
+                 ;; get raw latex code from current buffer
+                 (latex-output (org-export-as
+                                ;; backend subtreep visible-only body-only ext-plist
+                                'latex  subtreep nil          t         nil
+                                ))
+                 (source-file (buffer-file-name))
+                 (target-directory (org-get-latex-export-cache-directory))
+                 (template-file (concat target-directory "/"))
+                 (org-target-file
+                  (concat
+                   target-directory
+                   "/"
+                   (read-string
+                    "File name base:"
+                    (file-name-nondirectory (file-name-sans-extension source-file)))
+                   "_"
+                   (format-time-string "%y%m%d")
+                   ".org"
+                   ))
+                 (tex-target-file
+                  (concat (file-name-sans-extension org-target-file) ".tex"))
+                 (pdf-file (concat
+                            (file-name-sans-extension org-target-file)
+                            ".pdf")))
+
+      ;; Copy org source file to cache directory for reference
+      (message "the source file is: %s\nThe target file is: %s" source-file org-target-file)
+      (copy-file source-file org-target-file t)
+
+      ;; provide default bib file if missing
+      (unless
+          (file-expand-wildcards (concat target-directory "/*.bib"))
+        (make-symbolic-link
+         org-latex-bib-full-path
+         (concat target-directory "/bibliography.bib")))
+
+      ;; get latex class, header and footer from template file
+      (find-file (concat target-directory "/latex-template.org"))
+      (setq class (get-class-from-section))
+      (setq header (get-custom-latex-from-section "latex-header"))
+      (setq footer (get-custom-latex-from-section "latex-footer"))
+      ;; Insert class, header, footer to latex output and export to pdf
       (with-temp-buffer
-        (insert (cadr document-class) "\n")
+        (insert (cadr class) "\n")
         (insert header)
-        (insert output)
+        (insert latex-output)
         (insert footer)
         (let ((coding-system-for-write 'utf-8)
               (org-latex-pdf-process
                (if pdflatexp
                    '("latexmk -shell-escape -g -pdf -pdflatex=\"pdflatex\" -outdir=%o %f")
                  '("latexmk -shell-escape -g -pdf -pdflatex=\"xelatex\" -outdir=%o %f"))))
-          (write-file file)
+          ;;
+          (write-file tex-target-file)
           (message "org-latex-default-class is:\n%s" org-latex-default-class)
           (message "org latex classes are:\n%s" org-latex-classes)
           (message "latex compile command is:\n %s" org-latex-pdf-process)
@@ -131,7 +235,7 @@
     "Remove bbl file before compiling, to ensure bibliography is compiled anew."
     (message "deleting bbl file:\n%s\n" (concat (file-name-sans-extension filename) ".bbl"))
     (delete-file (concat (file-name-sans-extension filename) ".bbl"))
-    (org-latex-compile file))
+    (org-latex-compile filename))
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; The following functions must be rewritten.
@@ -213,6 +317,21 @@
       (message "I AM SETTING CLASS TO THIS:\n%s" class)
       class))
 
+  (defun get-latex-section (&optional section-name)
+    "Get entire section with name matching SECTION-NAME."
+    (setq section-name (or section-name "latex-header"))
+    (let ((code (or
+                 (cdr (assoc section-name latex-blocks-alist))
+                 "")))
+      (org-map-entries
+       (lambda ()
+         (let ((element (cadr (org-element-at-point))))
+           (when (string= section-name (plist-get element :title))
+             (org-copy-subtree)
+             (setq code (current-kill 0)))
+           )))
+      code))
+
   (defun get-contents-or-babel (element)
     "Get contents of section or babel block as string from ELEMENT."
     (let* ((result (buffer-substring-no-properties
@@ -235,17 +354,11 @@
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; use deft to select and insert custom headers for latex export
 
-  (defun org-deft-latex-recipes ()
-    "Select latex recipe with deft and insert its headers to current buffer."
-    (interactive)
-    (setq org-current-buffer (current-buffer))
-    (deft))
-
   ;; Browse recipes using deft.  Deft setup:
   (prelude-load-require-packages '(deft))
   (eval-after-load 'deft
     '(progn
-       (define-key deft-mode-map (kbd "C-i") 'deft-insert-latex-headers)
+       (define-key deft-mode-map (kbd "C-i") 'deft-select-latex-headers)
        (setq deft-current-sort-method 'title)))
 
   (setq deft-use-filename-as-title t)
@@ -266,41 +379,43 @@
   (setq deft-recursive t)
 
   ;; Functions for getting headers from deft
-  (defun deft-insert-latex-headers ()
-    "Get latex headers from current file and append them to ORG-CURRENT-BUFFER.
-    ORG-CURRENT-BUFFER is set from org-latex-insert-headers-recipe."
+  (defun deft-select-latex-headers ()
+    "Copy folder of selected latex header files to cache, and construct template file.
+  Empty latex export cache subdirectory.
+  Copy current directory contents to latex export cache subdirectory."
     (interactive)
-    (if (null org-current-buffer)
-        (message "there is no current buffer to insert headers.")
-      (let ((filename (deft-filename-at-point))
-            (headers "") (header "") (footer "") header-file-buffer)
-        (find-file filename)
-        (setq header-file-buffer (current-buffer))
-        (setq header (get-latex-section "latex-header"))
-        (setq footer (get-latex-section "latex-footer"))
-        (switch-to-buffer org-current-buffer)
-        (kill-buffer header-file-buffer)
-        (save-excursion
-          (goto-char (point-max))
-          (insert header "\n" footer)
-          (push-mark))
-        (message
-         "Type C-x C-x to see headers from %s"
-         (file-name-nondirectory filename)))))
+    (let* ((cache-dir (org-get-latex-export-cache-directory))
+          (source-file (deft-filename-at-point))
+          (source-directory (file-name-directory source-file)))
+      (when (directory-name-p cache-dir)
+        (delete-directory cache-dir t t))
+      (copy-directory source-directory cache-dir t t t)
+      (copy-file source-file (concat cache-dir "/latex-template.org") t)
+      (with-temp-buffer
+        (insert source-file)
+        (write-file (concat cache-dir "/template-file-path.txt")))))
 
-  (defun get-latex-section (&optional section-name)
-    "Get entire section with name matching SECTION-NAME."
-    (setq section-name (or section-name "latex-header"))
-    (let ((code (or
-                 (cdr (assoc section-name latex-blocks-alist))
-                 "")))
-      (org-map-entries
-       (lambda ()
-         (let ((element (cadr (org-element-at-point))))
-           (when (string= section-name (plist-get element :title))
-             (org-copy-subtree)
-             (setq code (current-kill 0)))
-           )))
-      code))
+  (defun org-get-latex-export-cache-directory ()
+    "Return path of latex-export-cache subdirectory."
+    (concat org-latex-export-path "/cache"))
+
+  (defun org-post-current-latex-export-template ()
+    "Post file name of latex-template from latex-exports cache subdirectory."
+    (interactive)
+    (let* ((template-file (org-get-latex-template-file-path))
+           (template (if (file-exists-p template-file)
+                         (with-temp-buffer
+                           (insert-file-contents template-file)
+                           (buffer-string))
+                       nil)))
+      (if template
+          (message "The template file is: %sIts folder is: %s"
+                   (file-name-nondirectory template)
+                   (file-name-directory template))
+        (message "no template file found at %" template-file))))
+
+  (defun org-get-latex-template-file-path ()
+    "Return path of latex-tempalte-file name from leatex-exports cache subdirectory."
+    (concat (org-get-latex-export-cache-directory) "/template-file-path.txt"))
 (provide 'org_compile_latex_with_custom_headers)
 ;;; 025_org_compile_latex_with_custom_headers.el ends here

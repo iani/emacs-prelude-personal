@@ -1,4 +1,4 @@
-;;; org-journal --- 2018-11-03 03:10:56 PM
+;;; org-journal --- 2018-11-13 12:50:31 PM
   ;;; Commentary:
   ;;; use org-journal for capture globally into files named by date number.
   ;;; https://github.com/bastibe/org-journal.
