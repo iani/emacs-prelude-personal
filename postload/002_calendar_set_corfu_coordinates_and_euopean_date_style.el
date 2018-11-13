@@ -1,4 +1,4 @@
-;;; calendar_set_corfu_coordinates_and_euopean_date_style --- 2018-11-13 12:50:27 PM
+;;; calendar_set_corfu_coordinates_and_euopean_date_style --- 2018-11-13 02:38:10 PM
   (setq calendar-latitude [39 37 north])
   (setq calendar-longitude [19 54 east])
   (setq calendar-date-style 'european)

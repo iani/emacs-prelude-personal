@@ -1,4 +1,4 @@
-;;; Compiling_bibliogaphies_wih_biblatex --- 2018-11-13 12:50:29 PM
+;;; Compiling_bibliogaphies_wih_biblatex --- 2018-11-13 02:38:13 PM
   ;; (defun org-insert-latex-headers-from-deft ()
   ;;   "Choose latex headers from recipe list using deft, and append them to the currently edited file."
   ;;   (with-current-buffer
@@ -49,108 +49,6 @@
     "Export with xelatex using custom latex headers if available."
     (interactive)
     (org-compile-latex-with-custom-headers nil t))
-
-  (defun things-to-put-in-header-export-function ()
-    "This function needs to be build in another function."
-
-    ;;; ================================================================
-    ;;; Part 1
-    (let ((filename (deft-filename-at-point))
-          (headers "") (header "") (footer "") header-file-buffer)
-      (find-file filename)
-      (setq header-file-buffer (current-buffer))
-      (setq header (get-latex-section "latex-header"))
-      (setq footer (get-latex-section "latex-footer"))
-      (switch-to-buffer org-current-buffer)
-      (kill-buffer header-file-buffer)
-      (save-excursion
-        (goto-char (point-max))
-        (insert header "\n" footer)
-        (push-mark))
-      (message
-       "Type C-x C-x to see headers from %s"
-       (file-name-nondirectory filename)))
-     ;;; ================================================================
-     ;;; Part 2
-
-    (save-excursion
-      (let* ((cursor-pos (point))
-             (source-file-name (file-name-nondirectory (buffer-file-name)))
-
-             (document-class (get-class-from-section "latex-class"))
-            (org-latex-default-class (car document-class))
-            (output (org-export-as
-                     ;; backend subtreep visible-only body-only ext-plist
-                     'latex  subtreep nil          t         nil
-                     ))
-            (source-directory-path
-             (replace-regexp-in-string
-              "/$" "" (file-name-directory (buffer-file-name))))
-            (source-directory-name
-             (file-name-nondirectory source-directory-path))
-            (target-directory-path
-             (concat
-              org-latex-export-path
-              "/"
-              source-directory-name))
-            (file (concat
-                   target-directory-path
-                   "/"
-                   (read-string
-                    "File name base:"
-                    (file-name-nondirectory (file-name-sans-extension (buffer-file-name))))
-                   "_"
-                   (format-time-string "%y%m%d")
-                   ".tex"))
-            (pdf-file (concat
-                       (file-name-sans-extension file)
-                       ".pdf"))
-            (header (get-custom-latex-from-section "latex-header"))
-            (footer (get-custom-latex-from-section "latex-footer"))
-            )
-
-       (message source-directory-path)
-       (message target-directory-path)
-
-       (message "the default source bib path is: \n%s"
-                (concat source-directory-path "/bibliography.bib")
-                )
-
-      ;;; TODO: rework bibliography + source directory content transfer to target path
-
-       (unless
-           (file-expand-wildcards (concat source-directory-path "/*.bib"))
-         (make-symbolic-link
-          org-latex-bib-full-path
-          (concat source-directory-path "/bibliography.bib")))
-
-       (copy-directory
-        source-directory-path
-        target-directory-path
-        nil ;; do not keep time
-        t   ;; create parents if needed
-        t   ;; copy contents only - do not replace directory)
-        )
-
-       (with-temp-buffer
-         (insert (cadr document-class) "\n")
-         (insert header)
-         (insert output)
-         (insert footer)
-         (let ((coding-system-for-write 'utf-8)
-               (org-latex-pdf-process
-                (if pdflatexp
-                    '("latexmk -shell-escape -g -pdf -pdflatex=\"pdflatex\" -outdir=%o %f")
-                  '("latexmk -shell-escape -g -pdf -pdflatex=\"xelatex\" -outdir=%o %f"))))
-           (write-file file)
-           (message "org-latex-default-class is:\n%s" org-latex-default-class)
-           (message "org latex classes are:\n%s" org-latex-classes)
-           (message "latex compile command is:\n %s" org-latex-pdf-process)
-           ;; (org-latex-compile (buffer-file-name))
-           (cleanup-bbl-and-compile-latex (buffer-file-name))
-           (message "org-latex compile to PDF done. Opening:\n%s" (shell-quote-argument pdf-file))
-           (shell-command (concat "open " (shell-quote-argument pdf-file)))))))
-    )
 
   (defun org-compile-latex-with-custom-headers (&optional pdflatexp subtreep)
     "Export body, insert header+footer from sections, compile to pdf.
@@ -206,10 +104,12 @@
          (concat target-directory "/bibliography.bib")))
 
       ;; get latex class, header and footer from template file
+
       (find-file (concat target-directory "/latex-template.org"))
       (setq class (get-class-from-section))
       (setq header (get-custom-latex-from-section "latex-header"))
       (setq footer (get-custom-latex-from-section "latex-footer"))
+      (kill-buffer (current-buffer))
       ;; Insert class, header, footer to latex output and export to pdf
       (with-temp-buffer
         (insert (cadr class) "\n")
@@ -229,6 +129,7 @@
           ;; (org-latex-compile (buffer-file-name))
           (cleanup-bbl-and-compile-latex (buffer-file-name))
           (message "org-latex compile to PDF done. Opening:\n%s" (shell-quote-argument pdf-file))
+          (copy-file pdf-file (concat org-latex-export-path "/" (file-name-nondirectory pdf-file)) t)
           (shell-command (concat "open " (shell-quote-argument pdf-file)))))))
 
   (defun cleanup-bbl-and-compile-latex (filename)

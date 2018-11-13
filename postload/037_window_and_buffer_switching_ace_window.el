@@ -1,4 +1,4 @@
-;;; window_and_buffer_switching_ace_window --- 2018-11-13 12:50:31 PM
+;;; window_and_buffer_switching_ace_window --- 2018-11-13 02:38:14 PM
   ;;; Commentary:
   ;;; move amngst windows and switch window position with cursor keys
 
