@@ -2787,8 +2787,8 @@ Design draft for next version:
     (custom-set-faces
      '(org-link ((t
                   (:underline
-                   (:color "#1f0bff" :style line)
-                   :foreground "#FfFbff" :background "#F11111"))))
+                   (:color "#Ff0b5f" :style line)
+                   :foreground "#1f0bff" :background "#F1E1D1"))))
      '(highlight ((t
                    (:foreground "#FaFbff" :background "#119191"))))
      )

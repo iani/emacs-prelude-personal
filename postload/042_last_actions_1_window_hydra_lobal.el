@@ -1,4 +1,4 @@
-;;; last_actions_1_window_hydra_lobal --- 2018-11-13 02:38:15 PM
+;;; last_actions_1_window_hydra_lobal --- 2018-11-17 09:12:55 AM
   (delete-other-windows)
   (hydra-global/body)
 (provide 'last_actions_1_window_hydra_lobal)

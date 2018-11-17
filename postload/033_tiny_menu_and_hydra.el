@@ -1,4 +1,4 @@
-;;; tiny_menu_and_hydra --- 2018-11-13 02:38:14 PM
+;;; tiny_menu_and_hydra --- 2018-11-17 09:12:53 AM
     ;;; Commentary:
 
   ;; 2 tiny-menus for functions that I do not want to place on command-keys,
@@ -206,8 +206,8 @@
     (custom-set-faces
      '(org-link ((t
                   (:underline
-                   (:color "#1f0bff" :style line)
-                   :foreground "#FfFbff" :background "#F11111"))))
+                   (:color "#Ff0b5f" :style line)
+                   :foreground "#1f0bff" :background "#F1E1D1"))))
      '(highlight ((t
                    (:foreground "#FaFbff" :background "#119191"))))
      )
