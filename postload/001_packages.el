@@ -1,4 +1,4 @@
-;;; packages --- 2018-11-17 09:12:49 AM
+;;; packages --- 2018-11-27 02:36:44 PM
 
   ;;; Commentary:
   ;;; this is only some of the packags.
@@ -7,6 +7,13 @@
   ;;; at the time required, if necessary.
 
   ;;; Code:
+
+  ;; include all package repositories needed
+  (setq package-archives
+        '(("melpa" . "https://melpa.org/packages/")
+          ("gnu" . "https://elpa.gnu.org/packages/")
+          ("org" . "http://orgmode.org/elpa/")))
+  (package-initialize)
 
   (require 'prelude-packages)
 

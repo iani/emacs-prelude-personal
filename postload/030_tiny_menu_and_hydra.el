@@ -1,4 +1,4 @@
-;;; tiny_menu_and_hydra --- 2018-11-17 09:12:53 AM
+;;; tiny_menu_and_hydra --- 2018-11-27 02:36:47 PM
     ;;; Commentary:
 
   ;; 2 tiny-menus for functions that I do not want to place on command-keys,
@@ -207,7 +207,7 @@
      '(org-link ((t
                   (:underline
                    (:color "#Ff0b5f" :style line)
-                   :foreground "#1f0bff" :background "#F1E1D1"))))
+                   :foreground "#Ff0b0f" :background "F1F1F1"))))
      '(highlight ((t
                    (:foreground "#FaFbff" :background "#119191"))))
      )
@@ -433,4 +433,4 @@
   (global-set-key (kbd "H-m") 'air-tiny-menu)
   (global-set-key (kbd "H-M") 'air-tiny-menu2)
 (provide 'tiny_menu_and_hydra)
-;;; 033_tiny_menu_and_hydra.el ends here
+;;; 030_tiny_menu_and_hydra.el ends here

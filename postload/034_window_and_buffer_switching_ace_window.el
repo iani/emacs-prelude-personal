@@ -1,4 +1,4 @@
-;;; window_and_buffer_switching_ace_window --- 2018-11-17 09:12:54 AM
+;;; window_and_buffer_switching_ace_window --- 2018-11-27 02:36:47 PM
   ;;; Commentary:
   ;;; move amngst windows and switch window position with cursor keys
 
@@ -24,4 +24,4 @@
   ;;  :config (setq aw-keys '(?a ?o ?e ?u ?i ?d ?h ?t ?n ?s))
   ;;  :bind ("C-x o") . ace-window)
 (provide 'window_and_buffer_switching_ace_window)
-;;; 037_window_and_buffer_switching_ace_window.el ends here
+;;; 034_window_and_buffer_switching_ace_window.el ends here

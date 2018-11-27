@@ -13,6 +13,13 @@ http://www.org.org
 
   ;;; Code:
 
+  ;; include all package repositories needed
+  (setq package-archives
+        '(("melpa" . "https://melpa.org/packages/")
+          ("gnu" . "https://elpa.gnu.org/packages/")
+          ("org" . "http://orgmode.org/elpa/")))
+  (package-initialize)
+
   (require 'prelude-packages)
 
   ;; also load prelude-required packages manually.
@@ -1660,7 +1667,7 @@ Only solution so far is to switch off prelude mode when in org mode.
   :PROPERTIES:
   :DATE:     <2018-03-05 Mon 23:11>
   :END:
-** Installing org-mode version 9 or greater
+** COMMENT Installing org-mode version 9 or greater
 
 Xelatex enables one to use system fonts. These are necessary for languages such as greek, which requires a character set other than latin.  
 
@@ -1683,7 +1690,7 @@ The present software specifies use of xelatec and requires org-version 9 or grea
  #+END_SRC
 
  - Install the org-plus-contrib package either with command =package-install= or with =package-list-packages= and then searching =org-plus-contrib=, then typing i to mark it for installation and then typing x to install the marked packages.
-** Using custom latex documnent styles
+** COMMENT Using custom latex documnent styles
    :PROPERTIES:
    :DATE:     <2018-09-23 Sun 16:11>
    :END:
@@ -1704,7 +1711,7 @@ Now under development is a modification of the function =org-compile-latex-with-
   - Generate the source tex file for compiling the intended pdf document.
   - Generate the intended pdf document by compiling the source tex file, if needed using any auxiliary files contained in the target folder.
 
-** Compiling bibliogaphies wih biblatex
+** COMMENT Compiling bibliogaphies wih biblatex
 
 The templates provided here use references stored in =bib= files (bibtex format).  Biblatex requires to use the =\bibliography= in order specify the name(s) of the =bib= files used.  Since biblatex works also when the name of a bib file points to a symbolic link, we store a symbolic link to the =bib= file in the target folder (see [[*Using custom latex documnent styles][previous section]]).  We store the directory path and the file name of the default bib file use custom variables =org-latex-bib-path= and =org=latex-bib-filename=. 
 
@@ -2788,7 +2795,7 @@ Design draft for next version:
      '(org-link ((t
                   (:underline
                    (:color "#Ff0b5f" :style line)
-                   :foreground "#1f0bff" :background "#F1E1D1"))))
+                   :foreground "#Ff0b0f" :background "F1F1F1"))))
      '(highlight ((t
                    (:foreground "#FaFbff" :background "#119191"))))
      )

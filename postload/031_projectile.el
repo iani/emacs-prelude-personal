@@ -1,4 +1,4 @@
-;;; projectile --- 2018-11-17 09:12:54 AM
+;;; projectile --- 2018-11-27 02:36:47 PM
   ;;; Commentary:
   ;;; some useful extensions to projectile
   ;;; helm-projectile
@@ -13,4 +13,4 @@
   ;; (require 'persp-projectile)
   ;; (define-key projectile-mode-map (kbd "s-s") 'projectile-persp-switch-project)
 (provide 'projectile)
-;;; 034_projectile.el ends here
+;;; 031_projectile.el ends here

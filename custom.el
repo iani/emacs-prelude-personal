@@ -83,6 +83,7 @@
  '(highlight ((t (:foreground "#FaFbff" :background "#119191"))))
  '(hl-line ((t (:background "gray90"))))
  '(hl-sexp-face ((t (:background "gray80"))))
+ '(org-block ((t (:foreground "#005f87" :background "#17271f"))))
  '(org-block-begin-line ((t (:background "#3a2a2f" :foreground "gray99"))))
  '(org-block-end-line ((t (:background "#2a2a2f" :foreground "gray99"))))
  '(org-level-1 ((t (:family "Helvetica" :height 1.1 :weight bold))))
