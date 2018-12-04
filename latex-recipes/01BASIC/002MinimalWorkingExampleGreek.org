@@ -7,8 +7,10 @@ Hello World!
 
 #+BEGIN_SRC latex
 \usepackage{fontspec}
-\setmainfont{Times New Roman}
+\setmainfont{Linux Libertine O} % libertine definitely better than Times New Roman
+% \setmainfont{Times New Roman}
 \usepackage{ulem} %This is needed to enable underlined emphasis (e.g. _underlined_)
+\usepackage{}
 \begin{document}
 #+END_SRC
 

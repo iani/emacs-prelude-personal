@@ -1372,6 +1372,53 @@ Only solution so far is to switch off prelude mode when in org mode.
   (add-to-list 'math-tzone-names '("JST" 9 0))
   (add-to-list 'math-tzone-names '("EEST" 3 0))
 #+END_SRC
+* org-mode hydra 
+
+#+BEGIN_SRC emacs-lisp
+  (defhydra hydra-org ( :color red :columns 3)
+    "org-mode hydra"
+    ("n" outline-next-visible-heading "next heading")
+    ("p" outline-previous-visible-heading "prev heading")
+    ;; ("C-p" outline-previous-visible-heading "prev heading")
+    ("N" org-forward-heading-same-level "next heading at same level")
+    ("P" org-backward-heading-same-level "prev heading at same level")
+    ("c" org-cycle "cycle")
+    ("u" outline-up-heading "up heading")
+    ("i" imenu-anywhere "imenu" :exit t)
+    ("I" air-goto-section "icicles goto" :exit t)
+    ("f" ox-hugo-set-filename "hugo set filename")
+    ("F" ox-hugo-set-index-filename "hugo set index filename")
+    ("s" ox-hugo-set-section "hugo set section")
+    ("S" ox-hugo-set-section* "hugo set section*")
+    ("c" ox-hugo-clear-contents "clear hugo content dir")
+    ("e" org-export-dispatch "org (+ox) export")
+    ("r" ox-hugo-copy-root-dir "copy root dir")
+    ("q" nil "quit" :color blue))
+
+  (defun ox-hugo-set-filename (&optional file-name)
+    "Set property EXPORT_FILE_NAME"
+    (interactive "MFile name: ")
+    (org-set-property "EXPORT_FILE_NAME" file-name)
+    (message "EXPORT_FILE_NAME was set to %" file-name))
+
+  (defun ox-hugo-set-index-filename ()
+    "Set property EXPORT_FILE_NAME to _index"
+    (interactive)
+    (org-set-property "EXPORT_FILE_NAME" "_index")
+    (message "EXPORT_FILE_NAME was set to _index"))
+
+  (defun ox-hugo-set-section (&optional section-name)
+    "Set property EXPORT_SECTION"
+    (interactive "MSection name: ")
+    (org-set-property "EXPORT_HUGO_SECTION" section-name)
+    (message "EXPORT_HUGO_SECTION was set to %" section-name))
+
+  (defun ox-hugo-set-section* (&optional section-name)
+    "Set property EXPORT_SECTION*"
+    (interactive "MSection name: ")
+    (org-set-property "EXPORT_HUGO_SECTION*" section-name)
+    (message "EXPORT_HUGO_SECTION* was set to %" section-name))
+#+END_SRC
 * org-mode
 
 #+BEGIN_SRC emacs-lisp
@@ -1513,6 +1560,7 @@ Only solution so far is to switch off prelude mode when in org mode.
   ;; It adds some org-mode specific key bindings.
   (eval-after-load 'org
     '(progn
+       (define-key org-mode-map (kbd "H-o") 'hydra-org/body)
        ;; alias for org-cycle, more convenient than TAB
        (define-key org-mode-map (kbd "C-M-]") 'org-cycle)
        ;; Use deft to customize org-latex export of current org-mode buffer
@@ -1532,7 +1580,7 @@ Only solution so far is to switch off prelude mode when in org mode.
        (define-key org-mode-map (kbd "C-M-/") 'org-sclang-eval-babel-block)
               ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
        ;; from: http://orgmode.org/worg/org-configs/org-config-examples.html
-       ;; section navigation
+       ;; section navigation;
        (define-key org-mode-map (kbd "M-n") 'jump-outline-next-visible-heading)
        (define-key org-mode-map (kbd "C-M-n") 'jump-outline-next-visible-heading-and-cycle)
        ;; (define-key org-mode-map (kbd "C-M-N") 'org-find-next-src-block)
@@ -2230,6 +2278,9 @@ The templates provided here use references stored in =bib= files (bibtex format)
 
 * org-split-hugo
 
+This org-split-hugo has been superseded by ox-hugo and is obsolete.
+See next section.
+
 #+BEGIN_SRC emacs-lisp
   ;;; Commentary:
   ;;; Utilities for blog + website editing with HUGO. 2 versions are included:
@@ -2429,20 +2480,32 @@ The templates provided here use references stored in =bib= files (bibtex format)
     "Build sparse tree with entries whose property filename is set."
     (interactive)
     (org-match-sparse-tree nil "filename={[^§]}"))
+ 
+  (eval-after-load 'org
+    '(progn
+       (define-key org-mode-map (kbd "C-c C-h e") 'ox-hugo-prepare-and-export)
+       (define-key org-mode-map (kbd "C-c C-h c") 'ox-hugo-clear-contents)
+       (define-key org-mode-map (kbd "C-c C-h C-e") 'org-hugo-export)
+       (define-key org-mode-map (kbd "C-c C-h C-a") 'org-hugo-autosplit)
+       (define-key org-mode-map (kbd "C-c C-h C-/") 'org-hugo-select-filenames)))
+#+END_SRC
 
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;; New function, using ox-hugo.  (11 Aug 2018 11:36)
+* ox-hugo
+
+#+BEGIN_SRC emacs-lisp
+  ;; Functions for ox-hugo.  (11 Aug 2018 11:36)
   (defun ox-hugo-prepare-and-export ()
-    "Set weight property for all sections, call ord-export-dispatch."
+    "Call org-export-dispatch.
+  Obsolete!"
     (interactive)
-    (let ((weight 0))
-      (org-map-entries 'org--set-weight))
+    ;; (let ((weight 0))
+    ;;   (org-map-entries 'org--set-weight))
     (call-interactively 'org-export-dispatch))
 
-  (defun org--set-weight ()
-    "Calculate and set EXPORT_HUGO_WEIGHT property for this entry."
-    (org-set-property "EXPORT_HUGO_WEIGHT" (format "%d" weight))
-    (setq weight (+ 1 weight)))
+  ;; (defun org--set-weight ()
+  ;;   "Calculate and set EXPORT_HUGO_WEIGHT property for this entry."
+  ;;   (org-set-property "EXPORT_HUGO_WEIGHT" (format "%d" weight))
+  ;;   (setq weight (+ 1 weight)))
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
   (defun ox-hugo-clear-contents ()
@@ -2461,16 +2524,25 @@ The templates provided here use references stored in =bib= files (bibtex format)
         (delete-directory pub-dir t)
         (message "%s deleted!" pub-dir))))
 
-
-  (eval-after-load 'org
-    '(progn
-       (define-key org-mode-map (kbd "C-c C-h e") 'ox-hugo-prepare-and-export)
-       (define-key org-mode-map (kbd "C-c C-h c") 'ox-hugo-clear-contents)
-       (define-key org-mode-map (kbd "C-c C-h C-e") 'org-hugo-export)
-       (define-key org-mode-map (kbd "C-c C-h C-a") 'org-hugo-autosplit)
-       (define-key org-mode-map (kbd "C-c C-h C-/") 'org-hugo-select-filenames)))
+  (defun ox-hugo-copy-root-dir ()
+    "Copy hugo root directory to kill ring as shell-escaped string.
+  Use: Paste the copied string in a shell terminal to go to the root dir,
+  and then run hugo-server or hugo or other related commands."
+    (interactive)
+    (let* ((org-use-property-inheritance (org-hugo--selective-property-inheritance))
+           (info (org-combine-plists
+                  (org-export--get-export-attributes
+                   'hugo nil nil
+                   ;; subtreep visible-only
+                   )
+                  (org-export--get-buffer-attributes)
+                  (org-export-get-environment 'hugo nil)))
+           (pub-dir (org-hugo--get-pub-dir info)))
+      (kill-new
+       (shell-quote-argument (file-name-directory (directory-file-name pub-dir))))
+      (message "Copied %s"
+               (shell-quote-argument (file-name-directory (directory-file-name pub-dir))))))
 #+END_SRC
-
 * org-export-recipes
 
 #+BEGIN_SRC emacs-lisp
@@ -2730,7 +2802,7 @@ Design draft for next version:
                        ((?s "search/mark/goto" hydra-search/body)
                         (?t "transpose" hydra-transpose/body)
                         (?z "zoom" hydra-zoom/body)
-                        (?o "org" hydra-org/body)
+                        ;; (?o "org" hydra-org/body)
                         (?j "goto journal entry" air-journal-goto-date)
                         (?m "multiple cursors" mc-hydra/body)
                         (?q "corral" hydra-corral/body)
@@ -2866,19 +2938,7 @@ Design draft for next version:
     ("o" text-scale-decrease "out")
     ("0" (text-scale-adjust 0) "reset")
     ("q" nil "quit" :color blue))
-
-  (defhydra hydra-org (global-map "C-M-o" :color red :columns 3)
-    "Org Mode Movements"
-    ("n" outline-next-visible-heading "next heading")
-    ("p" outline-previous-visible-heading "prev heading")
-    ("C-p" outline-previous-visible-heading "prev heading")
-    ("N" org-forward-heading-same-level "next heading at same level")
-    ("P" org-backward-heading-same-level "prev heading at same level")
-    ("c" org-cycle "cycle")
-    ("u" outline-up-heading "up heading")
-    ("i" imenu-anywhere "imenu" :exit t)
-    ("I" air-goto-section "icicles goto" :exit t))
-
+  
   (defhydra hydra-search (global-map "M-g" :color blue :columns 3)
     "search+goto+mark"
     ("r" helm-recentf "recent files")

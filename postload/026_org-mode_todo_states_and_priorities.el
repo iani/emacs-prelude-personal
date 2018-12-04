@@ -1,4 +1,4 @@
-;;; org-mode_todo_states_and_priorities --- 2018-11-27 02:36:46 PM
+;;; org-mode_todo_states_and_priorities --- 2018-12-04 09:34:31 AM
   ;; Experimental, 29 Sep 2018 04:25
   ;; after https://orgmode.org/manual/Fast-access-to-TODO-states.html#Fast-access-to-TODO-states
 
@@ -39,4 +39,4 @@
   (setq org-lowest-priority 77) ;; Set possible priorities range from A to M
   (setq org-default-priority 77) ;; List TODOS without priority setting at the bottom
 (provide 'org-mode_todo_states_and_priorities)
-;;; 025_org-mode_todo_states_and_priorities.el ends here
+;;; 026_org-mode_todo_states_and_priorities.el ends here

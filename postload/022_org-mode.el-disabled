@@ -1,4 +1,4 @@
-;;; org-mode --- 2018-11-27 02:36:46 PM
+;;; org-mode --- 2018-12-03 10:11:30 PM
   ;;; Commentary:
 
   ;; customize some org mode settings
@@ -137,6 +137,7 @@
   ;; It adds some org-mode specific key bindings.
   (eval-after-load 'org
     '(progn
+       (define-key org-mode-map (kbd "H-o") hydra-org/body)
        ;; alias for org-cycle, more convenient than TAB
        (define-key org-mode-map (kbd "C-M-]") 'org-cycle)
        ;; Use deft to customize org-latex export of current org-mode buffer
@@ -287,4 +288,4 @@
 
   (global-set-key (kbd "C-c C-x t") 'org-insert-current-date)
 (provide 'org-mode)
-;;; 021_org-mode.el ends here
+;;; 022_org-mode.el ends here

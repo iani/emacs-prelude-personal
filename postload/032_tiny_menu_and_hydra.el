@@ -1,4 +1,4 @@
-;;; tiny_menu_and_hydra --- 2018-11-27 02:36:47 PM
+;;; tiny_menu_and_hydra --- 2018-12-04 09:34:32 AM
     ;;; Commentary:
 
   ;; 2 tiny-menus for functions that I do not want to place on command-keys,
@@ -142,7 +142,7 @@
                        ((?s "search/mark/goto" hydra-search/body)
                         (?t "transpose" hydra-transpose/body)
                         (?z "zoom" hydra-zoom/body)
-                        (?o "org" hydra-org/body)
+                        ;; (?o "org" hydra-org/body)
                         (?j "goto journal entry" air-journal-goto-date)
                         (?m "multiple cursors" mc-hydra/body)
                         (?q "corral" hydra-corral/body)
@@ -278,18 +278,6 @@
     ("o" text-scale-decrease "out")
     ("0" (text-scale-adjust 0) "reset")
     ("q" nil "quit" :color blue))
-
-  (defhydra hydra-org (global-map "C-M-o" :color red :columns 3)
-    "Org Mode Movements"
-    ("n" outline-next-visible-heading "next heading")
-    ("p" outline-previous-visible-heading "prev heading")
-    ("C-p" outline-previous-visible-heading "prev heading")
-    ("N" org-forward-heading-same-level "next heading at same level")
-    ("P" org-backward-heading-same-level "prev heading at same level")
-    ("c" org-cycle "cycle")
-    ("u" outline-up-heading "up heading")
-    ("i" imenu-anywhere "imenu" :exit t)
-    ("I" air-goto-section "icicles goto" :exit t))
 
   (defhydra hydra-search (global-map "M-g" :color blue :columns 3)
     "search+goto+mark"
@@ -433,4 +421,4 @@
   (global-set-key (kbd "H-m") 'air-tiny-menu)
   (global-set-key (kbd "H-M") 'air-tiny-menu2)
 (provide 'tiny_menu_and_hydra)
-;;; 030_tiny_menu_and_hydra.el ends here
+;;; 032_tiny_menu_and_hydra.el ends here

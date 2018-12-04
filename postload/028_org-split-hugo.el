@@ -1,4 +1,4 @@
-;;; org-split-hugo --- 2018-11-27 02:36:46 PM
+;;; org-split-hugo --- 2018-12-04 09:34:32 AM
   ;;; Commentary:
   ;;; Utilities for blog + website editing with HUGO. 2 versions are included:
 
@@ -198,38 +198,6 @@
     (interactive)
     (org-match-sparse-tree nil "filename={[^§]}"))
 
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;; New function, using ox-hugo.  (11 Aug 2018 11:36)
-  (defun ox-hugo-prepare-and-export ()
-    "Set weight property for all sections, call ord-export-dispatch."
-    (interactive)
-    (let ((weight 0))
-      (org-map-entries 'org--set-weight))
-    (call-interactively 'org-export-dispatch))
-
-  (defun org--set-weight ()
-    "Calculate and set EXPORT_HUGO_WEIGHT property for this entry."
-    (org-set-property "EXPORT_HUGO_WEIGHT" (format "%d" weight))
-    (setq weight (+ 1 weight)))
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-  (defun ox-hugo-clear-contents ()
-    "Delete contents of HUGO_BASE_DIR."
-    (interactive)
-    (let* ((org-use-property-inheritance (org-hugo--selective-property-inheritance))
-           (info (org-combine-plists
-                  (org-export--get-export-attributes
-                   'hugo nil nil
-                   ;; subtreep visible-only
-                   )
-                  (org-export--get-buffer-attributes)
-                  (org-export-get-environment 'hugo nil)))
-           (pub-dir (org-hugo--get-pub-dir info)))
-      (when (y-or-n-p (format "Delete contents of %s?" pub-dir))
-        (delete-directory pub-dir t)
-        (message "%s deleted!" pub-dir))))
-
-
   (eval-after-load 'org
     '(progn
        (define-key org-mode-map (kbd "C-c C-h e") 'ox-hugo-prepare-and-export)
@@ -238,4 +206,4 @@
        (define-key org-mode-map (kbd "C-c C-h C-a") 'org-hugo-autosplit)
        (define-key org-mode-map (kbd "C-c C-h C-/") 'org-hugo-select-filenames)))
 (provide 'org-split-hugo)
-;;; 027_org-split-hugo.el ends here
+;;; 028_org-split-hugo.el ends here
