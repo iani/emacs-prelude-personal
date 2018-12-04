@@ -1,4 +1,4 @@
-;;; tiny_menu_and_hydra --- 2018-12-04 09:34:32 AM
+;;; tiny_menu_and_hydra --- 2018-12-05 01:36:09 AM
     ;;; Commentary:
 
   ;; 2 tiny-menus for functions that I do not want to place on command-keys,
@@ -225,7 +225,7 @@
         (message "You selected light")
         (custom-set-faces
          '(org-block ((t
-                       (:foreground "#005f87" :background "#A797Af"))))
+                       (:foreground "#005f87" :background "#D7E7Af"))))
          '(hl-line ((t (:background "gray90"))))
          '(hl-sexp-face ((t (:background "gray80"))))
          '(org-block-end-line ((t (:background "#AaBaFf" :foreground "gray9"))) t)

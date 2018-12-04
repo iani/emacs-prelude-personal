@@ -2,6 +2,9 @@
 http://www.org.org
 
 * packages
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 0
+  :END:
 
 #+BEGIN_SRC emacs-lisp
 
@@ -47,6 +50,9 @@ http://www.org.org
 #+END_SRC
 
 * calendar set corfu coordinates and euopean date style
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 1
+  :END:
 
 #+BEGIN_SRC emacs-lisp
   (setq calendar-latitude [39 37 north])
@@ -55,6 +61,9 @@ http://www.org.org
 #+END_SRC
 
 * COMMENT moe theme powerline delimiter faces
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 2
+  :END:
 
 #+BEGIN_SRC emacs-lisp
   ;;; Commentary:
@@ -86,6 +95,9 @@ http://www.org.org
 #+END_SRC
 
 * COMMENT background color dark grey
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 3
+  :END:
 
 #+BEGIN_SRC emacs-lisp
 (custom-set-variables
@@ -93,6 +105,9 @@ http://www.org.org
 #+END_SRC
 
 * COMMENT Theming+Faces
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 4
+  :END:
 
 dark theme hl colors and inconsolata font
 
@@ -131,6 +146,9 @@ dark theme hl colors and inconsolata font
   (moe-dark)
 #+END_SRC
 * Cursor Beep
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 5
+  :END:
 
 #+BEGIN_SRC emacs-lisp
 
@@ -152,6 +170,9 @@ dark theme hl colors and inconsolata font
 #+END_SRC
 
 * Fullscreen toggle and native use
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 6
+  :END:
 
 #+BEGIN_SRC emacs-lisp
 ;;; Commentary:
@@ -162,6 +183,9 @@ dark theme hl colors and inconsolata font
 (global-set-key (kbd "H-t") 'toggle-frame-fullscreen)
 #+END_SRC
 * COMMENT parenthesis-colors
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 7
+  :END:
 
 #+BEGIN_SRC emacs-lisp
 (custom-set-faces
@@ -177,6 +201,9 @@ dark theme hl colors and inconsolata font
 #+END_SRC
 
 * load-some-useful-package-avy-jump-etc
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 8
+  :END:
 
 #+BEGIN_SRC emacs-lisp
   (prelude-load-require-packages '(avy-zap avy-menu auto-async-byte-compile anzu ace-window ace-popup-menu ace-isearch))
@@ -185,6 +212,7 @@ dark theme hl colors and inconsolata font
 * god and evil modes
   :PROPERTIES:
   :DATE:     <2017-10-19 Πεμ 10:03>
+  :EXPORT_HUGO_WEIGHT: 9
   :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -193,6 +221,9 @@ dark theme hl colors and inconsolata font
 #+END_SRC
 
 * whitespace and visual line fixes
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 10
+  :END:
 
 #+BEGIN_SRC emacs-lisp
   ;;; Commentary:
@@ -219,6 +250,9 @@ dark theme hl colors and inconsolata font
 
 #+END_SRC
 * turn off auto fill in text mode
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 11
+  :END:
 
 Do not turn on auto-fill mode in text or org-mode or related modes.
 The culprit in the latest version of emacs is file /Resources/lisp/textmodes/text-mode.el.
@@ -229,6 +263,9 @@ For more info, see: https://stackoverflow.com/questions/9878623/how-can-i-disabl
 (setq text-mode-hook nil)
 #+END_SRC
 * multiple-cursors
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 12
+  :END:
 
 #+BEGIN_SRC emacs-lisp
 
@@ -264,6 +301,9 @@ For more info, see: https://stackoverflow.com/questions/9878623/how-can-i-disabl
 #+END_SRC
 
 * COMMENT hl-faces
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 13
+  :END:
 
 #+BEGIN_SRC emacs-lisp
 (custom-set-faces
@@ -272,6 +312,9 @@ For more info, see: https://stackoverflow.com/questions/9878623/how-can-i-disabl
 #+END_SRC
 
 * COMMENT prelude-customization
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 14
+  :END:
 
 Unfortunately this does not work.
 Only solution so far is to switch off prelude mode when in org mode.
@@ -335,6 +378,9 @@ Only solution so far is to switch off prelude mode when in org mode.
 #+END_SRC
 
 * COMMENT helm
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 15
+  :END:
 
 #+BEGIN_SRC emacs-lisp
 ;; 1. Ensure that helm-browse-project will find .git root dir and update cache
@@ -489,6 +535,9 @@ Adapted from helm-switch-to-buffers."
 #+END_SRC
 
 * helm-swoop
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 16
+  :END:
 
 #+BEGIN_SRC emacs-lisp
   (global-ace-isearch-mode +1)
@@ -497,6 +546,9 @@ Adapted from helm-switch-to-buffers."
 #+END_SRC
 
 * bookmark extensions
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 17
+  :END:
 
 #+BEGIN_SRC emacs-lisp
 
@@ -509,12 +561,18 @@ Adapted from helm-switch-to-buffers."
 #+END_SRC
 
 * COMMENT desktop
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 18
+  :END:
 
 #+BEGIN_SRC emacs-lisp
 ;; (setq desktop-save-mode 1)
 #+END_SRC
 
 * EmacsLispModes and whitespace off
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 19
+  :END:
 
 #+BEGIN_SRC emacs-lisp
   ;;; Commentary:
@@ -544,6 +602,9 @@ Adapted from helm-switch-to-buffers."
 #+END_SRC
 
 * untangle tangle export babel from master file
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 20
+  :END:
 
 #+BEGIN_SRC emacs-lisp
   ;;; Commentary:
@@ -655,6 +716,9 @@ Adapted from helm-switch-to-buffers."
 #+END_SRC
 
 * cpp makefile
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 21
+  :END:
 
 #+BEGIN_SRC emacs-lisp
 ;;; Gcc and makefile support
@@ -676,6 +740,9 @@ Adapted from helm-switch-to-buffers."
 
 #+END_SRC
 * SuperCollider
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 22
+  :END:
 
 #+BEGIN_SRC emacs-lisp
   ;;; Commentary:
@@ -711,6 +778,9 @@ Adapted from helm-switch-to-buffers."
 #+END_SRC
 
 * SuperCollider-utils
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 23
+  :END:
 
 #+BEGIN_SRC emacs-lisp
   ;;; Commentary:
@@ -978,6 +1048,9 @@ Adapted from helm-switch-to-buffers."
 #+END_SRC
 
 * SuperCollider-hydra-snippets
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 24
+  :END:
 
 #+BEGIN_SRC emacs-lisp
   (defhydra hydra-snippets (sclang-mode-map "C-h C-s" :color red :columns 3)
@@ -1250,6 +1323,9 @@ Adapted from helm-switch-to-buffers."
 #+END_SRC
 
 * SuperCollider-hydra-general
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 25
+  :END:
 
 #+BEGIN_SRC emacs-lisp
   ;; mode-map does not work because it is overwritten by global sclang-mode=map settings
@@ -1297,6 +1373,9 @@ Adapted from helm-switch-to-buffers."
     (sclang-eval-string "PlayerSnippetList.gui"))
 #+END_SRC
 * tidal
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 26
+  :END:
 
 #+BEGIN_SRC emacs-lisp
 
@@ -1307,6 +1386,9 @@ Adapted from helm-switch-to-buffers."
 #+END_SRC
 
 * COMMENT customize-prelude-mode-keymap
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 27
+  :END:
 
 Unfortunately this does not work.
 Only solution so far is to switch off prelude mode when in org mode.
@@ -1364,6 +1446,9 @@ Only solution so far is to switch off prelude mode when in org mode.
 #+END_SRC
 
 * calc-time-zones
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 28
+  :END:
 
 #+BEGIN_SRC emacs-lisp
   ;;; Commentary:
@@ -1373,6 +1458,9 @@ Only solution so far is to switch off prelude mode when in org mode.
   (add-to-list 'math-tzone-names '("EEST" 3 0))
 #+END_SRC
 * org-mode hydra 
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 29
+  :END:
 
 #+BEGIN_SRC emacs-lisp
   (defhydra hydra-org ( :color red :columns 3)
@@ -1389,9 +1477,11 @@ Only solution so far is to switch off prelude mode when in org mode.
     ("f" ox-hugo-set-filename "hugo set filename")
     ("F" ox-hugo-set-index-filename "hugo set index filename")
     ("s" ox-hugo-set-section "hugo set section")
-    ("S" ox-hugo-set-section* "hugo set section*")
+    ;; section* does not work reliably with ox-hugo
+    ;; ("S" ox-hugo-set-section* "hugo set section*")
     ("c" ox-hugo-clear-contents "clear hugo content dir")
-    ("e" org-export-dispatch "org (+ox) export")
+    ;; has been incorporated as advice to org-export-dispatch function:
+    ;; ("w" ox-hugo-set-weights "hugo set weights")
     ("r" ox-hugo-copy-root-dir "copy root dir")
     ("q" nil "quit" :color blue))
 
@@ -1413,13 +1503,17 @@ Only solution so far is to switch off prelude mode when in org mode.
     (org-set-property "EXPORT_HUGO_SECTION" section-name)
     (message "EXPORT_HUGO_SECTION was set to %" section-name))
 
-  (defun ox-hugo-set-section* (&optional section-name)
-    "Set property EXPORT_SECTION*"
-    (interactive "MSection name: ")
-    (org-set-property "EXPORT_HUGO_SECTION*" section-name)
-    (message "EXPORT_HUGO_SECTION* was set to %" section-name))
+  ;; section* does not work reliably.
+  ;; (defun ox-hugo-set-section* (&optional section-name)
+  ;;   "Set property EXPORT_SECTION*"
+  ;;   (interactive "MSection name: ")
+  ;;   (org-set-property "EXPORT_HUGO_SECTION*" section-name)
+  ;;   (message "EXPORT_HUGO_SECTION* was set to %" section-name))
 #+END_SRC
 * org-mode
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 30
+  :END:
 
 #+BEGIN_SRC emacs-lisp
   ;;; Commentary:
@@ -1714,8 +1808,12 @@ Only solution so far is to switch off prelude mode when in org mode.
 * COMMENT org mode latex export - notes
   :PROPERTIES:
   :DATE:     <2018-03-05 Mon 23:11>
+  :EXPORT_HUGO_WEIGHT: 31
   :END:
 ** COMMENT Installing org-mode version 9 or greater
+   :PROPERTIES:
+   :EXPORT_HUGO_WEIGHT: 32
+   :END:
 
 Xelatex enables one to use system fonts. These are necessary for languages such as greek, which requires a character set other than latin.  
 
@@ -1741,6 +1839,7 @@ The present software specifies use of xelatec and requires org-version 9 or grea
 ** COMMENT Using custom latex documnent styles
    :PROPERTIES:
    :DATE:     <2018-09-23 Sun 16:11>
+   :EXPORT_HUGO_WEIGHT: 33
    :END:
 
 If the .sty or .cls files defining a latex document style are missing from the folders used by latex installed in the system, then these files should be placed in the same directory as latex file that requires them.  (The rationale for this as well as alternatives are discussed here:
@@ -1760,10 +1859,16 @@ Now under development is a modification of the function =org-compile-latex-with-
   - Generate the intended pdf document by compiling the source tex file, if needed using any auxiliary files contained in the target folder.
 
 ** COMMENT Compiling bibliogaphies wih biblatex
+   :PROPERTIES:
+   :EXPORT_HUGO_WEIGHT: 34
+   :END:
 
 The templates provided here use references stored in =bib= files (bibtex format).  Biblatex requires to use the =\bibliography= in order specify the name(s) of the =bib= files used.  Since biblatex works also when the name of a bib file points to a symbolic link, we store a symbolic link to the =bib= file in the target folder (see [[*Using custom latex documnent styles][previous section]]).  We store the directory path and the file name of the default bib file use custom variables =org-latex-bib-path= and =org=latex-bib-filename=. 
 
 * org compile latex with custom headers
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 35
+  :END:
 
 #+BEGIN_SRC emacs-lisp
   ;; (defun org-insert-latex-headers-from-deft ()
@@ -2090,6 +2195,7 @@ The templates provided here use references stored in =bib= files (bibtex format)
 * org mode and reference management ebib reftex
   :PROPERTIES:
   :DATE:     <2018-03-14 Wed 12:57>
+  :EXPORT_HUGO_WEIGHT: 36
   :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2100,6 +2206,7 @@ The templates provided here use references stored in =bib= files (bibtex format)
   :PROPERTIES:
   :DATE:     <2017-11-01 Τετ 10:56>
   :ID:       31EB3CBA-7864-4E53-A386-3E85C61F1EDA
+  :EXPORT_HUGO_WEIGHT: 37
   :END:
 
   #+BEGIN_SRC emacs-lisp
@@ -2128,6 +2235,7 @@ The templates provided here use references stored in =bib= files (bibtex format)
 * org-mode todo states and priorities
   :PROPERTIES:
   :DATE:     <2017-12-22 Fri 01:42>
+  :EXPORT_HUGO_WEIGHT: 38
   :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2172,6 +2280,9 @@ The templates provided here use references stored in =bib= files (bibtex format)
   (setq org-default-priority 77) ;; List TODOS without priority setting at the bottom
 #+END_SRC
 * org calfw
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 39
+  :END:
 
 #+BEGIN_SRC emacs-lisp
     ;;; Commentary:
@@ -2277,6 +2388,9 @@ The templates provided here use references stored in =bib= files (bibtex format)
 #+END_SRC
 
 * org-split-hugo
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 40
+  :END:
 
 This org-split-hugo has been superseded by ox-hugo and is obsolete.
 See next section.
@@ -2480,7 +2594,7 @@ See next section.
     "Build sparse tree with entries whose property filename is set."
     (interactive)
     (org-match-sparse-tree nil "filename={[^§]}"))
- 
+
   (eval-after-load 'org
     '(progn
        (define-key org-mode-map (kbd "C-c C-h e") 'ox-hugo-prepare-and-export)
@@ -2491,21 +2605,43 @@ See next section.
 #+END_SRC
 
 * ox-hugo
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 41
+  :END:
 
 #+BEGIN_SRC emacs-lisp
   ;; Functions for ox-hugo.  (11 Aug 2018 11:36)
-  (defun ox-hugo-prepare-and-export ()
-    "Call org-export-dispatch.
-  Obsolete!"
-    (interactive)
-    ;; (let ((weight 0))
-    ;;   (org-map-entries 'org--set-weight))
-    (call-interactively 'org-export-dispatch))
+  (defun ox-hugo-set-weights ()
+    "Set correct hugo weights, then Call org-export-dispatch.
 
-  ;; (defun org--set-weight ()
-  ;;   "Calculate and set EXPORT_HUGO_WEIGHT property for this entry."
-  ;;   (org-set-property "EXPORT_HUGO_WEIGHT" (format "%d" weight))
-  ;;   (setq weight (+ 1 weight)))
+  Note: the auto-weight option of ox-hugo sets wrong weights, which result
+  in subsubsections to be always at the bottom of a subsection, and not
+  inside the subsection to which they belong. Therefore, the present renumbering is
+  necessary if editing a site that has nested subsections inside subsections"
+    (interactive)
+    (let ((weight 0))
+      (org-map-entries 'ox-hugo--set-weight))
+    ;; The ox-hugo options disappear the second time after calling this:
+    ;; (org-export-dispatch)
+    (message "Weights for hugo export have been set."))
+
+  (defun ox-hugo--set-weight ()
+    "Set EXPORT_HUGO_WEIGHT property for this entry.
+  Note: the auto-weight option of ox-hugo sets wrong weights, which result
+  in subsubsections to be always at the bottom of a subsection, and not
+  inside the subsection to which they belong. Therefore, the present renumbering is
+  necessary if editing a site that has nested subsections inside subsections."
+     (org-set-property "EXPORT_HUGO_WEIGHT" (format "%d" weight))
+     (setq weight (+ 1 weight)))
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; try adding ox-hugo-set-weights as advice to export
+
+  ;; (defun my-message (&optional ARG PRED)
+  ;;   (message "Hello!"))
+
+  (advice-add 'org-export-dispatch :before 'ox-hugo-set-weights)
+
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
   (defun ox-hugo-clear-contents ()
@@ -2544,6 +2680,9 @@ See next section.
                (shell-quote-argument (file-name-directory (directory-file-name pub-dir))))))
 #+END_SRC
 * org-export-recipes
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 42
+  :END:
 
 #+BEGIN_SRC emacs-lisp
   ;;; Commentary:
@@ -2597,6 +2736,9 @@ See next section.
 #+END_SRC
 
 * unset-command-q
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 43
+  :END:
 
 #+BEGIN_SRC emacs-lisp
 ;;; Commentary:
@@ -2607,6 +2749,9 @@ See next section.
 #+END_SRC
 
 * tiny menu and hydra
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 44
+  :END:
 
 Design draft for next version:
 
@@ -2885,7 +3030,7 @@ Design draft for next version:
         (message "You selected light")
         (custom-set-faces
          '(org-block ((t
-                       (:foreground "#005f87" :background "#A797Af"))))
+                       (:foreground "#005f87" :background "#D7E7Af"))))
          '(hl-line ((t (:background "gray90"))))
          '(hl-sexp-face ((t (:background "gray80"))))
          '(org-block-end-line ((t (:background "#AaBaFf" :foreground "gray9"))) t)
@@ -2938,7 +3083,7 @@ Design draft for next version:
     ("o" text-scale-decrease "out")
     ("0" (text-scale-adjust 0) "reset")
     ("q" nil "quit" :color blue))
-  
+
   (defhydra hydra-search (global-map "M-g" :color blue :columns 3)
     "search+goto+mark"
     ("r" helm-recentf "recent files")
@@ -3086,6 +3231,9 @@ Design draft for next version:
   :DATE:     <2018-01-04 Thu 09:27>
   :END:
 * COMMENT Dired-hide-details
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 45
+  :END:
 
 #+BEGIN_SRC emacs-lisp
   ;;; Commentary:
@@ -3102,6 +3250,9 @@ Design draft for next version:
 #+END_SRC
 
 * COMMENT copy line2shell
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 46
+  :END:
 
 #+BEGIN_SRC emacs-lisp
 ;;; line2shell --- copy current line and paste to shell in other window
@@ -3132,6 +3283,7 @@ Design draft for next version:
 * projectile
   :PROPERTIES:
   :DATE:     <2017-07-26 Wed 12:39>
+  :EXPORT_HUGO_WEIGHT: 47
   :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -3151,6 +3303,9 @@ Design draft for next version:
 #+END_SRC
 
 * COMMENT hexo-export-hacks
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 48
+  :END:
 
 #+BEGIN_SRC emacs-lisp
 
@@ -3181,6 +3336,9 @@ Design draft for next version:
 #+END_SRC
 
 * COMMENT copy-filename-to-clipboard
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 49
+  :END:
 
 #+BEGIN_SRC emacs-lisp
 (defun copy-file-name-to-clipboard ()
@@ -3195,6 +3353,9 @@ Design draft for next version:
 #+END_SRC
 
 * calendar
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 50
+  :END:
 
 #+BEGIN_SRC emacs-lisp
 
@@ -3238,6 +3399,9 @@ Design draft for next version:
 #+END_SRC
 
 * COMMENT evil-mode
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 51
+  :END:
 
 #+BEGIN_SRC emacs-lisp
           (lambda ()
@@ -3249,6 +3413,9 @@ Design draft for next version:
 #+END_SRC
 
 * greek input
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 52
+  :END:
 
 #+BEGIN_SRC emacs-lisp
   ;; (global-set-key (kbd "C-c C-\\") 'toggle-input-method)
@@ -3260,6 +3427,9 @@ Design draft for next version:
 #+END_SRC
 
 * window and buffer switching ace window
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 53
+  :END:
 
 #+BEGIN_SRC emacs-lisp
   ;;; Commentary:
@@ -3289,6 +3459,9 @@ Design draft for next version:
 #+END_SRC
 
 * COMMENT god-mode
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 54
+  :END:
 
 #+BEGIN_SRC emacs-lisp
 ;; (global-set-key (kbd "<escape>") 'god-local-mode)
@@ -3296,6 +3469,9 @@ Design draft for next version:
 #+END_SRC
 
 * COMMENT elisp-slime-nav
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 55
+  :END:
 
 #+BEGIN_SRC emacs-lisp
 ;; see: http://sachachua.com/blog/2014/05/emacs-chat-bozhidar-batsov/
@@ -3308,6 +3484,9 @@ Design draft for next version:
 #+RESULTS:
 
 * copy-file-path
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 56
+  :END:
 
 #+BEGIN_SRC emacs-lisp
   (defun crux-copy-file-path (&optional dir-path-only-p)
@@ -3337,6 +3516,9 @@ Design draft for next version:
 #+END_SRC
 
 * org-journal
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 57
+  :END:
 
 #+BEGIN_SRC emacs-lisp
   ;;; Commentary:
@@ -3491,6 +3673,9 @@ Design draft for next version:
 #+END_SRC
 
 * re-builder
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 58
+  :END:
 
 #+BEGIN_SRC emacs-lisp
   ;;; see https://www.masteringemacs.org/article/re-builder-interactive-regexp-builder
@@ -3499,6 +3684,9 @@ Design draft for next version:
 #+END_SRC
 
 * COMMENT sclang-link-folder-to-extensions
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 59
+  :END:
 
 #+BEGIN_SRC emacs-lisp
 
@@ -3531,6 +3719,9 @@ If UNLINK-P is not nil, then delete the link instead."
 #+END_SRC
 
 * COMMENT use-workgroups2
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 60
+  :END:
 
 #+BEGIN_SRC emacs-lisp
   (prelude-require-package 'workgroups2)
@@ -3538,12 +3729,18 @@ If UNLINK-P is not nil, then delete the link instead."
 
 #+END_SRC
 * turn-whitespace-off
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 61
+  :END:
 
 #+BEGIN_SRC emacs-lisp
   (whitespace-mode -1)
   ;; (toggle-frame-fullscreen)
 #+END_SRC
 * COMMENT eshell on path with prompt
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 62
+  :END:
 
 #+BEGIN_SRC emacs-lisp
   ;;;;;;;;;;;;;;;; UNDER DEVELOPENT
@@ -3578,6 +3775,7 @@ If UNLINK-P is not nil, then delete the link instead."
 * last actions 1 window hydra lobal
   :PROPERTIES:
   :DATE:     <2017-12-15 Fri 09:55>
+  :EXPORT_HUGO_WEIGHT: 63
   :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -3585,6 +3783,9 @@ If UNLINK-P is not nil, then delete the link instead."
   (hydra-global/body)
 #+END_SRC
 * COMMENT debugging agenda
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 64
+  :END:
 
 #+BEGIN_SRC emacs-lisp
 (setq org-agenda-files '("/Volumes/t2a/DebugEmacsAgenda" "/Volumes/t2a/DebugEmacsAgenda/journal"))

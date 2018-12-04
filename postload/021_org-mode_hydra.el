@@ -1,4 +1,4 @@
-;;; org-mode_hydra --- 2018-12-04 09:34:31 AM
+;;; org-mode_hydra --- 2018-12-05 01:36:08 AM
   (defhydra hydra-org ( :color red :columns 3)
     "org-mode hydra"
     ("n" outline-next-visible-heading "next heading")
@@ -13,9 +13,11 @@
     ("f" ox-hugo-set-filename "hugo set filename")
     ("F" ox-hugo-set-index-filename "hugo set index filename")
     ("s" ox-hugo-set-section "hugo set section")
-    ("S" ox-hugo-set-section* "hugo set section*")
+    ;; section* does not work reliably with ox-hugo
+    ;; ("S" ox-hugo-set-section* "hugo set section*")
     ("c" ox-hugo-clear-contents "clear hugo content dir")
-    ("e" org-export-dispatch "org (+ox) export")
+    ;; has been incorporated as advice to org-export-dispatch function:
+    ;; ("w" ox-hugo-set-weights "hugo set weights")
     ("r" ox-hugo-copy-root-dir "copy root dir")
     ("q" nil "quit" :color blue))
 
@@ -37,10 +39,11 @@
     (org-set-property "EXPORT_HUGO_SECTION" section-name)
     (message "EXPORT_HUGO_SECTION was set to %" section-name))
 
-  (defun ox-hugo-set-section* (&optional section-name)
-    "Set property EXPORT_SECTION*"
-    (interactive "MSection name: ")
-    (org-set-property "EXPORT_HUGO_SECTION*" section-name)
-    (message "EXPORT_HUGO_SECTION* was set to %" section-name))
+  ;; section* does not work reliably.
+  ;; (defun ox-hugo-set-section* (&optional section-name)
+  ;;   "Set property EXPORT_SECTION*"
+  ;;   (interactive "MSection name: ")
+  ;;   (org-set-property "EXPORT_HUGO_SECTION*" section-name)
+  ;;   (message "EXPORT_HUGO_SECTION* was set to %" section-name))
 (provide 'org-mode_hydra)
 ;;; 021_org-mode_hydra.el ends here

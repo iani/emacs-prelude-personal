@@ -1,17 +1,36 @@
-;;; ox-hugo --- 2018-12-04 09:34:32 AM
+;;; ox-hugo --- 2018-12-05 01:36:09 AM
   ;; Functions for ox-hugo.  (11 Aug 2018 11:36)
-  (defun ox-hugo-prepare-and-export ()
-    "Call org-export-dispatch.
-  Obsolete!"
-    (interactive)
-    ;; (let ((weight 0))
-    ;;   (org-map-entries 'org--set-weight))
-    (call-interactively 'org-export-dispatch))
+  (defun ox-hugo-set-weights ()
+    "Set correct hugo weights, then Call org-export-dispatch.
 
-  ;; (defun org--set-weight ()
-  ;;   "Calculate and set EXPORT_HUGO_WEIGHT property for this entry."
-  ;;   (org-set-property "EXPORT_HUGO_WEIGHT" (format "%d" weight))
-  ;;   (setq weight (+ 1 weight)))
+  Note: the auto-weight option of ox-hugo sets wrong weights, which result
+  in subsubsections to be always at the bottom of a subsection, and not
+  inside the subsection to which they belong. Therefore, the present renumbering is
+  necessary if editing a site that has nested subsections inside subsections"
+    (interactive)
+    (let ((weight 0))
+      (org-map-entries 'ox-hugo--set-weight))
+    ;; The ox-hugo options disappear the second time after calling this:
+    ;; (org-export-dispatch)
+    (message "Weights for hugo export have been set."))
+
+  (defun ox-hugo--set-weight ()
+    "Set EXPORT_HUGO_WEIGHT property for this entry.
+  Note: the auto-weight option of ox-hugo sets wrong weights, which result
+  in subsubsections to be always at the bottom of a subsection, and not
+  inside the subsection to which they belong. Therefore, the present renumbering is
+  necessary if editing a site that has nested subsections inside subsections."
+     (org-set-property "EXPORT_HUGO_WEIGHT" (format "%d" weight))
+     (setq weight (+ 1 weight)))
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; try adding ox-hugo-set-weights as advice to export
+
+  ;; (defun my-message (&optional ARG PRED)
+  ;;   (message "Hello!"))
+
+  (advice-add 'org-export-dispatch :before 'ox-hugo-set-weights)
+
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
   (defun ox-hugo-clear-contents ()
