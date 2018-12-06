@@ -1984,7 +1984,7 @@ The templates provided here use references stored in =bib= files (bibtex format)
       (kill-buffer (current-buffer))
       ;; Insert class, header, footer to latex output and export to pdf
       (with-temp-buffer
-        (insert (cadr class) "\n")
+        (unless (has-documentclass header) (insert (cadr class) "\n"))
         (insert header)
         (insert latex-output)
         (insert footer)
@@ -2001,8 +2001,21 @@ The templates provided here use references stored in =bib= files (bibtex format)
           ;; (org-latex-compile (buffer-file-name))
           (cleanup-bbl-and-compile-latex (buffer-file-name))
           (message "org-latex compile to PDF done. Opening:\n%s" (shell-quote-argument pdf-file))
-          (copy-file pdf-file (concat org-latex-export-path "/" (file-name-nondirectory pdf-file)) t)
+          (copy-file pdf-file (concat org-latex-export-path "/"
+                                      (file-name-nondirectory pdf-file)) t)
           (shell-command (concat "open " (shell-quote-argument pdf-file)))))))
+
+  (defun has-documentclass (string)
+    "Return if string contains documentclass."
+    (if (string-match "documentclass" string)
+        t
+      nil))
+
+  (defun test-doclass ()
+      "temporary test function"
+    (interactive)
+    (message "Is: %s"
+             (has-documentclass (buffer-substring-no-properties (point-min) (point-max)))))
 
   (defun cleanup-bbl-and-compile-latex (filename)
     "Remove bbl file before compiling, to ensure bibliography is compiled anew."
@@ -2611,6 +2624,11 @@ See next section.
 
 #+BEGIN_SRC emacs-lisp
   ;; Functions for ox-hugo.  (11 Aug 2018 11:36)
+
+  ;;; use yaml format in export front matter,
+  ;;; because most themes use this as default
+  (setq org-hugo-front-matter-format "yaml")
+
   (defun ox-hugo-set-weights ()
     "Set correct hugo weights, then Call org-export-dispatch.
 
@@ -2645,7 +2663,12 @@ See next section.
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
   (defun ox-hugo-clear-contents ()
-    "Delete contents of HUGO_BASE_DIR."
+    "Delete contents of HUGO_BASE_DIR.
+  TODO: make this delete only md files.
+  Other files should remain, because they may be images (static content).
+  Alternatively, put images in static only - not in content.
+  See https://discourse.gohugo.io/t/solved-how-to-insert-image-in-my-post/1473/10
+  "
     (interactive)
     (let* ((org-use-property-inheritance (org-hugo--selective-property-inheritance))
            (info (org-combine-plists

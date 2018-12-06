@@ -1,4 +1,4 @@
-;;; SuperCollider-hydra-snippets --- 2018-12-05 01:36:07 AM
+;;; SuperCollider-hydra-snippets --- 2018-12-06 07:51:30 PM
   (defhydra hydra-snippets (sclang-mode-map "C-h C-s" :color red :columns 3)
     "SC Snippet hydra"
     ("n" sclang-goto-next-snippet "next")

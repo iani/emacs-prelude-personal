@@ -1,4 +1,4 @@
-;;; org_compile_latex_with_custom_headers --- 2018-12-05 01:36:08 AM
+;;; org_compile_latex_with_custom_headers --- 2018-12-06 07:51:31 PM
   ;; (defun org-insert-latex-headers-from-deft ()
   ;;   "Choose latex headers from recipe list using deft, and append them to the currently edited file."
   ;;   (with-current-buffer
@@ -112,7 +112,7 @@
       (kill-buffer (current-buffer))
       ;; Insert class, header, footer to latex output and export to pdf
       (with-temp-buffer
-        (insert (cadr class) "\n")
+        (unless (has-documentclass header) (insert (cadr class) "\n"))
         (insert header)
         (insert latex-output)
         (insert footer)
@@ -129,8 +129,21 @@
           ;; (org-latex-compile (buffer-file-name))
           (cleanup-bbl-and-compile-latex (buffer-file-name))
           (message "org-latex compile to PDF done. Opening:\n%s" (shell-quote-argument pdf-file))
-          (copy-file pdf-file (concat org-latex-export-path "/" (file-name-nondirectory pdf-file)) t)
+          (copy-file pdf-file (concat org-latex-export-path "/"
+                                      (file-name-nondirectory pdf-file)) t)
           (shell-command (concat "open " (shell-quote-argument pdf-file)))))))
+
+  (defun has-documentclass (string)
+    "Return if string contains documentclass."
+    (if (string-match "documentclass" string)
+        t
+      nil))
+
+  (defun test-doclass ()
+      "temporary test function"
+    (interactive)
+    (message "Is: %s"
+             (has-documentclass (buffer-substring-no-properties (point-min) (point-max)))))
 
   (defun cleanup-bbl-and-compile-latex (filename)
     "Remove bbl file before compiling, to ensure bibliography is compiled anew."

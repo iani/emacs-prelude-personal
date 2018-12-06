@@ -1,5 +1,10 @@
-;;; ox-hugo --- 2018-12-05 01:36:09 AM
+;;; ox-hugo --- 2018-12-06 07:51:32 PM
   ;; Functions for ox-hugo.  (11 Aug 2018 11:36)
+
+  ;;; use yaml format in export front matter,
+  ;;; because most themes use this as default
+  (setq org-hugo-front-matter-format "yaml")
+
   (defun ox-hugo-set-weights ()
     "Set correct hugo weights, then Call org-export-dispatch.
 
@@ -34,7 +39,12 @@
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
   (defun ox-hugo-clear-contents ()
-    "Delete contents of HUGO_BASE_DIR."
+    "Delete contents of HUGO_BASE_DIR.
+  TODO: make this delete only md files.
+  Other files should remain, because they may be images (static content).
+  Alternatively, put images in static only - not in content.
+  See https://discourse.gohugo.io/t/solved-how-to-insert-image-in-my-post/1473/10
+  "
     (interactive)
     (let* ((org-use-property-inheritance (org-hugo--selective-property-inheritance))
            (info (org-combine-plists
