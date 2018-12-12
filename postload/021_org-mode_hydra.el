@@ -1,4 +1,4 @@
-;;; org-mode_hydra --- 2018-12-06 07:51:31 PM
+;;; org-mode_hydra --- 2018-12-12 03:45:20 PM
   (defhydra hydra-org ( :color red :columns 3)
     "org-mode hydra"
     ("n" outline-next-visible-heading "next heading")
@@ -6,6 +6,7 @@
     ;; ("C-p" outline-previous-visible-heading "prev heading")
     ("N" org-forward-heading-same-level "next heading at same level")
     ("P" org-backward-heading-same-level "prev heading at same level")
+    ("C-p" org-prev-show-properties "prev show properties")
     ("c" org-cycle "cycle")
     ("u" outline-up-heading "up heading")
     ("i" imenu-anywhere "imenu" :exit t)
@@ -21,20 +22,26 @@
     ("r" ox-hugo-copy-root-dir "copy root dir")
     ("q" nil "quit" :color blue))
 
+  (defun org-prev-show-properties ()
+    "Go to previous heading and open subtree."
+    (interactive)
+    (outline-previous-heading)
+    (org-show-subtree))
+
   (defun ox-hugo-set-filename (&optional file-name)
-    "Set property EXPORT_FILE_NAME"
+    "Set property EXPORT_FILE_NAME."
     (interactive "MFile name: ")
     (org-set-property "EXPORT_FILE_NAME" file-name)
     (message "EXPORT_FILE_NAME was set to %" file-name))
 
   (defun ox-hugo-set-index-filename ()
-    "Set property EXPORT_FILE_NAME to _index"
+    "Set property EXPORT_FILE_NAME to _index."
     (interactive)
     (org-set-property "EXPORT_FILE_NAME" "_index")
     (message "EXPORT_FILE_NAME was set to _index"))
 
   (defun ox-hugo-set-section (&optional section-name)
-    "Set property EXPORT_SECTION"
+    "Set property EXPORT-NAME."
     (interactive "MSection name: ")
     (org-set-property "EXPORT_HUGO_SECTION" section-name)
     (message "EXPORT_HUGO_SECTION was set to %" section-name))

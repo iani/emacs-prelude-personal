@@ -1,4 +1,4 @@
-;;; org-mode_todo_states_and_priorities --- 2018-12-06 07:51:31 PM
+;;; org-mode_todo_states_and_priorities --- 2018-12-12 03:45:21 PM
   ;; Experimental, 29 Sep 2018 04:25
   ;; after https://orgmode.org/manual/Fast-access-to-TODO-states.html#Fast-access-to-TODO-states
 
@@ -18,7 +18,7 @@
   ;;
 
   (setq org-todo-keywords
-        '((sequence "TODO(t)" "|" "STARTED(s@)" "|" "DONE(d@)")
+        '((sequence "TODO(t)" "|" "TAZE(z)" "|" "STARTED(s@)" "|" "BAYAT(b)" "|" "DONE(d@)")
           (sequence "|" "URGENT(u)")
           (sequence "|" "DELEGATED(l)")
           (sequence "|" "CANCELED(c)")
@@ -26,12 +26,14 @@
 
   (setq org-todo-keyword-faces
         '(("TODO" . (:foreground "red1" :weight bold))
+          ("TAZE" . (:foreground "green3" :background "navy" :weight bold))
           ("URGENT" . (:foreground "red1" :background "orange1" :weight bold))
           ("STARTED" . (:foreground "salmon" :weight bold))
           ;; ("STARTED" . "#E35DBF")
           ("CANCELED" . (:foreground "white" :background "#4d4d4d" :weight bold))
           ("DELEGATED" . (:foreground "orange2" :background "#4d4d4d" :weight bold))
           ("POSTPONED" . (:foreground "dark cyan" :weight bold))
+          ("BAYAT" . (:foreground "gainsboro" :weight bold))
           ;; ("POSTPONED" . "#008080")
           ))
 

@@ -1,4 +1,4 @@
-;;; whitespace_and_visual_line_fixes --- 2018-12-06 07:51:29 PM
+;;; whitespace_and_visual_line_fixes --- 2018-12-12 03:45:18 PM
   ;;; Commentary:
   ;;; turn off whitespace and turn on visual line modes,
   ;;; for these main modes:

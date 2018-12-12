@@ -1,4 +1,4 @@
-;;; copy-file-path --- 2018-12-06 07:51:33 PM
+;;; copy-file-path --- 2018-12-12 03:45:22 PM
   (defun crux-copy-file-path (&optional dir-path-only-p)
   "Copy the current buffer's file path or dired path to `kill-ring'.
   Result is full path.

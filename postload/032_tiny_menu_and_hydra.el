@@ -1,4 +1,4 @@
-;;; tiny_menu_and_hydra --- 2018-12-06 07:51:32 PM
+;;; tiny_menu_and_hydra --- 2018-12-12 03:45:22 PM
     ;;; Commentary:
 
   ;; 2 tiny-menus for functions that I do not want to place on command-keys,
@@ -202,12 +202,8 @@
     "Customize faces for hl selecting dark or light theme."
     (interactive "c type d for dark or l for light")
     (message "you input this: %s" dark-or-light)
-    ;; these  2 faces should work both on dark and light
+    ;; should work both on dark and light?
     (custom-set-faces
-     '(org-link ((t
-                  (:underline
-                   (:color "#Ff0b5f" :style line)
-                   :foreground "#Ff0b0f" :background "F1F1F1"))))
      '(highlight ((t
                    (:foreground "#FaFbff" :background "#119191"))))
      )
@@ -215,8 +211,12 @@
         (progn
           (message "You selected dark")
           (custom-set-faces
+           '(org-link ((t
+                        (:underline
+                         (:color "cyan" :style line)
+                         :foreground "cyan"))))
            '(org-block ((t
-                         (:foreground "#005f87" :background "#17271f"))))
+                         (:foreground "#9bff7" :background "#17271f"))))
            '(hl-line ((t (:background "gray0"))))
            '(hl-sexp-face ((t (:background "gray10"))))
            '(org-block-end-line ((t (:background "#2a2a2f" :foreground "gray99"))) t)
@@ -224,8 +224,14 @@
       (progn
         (message "You selected light")
         (custom-set-faces
+         '(org-link ((t
+                      (:underline
+                       (:color "#Ff0b5f" :style line)
+                       :foreground "#Ff0b0f" :background "#F1F1F1"))))
+         '(org-level-2 ((t
+                         (:height 1.1 :weight bold :foreground "green3"))))
          '(org-block ((t
-                       (:foreground "#005f87" :background "#D7E7Af"))))
+                       (:foreground "gray5" :background "#F7E7Cf"))))
          '(hl-line ((t (:background "gray90"))))
          '(hl-sexp-face ((t (:background "gray80"))))
          '(org-block-end-line ((t (:background "#AaBaFf" :foreground "gray9"))) t)
