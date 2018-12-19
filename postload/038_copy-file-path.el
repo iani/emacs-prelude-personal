@@ -1,17 +1,18 @@
-;;; copy-file-path --- 2018-12-12 03:45:22 PM
+;;; copy-file-path --- 2018-12-19 08:20:56 PM
   (defun crux-copy-file-path (&optional dir-path-only-p)
-  "Copy the current buffer's file path or dired path to `kill-ring'.
-  Result is full path.
-  If `universal-argument' is called first, copy only the dir path.
-  URL `http://ergoemacs.org/emacs/emacs_copy_file_path.html'
-  Version 2015-12-02"
+    "Copy the current buffer's file path or dired path to `kill-ring'.
+    Result is full path.
+    If `universal-argument' is called first, copy only the dir path.
+    URL `http://ergoemacs.org/emacs/emacs_copy_file_path.html'
+    Version 2015-12-02"
     (interactive "P")
     (let ((ξfpath
            (if (equal major-mode 'dired-mode)
                (expand-file-name default-directory)
              (if (null (buffer-file-name))
                  (user-error "Current buffer is not associated with a file.")
-               (buffer-file-name)))))
+               ;; use shell-quote-argument for convenience when pasting to shell terminal
+               (shell-quote-argument (buffer-file-name))))))
       (kill-new
        (if (null dir-path-only-p)
            (progn
@@ -24,4 +25,4 @@
 
   (global-set-key (kbd "C-c P") 'crux-copy-file-path)
 (provide 'copy-file-path)
-;;; 037_copy-file-path.el ends here
+;;; 038_copy-file-path.el ends here

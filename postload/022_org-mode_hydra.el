@@ -1,4 +1,4 @@
-;;; org-mode_hydra --- 2018-12-12 03:45:20 PM
+;;; org-mode_hydra --- 2018-12-19 08:20:54 PM
   (defhydra hydra-org ( :color red :columns 3)
     "org-mode hydra"
     ("n" outline-next-visible-heading "next heading")
@@ -9,8 +9,9 @@
     ("C-p" org-prev-show-properties "prev show properties")
     ("c" org-cycle "cycle")
     ("u" outline-up-heading "up heading")
-    ("i" imenu-anywhere "imenu" :exit t)
-    ("I" air-goto-section "icicles goto" :exit t)
+    ("i" icicle-imenu "icicle imenu" :exit t)
+    ("I" imenu-anywhere "imenu" :exit t)
+    ("g" air-goto-section "icicles goto" :exit t)
     ("f" ox-hugo-set-filename "hugo set filename")
     ("F" ox-hugo-set-index-filename "hugo set index filename")
     ("s" ox-hugo-set-section "hugo set section")
@@ -53,4 +54,4 @@
   ;;   (org-set-property "EXPORT_HUGO_SECTION*" section-name)
   ;;   (message "EXPORT_HUGO_SECTION* was set to %" section-name))
 (provide 'org-mode_hydra)
-;;; 021_org-mode_hydra.el ends here
+;;; 022_org-mode_hydra.el ends here

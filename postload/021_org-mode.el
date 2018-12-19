@@ -1,4 +1,4 @@
-;;; org-mode --- 2018-12-12 03:45:21 PM
+;;; org-mode --- 2018-12-19 08:20:54 PM
   ;;; Commentary:
 
   ;; customize some org mode settings
@@ -209,10 +209,11 @@
        (define-key org-mode-map (kbd "C-c k") 'crux-kill-other-buffers)
        ;;     ;; another annoying overwrite of a useful org-mode command:
        ;;     ;; (define-key map (kbd "C-c TAB") 'prelude-indent-rigidly-and-copy-to-clipboard)
-       (define-key org-mode-map (kbd "C-c I") 'crux-find-user-init-file)
        (define-key org-mode-map (kbd "C-c S") 'crux-find-shell-init-file)
        ;; replace not functioning 'prelude-goto-symbol with useful imenu-anywhere
-       (define-key org-mode-map (kbd "C-c i") 'imenu-anywhere)
+       (define-key org-mode-map (kbd "C-c i") 'icicle-imenu)
+       (define-key org-mode-map (kbd "C-c I") 'imenu-anywhere)
+       ;; (define-key org-mode-map (kbd "C-c I") 'crux-find-user-init-file)
        ;;     ;; extra prefix for projectile
        (define-key org-mode-map (kbd "s-p") 'projectile-command-map)
        ;;     ;; make some use of the Super key
@@ -288,4 +289,4 @@
 
   (global-set-key (kbd "C-c C-x t") 'org-insert-current-date)
 (provide 'org-mode)
-;;; 022_org-mode.el ends here
+;;; 021_org-mode.el ends here

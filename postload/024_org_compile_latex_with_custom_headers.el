@@ -1,4 +1,4 @@
-;;; org_compile_latex_with_custom_headers --- 2018-12-12 03:45:21 PM
+;;; org_compile_latex_with_custom_headers --- 2018-12-19 08:20:54 PM
   ;; (defun org-insert-latex-headers-from-deft ()
   ;;   "Choose latex headers from recipe list using deft, and append them to the currently edited file."
   ;;   (with-current-buffer
@@ -331,5 +331,8 @@
   (defun org-get-latex-template-file-path ()
     "Return path of latex-tempalte-file name from leatex-exports cache subdirectory."
     (concat (org-get-latex-export-cache-directory) "/template-file-path.txt"))
+
+  6939226266
+  26610 87662
 (provide 'org_compile_latex_with_custom_headers)
-;;; 023_org_compile_latex_with_custom_headers.el ends here
+;;; 024_org_compile_latex_with_custom_headers.el ends here

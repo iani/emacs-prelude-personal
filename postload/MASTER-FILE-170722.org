@@ -1428,7 +1428,8 @@ Only solution so far is to switch off prelude mode when in org mode.
       (define-key map (kbd "C-c TAB") 'crux-indent-rigidly-and-copy-to-clipboard)
       (define-key map (kbd "C-c I") 'crux-find-user-init-file)
       (define-key map (kbd "C-c S") 'crux-find-shell-init-file)
-      (define-key map (kbd "C-c i") 'imenu-anywhere)
+      (define-key map (kbd "C-c i") 'icicle-imenu)
+      (define-key map (kbd "C-c I") 'imenu-anywhere)
       ;; extra prefix for projectile
       (define-key map (kbd "s-p") 'projectile-command-map)
       ;; make some use of the Super key
@@ -1456,66 +1457,6 @@ Only solution so far is to switch off prelude mode when in org mode.
   (require 'calc-forms) ;; built-in package
   (add-to-list 'math-tzone-names '("JST" 9 0))
   (add-to-list 'math-tzone-names '("EEST" 3 0))
-#+END_SRC
-* org-mode hydra 
-  :PROPERTIES:
-  :EXPORT_HUGO_WEIGHT: 29
-  :END:
-
-#+BEGIN_SRC emacs-lisp
-  (defhydra hydra-org ( :color red :columns 3)
-    "org-mode hydra"
-    ("n" outline-next-visible-heading "next heading")
-    ("p" outline-previous-visible-heading "prev heading")
-    ;; ("C-p" outline-previous-visible-heading "prev heading")
-    ("N" org-forward-heading-same-level "next heading at same level")
-    ("P" org-backward-heading-same-level "prev heading at same level")
-    ("C-p" org-prev-show-properties "prev show properties")
-    ("c" org-cycle "cycle")
-    ("u" outline-up-heading "up heading")
-    ("i" imenu-anywhere "imenu" :exit t)
-    ("I" air-goto-section "icicles goto" :exit t)
-    ("f" ox-hugo-set-filename "hugo set filename")
-    ("F" ox-hugo-set-index-filename "hugo set index filename")
-    ("s" ox-hugo-set-section "hugo set section")
-    ;; section* does not work reliably with ox-hugo
-    ;; ("S" ox-hugo-set-section* "hugo set section*")
-    ("c" ox-hugo-clear-contents "clear hugo content dir")
-    ;; has been incorporated as advice to org-export-dispatch function:
-    ;; ("w" ox-hugo-set-weights "hugo set weights")
-    ("r" ox-hugo-copy-root-dir "copy root dir")
-    ("q" nil "quit" :color blue))
-
-  (defun org-prev-show-properties ()
-    "Go to previous heading and open subtree."
-    (interactive)
-    (outline-previous-heading)
-    (org-show-subtree))
-
-  (defun ox-hugo-set-filename (&optional file-name)
-    "Set property EXPORT_FILE_NAME."
-    (interactive "MFile name: ")
-    (org-set-property "EXPORT_FILE_NAME" file-name)
-    (message "EXPORT_FILE_NAME was set to %" file-name))
-
-  (defun ox-hugo-set-index-filename ()
-    "Set property EXPORT_FILE_NAME to _index."
-    (interactive)
-    (org-set-property "EXPORT_FILE_NAME" "_index")
-    (message "EXPORT_FILE_NAME was set to _index"))
-
-  (defun ox-hugo-set-section (&optional section-name)
-    "Set property EXPORT-NAME."
-    (interactive "MSection name: ")
-    (org-set-property "EXPORT_HUGO_SECTION" section-name)
-    (message "EXPORT_HUGO_SECTION was set to %" section-name))
-
-  ;; section* does not work reliably.
-  ;; (defun ox-hugo-set-section* (&optional section-name)
-  ;;   "Set property EXPORT_SECTION*"
-  ;;   (interactive "MSection name: ")
-  ;;   (org-set-property "EXPORT_HUGO_SECTION*" section-name)
-  ;;   (message "EXPORT_HUGO_SECTION* was set to %" section-name))
 #+END_SRC
 * org-mode
   :PROPERTIES:
@@ -1733,10 +1674,11 @@ Only solution so far is to switch off prelude mode when in org mode.
        (define-key org-mode-map (kbd "C-c k") 'crux-kill-other-buffers)
        ;;     ;; another annoying overwrite of a useful org-mode command:
        ;;     ;; (define-key map (kbd "C-c TAB") 'prelude-indent-rigidly-and-copy-to-clipboard)
-       (define-key org-mode-map (kbd "C-c I") 'crux-find-user-init-file)
        (define-key org-mode-map (kbd "C-c S") 'crux-find-shell-init-file)
        ;; replace not functioning 'prelude-goto-symbol with useful imenu-anywhere
-       (define-key org-mode-map (kbd "C-c i") 'imenu-anywhere)
+       (define-key org-mode-map (kbd "C-c i") 'icicle-imenu)
+       (define-key org-mode-map (kbd "C-c I") 'imenu-anywhere)
+       ;; (define-key org-mode-map (kbd "C-c I") 'crux-find-user-init-file)
        ;;     ;; extra prefix for projectile
        (define-key org-mode-map (kbd "s-p") 'projectile-command-map)
        ;;     ;; make some use of the Super key
@@ -1812,6 +1754,83 @@ Only solution so far is to switch off prelude mode when in org mode.
 
   (global-set-key (kbd "C-c C-x t") 'org-insert-current-date)
 #+END_SRC
+* org-mode hydra 
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 29
+  :END:
+
+#+BEGIN_SRC emacs-lisp
+  (defhydra hydra-org ( :color red :columns 3)
+    "org-mode hydra"
+    ("n" outline-next-visible-heading "next heading")
+    ("p" outline-previous-visible-heading "prev heading")
+    ;; ("C-p" outline-previous-visible-heading "prev heading")
+    ("N" org-forward-heading-same-level "next heading at same level")
+    ("P" org-backward-heading-same-level "prev heading at same level")
+    ("C-p" org-prev-show-properties "prev show properties")
+    ("c" org-cycle "cycle")
+    ("u" outline-up-heading "up heading")
+    ("i" icicle-imenu "icicle imenu" :exit t)
+    ("I" imenu-anywhere "imenu" :exit t)
+    ("g" air-goto-section "icicles goto" :exit t)
+    ("f" ox-hugo-set-filename "hugo set filename")
+    ("F" ox-hugo-set-index-filename "hugo set index filename")
+    ("s" ox-hugo-set-section "hugo set section")
+    ;; section* does not work reliably with ox-hugo
+    ;; ("S" ox-hugo-set-section* "hugo set section*")
+    ("c" ox-hugo-clear-contents "clear hugo content dir")
+    ;; has been incorporated as advice to org-export-dispatch function:
+    ;; ("w" ox-hugo-set-weights "hugo set weights")
+    ("r" ox-hugo-copy-root-dir "copy root dir")
+    ("q" nil "quit" :color blue))
+
+  (defun org-prev-show-properties ()
+    "Go to previous heading and open subtree."
+    (interactive)
+    (outline-previous-heading)
+    (org-show-subtree))
+
+  (defun ox-hugo-set-filename (&optional file-name)
+    "Set property EXPORT_FILE_NAME."
+    (interactive "MFile name: ")
+    (org-set-property "EXPORT_FILE_NAME" file-name)
+    (message "EXPORT_FILE_NAME was set to %" file-name))
+
+  (defun ox-hugo-set-index-filename ()
+    "Set property EXPORT_FILE_NAME to _index."
+    (interactive)
+    (org-set-property "EXPORT_FILE_NAME" "_index")
+    (message "EXPORT_FILE_NAME was set to _index"))
+
+  (defun ox-hugo-set-section (&optional section-name)
+    "Set property EXPORT-NAME."
+    (interactive "MSection name: ")
+    (org-set-property "EXPORT_HUGO_SECTION" section-name)
+    (message "EXPORT_HUGO_SECTION was set to %" section-name))
+
+  ;; section* does not work reliably.
+  ;; (defun ox-hugo-set-section* (&optional section-name)
+  ;;   "Set property EXPORT_SECTION*"
+  ;;   (interactive "MSection name: ")
+  ;;   (org-set-property "EXPORT_HUGO_SECTION*" section-name)
+  ;;   (message "EXPORT_HUGO_SECTION* was set to %" section-name))
+#+END_SRC
+* COMMENT org-capture to correspondence
+
+Incomplete draft.
+#+BEGIN_SRC emacs-lisp
+  (setq org-default-notes-file (file-truename "~/BitTorrent Sync/000WORKFILES/PROJECTS_CURRENT/Correspondence.org"))
+  /Users/iani/BitTorrent Sync/000WORKFILES/PROJECTS_CURRENT/Correspondence.org
+  ;; (define-key global-map "\C-cc" 'org-capture)
+
+  (setq org-capture-templates
+        '(("c" "Correspondence" entry ())
+          ("t" "Todo" entry (file+headline "~/org/gtd.org" "Tasks")
+           "* TODO %?\n  %i\n  %a")
+          ("j" "Journal" entry (file+olp+datetree "~/org/journal.org")
+           "* %?\nEntered on %U\n  %i\n  %a")))
+#+END_SRC
+
 * COMMENT org mode latex export - notes
   :PROPERTIES:
   :DATE:     <2018-03-05 Mon 23:11>
@@ -1871,6 +1890,163 @@ Now under development is a modification of the function =org-compile-latex-with-
    :END:
 
 The templates provided here use references stored in =bib= files (bibtex format).  Biblatex requires to use the =\bibliography= in order specify the name(s) of the =bib= files used.  Since biblatex works also when the name of a bib file points to a symbolic link, we store a symbolic link to the =bib= file in the target folder (see [[*Using custom latex documnent styles][previous section]]).  We store the directory path and the file name of the default bib file use custom variables =org-latex-bib-path= and =org=latex-bib-filename=. 
+
+* org-journal
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 57
+  :END:
+
+#+BEGIN_SRC emacs-lisp
+  ;;; Commentary:
+  ;;; use org-journal for capture globally into files named by date number.
+  ;;; https://github.com/bastibe/org-journal.
+  ;;; Set agenda folders and files.
+  ;;; Define custom agenda commands.
+
+  ;;; Code:
+
+  (prelude-load-require-package 'org-journal)
+
+  ;; Create files with .org ending to automatically enable org-mode when loading them:
+  (setq org-journal-file-format "%Y%m%d.org")
+
+  ;; allow input of dates before 1970
+  (setq org-read-date-force-compatible-dates nil)
+
+  (defun org-journal-new-entry-from-org-timestamp ()
+    "Like org-journal-new-entry except read time interactively using org-read-date."
+    (interactive)
+    (org-journal-new-entry nil (apply 'encode-time (org-parse-time-string (org-read-date t t)))))
+
+  ;; Use own path for journal dir:
+  ;; (setq org-journal-dir (file-truename "~/Documents/000WORKFILES/PERSONAL/journal"))
+  ;; On 27 Jun 2018 16:01 get stack overflow with above. changing now to this:
+  (setq org-journal-dir (file-truename "~/journal"))
+
+  ;; Use own path for diary dir:
+  (setq org-agenda-diary-file 'diary-file)
+  ;; (setq diary-file (concat (file-name-directory org-journal-dir) "diary"))
+  (setq diary-file (file-truename "~/BitTorrent Sync/000WORKFILES/PERSONAL/diary"))
+  (setq org-agenda-include-diary t)
+
+  ;; adding own custom var to journal group, using template from journal mode.
+  (defcustom org-todo-dir (file-truename "~/Documents/000WORKFILES/PERSONAL/TODOS")
+    "Directory containing journal entries.
+    Setting this will update auto-mode-alist using
+    `(org-journal-update-auto-mode-alist)`"
+    :type 'string :group 'org-journal
+    :set (lambda (symbol value)
+           (set-default symbol value)
+           (org-journal-update-auto-mode-alist)))
+
+  (defcustom org-projects-dir (file-truename "~/Documents/000WORKFILES/PROJECTS_CURRENT")
+    "Directory containing project entries.
+    Setting this will update auto-mode-alist using
+    `(org-journal-update-auto-mode-alist)`"
+    :type 'string :group 'org-journal
+    :set (lambda (symbol value)
+           (set-default symbol value)
+           (org-journal-update-auto-mode-alist)))
+  ;; provide custom refile targets for todo entries
+  ;; NOTE: This function is also used in custom function org-jump-to-refile-target.
+  (defun org-iz-make-refile-targets ()
+  "Provide custom refile targets for todo entries.
+  This function is also used in custom function org-jump-to-refile-target."
+  (setq org-refile-targets
+        (append
+         (mapcar (lambda (x) (cons x '(:maxlevel . 2)))
+                 (file-expand-wildcards (concat org-todo-dir "/*.org")))
+         (mapcar (lambda (x) (cons x '(:maxlevel . 2)))
+                 (file-expand-wildcards (concat org-projects-dir "/*.org"))))))
+
+  ;; Include all journal and todo files in agenda:
+  (setq org-agenda-files `(,org-journal-dir
+                           ,org-todo-dir
+                           ,org-projects-dir))
+
+  (defun org-journal-at-date-from-user (no-entry)
+    "Creat journal entry with date from user, NO-ENTRY prefix just opens the file without creating entry."
+    (interactive "P")
+    (let ((time (org-read-date t t)) timestamp)
+      (org-journal-new-entry no-entry time)
+      (setq timestamp (format-time-string (cdr org-time-stamp-formats) time))
+      ;; (if no-entry
+      ;;     (insert "\n" timestamp))
+      (unless no-entry
+        (progn
+          (insert
+           "\n :PROPERTIES:\n :DATE: "
+           timestamp
+           " \n :END:\n")
+          (previous-line 4)
+          (end-of-line)))))
+
+  (defun org-journal-at-date-from-calendar (no-entry)
+    "Creat journal entry on calendar cursor date, if NO-ENTRY do not create entry."
+    (interactive "P")
+    (let* ((monthdayyear (calendar-cursor-to-date))
+           (month (car monthdayyear))
+           (day (cadr monthdayyear))
+           (year (caddr monthdayyear))
+           (time (encode-time 0 0 7 day month year))
+           (timestamp (format-time-string (cdr org-time-stamp-formats) time)))
+      (message "Creating entry at: %s" timestamp)
+      (org-journal-new-entry no-entry time)
+      ;; (setq timestamp (format-time-string (cdr org-time-stamp-formats) time))
+      ;; (if no-entry
+      ;;     (insert "\n" timestamp))
+      (unless no-entry
+        (progn
+          (insert
+           "\n :PROPERTIES:\n :DATE: "
+           timestamp
+           " \n :END:\n")
+          (previous-line 2)
+          (end-of-line)
+          (backward-char 4)
+          (org-time-stamp t)))))
+
+  (defun my/bindkey-recompile ()
+    "Bind <F5> to `recompile'."
+    (local-set-key (kbd "J") 'org-journal-at-date-from-calendar))
+
+  (add-hook 'calendar-mode-hook 'my/bindkey-recompile)
+
+  ;; Define custom agenda commands for some useful tag searches
+  ;; NOTE: These are the keys used by default agenda dispatch menu:
+  ;; a t T m M e s S / < > # ! C
+  ;;
+  ;; a     Call `org-agenda-list' to display the agenda for current day or week.
+  ;; t     Call `org-todo-list' to display the global todo list.
+  ;; T     Call `org-todo-list' to display the global todo list, select only
+  ;;             entries with a specific TODO keyword (the user gets a prompt).
+  ;; m     Call `org-tags-view' to display headlines with tags matching a condition  (the user is prompted for the condition).
+  ;; M     Like `m', but select only TODO entries, no ordinary headlines.
+  ;; e     Export views to associated files.
+  ;; s     Search entries for keywords.
+  ;; S     Search entries for keywords, only with TODO keywords.
+  ;; /     Multi occur across all agenda files and also files listed in `org-agenda-text-search-extra-files'.
+  ;; <     Restrict agenda commands to buffer, subtree, or region. Press several times to get the desired effect.
+  ;; >     Remove a previous restriction.
+  ;; #     List \"stuck\" projects.
+  ;; !     Configure what \"stuck\" means.
+  ;; C     Configure custom agenda commands.
+
+  ;;       Any own keys should be other than the above!
+
+  (setq org-agenda-custom-commands
+        '(("A" tags "+avarts")
+          ("E" tags "+eastndc")
+          ("p" tags "+phd")
+          ("w" tags "+weinstein")
+          ("h" tags "+health")
+          ("f" tags "+finance")
+          ("c" tags "+correspondence")))
+
+  ;; Make new-entry keyboard command available also in org-mode:
+  (global-set-key (kbd "C-c c j") 'org-journal-at-date-from-user)
+  (global-set-key (kbd "C-c c J") 'org-journal-new-entry-from-org-timestamp)
+#+END_SRC
 
 * org compile latex with custom headers
   :PROPERTIES:
@@ -2210,6 +2386,9 @@ The templates provided here use references stored in =bib= files (bibtex format)
   (defun org-get-latex-template-file-path ()
     "Return path of latex-tempalte-file name from leatex-exports cache subdirectory."
     (concat (org-get-latex-export-cache-directory) "/template-file-path.txt"))
+
+  6939226266
+  26610 87662
 #+END_SRC
 
 * org mode and reference management ebib reftex
@@ -3528,18 +3707,19 @@ Design draft for next version:
 
 #+BEGIN_SRC emacs-lisp
   (defun crux-copy-file-path (&optional dir-path-only-p)
-  "Copy the current buffer's file path or dired path to `kill-ring'.
-  Result is full path.
-  If `universal-argument' is called first, copy only the dir path.
-  URL `http://ergoemacs.org/emacs/emacs_copy_file_path.html'
-  Version 2015-12-02"
+    "Copy the current buffer's file path or dired path to `kill-ring'.
+    Result is full path.
+    If `universal-argument' is called first, copy only the dir path.
+    URL `http://ergoemacs.org/emacs/emacs_copy_file_path.html'
+    Version 2015-12-02"
     (interactive "P")
     (let ((ξfpath
            (if (equal major-mode 'dired-mode)
                (expand-file-name default-directory)
              (if (null (buffer-file-name))
                  (user-error "Current buffer is not associated with a file.")
-               (buffer-file-name)))))
+               ;; use shell-quote-argument for convenience when pasting to shell terminal
+               (shell-quote-argument (buffer-file-name))))))
       (kill-new
        (if (null dir-path-only-p)
            (progn
@@ -3551,163 +3731,6 @@ Design draft for next version:
            (file-name-directory ξfpath))))))
 
   (global-set-key (kbd "C-c P") 'crux-copy-file-path)
-#+END_SRC
-
-* org-journal
-  :PROPERTIES:
-  :EXPORT_HUGO_WEIGHT: 57
-  :END:
-
-#+BEGIN_SRC emacs-lisp
-  ;;; Commentary:
-  ;;; use org-journal for capture globally into files named by date number.
-  ;;; https://github.com/bastibe/org-journal.
-  ;;; Set agenda folders and files.
-  ;;; Define custom agenda commands.
-
-  ;;; Code:
-
-  (prelude-load-require-package 'org-journal)
-
-  ;; Create files with .org ending to automatically enable org-mode when loading them:
-  (setq org-journal-file-format "%Y%m%d.org")
-
-  ;; allow input of dates before 1970
-  (setq org-read-date-force-compatible-dates nil)
-
-  (defun org-journal-new-entry-from-org-timestamp ()
-    "Like org-journal-new-entry except read time interactively using org-read-date."
-    (interactive)
-    (org-journal-new-entry nil (apply 'encode-time (org-parse-time-string (org-read-date t t)))))
-
-  ;; Use own path for journal dir:
-  ;; (setq org-journal-dir (file-truename "~/Documents/000WORKFILES/PERSONAL/journal"))
-  ;; On 27 Jun 2018 16:01 get stack overflow with above. changing now to this:
-  (setq org-journal-dir (file-truename "~/journal"))
-
-  ;; Use own path for diary dir:
-  (setq org-agenda-diary-file 'diary-file)
-  ;; (setq diary-file (concat (file-name-directory org-journal-dir) "diary"))
-  (setq diary-file (file-truename "~/BitTorrent Sync/000WORKFILES/PERSONAL/diary"))
-  (setq org-agenda-include-diary t)
-
-  ;; adding own custom var to journal group, using template from journal mode.
-  (defcustom org-todo-dir (file-truename "~/Documents/000WORKFILES/PERSONAL/TODOS")
-    "Directory containing journal entries.
-    Setting this will update auto-mode-alist using
-    `(org-journal-update-auto-mode-alist)`"
-    :type 'string :group 'org-journal
-    :set (lambda (symbol value)
-           (set-default symbol value)
-           (org-journal-update-auto-mode-alist)))
-
-  (defcustom org-projects-dir (file-truename "~/Documents/000WORKFILES/PROJECTS_CURRENT")
-    "Directory containing project entries.
-    Setting this will update auto-mode-alist using
-    `(org-journal-update-auto-mode-alist)`"
-    :type 'string :group 'org-journal
-    :set (lambda (symbol value)
-           (set-default symbol value)
-           (org-journal-update-auto-mode-alist)))
-  ;; provide custom refile targets for todo entries
-  ;; NOTE: This function is also used in custom function org-jump-to-refile-target.
-  (defun org-iz-make-refile-targets ()
-  "Provide custom refile targets for todo entries.
-  This function is also used in custom function org-jump-to-refile-target."
-  (setq org-refile-targets
-        (append
-         (mapcar (lambda (x) (cons x '(:maxlevel . 2)))
-                 (file-expand-wildcards (concat org-todo-dir "/*.org")))
-         (mapcar (lambda (x) (cons x '(:maxlevel . 2)))
-                 (file-expand-wildcards (concat org-projects-dir "/*.org"))))))
-
-  ;; Include all journal and todo files in agenda:
-  (setq org-agenda-files `(,org-journal-dir
-                           ,org-todo-dir
-                           ,org-projects-dir))
-
-  (defun org-journal-at-date-from-user (no-entry)
-    "Creat journal entry with date from user, NO-ENTRY prefix just opens the file without creating entry."
-    (interactive "P")
-    (let ((time (org-read-date t t)) timestamp)
-      (org-journal-new-entry no-entry time)
-      (setq timestamp (format-time-string (cdr org-time-stamp-formats) time))
-      ;; (if no-entry
-      ;;     (insert "\n" timestamp))
-      (unless no-entry
-        (progn
-          (insert
-           "\n :PROPERTIES:\n :DATE: "
-           timestamp
-           " \n :END:\n")
-          (previous-line 4)
-          (end-of-line)))))
-
-  (defun org-journal-at-date-from-calendar (no-entry)
-    "Creat journal entry on calendar cursor date, if NO-ENTRY do not create entry."
-    (interactive "P")
-    (let* ((monthdayyear (calendar-cursor-to-date))
-           (month (car monthdayyear))
-           (day (cadr monthdayyear))
-           (year (caddr monthdayyear))
-           (time (encode-time 0 0 7 day month year))
-           (timestamp (format-time-string (cdr org-time-stamp-formats) time)))
-      (message "Creating entry at: %s" timestamp)
-      (org-journal-new-entry no-entry time)
-      ;; (setq timestamp (format-time-string (cdr org-time-stamp-formats) time))
-      ;; (if no-entry
-      ;;     (insert "\n" timestamp))
-      (unless no-entry
-        (progn
-          (insert
-           "\n :PROPERTIES:\n :DATE: "
-           timestamp
-           " \n :END:\n")
-          (previous-line 2)
-          (end-of-line)
-          (backward-char 4)
-          (org-time-stamp t)))))
-
-  (defun my/bindkey-recompile ()
-    "Bind <F5> to `recompile'."
-    (local-set-key (kbd "J") 'org-journal-at-date-from-calendar))
-
-  (add-hook 'calendar-mode-hook 'my/bindkey-recompile)
-
-  ;; Define custom agenda commands for some useful tag searches
-  ;; NOTE: These are the keys used by default agenda dispatch menu:
-  ;; a t T m M e s S / < > # ! C
-  ;;
-  ;; a     Call `org-agenda-list' to display the agenda for current day or week.
-  ;; t     Call `org-todo-list' to display the global todo list.
-  ;; T     Call `org-todo-list' to display the global todo list, select only
-  ;;             entries with a specific TODO keyword (the user gets a prompt).
-  ;; m     Call `org-tags-view' to display headlines with tags matching a condition  (the user is prompted for the condition).
-  ;; M     Like `m', but select only TODO entries, no ordinary headlines.
-  ;; e     Export views to associated files.
-  ;; s     Search entries for keywords.
-  ;; S     Search entries for keywords, only with TODO keywords.
-  ;; /     Multi occur across all agenda files and also files listed in `org-agenda-text-search-extra-files'.
-  ;; <     Restrict agenda commands to buffer, subtree, or region. Press several times to get the desired effect.
-  ;; >     Remove a previous restriction.
-  ;; #     List \"stuck\" projects.
-  ;; !     Configure what \"stuck\" means.
-  ;; C     Configure custom agenda commands.
-
-  ;;       Any own keys should be other than the above!
-
-  (setq org-agenda-custom-commands
-        '(("A" tags "+avarts")
-          ("E" tags "+eastndc")
-          ("p" tags "+phd")
-          ("w" tags "+weinstein")
-          ("h" tags "+health")
-          ("f" tags "+finance")
-          ("c" tags "+correspondence")))
-
-  ;; Make new-entry keyboard command available also in org-mode:
-  (global-set-key (kbd "C-c c j") 'org-journal-at-date-from-user)
-  (global-set-key (kbd "C-c c J") 'org-journal-new-entry-from-org-timestamp)
 #+END_SRC
 
 * re-builder
