@@ -3262,6 +3262,8 @@ Design draft for next version:
         (progn
           (message "You selected dark")
           (custom-set-faces
+           '(region ((t
+                      (:background "#454A35"))))
            '(org-link ((t
                         (:underline
                          (:color "cyan" :style line)
@@ -3879,6 +3881,8 @@ If UNLINK-P is not nil, then delete the link instead."
   (hydra-global/body)
   ;; set faces to harmonize with prelude's default zenburn color theme
   (custom-set-faces
+   '(region ((t
+              (:background "#454A35"))))
    '(org-link ((t
                 (:underline
                  (:color "cyan" :style line)
@@ -3895,7 +3899,7 @@ If UNLINK-P is not nil, then delete the link instead."
   :EXPORT_HUGO_WEIGHT: 64
   :END:
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp 
 (setq org-agenda-files '("/Volumes/t2a/DebugEmacsAgenda" "/Volumes/t2a/DebugEmacsAgenda/journal"))
 #+END_SRC
 

@@ -1,4 +1,4 @@
-;;; tiny_menu_and_hydra --- 2018-12-20 06:36:49 AM
+;;; tiny_menu_and_hydra --- 2018-12-20 06:51:52 AM
     ;;; Commentary:
 
   ;; 2 tiny-menus for functions that I do not want to place on command-keys,
@@ -217,6 +217,8 @@
         (progn
           (message "You selected dark")
           (custom-set-faces
+           '(region ((t
+                      (:background "#454A35"))))
            '(org-link ((t
                         (:underline
                          (:color "cyan" :style line)
