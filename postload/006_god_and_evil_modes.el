@@ -1,4 +1,4 @@
-;;; god_and_evil_modes --- 2018-12-19 08:20:51 PM
+;;; god_and_evil_modes --- 2018-12-20 06:11:39 AM
   (global-set-key (kbd "<f5>") 'god-mode)
   (global-set-key (kbd "<f6>") 'evil-mode)
 (provide 'god_and_evil_modes)

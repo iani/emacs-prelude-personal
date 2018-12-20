@@ -1,4 +1,4 @@
-;;; org-split-hugo --- 2018-12-19 08:20:54 PM
+;;; org-split-hugo --- 2018-12-20 06:11:42 AM
   ;;; Commentary:
   ;;; Utilities for blog + website editing with HUGO. 2 versions are included:
 

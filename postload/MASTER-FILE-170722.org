@@ -2121,6 +2121,7 @@ The templates provided here use references stored in =bib= files (bibtex format)
 
   This command assumes that we are already in the buffer of the file to be exported.
   "
+    (org-prepare-latex-export-cache-dir)
     (let* (class header footer ;; these 3 variables are set later in the body of the let form.
                  ;; get raw latex code from current buffer
                  (latex-output (org-export-as
@@ -2355,14 +2356,14 @@ The templates provided here use references stored in =bib= files (bibtex format)
     (let* ((cache-dir (org-get-latex-export-cache-directory))
            (source-file (file-truename (deft-filename-at-point)))
           (source-directory (file-name-directory source-file)))
-      (when (directory-name-p cache-dir)
-        (delete-directory cache-dir t t))
-      (copy-directory source-directory cache-dir t t t)
-      (copy-file source-file (concat cache-dir "/latex-template.org") t)
+      ;; (when (directory-name-p cache-dir)
+      ;;   (delete-directory cache-dir t t))
+      ;; (copy-directory source-directory cache-dir t t t)
+      ;; (copy-file source-file (concat cache-dir "/latex-template.org") t)
       (with-temp-buffer
         (insert source-file)
         ;; the next line should be removed
-        (write-file (concat cache-dir "/template-file-path.txt"))
+        ;; (write-file (concat cache-dir "/template-file-path.txt"))
         ;; the next line should be kept
         (write-file (org-get-latex-export-template-file-path)))
       (message "template set to: %s" source-file)))
@@ -2417,9 +2418,6 @@ The templates provided here use references stored in =bib= files (bibtex format)
   (defun org-get-latex-template-file-path ()
     "Return path of latex-tempalte-file name from leatex-exports cache subdirectory."
     (concat (org-get-latex-export-cache-directory) "/template-file-path.txt"))
-
-  6939226266
-  26610 87662
 #+END_SRC
 
 * org mode and reference management ebib reftex

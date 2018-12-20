@@ -1,4 +1,4 @@
-;;; org_compile_latex_with_custom_headers --- 2018-12-19 08:20:54 PM
+;;; org_compile_latex_with_custom_headers --- 2018-12-20 06:11:41 AM
   ;; (defun org-insert-latex-headers-from-deft ()
   ;;   "Choose latex headers from recipe list using deft, and append them to the currently edited file."
   ;;   (with-current-buffer
@@ -66,6 +66,7 @@
 
   This command assumes that we are already in the buffer of the file to be exported.
   "
+    (org-prepare-latex-export-cache-dir)
     (let* (class header footer ;; these 3 variables are set later in the body of the let form.
                  ;; get raw latex code from current buffer
                  (latex-output (org-export-as
@@ -294,24 +295,55 @@
 
   ;; Functions for getting headers from deft
   (defun deft-select-latex-headers ()
-    "Copy folder of selected latex header files to cache, and construct template file.
-  Empty latex export cache subdirectory.
-  Copy current directory contents to latex export cache subdirectory."
+    "Store path of selected latex-recipe file to latex-export template file.
+  This is used by org-prepare-latex-export-cache-dir."
     (interactive)
     (let* ((cache-dir (org-get-latex-export-cache-directory))
-          (source-file (deft-filename-at-point))
+           (source-file (file-truename (deft-filename-at-point)))
           (source-directory (file-name-directory source-file)))
-      (when (directory-name-p cache-dir)
+      ;; (when (directory-name-p cache-dir)
+      ;;   (delete-directory cache-dir t t))
+      ;; (copy-directory source-directory cache-dir t t t)
+      ;; (copy-file source-file (concat cache-dir "/latex-template.org") t)
+      (with-temp-buffer
+        (insert source-file)
+        ;; the next line should be removed
+        ;; (write-file (concat cache-dir "/template-file-path.txt"))
+        ;; the next line should be kept
+        (write-file (org-get-latex-export-template-file-path)))
+      (message "template set to: %s" source-file)))
+
+  (defun org-prepare-latex-export-cache-dir ()
+    "Copy template directory to latex-export cache directory.
+  Also copy template source file to latex-template.
+  Evaluated by latex-compile-file-with-latexmk before each compilation.
+  This ensures that any changes made in the template will be adopted
+  at latex compilation."
+    (let* ((cache-dir (org-get-latex-export-cache-directory))
+           (source-file (with-temp-buffer
+                          (insert-file-contents (org-get-latex-export-template-file-path))
+                          (car (split-string (buffer-string) "\n" t))))
+           (source-directory (file-name-directory source-file)))
+      (when (file-directory-p cache-dir)
         (delete-directory cache-dir t t))
       (copy-directory source-directory cache-dir t t t)
       (copy-file source-file (concat cache-dir "/latex-template.org") t)
-      (with-temp-buffer
-        (insert source-file)
-        (write-file (concat cache-dir "/template-file-path.txt")))))
+      ;; (with-temp-buffer
+      ;;   (insert source-file)
+      ;;   ;; the next line should be removed
+      ;;   (write-file (concat cache-dir "/template-file-path.txt"))
+      ;;   ;; the next line should be kept
+      ;;   (write-file (org-get-latex-export-template-file-path)))
+      ;; (message "template set to: %s" source-file)
+      ))
 
   (defun org-get-latex-export-cache-directory ()
     "Return path of latex-export-cache subdirectory."
     (concat org-latex-export-path "/cache"))
+
+  (defun org-get-latex-export-template-file-path ()
+    "Return path of file containing the latex-export-file-template."
+    (concat org-latex-export-path "/template-file-path.txt"))
 
   (defun org-post-current-latex-export-template ()
     "Post file name of latex-template from latex-exports cache subdirectory."
@@ -331,8 +363,5 @@
   (defun org-get-latex-template-file-path ()
     "Return path of latex-tempalte-file name from leatex-exports cache subdirectory."
     (concat (org-get-latex-export-cache-directory) "/template-file-path.txt"))
-
-  6939226266
-  26610 87662
 (provide 'org_compile_latex_with_custom_headers)
 ;;; 024_org_compile_latex_with_custom_headers.el ends here
