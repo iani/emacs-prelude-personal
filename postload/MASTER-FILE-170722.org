@@ -2329,6 +2329,9 @@ The templates provided here use references stored in =bib= files (bibtex format)
   (eval-after-load 'deft
     '(progn
        (define-key deft-mode-map (kbd "C-i") 'deft-select-latex-headers)
+       ;; prelude overrides this. FIX IT!:
+       ;; (define-key deft-mode-map [(shift return)] 'deft-select-latex-headers)
+       ;; (define-key deft-mode-map (kbd "S-RET") 'deft-select-latex-headers)
        (setq deft-current-sort-method 'title)))
 
   (setq deft-use-filename-as-title t)
@@ -2403,7 +2406,7 @@ The templates provided here use references stored in =bib= files (bibtex format)
   (defun org-post-current-latex-export-template ()
     "Post file name of latex-template from latex-exports cache subdirectory."
     (interactive)
-    (let* ((template-file (org-get-latex-template-file-path))
+    (let* ((template-file (org-get-latex-export-template-file-path))
            (template (if (file-exists-p template-file)
                          (with-temp-buffer
                            (insert-file-contents template-file)
@@ -2413,7 +2416,7 @@ The templates provided here use references stored in =bib= files (bibtex format)
           (message "The template file is: %sIts folder is: %s"
                    (file-name-nondirectory template)
                    (file-name-directory template))
-        (message "no template file found at %" template-file))))
+        (message "no template file found at %s" template-file))))
 
   (defun org-get-latex-template-file-path ()
     "Return path of latex-tempalte-file name from leatex-exports cache subdirectory."
@@ -3893,6 +3896,9 @@ If UNLINK-P is not nil, then delete the link instead."
    '(hl-sexp-face ((t (:background "gray10"))))
    '(org-block-end-line ((t (:background "#2a2a2f" :foreground "gray99"))) t)
    '(org-block-begin-line ((t (:background "#3a2a2f" :foreground "gray99"))) t))
+
+  ;; make buffer name more visible in powerline moe theme
+  (set-face-attribute 'mode-line-buffer-id nil :background nil :foreground "#F81808")
 #+END_SRC
 * COMMENT debugging agenda
   :PROPERTIES:

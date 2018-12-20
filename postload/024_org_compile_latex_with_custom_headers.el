@@ -1,4 +1,4 @@
-;;; org_compile_latex_with_custom_headers --- 2018-12-20 06:51:51 AM
+;;; org_compile_latex_with_custom_headers --- 2018-12-20 07:26:18 AM
   ;; (defun org-insert-latex-headers-from-deft ()
   ;;   "Choose latex headers from recipe list using deft, and append them to the currently edited file."
   ;;   (with-current-buffer
@@ -274,6 +274,9 @@
   (eval-after-load 'deft
     '(progn
        (define-key deft-mode-map (kbd "C-i") 'deft-select-latex-headers)
+       ;; prelude overrides this. FIX IT!:
+       ;; (define-key deft-mode-map [(shift return)] 'deft-select-latex-headers)
+       ;; (define-key deft-mode-map (kbd "S-RET") 'deft-select-latex-headers)
        (setq deft-current-sort-method 'title)))
 
   (setq deft-use-filename-as-title t)
@@ -348,7 +351,7 @@
   (defun org-post-current-latex-export-template ()
     "Post file name of latex-template from latex-exports cache subdirectory."
     (interactive)
-    (let* ((template-file (org-get-latex-template-file-path))
+    (let* ((template-file (org-get-latex-export-template-file-path))
            (template (if (file-exists-p template-file)
                          (with-temp-buffer
                            (insert-file-contents template-file)
@@ -358,7 +361,7 @@
           (message "The template file is: %sIts folder is: %s"
                    (file-name-nondirectory template)
                    (file-name-directory template))
-        (message "no template file found at %" template-file))))
+        (message "no template file found at %s" template-file))))
 
   (defun org-get-latex-template-file-path ()
     "Return path of latex-tempalte-file name from leatex-exports cache subdirectory."

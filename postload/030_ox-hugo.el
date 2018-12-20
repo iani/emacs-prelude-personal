@@ -1,4 +1,4 @@
-;;; ox-hugo --- 2018-12-20 06:51:52 AM
+;;; ox-hugo --- 2018-12-20 07:26:18 AM
   ;; Functions for ox-hugo.  (11 Aug 2018 11:36)
 
   ;;; use yaml format in export front matter,

@@ -1,4 +1,4 @@
-;;; org-mode_hydra --- 2018-12-20 06:51:51 AM
+;;; org-mode_hydra --- 2018-12-20 07:26:18 AM
   (defhydra hydra-org ( :color red :columns 3)
     "org-mode hydra"
     ("n" outline-next-visible-heading "next heading")
