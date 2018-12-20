@@ -1,4 +1,4 @@
-;;; re-builder --- 2018-12-20 06:31:06 AM
+;;; re-builder --- 2018-12-20 06:36:50 AM
   ;;; see https://www.masteringemacs.org/article/re-builder-interactive-regexp-builder
   (prelude-load-require-package 're-builder)
   (setq reb-re-syntax 'string)

@@ -3868,7 +3868,7 @@ If UNLINK-P is not nil, then delete the link instead."
     (eshell 'N))
 #+END_SRC
 
-* last actions 1 window hydra lobal
+* last actions 1 window hydra global hl dark
   :PROPERTIES:
   :DATE:     <2017-12-15 Fri 09:55>
   :EXPORT_HUGO_WEIGHT: 63
@@ -3877,6 +3877,18 @@ If UNLINK-P is not nil, then delete the link instead."
 #+BEGIN_SRC emacs-lisp
   (delete-other-windows)
   (hydra-global/body)
+  ;; set faces to harmonize with prelude's default zenburn color theme
+  (custom-set-faces
+   '(org-link ((t
+                (:underline
+                 (:color "cyan" :style line)
+                 :foreground "cyan"))))
+   '(org-block ((t
+                 (:foreground "#9bff7" :background "#17271f"))))
+   '(hl-line ((t (:background "gray0"))))
+   '(hl-sexp-face ((t (:background "gray10"))))
+   '(org-block-end-line ((t (:background "#2a2a2f" :foreground "gray99"))) t)
+   '(org-block-begin-line ((t (:background "#3a2a2f" :foreground "gray99"))) t))
 #+END_SRC
 * COMMENT debugging agenda
   :PROPERTIES:
