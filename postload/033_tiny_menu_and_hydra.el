@@ -1,4 +1,4 @@
-;;; tiny_menu_and_hydra --- 2018-12-20 06:11:42 AM
+;;; tiny_menu_and_hydra --- 2018-12-20 06:31:05 AM
     ;;; Commentary:
 
   ;; 2 tiny-menus for functions that I do not want to place on command-keys,
@@ -180,7 +180,8 @@
     ("r" helm-recentf "open recent")
     ("s" sclang-start-fullscreen "sclang")
     ("S" sclang-fix-window-arrangement "sclang")
-    ("c" cfw:open-org-calendar "calendar")
+    ("c" open-correspondence "correspondence")
+    ("C" cfw:open-org-calendar "calendar")
     ("a" org-agenda "agenda")
     ("j" org-journal-at-date-from-user "journal entry")
     ("J" air-journal-goto-date "journal goto")
@@ -197,6 +198,11 @@
     ("q" nil "quit" :color blue))
 
   (global-set-key (kbd "H-h") 'hydra-global/body)
+
+  (defun open-correspondence ()
+    "Open file Correspondence org file from workfiles directory."
+    (interactive)
+    (find-file (file-truename "~/BitTorrent Sync/000WORKFILES/PROJECTS_CURRENT/Correspondence.org")))
 
   (defun hl-set-faces (&optional dark-or-light)
     "Customize faces for hl selecting dark or light theme."

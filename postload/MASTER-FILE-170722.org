@@ -3225,7 +3225,8 @@ Design draft for next version:
     ("r" helm-recentf "open recent")
     ("s" sclang-start-fullscreen "sclang")
     ("S" sclang-fix-window-arrangement "sclang")
-    ("c" cfw:open-org-calendar "calendar")
+    ("c" open-correspondence "correspondence")
+    ("C" cfw:open-org-calendar "calendar")
     ("a" org-agenda "agenda")
     ("j" org-journal-at-date-from-user "journal entry")
     ("J" air-journal-goto-date "journal goto")
@@ -3242,6 +3243,11 @@ Design draft for next version:
     ("q" nil "quit" :color blue))
 
   (global-set-key (kbd "H-h") 'hydra-global/body)
+
+  (defun open-correspondence ()
+    "Open file Correspondence org file from workfiles directory."
+    (interactive)
+    (find-file (file-truename "~/BitTorrent Sync/000WORKFILES/PROJECTS_CURRENT/Correspondence.org")))
 
   (defun hl-set-faces (&optional dark-or-light)
     "Customize faces for hl selecting dark or light theme."
