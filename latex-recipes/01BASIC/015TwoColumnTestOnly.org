@@ -1,0 +1,76 @@
+# Minimal example with english and greek text.
+
+Με την παρούσα αιτούμαι ... 
+
+asdff ασδφ ασδφ 
+
+* COMMENT latex-header
+
+#+BEGIN_SRC latex
+  \usepackage{fontspec}
+  \setmainfont{Linux Libertine O} % libertine definitely better than Times New Roman
+  % \setmainfont{Times New Roman}
+  \usepackage[a4paper,width=170mm,top=15mm,bottom=25mm]{geometry}
+  \usepackage{hyperref} % enable links
+  \usepackage{ulem} %This is needed to enable underlined emphasis (e.g. _underlined_)
+  \usepackage{multicol}
+  \usepackage{graphicx} % enable pictures
+  \raggedcolumns
+  % \flushbottom
+  \begin{document}
+  \begin{multicols}{2}
+
+Hello, we tried to use raggedbottom here but got no results. Why?
+
+Hey.  Greetings from raggedcolumns.
+  % \noindent
+  % \vspace{0.5cm}
+  % ΑΙΤΗΣΗ\\
+  % \noindent
+  % Ιωάννης Ζάννος\\
+  % Καθηγητής Τμήματος Τεχνών Ήχου και Εικόνας\\
+  % Σχολής Μουσικής και Οπτικοακουστικών Τεχνών\\
+  % Ιονίου Πανεπιστημίου
+
+  % \vspace*{0.5cm}
+  % \noindent
+  % Κέρκυρα, 17/01/2019\\
+
+  % % \vspace{1cm}
+  % % \noindent
+  % % Κέρκυρα, 17/01/2019\\
+
+  % \columnbreak
+  % \noindent
+  % ΠΡΟΣ
+
+  % \vspace{0.5cm}
+  % \noindent
+  % Την Γενική Συνέλευση\\
+  % του Τμήματος Τεχνών Ήχου και Εικόνας\\
+  % Σχολής Μουσικής και Οπτικοακουστικών Τεχνών\\
+  % του Ιονίου Πανεπιστημίου
+
+  % \vspace{1cm}
+
+#+END_SRC
+
+* COMMENT latex-footer
+
+#+BEGIN_SRC latex
+  % \vspace{1cm}
+  % % \noindent
+  % \parindent=0.5cm
+  % Κέρκυρα,  17. Ιανουαρίου 2019.
+
+  % \vspace{0.5cm}
+
+  % % \includegraphics[width=3.5cm]{signature}
+
+  % \vspace{0.5cm}
+  % \parindent=1cm
+  % Ιωάννης Ζάννος
+
+  \end{multicols}
+  \end{document}
+#+END_SRC
