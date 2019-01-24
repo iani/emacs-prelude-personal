@@ -104,7 +104,7 @@ http://www.org.org
  '(background-color "#202020"))
 #+END_SRC
 
-* COMMENT Theming+Faces
+* Theming+Faces
   :PROPERTIES:
   :EXPORT_HUGO_WEIGHT: 4
   :END:
@@ -114,9 +114,8 @@ dark theme hl colors and inconsolata font
 #+BEGIN_SRC emacs-lisp
   ;;; Commentary:
 
-  ;;; Default font: Inconsolata.
-  ;;; Preferred face colors for region, hl-line, hl-sexp-face.
-  ;;; Work both for zenburn and moe-dark themes.
+  ;; Theme tweaking is a time-consuming and frustrating pasttime.
+  ;; Avoid if possible.
 
   ;;; Code:
 
@@ -126,24 +125,31 @@ dark theme hl colors and inconsolata font
    ;; Inconsolata and Source Code Pro result in misaligned table columns when mixing greek and latin characters.
    '(default ((t (:family
                   ;; "Liberation Mono for Powerline"
-                  "Courier New"
+                  ;; "Courier New"
+                  "Ubuntu Mono derivative Powerline"
                   :foundry "nil"
                   :width normal :height 110
                   :weight normal :slant normal :underline nil :overline nil
                   :strike-through nil :box nil
-                  :inverse-video nil :foreground "#DCDCCC"
-                  :background "#3F3F3F" :stipple nil :inherit nil))))
-   '(helm-selection ((t
-                      (:underline nil :background "MediumOrchid1" :foreground "white"))))
-   '(region ((t (:background "thistle4" :foreground nil))))
-   ;; following 2 are for moe-light:
-   ;; '(hl-line ((t (:background "DarkSlateGray4" :foreground "yellow1"))))
-   '(hl-line ((t (:background "red4"))))
-   ;; '(hl-sexp-face ((t (:background "linen" :foreground "VioletRed4"))))
-   '(hl-sexp-face ((t (:background "gray10")))))
+                  ;; :inverse-video nil :foreground "#DCDCCC"
+                  ;; :background "#3F3F3F" :stipple nil :inherit nil
 
-  (powerline-moe-theme)
-  (moe-dark)
+                  )))))
+
+  ;;; !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  ;;; following often caused a mess:
+
+  ;; '(helm-selection ((t
+  ;;                    (:underline nil :background "MediumOrchid1" :foreground "white"))))
+  ;; '(region ((t (:background "thistle4" :foreground nil))))
+  ;; following 2 are for moe-light:
+  ;; '(hl-line ((t (:background "DarkSlateGray4" :foreground "yellow1"))))
+  ;; '(hl-line ((t (:background "red4"))))
+  ;; '(hl-sexp-face ((t (:background "linen" :foreground "VioletRed4"))))
+  ;; '(hl-sexp-face ((t (:background "gray10"))))
+
+  ;; (powerline-moe-theme)
+  ;; (moe-dark)
 #+END_SRC
 * Cursor Beep
   :PROPERTIES:
@@ -1460,7 +1466,7 @@ Only solution so far is to switch off prelude mode when in org mode.
 #+END_SRC
 * org-mode
   :PROPERTIES:
-  :EXPORT_HUGO_WEIGHT: 30
+  :EXPORT_HUGO_WEIGHT: 29
   :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -1470,7 +1476,7 @@ Only solution so far is to switch off prelude mode when in org mode.
 
   ;; define some useful functions
 
-  ;;; Code:
+d  ;;; Code:
 
   ;;; pretty bullets
   ;;;   (prelude-load-require-package 'org-bullets)
@@ -1491,16 +1497,16 @@ Only solution so far is to switch off prelude mode when in org mode.
   ;; customize looks
   (custom-set-faces
    ;; #ef2929
-   '(org-priority ((t (:background "#ff5959" :foreground "gray99"))) t)
-   '(org-block-end-line ((t (:background "#2a2a2f" :foreground "gray99"))) t)
-   '(org-block-begin-line ((t (:background "#3a2a2f" :foreground "gray99"))) t)
-   '(org-level-1 ((t (:family "Helvetica" :height 1.1 :weight bold))))
-   ;; thinner org-level-2 face for kanji
-   '(org-level-2
-     ((t
-       (:family "Inconsolata" :height 1.1 :weight light :box nil
-                :foreground "#a1db00" :inherit
-                (outline-2)))))
+   ;; '(org-priority ((t (:background "#ff5959" :foreground "gray99"))) t)
+   ;; '(org-block-end-line ((t (:background "#2a2a2f" :foreground "gray99"))) t)
+   ;; '(org-block-begin-line ((t (:background "#3a2a2f" :foreground "gray99"))) t)
+   ;; '(org-level-1 ((t (:family "Helvetica" :height 1.1 :weight bold))))
+   ;; ;; thinner org-level-2 face for kanji
+   ;; '(org-level-2
+   ;;   ((t
+   ;;     (:family "Inconsolata" :height 1.1 :weight light :box nil
+   ;;              :foreground "#a1db00" :inherit
+   ;;              (outline-2)))))<
    ;; '(org-level-1 ((t (:family "Courier New" :height 1.1 :weight bold))))
    ;; '(org-level-2 ((t (:family "Courier New" :height 1.1 :weight bold))))
    '(org-level-3 ((t (:weight bold :height 1.1))))
@@ -1756,7 +1762,7 @@ Only solution so far is to switch off prelude mode when in org mode.
 #+END_SRC
 * org-mode hydra 
   :PROPERTIES:
-  :EXPORT_HUGO_WEIGHT: 29
+  :EXPORT_HUGO_WEIGHT: 30
   :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -1816,6 +1822,9 @@ Only solution so far is to switch off prelude mode when in org mode.
   ;;   (message "EXPORT_HUGO_SECTION* was set to %" section-name))
 #+END_SRC
 * COMMENT org-capture to correspondence
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 31
+  :END:
 
 Incomplete draft.
 #+BEGIN_SRC emacs-lisp
@@ -1834,11 +1843,11 @@ Incomplete draft.
 * COMMENT org mode latex export - notes
   :PROPERTIES:
   :DATE:     <2018-03-05 Mon 23:11>
-  :EXPORT_HUGO_WEIGHT: 31
+  :EXPORT_HUGO_WEIGHT: 32
   :END:
 ** COMMENT Installing org-mode version 9 or greater
    :PROPERTIES:
-   :EXPORT_HUGO_WEIGHT: 32
+   :EXPORT_HUGO_WEIGHT: 33
    :END:
 
 Xelatex enables one to use system fonts. These are necessary for languages such as greek, which requires a character set other than latin.  
@@ -1865,7 +1874,7 @@ The present software specifies use of xelatec and requires org-version 9 or grea
 ** COMMENT Using custom latex documnent styles
    :PROPERTIES:
    :DATE:     <2018-09-23 Sun 16:11>
-   :EXPORT_HUGO_WEIGHT: 33
+   :EXPORT_HUGO_WEIGHT: 34
    :END:
 
 If the .sty or .cls files defining a latex document style are missing from the folders used by latex installed in the system, then these files should be placed in the same directory as latex file that requires them.  (The rationale for this as well as alternatives are discussed here:
@@ -1886,14 +1895,14 @@ Now under development is a modification of the function =org-compile-latex-with-
 
 ** COMMENT Compiling bibliogaphies wih biblatex
    :PROPERTIES:
-   :EXPORT_HUGO_WEIGHT: 34
+   :EXPORT_HUGO_WEIGHT: 35
    :END:
 
 The templates provided here use references stored in =bib= files (bibtex format).  Biblatex requires to use the =\bibliography= in order specify the name(s) of the =bib= files used.  Since biblatex works also when the name of a bib file points to a symbolic link, we store a symbolic link to the =bib= file in the target folder (see [[*Using custom latex documnent styles][previous section]]).  We store the directory path and the file name of the default bib file use custom variables =org-latex-bib-path= and =org=latex-bib-filename=. 
 
 * org-journal
   :PROPERTIES:
-  :EXPORT_HUGO_WEIGHT: 57
+  :EXPORT_HUGO_WEIGHT: 36
   :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2050,7 +2059,7 @@ The templates provided here use references stored in =bib= files (bibtex format)
 
 * org compile latex with custom headers
   :PROPERTIES:
-  :EXPORT_HUGO_WEIGHT: 35
+  :EXPORT_HUGO_WEIGHT: 37
   :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2426,7 +2435,7 @@ The templates provided here use references stored in =bib= files (bibtex format)
 * org mode and reference management ebib reftex
   :PROPERTIES:
   :DATE:     <2018-03-14 Wed 12:57>
-  :EXPORT_HUGO_WEIGHT: 36
+  :EXPORT_HUGO_WEIGHT: 38
   :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2437,7 +2446,7 @@ The templates provided here use references stored in =bib= files (bibtex format)
   :PROPERTIES:
   :DATE:     <2017-11-01 Τετ 10:56>
   :ID:       31EB3CBA-7864-4E53-A386-3E85C61F1EDA
-  :EXPORT_HUGO_WEIGHT: 37
+  :EXPORT_HUGO_WEIGHT: 39
   :END:
 
   #+BEGIN_SRC emacs-lisp
@@ -2466,7 +2475,7 @@ The templates provided here use references stored in =bib= files (bibtex format)
 * org-mode todo states and priorities
   :PROPERTIES:
   :DATE:     <2017-12-22 Fri 01:42>
-  :EXPORT_HUGO_WEIGHT: 38
+  :EXPORT_HUGO_WEIGHT: 40
   :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2514,7 +2523,7 @@ The templates provided here use references stored in =bib= files (bibtex format)
 #+END_SRC
 * org calfw
   :PROPERTIES:
-  :EXPORT_HUGO_WEIGHT: 39
+  :EXPORT_HUGO_WEIGHT: 41
   :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2622,7 +2631,7 @@ The templates provided here use references stored in =bib= files (bibtex format)
 
 * org-split-hugo
   :PROPERTIES:
-  :EXPORT_HUGO_WEIGHT: 40
+  :EXPORT_HUGO_WEIGHT: 42
   :END:
 
 This org-split-hugo has been superseded by ox-hugo and is obsolete.
@@ -2839,7 +2848,7 @@ See next section.
 
 * ox-hugo
   :PROPERTIES:
-  :EXPORT_HUGO_WEIGHT: 41
+  :EXPORT_HUGO_WEIGHT: 43
   :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2924,7 +2933,7 @@ See next section.
 #+END_SRC
 * org-export-recipes
   :PROPERTIES:
-  :EXPORT_HUGO_WEIGHT: 42
+  :EXPORT_HUGO_WEIGHT: 44
   :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2980,7 +2989,7 @@ See next section.
 
 * unset-command-q
   :PROPERTIES:
-  :EXPORT_HUGO_WEIGHT: 43
+  :EXPORT_HUGO_WEIGHT: 45
   :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -2993,7 +3002,7 @@ See next section.
 
 * tiny menu and hydra
   :PROPERTIES:
-  :EXPORT_HUGO_WEIGHT: 44
+  :EXPORT_HUGO_WEIGHT: 46
   :END:
 
 Design draft for next version:
@@ -3489,7 +3498,7 @@ Design draft for next version:
   :END:
 * COMMENT Dired-hide-details
   :PROPERTIES:
-  :EXPORT_HUGO_WEIGHT: 45
+  :EXPORT_HUGO_WEIGHT: 47
   :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -3508,7 +3517,7 @@ Design draft for next version:
 
 * COMMENT copy line2shell
   :PROPERTIES:
-  :EXPORT_HUGO_WEIGHT: 46
+  :EXPORT_HUGO_WEIGHT: 48
   :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -3540,7 +3549,7 @@ Design draft for next version:
 * projectile
   :PROPERTIES:
   :DATE:     <2017-07-26 Wed 12:39>
-  :EXPORT_HUGO_WEIGHT: 47
+  :EXPORT_HUGO_WEIGHT: 49
   :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -3561,7 +3570,7 @@ Design draft for next version:
 
 * COMMENT hexo-export-hacks
   :PROPERTIES:
-  :EXPORT_HUGO_WEIGHT: 48
+  :EXPORT_HUGO_WEIGHT: 50
   :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -3594,7 +3603,7 @@ Design draft for next version:
 
 * COMMENT copy-filename-to-clipboard
   :PROPERTIES:
-  :EXPORT_HUGO_WEIGHT: 49
+  :EXPORT_HUGO_WEIGHT: 51
   :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -3611,7 +3620,7 @@ Design draft for next version:
 
 * calendar
   :PROPERTIES:
-  :EXPORT_HUGO_WEIGHT: 50
+  :EXPORT_HUGO_WEIGHT: 52
   :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -3657,7 +3666,7 @@ Design draft for next version:
 
 * COMMENT evil-mode
   :PROPERTIES:
-  :EXPORT_HUGO_WEIGHT: 51
+  :EXPORT_HUGO_WEIGHT: 53
   :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -3671,7 +3680,7 @@ Design draft for next version:
 
 * greek input
   :PROPERTIES:
-  :EXPORT_HUGO_WEIGHT: 52
+  :EXPORT_HUGO_WEIGHT: 54
   :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -3685,7 +3694,7 @@ Design draft for next version:
 
 * window and buffer switching ace window
   :PROPERTIES:
-  :EXPORT_HUGO_WEIGHT: 53
+  :EXPORT_HUGO_WEIGHT: 55
   :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -3717,7 +3726,7 @@ Design draft for next version:
 
 * COMMENT god-mode
   :PROPERTIES:
-  :EXPORT_HUGO_WEIGHT: 54
+  :EXPORT_HUGO_WEIGHT: 56
   :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -3727,7 +3736,7 @@ Design draft for next version:
 
 * COMMENT elisp-slime-nav
   :PROPERTIES:
-  :EXPORT_HUGO_WEIGHT: 55
+  :EXPORT_HUGO_WEIGHT: 57
   :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -3742,7 +3751,7 @@ Design draft for next version:
 
 * copy-file-path
   :PROPERTIES:
-  :EXPORT_HUGO_WEIGHT: 56
+  :EXPORT_HUGO_WEIGHT: 58
   :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -3775,7 +3784,7 @@ Design draft for next version:
 
 * re-builder
   :PROPERTIES:
-  :EXPORT_HUGO_WEIGHT: 58
+  :EXPORT_HUGO_WEIGHT: 59
   :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -3786,7 +3795,7 @@ Design draft for next version:
 
 * COMMENT sclang-link-folder-to-extensions
   :PROPERTIES:
-  :EXPORT_HUGO_WEIGHT: 59
+  :EXPORT_HUGO_WEIGHT: 60
   :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -3821,7 +3830,7 @@ If UNLINK-P is not nil, then delete the link instead."
 
 * COMMENT use-workgroups2
   :PROPERTIES:
-  :EXPORT_HUGO_WEIGHT: 60
+  :EXPORT_HUGO_WEIGHT: 61
   :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -3831,7 +3840,7 @@ If UNLINK-P is not nil, then delete the link instead."
 #+END_SRC
 * turn-whitespace-off
   :PROPERTIES:
-  :EXPORT_HUGO_WEIGHT: 61
+  :EXPORT_HUGO_WEIGHT: 62
   :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -3840,7 +3849,7 @@ If UNLINK-P is not nil, then delete the link instead."
 #+END_SRC
 * COMMENT eshell on path with prompt
   :PROPERTIES:
-  :EXPORT_HUGO_WEIGHT: 62
+  :EXPORT_HUGO_WEIGHT: 63
   :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -3876,33 +3885,33 @@ If UNLINK-P is not nil, then delete the link instead."
 * last actions 1 window hydra global hl dark
   :PROPERTIES:
   :DATE:     <2017-12-15 Fri 09:55>
-  :EXPORT_HUGO_WEIGHT: 63
+  :EXPORT_HUGO_WEIGHT: 64
   :END:
 
 #+BEGIN_SRC emacs-lisp
   (delete-other-windows)
   (hydra-global/body)
   ;; set faces to harmonize with prelude's default zenburn color theme
-  (custom-set-faces
-   '(region ((t
-              (:background "#454A35"))))
-   '(org-link ((t
-                (:underline
-                 (:color "cyan" :style line)
-                 :foreground "cyan"))))
-   '(org-block ((t
-                 (:foreground "#9bff7" :background "#17271f"))))
-   '(hl-line ((t (:background "gray0"))))
-   '(hl-sexp-face ((t (:background "gray10"))))
-   '(org-block-end-line ((t (:background "#2a2a2f" :foreground "gray99"))) t)
-   '(org-block-begin-line ((t (:background "#3a2a2f" :foreground "gray99"))) t))
+  ;; (custom-set-faces
+  ;;  '(region ((t
+  ;;             (:background "#454A35"))))
+  ;;  '(org-link ((t
+  ;;               (:underline
+  ;;                (:color "cyan" :style line)
+  ;;                :foreground "cyan"))))
+  ;;  '(org-block ((t
+  ;;                (:foreground "#9bff7" :background "#17271f"))))
+  ;;  '(hl-line ((t (:background "gray0"))))
+  ;;  '(hl-sexp-face ((t (:background "gray10"))))
+  ;;  '(org-block-end-line ((t (:background "#2a2a2f" :foreground "gray99"))) t)
+  ;;  '(org-block-begin-line ((t (:background "#3a2a2f" :foreground "gray99"))) t))
 
   ;; make buffer name more visible in powerline moe theme
   (set-face-attribute 'mode-line-buffer-id nil :background nil :foreground "#F81808")
 #+END_SRC
 * COMMENT debugging agenda
   :PROPERTIES:
-  :EXPORT_HUGO_WEIGHT: 64
+  :EXPORT_HUGO_WEIGHT: 65
   :END:
 
 #+BEGIN_SRC emacs-lisp 
@@ -3937,3 +3946,7 @@ If UNLINK-P is not nil, then delete the link instead."
 
 #+RESULTS:
 | /Users/iani/BitTorrent Sync/000WORKFILES/PERSONAL/journal | /Users/iani/BitTorrent Sync/000WORKFILES/PERSONAL/TODOS | /Users/iani/BitTorrent Sync/000WORKFILES/PROJECTS_CURRENT |
+* COMMENT Font test for org-tables
+
+| greek    | or english | or japanese |
+| Ελληνικά | 日本語も   | 困ったな    |

@@ -36,13 +36,13 @@ Some people are too nosy. What can happen to them is described by Laura Lion \pa
 * COMMENT latex-header
 
 #+BEGIN_SRC latex
-  \usepackage{xeCJK}
-  \setmainfont{Linux Libertine O} % {Times New Roman}
-  \setCJKmainfont[BoldFont=STHeiti,ItalicFont=STKaiti]{STSong}
+\usepackage{xeCJK}
+\setmainfont{Linux Libertine O} % {Times New Roman}
+\setCJKmainfont[BoldFont=STHeiti,ItalicFont=STKaiti]{STSong}
   \usepackage[authordate,autocite=inline,backend=biber]{biblatex-chicago}
-  \bibliography{bibliography-ml.bib}
+\bibliography{bibliography-ml.bib}
 
-  \begin{document}
+\begin{document}
 #+END_SRC
 * COMMENT latex-footer
 
