@@ -1,4 +1,4 @@
-;;; org-mode --- 2019-01-23 04:39:40 AM
+;;; org-mode --- 2019-01-29 03:48:04 PM
   ;;; Commentary:
 
   ;; customize some org mode settings
@@ -35,7 +35,7 @@
    ;;   ((t
    ;;     (:family "Inconsolata" :height 1.1 :weight light :box nil
    ;;              :foreground "#a1db00" :inherit
-   ;;              (outline-2)))))
+   ;;              (outline-2)))))<
    ;; '(org-level-1 ((t (:family "Courier New" :height 1.1 :weight bold))))
    ;; '(org-level-2 ((t (:family "Courier New" :height 1.1 :weight bold))))
    '(org-level-3 ((t (:weight bold :height 1.1))))

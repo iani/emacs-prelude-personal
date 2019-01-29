@@ -1,4 +1,4 @@
-;;; Theming+Faces --- 2019-01-23 04:39:39 AM
+;;; Theming+Faces --- 2019-01-29 03:48:02 PM
   ;;; Commentary:
 
   ;; Theme tweaking is a time-consuming and frustrating pasttime.
@@ -13,7 +13,8 @@
    '(default ((t (:family
                   ;; "Liberation Mono for Powerline"
                   ;; "Courier New"
-                  "Ubuntu Mono derivative Powerline"
+                  ;; "Ubuntu Mono derivative Powerline"
+                  "Ubuntu Mono"
                   :foundry "nil"
                   :width normal :height 110
                   :weight normal :slant normal :underline nil :overline nil
