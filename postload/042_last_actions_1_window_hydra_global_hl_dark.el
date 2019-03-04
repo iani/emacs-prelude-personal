@@ -1,4 +1,4 @@
-;;; last_actions_1_window_hydra_global_hl_dark --- 2019-01-29 03:48:06 PM
+;;; last_actions_1_window_hydra_global_hl_dark --- 2019-02-16 12:26:00 AM
   (delete-other-windows)
   (hydra-global/body)
   ;; set faces to harmonize with prelude's default zenburn color theme

@@ -1,0 +1,26 @@
+
+
+
+
+#+LATEX_HEADER_PATH: /Users/iani/latex-exports/templates/00BasicGreek/framework.tex
+
+
+
+
+
+* A test node for latex export
+#+BEGIN_SRC emacs-lisp
+  (let* ((path-property-name "LATEX_HEADER_PATH")
+           (template-path
+            (cond
+             ((setq template-path (org-entry-get (point) path-property-name)))))
+           )
+    (message "the property found was: %s\n" template-path)
+      )
+#+END_SRC
+
+#+RESULTS:
+: the property found was: nil
+
+
+* Section 1

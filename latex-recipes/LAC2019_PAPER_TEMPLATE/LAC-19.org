@@ -1,102 +1,115 @@
 * COMMENT latex-header
 
 #+BEGIN_SRC latex
-\def\papertitle{sc-hacks: A Live Coding Framework for Gestural Performance and Electroacoustic Music}
-\def\paperauthorA{Iannis Zannos}
-\def\paperauthorB{Author Two}
-\def\paperauthorC{Author Three}
-\def\paperauthorD{Author Four}
+    \def\papertitle{sc-hacks: A Live Coding Framework for Gestural Performance and Electronic Music}
+    \def\paperauthorA{Iannis Zannos}
+    \def\paperauthorB{Author Two}
+    \def\paperauthorC{Author Three}
+    \def\paperauthorD{Author Four}
 
-% Authors' affiliations have to be set below
+    % Authors' affiliations have to be set below
 
-%------------------------------------------------------------------------------------------
-\documentclass[twoside,letterpaper]{article}
-\usepackage{LAC-19}
-\usepackage{amsmath,amssymb,amsfonts,amsthm}
-\usepackage{euscript}
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{ifpdf}
+    %------------------------------------------------------------------------------------------
+    \documentclass[twoside,letterpaper]{article}
+    \usepackage{LAC-19}
+    \usepackage{amsmath,amssymb,amsfonts,amsthm}
+    \usepackage{euscript}
+    \usepackage[utf8]{inputenc}
+    \usepackage[T1]{fontenc}
+    \usepackage{ifpdf}
+    \usepackage{multicol}
 
-\usepackage{color}
-\usepackage{listings}
-\definecolor{mygrey}{rgb}{0.96,0.96,0.96}
-\lstset{
-  tabsize=4,
-  basicstyle=\ttfamily,
-  backgroundcolor=\color{mygrey},
-  captionpos=b,
-  breaklines=true
-}
+    \usepackage{color}
+    \usepackage{listings}
+    \definecolor{mygrey}{rgb}{0.96,0.96,0.96}
+    \lstset{
+      tabsize=4,
+      basicstyle=\ttfamily,
+      backgroundcolor=\color{mygrey},
+      captionpos=b,
+      breaklines=true
+    }
 
-\usepackage[english]{babel}
-\usepackage{caption}
-\usepackage{subfig, color}
+    \usepackage[english]{babel}
 
-\setcounter{page}{1}
-\ninept
+    % \usepackage[format=plain,
+    %             labelfont={bf,it},
+    %             textfont=it]{caption}
+  \usepackage[textfont=it]{caption}
+%  \captionsetup[figure]{labelfont=it,textfont={bf,it}} % THIS ONE WORKED
+%  \captionsetup[figure]{labelfont=it,textfont=it} % ALMOST THERE
+  \captionsetup[figure]{textfont=it} 
+  % \captionsetup[figure]{textfont={it}}
+    \usepackage{subfig, color}
 
-\usepackage{times}
-% Saves a lot of ouptut space in PDF... after conversion with the distiller
-% Delete if you cannot get PS fonts working on your system.
+    \setcounter{page}{1}
+    \ninept
 
-% pdf-tex settings: detect automatically if run by latex or pdflatex
-\newif\ifpdf
-\ifx\pdfoutput\relax
-\else
-   \ifcase\pdfoutput
-      \pdffalse
-   \else
-      \pdftrue
-\fi
+    \usepackage{times}
+    % Saves a lot of ouptut space in PDF... after conversion with the distiller
+    % Delete if you cannot get PS fonts working on your system.
 
-\ifpdf % compiling with pdflatex
-  \usepackage[pdftex,
-    pdftitle={\papertitle},
-    pdfauthor={\paperauthorA, \paperauthorB, \paperauthorC, \paperauthorD},
-    colorlinks=false, % links are activated as colror boxes instead of color text
-    bookmarksnumbered, % use section numbers with bookmarks
-    pdfstartview=XYZ % start with zoom=100% instead of full screen; especially useful if working with a big screen :-)
-  ]{hyperref}
-  \pdfcompresslevel=9
-  \usepackage[pdftex]{graphicx}
-  \usepackage[figure,table]{hypcap}
-\else % compiling with latex
-  \usepackage[dvips]{epsfig,graphicx}
-  \usepackage[dvips,
-    colorlinks=false, % no color links
-    bookmarksnumbered, % use section numbers with bookmarks
-    pdfstartview=XYZ % start with zoom=100% instead of full screen
-  ]{hyperref}
-  % hyperrefs are active in the pdf file after conversion
-  \usepackage[figure,table]{hypcap}
-\fi
+    % pdf-tex settings: detect automatically if run by latex or pdflatex
+    \newif\ifpdf
+    \ifx\pdfoutput\relax
+    \else
+       \ifcase\pdfoutput
+          \pdffalse
+       \else
+          \pdftrue
+    \fi
 
-\title{\papertitle}
+    \ifpdf % compiling with pdflatex
+      \usepackage[pdftex,
+        pdftitle={\papertitle},
+        pdfauthor={\paperauthorA, \paperauthorB, \paperauthorC, \paperauthorD},
+        colorlinks=false, % links are activated as colror boxes instead of color text
+        bookmarksnumbered, % use section numbers with bookmarks
+        pdfstartview=XYZ % start with zoom=100% instead of full screen; especially useful if working with a big screen :-)
+      ]{hyperref}
+      \pdfcompresslevel=9
+      \usepackage[pdftex]{graphicx}
+      \usepackage[figure,table]{hypcap}
+    \else % compiling with latex
+      \usepackage[dvips]{epsfig,graphicx}
+      \usepackage[dvips,
+        colorlinks=false, % no color links
+        bookmarksnumbered, % use section numbers with bookmarks
+        pdfstartview=XYZ % start with zoom=100% instead of full screen
+      ]{hyperref}
+      % hyperrefs are active in the pdf file after conversion
+      \usepackage[figure,table]{hypcap}
+    \fi
 
-%-------------SINGLE-AUTHOR HEADER STARTS (uncomment below if your paper has a single author)-----------------------
- \affiliation{
- \paperauthorA
- \,
-}
- {\href{http://avarts.ionio.gr}{Department of Audiovisual Arts} \\ Ionian University, Corfu, Greece \\
- {\tt \href{mailto:zannos@gmail.com}{zannos@gmail.com}}
- }
-%-----------------------------------SINGLE-AUTHOR HEADER ENDS------------------------------------------------------
+    \title{\papertitle}
 
-\begin{document}
-% more pdf-tex settings:
-\ifpdf % used graphic file format for pdflatex
-  \DeclareGraphicsExtensions{.png,.jpg,.pdf}
-\else  % used graphic file format for latex
-  \DeclareGraphicsExtensions{.eps}
-\fi
+    %-------------SINGLE-AUTHOR HEADER STARTS (uncomment below if your paper has a single author)-----------------------
+     \affiliation{
+     \paperauthorA
+     \,
+    }
+     {\href{http://avarts.ionio.gr}{Department of Audiovisual Arts} \\ Ionian University, Corfu, Greece \\
+     {\tt \href{mailto:zannos@gmail.com}{zannos@gmail.com}}
+     }
+    %-----------------------------------SINGLE-AUTHOR HEADER ENDS------------------------------------------------------
 
-\maketitle
+    \begin{document}
+    % more pdf-tex settings:
+    \ifpdf % used graphic file format for pdflatex
+      \DeclareGraphicsExtensions{.png,.jpg,.pdf}
+    \else  % used graphic file format for latex
+      \DeclareGraphicsExtensions{.eps}
+    \fi
+
+    \maketitle
 
 #+END_SRC
 
 * COMMENT latex-footer
 #+BEGIN_SRC latex
+\nocite{*}
+\bibliographystyle{IEEEbib}
+\bibliography{LAC-19-2} % requires file ifc-18.bib
+
 \end{document}
 #+END_SRC

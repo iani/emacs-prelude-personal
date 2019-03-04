@@ -1,0 +1,10 @@
+\BOOKMARK [1][-]{section.1}{1 \040Background}{}% 1
+\BOOKMARK [2][-]{subsection.1.1}{1.1 \040Bridging Live Coding and Gestural Interaction}{section.1}% 2
+\BOOKMARK [2][-]{subsection.1.2}{1.2 \040Live Coding Frameworks in SuperCollider}{section.1}% 3
+\BOOKMARK [3][-]{subsubsection.1.2.1}{1.2.1 \040Types of Live Coding Frameworks}{subsection.1.2}% 4
+\BOOKMARK [3][-]{subsubsection.1.2.2}{1.2.2 \040sc-hacks Objectives and Approach}{subsection.1.2}% 5
+\BOOKMARK [1][-]{section.2}{2 \040Approach}{}% 6
+\BOOKMARK [2][-]{subsection.2.1}{2.1 \040Players and Player Environments}{section.2}% 7
+\BOOKMARK [3][-]{subsubsection.2.1.1}{2.1.1 \040Named placeholders: -def classes vs. Player class}{subsection.2.1}% 8
+\BOOKMARK [3][-]{subsubsection.2.1.2}{2.1.2 \040Separate parameter namespaces: ProxySpace vs. Nevent}{subsection.2.1}% 9
+\BOOKMARK [3][-]{subsubsection.2.1.3}{2.1.3 \040Modifying event generating processes on the fly}{subsection.2.1}% 10

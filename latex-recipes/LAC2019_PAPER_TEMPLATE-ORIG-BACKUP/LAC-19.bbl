@@ -1,0 +1,26 @@
+\begin{thebibliography}{1}
+
+\bibitem{Sal89}
+G.~Salton,
+\newblock {\em Automatic Text Processing},
+\newblock Addison-Wesley, 1989.
+
+\bibitem{Spa72}
+K.~{Sparck Jones},
+\newblock ``A statistical interpretation of term specificity and its
+  application in retrieval,''
+\newblock {\em Journal of Documentation}, vol. 28, no. 1, pp. 11--21, 1972.
+
+\bibitem{MosWal64}
+F.~Mosteller and D.~Wallace,
+\newblock {\em Inference and Disputed Authorship: The Federalist},
+\newblock Addison-Wesley, Reading, Massachusetts, 1964.
+
+\bibitem{Kay86}
+Martin K.,
+\newblock ``Parsing in functional unification grammar,''
+\newblock in {\em Readings in Natural Language Processing}, K.~Spark~Jones
+  B.~J.~Grosz and B.~L. Webber, Eds., pp. 125--138. Morgan Kaufmann Publishers,
+  Los Altos, 1986.
+
+\end{thebibliography}

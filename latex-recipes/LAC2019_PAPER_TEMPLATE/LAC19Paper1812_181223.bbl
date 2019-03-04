@@ -1,0 +1,74 @@
+\begin{thebibliography}{10}
+
+\bibitem{StowellMcLean13}
+D.~Stowell and A.~McLean,
+\newblock ``Live music-making: A rich open task requires a rich open
+  interface,''
+\newblock in {\em Music and Human-Computer Interaction}, pp. 139--152.
+  Springer, 2013.
+
+\bibitem{Salazar17}
+S.~Salazar,
+\newblock ``Searching for gesture and embodiment in live coding,''
+\newblock in {\em Proceedings of the International Conference on Live Coding}.
+  2017.
+
+\bibitem{WangEtAl09}
+G.~Wang, G.~Essl, J.~Smith, S.~Salazar, P.~Cook, R.~Hamilton, and R.~Fiebrink,
+\newblock ``Smule= sonic media: An intersection of the mobile, musical, and
+  social,''
+\newblock in {\em Proceedings of the International Computer Music Conference},
+  p. 16–21. 2009.
+
+\bibitem{SalazarArmitage18}
+S.~Salazar and J.~Armitage,
+\newblock {\em Re-engaging the Body and Gesture in Musical Live Coding}, 2018,
+  [Online; accessed 20-December-2018],
+\newblock
+  \url{https://embodiedlivecoding.github.io/nime2018-workshop/workshop-paper.html}.
+
+\bibitem{ArmitageMcPherson17}
+Armitage. J. and A.~McPherson,
+\newblock ``The stenophone: live coding on a chorded keyboard with continuous
+  control,''
+\newblock in {\em Proceedings of the International Conference on Live Coding}.
+  2017.
+
+\bibitem{Sicchio14}
+K.~Sicchio,
+\newblock ``Hacking choreography: Dance and live coding,''
+\newblock {\em Computer Music Journal}, vol. 38, no. 1, pp. 31--39, 2014.
+
+\bibitem{Magnusson11}
+T.~Magnusson,
+\newblock ``The ixi lang: A supercollider parasite for live coding,''
+\newblock in {\em Proceedings of the International Computer Music Conference},
+  pp. 503--506. 2011.
+
+\bibitem{ShuCheng17}
+A.~W. Shu-Cheng,
+\newblock ``Supersampler: A new polyphonic concatenative sampler synthesizeer
+  in supercollider for sound motive creating, live coding, and improvisation,''
+\newblock in {\em Proceedings of the International Computer Music Conference}.
+  2017.
+
+\bibitem{Roma16}
+G.~Roma,
+\newblock ``Colliding: a supercollider environment for synthesis-oriented live
+  coding,''
+\newblock in {\em Proceedings of the 2016 International Conference on Live
+  Interfaces}. 2016.
+
+\bibitem{McLean10}
+A.~McLean and G.~Wigins,
+\newblock ``Tidal – pattern language for the live coding of music,''
+\newblock in {\em Proceedings of the 7th Sound and Music Computing Conference}.
+  2010.
+
+\bibitem{ZannosCarle18}
+I.~Zannos and M.~Carle,
+\newblock ``Metric interweaving in networked dance and music performance,''
+\newblock in {\em Proceedings of the 15th Sound and Music Computing
+  Conference}, pp. 524--529. 2018.
+
+\end{thebibliography}

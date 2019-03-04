@@ -10,7 +10,8 @@ Hello World!
 \setmainfont{Linux Libertine O} % libertine definitely better than Times New Roman
 % \setmainfont{Times New Roman}
 \usepackage{ulem} %This is needed to enable underlined emphasis (e.g. _underlined_)
-\usepackage{}
+\usepackage{hyperref}
+\sloppy
 \begin{document}
 #+END_SRC
 

@@ -1,0 +1,51 @@
+\input{header.tex}
+
+This is a test.
+
+* let us see how this handles sections
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 0
+  :END:
+
+abla
+
+** and subsections
+   :PROPERTIES:
+   :EXPORT_HUGO_WEIGHT: 1
+   :END:
+
+cadabla.
+
+* THis section should appear
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 2
+  :END:
+
+but the next section should not appear because it is commented.
+
+!!!!!ψ
+
+\input{footer.tex}
+
+* COMMENT A commented sectiona
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 3
+  :END:
+
+and its commmented contents.
+
+** and its commented subsection.
+   :PROPERTIES:
+   :EXPORT_HUGO_WEIGHT: 4
+   :END:
+
+and the commented subsections comments.
+
+* COMMENT ALWAYS PUT THE input footer statement at the end of the last UNCOMMENTED Section
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 5
+  :END:
+
+Because otherwise we lose the input statement at the end for the footer.
+
+

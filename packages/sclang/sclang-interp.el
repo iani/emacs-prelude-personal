@@ -357,7 +357,7 @@ If EOB-P is non-nil, positions cursor at end of buffer."
 ;; command process
 ;; =====================================================================
 
-(defcustom sclang-mkfifo-program "mkfifo"
+ (defcustom sclang-mkfifo-program "mkfifo"
   "*Name of the \"mkfifo\" program.
 
 Change this if \"mkfifo\" has a non-standard name or location."

@@ -1,15 +1,21 @@
-;;; org-mode --- 2019-01-29 03:48:04 PM
-  ;;; Commentary:
+;;; org-mode --- 2019-02-16 12:25:57 AM
+    ;;; Commentary:
 
   ;; customize some org mode settings
 
   ;; define some useful functions
 
-  ;;; Code:
+    ;;; Code:
 
-  ;;; pretty bullets
-  ;;;   (prelude-load-require-package 'org-bullets)
+    ;;; pretty bullets
+    ;;;   (prelude-load-require-package 'org-bullets)
   (require 'org-bullets)
+
+  ;;; use bullets currently displayable by emacson macos 10.13:
+  (setq org-bullets-bullet-list
+        '(
+          "⦿" "◎" "●" "○" "◆" "◇" "■" "□" "◼" "◻" "⚙"
+          ))
 
   (add-hook 'org-mode-hook (lambda () ;; custom bullets: on, auto-fill: off
                              (org-bullets-mode 1)
@@ -71,13 +77,13 @@
 
   (defun org-insert-current-date (arg)
     "Insert current date in format readable for org-capture minibuffer.
-  If called with ARG, do not insert time."
+    If called with ARG, do not insert time."
     (interactive "P")
     (if arg
         (insert (format-time-string "%e %b %Y"))
       (insert (format-time-string "%e %b %Y %H:%M"))))
 
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; make heading movement commands skip initial * marks
   (defun org-jump-forward-heading-same-level (&optional do-cycle)
     "Jump forward heading same level, and skip to beginning of heading itself."
@@ -131,7 +137,7 @@
     (interactive)
     (re-search-forward "\\#\\+BEGIN_SRC " nil t))
 
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
   ;; This is run once after loading org for the first time
   ;; It adds some org-mode specific key bindings.
@@ -155,7 +161,7 @@
        (define-key org-mode-map (kbd "C-M-S-n") 'org-next-src-block)
        (define-key org-mode-map (kbd "C-M-S-p") 'org-show-properties-block)
        (define-key org-mode-map (kbd "C-M-/") 'org-sclang-eval-babel-block)
-              ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
        ;; from: http://orgmode.org/worg/org-configs/org-config-examples.html
        ;; section navigation;
        (define-key org-mode-map (kbd "M-n") 'jump-outline-next-visible-heading)
@@ -263,7 +269,7 @@
   (add-hook
    'org-mode-hook
    (lambda ()
-     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
      ;; own stuff:
      ;; Make javascript blocks open in sclang mode in org-edit-special
      ;; This is because sclang blocks must currently be marked as javascript

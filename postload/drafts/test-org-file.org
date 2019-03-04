@@ -1,0 +1,18 @@
+
+* section
+  :PROPERTIES:
+  :EXPORT_HUGO_WEIGHT: 0
+  :END:
+
+this is a test
+
+** Only the ubsection
+   :PROPERTIES:
+   :EXPORT_HUGO_WEIGHT: 1
+   :END:
+Blah
+*** contains a fucking upsec
+    :PROPERTIES:
+    :EXPORT_HUGO_WEIGHT: 2
+    :END:
+ the ubsection.
