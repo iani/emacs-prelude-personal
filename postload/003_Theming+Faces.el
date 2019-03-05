@@ -1,4 +1,4 @@
-;;; Theming+Faces --- 2019-02-16 12:25:54 AM
+;;; Theming+Faces --- 2019-03-05 07:02:41 AM
   ;;; Commentary:
 
   ;; Theme tweaking is a time-consuming and frustrating pasttime.
@@ -16,7 +16,7 @@
                   ;; "Ubuntu Mono derivative Powerline"
                   "Ubuntu Mono"
                   :foundry "nil"
-                  :width normal :height 110
+                  :width normal :height 140
                   :weight normal :slant normal :underline nil :overline nil
                   :strike-through nil :box nil
                   ;; :inverse-video nil :foreground "#DCDCCC"

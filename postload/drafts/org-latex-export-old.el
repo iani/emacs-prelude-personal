@@ -57,7 +57,7 @@
     If subtreep only compile the current org-subtree of the file.
 
     Create new filename based on user input, prompting with a file name
-    constructed from the curent file and a datestamp.
+    constructed from the current file and a datestamp.
     Save that file in the cache subdirectory of latex-exports.
     Insert latex header, footer, class definition sections in that file.
     Restore cursor position from the original file in the new file.

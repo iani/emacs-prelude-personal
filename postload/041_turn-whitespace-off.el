@@ -1,4 +1,4 @@
-;;; turn-whitespace-off --- 2019-02-16 12:26:00 AM
+;;; turn-whitespace-off --- 2019-03-05 07:02:46 AM
   (whitespace-mode -1)
   ;; (toggle-frame-fullscreen)
 (provide 'turn-whitespace-off)
