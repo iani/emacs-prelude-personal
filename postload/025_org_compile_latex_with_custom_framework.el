@@ -1,4 +1,4 @@
-;;; org_compile_latex_with_custom_framework --- 2019-03-05 07:02:44 AM
+;;; org_compile_latex_with_custom_framework --- 2019-03-05 12:28:09 PM
   ;;; Commentary:
 
   ;; 28 Feb 2019 14:18 ff
@@ -87,52 +87,6 @@
     "Calculate full path of file to body file from FRAMEWORK-PATH."
     (concat (file-name-directory framework-path) "body.tex"))
 
-  (defun test ()
-    "Temporary test function for debugging this package."
-    (interactive)
-    (message "found: %s"
-             (save-excursion
-               (org-with-wide-buffer
-                (goto-char (point-min))
-                (let* ((property-value (org-latex-default-template-path))
-                       (property-name "LATEX_HEADER_PATH")
-                       (here (re-search-forward
-                              (concat "^"
-                                      (regexp-quote (concat "#+" property-name ":")))
-                              ;; property-name
-                              ;; (concat "^"
-                              ;;         (regexp-quote (concat "#+" property-name ":"))
-                              ;;         " ?")
-                              nil t)))
-                  (message "found here: %s" here)
-                  here)))))
-
-  (defhydra org-latex-hydra (org-mode-map "H-l" color: red columns: 2)
-    "LATEX"
-    ;; tested OK:
-    ("l" pdflatex-compile-buffer "pdflatex tex buffer")
-    ;; tested OK:
-    ("L" xelatex-compile-buffer "xelatex tex buffer")
-    ;;
-    ("p" org-pdflatex-compile-buffer "pdflatex org buffer")
-    ("P" org-pdflatex-compile-subtree "pdflatex org subtree")
-    ;; ;; testing:
-    ("x" org-xelatex-compile-buffer "xelatex org buffer")
-    ("X" org-xelatex-compile-subtree "xelatex org subtree")
-    ;; tested OK:
-    ("t" org-latex-set-buffer-template "set buffer template")
-    ;; tested OK:
-    ("T" org-latex-set-subtree-template "set subtree template")
-    ;; tested OK:
-    ("?" org-latex-post-subtree-template-path "post subtree template path")
-    ;; tested OK:
-    ("/" org-latex-post-file-template-path "post file template path")
-    ("f" org-latex-find-file-template-file "find file template file")
-    ("F" org-latex-find-subtree-template-file "find subtree template file")
-    ("q" quit "exit hydra" :exit t))
-
-  (global-set-key (kbd "H-l") 'org-latex-hydra)
-
   (defun org-pdflatex-compile-buffer ()
     "Export buffer as body.tex and create pdf with pdflatex using template.
   The template for the buffer is chosen by org-latex-get-file-template-path."
@@ -169,6 +123,19 @@
     (let*
         ((template-path (org-latex-get-file-template-path))
          (template-directory (file-name-directory template-path))
+         (export-file-copy-path
+          (concat
+           org-latex-export-path "/exports/"
+           (read-string
+            "pdf export file copy name base:"
+            (if subtreep
+                (substring-no-properties
+                 (replace-regexp-in-string "\\W" ""  (org-get-heading t t)))
+              (file-name-nondirectory (file-name-sans-extension
+                                       (buffer-file-name)))))
+           "_"
+           (format-time-string "%y%m%d")
+           ".pdf"))
          (body-path (concat template-directory "body.tex"))
          (latex-output (org-export-as
                         ;; backend subtreep visible-only body-only ext-plist
@@ -179,21 +146,14 @@
         (insert latex-output)
         (write-file body-path))
       ;; compile framework and body files into framework.pdf file
-      (latex-compile-file-with-latexmk pdflatexp template-path)
+      (latex-compile-file-with-latexmk pdflatexp template-path t) ;; t: do not open!
       (copy-file
        (concat (file-name-sans-extension template-path) ".pdf")
-       (concat
-        org-latex-export-path "/exports/"
-        (read-string
-         "File name base:"
-         (if subtreep
-             (substring-no-properties
-              (replace-regexp-in-string "\\W" ""  (org-get-heading t t)))
-           (file-name-nondirectory (file-name-sans-extension
-                                    (buffer-file-name)))))
-        (format-time-string "%y%m%d")
-        ".pdf")
-       t)))
+       export-file-copy-path
+       t)
+      ;; open the copy of the exported file:
+      (shell-command (concat "open " (shell-quote-argument export-file-copy-path)))
+      (message "pdf export file copied to:\n%s" export-file-copy-path)))
 
   (defun xelatex-compile-buffer ()
     "Compile current tex buffer into PDF using xelatex.
@@ -207,7 +167,7 @@
     (interactive)
     (latex-compile-file-with-latexmk t))
 
-  (defun latex-compile-file-with-latexmk (&optional pdflatexp filename)
+  (defun latex-compile-file-with-latexmk (&optional pdflatexp filename donotopen)
     "Compile tex file using latexmk.
   If PDFLATEXP then use pdflatex instead of xelatex.
   Open resulting pdf file with default macos open method."
@@ -223,7 +183,8 @@
       (delete-file (concat (file-name-sans-extension file) ".bbl"))
       (org-latex-compile file)
       (message "tex->pdf done. Opening:\n%s" (shell-quote-argument pdf-file))
-      (shell-command (concat "open " (shell-quote-argument pdf-file)))))
+      (unless donotopen
+        (shell-command (concat "open " (shell-quote-argument pdf-file))))))
 
   (defun org-latex-post-file-template-path ()
     "Post the path of the latex template file for this file."
@@ -347,5 +308,25 @@
             )))
       property-value
       ))
+
+  ;;; redoing the fucker
+  (defhydra hydra-latex (global-map "H-x" :color red :columns 2)
+    "latex hydra"
+
+    ("x" org-xelatex-compile-buffer "ORG xelatex buffer")
+    ("X" org-xelatex-compile-subtree "ORG xelatex subtree")
+    ("l" pdflatex-compile-buffer "TEX pdflatex buffer")
+    ("L" xelatex-compile-buffer "TEX xelatex buffer")
+    ("p" org-pdflatex-compile-buffer "ORG pdflatex buffer")
+    ("P" org-pdflatex-compile-subtree "ORG pdflatex subtree")
+    ("t" org-latex-set-buffer-template "set buffer template")
+    ("T" org-latex-set-subtree-template "set subtree template")
+    ("/" org-latex-post-file-template-path "post file template path")
+    ("?" org-latex-post-subtree-template-path "post subtree template path")
+    ("f" org-latex-find-file-template-file "find file template file")
+    ("F" org-latex-find-subtree-template-file "find subtree template file")
+    ("q" quit "exit hydra" :exit t))
+
+  (global-set-key (kbd "H-l") 'hydra-latex/body)
 (provide 'org_compile_latex_with_custom_framework)
 ;;; 025_org_compile_latex_with_custom_framework.el ends here

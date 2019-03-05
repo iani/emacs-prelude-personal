@@ -1847,66 +1847,6 @@ Incomplete draft.
            "* %?\nEntered on %U\n  %i\n  %a")))
 #+END_SRC
 
-* COMMENT org mode latex export - notes
-  :PROPERTIES:
-  :DATE:     <2018-03-05 Mon 23:11>
-  :EXPORT_HUGO_WEIGHT: 32
-  :END:
-** COMMENT Installing org-mode version 9 or greater
-   :PROPERTIES:
-   :EXPORT_HUGO_WEIGHT: 33
-   :END:
-
-Xelatex enables one to use system fonts. These are necessary for languages such as greek, which requires a character set other than latin.
-
-The present software specifies use of xelatec and requires org-version 9 or greater.  Use command =org-version= to find out which version is installed.  To upgrade to version 9 follow these steps:
-
- - Delete default org code base
-
- Delete the current or default org version code.  In macOS this is found inside the Emacs.app folder at this location: Emacs.app/Contents/Resources/lisp/org  It is necessary to delete this entire folder before upgrading, because if you keep it, it will cause conflicts with version 9 which will either disable latex export or result in errors when definin properties such as =#+TITLE:=, =#+AUTHOR:=, =#+DATE:= in an org file.
-
- - Add org-mode repository to the emacs-lisp package list variable
-
- Run the following code:
-
- #+BEGIN_SRC elisp
- (setq package-archives
-       '(("melpa" . "https://melpa.org/packages/")
-         ("gnu" . "https://elpa.gnu.org/packages/")
-         ("org" . "http://orgmode.org/elpa/")))
- (package-initialize)
- #+END_SRC
-
- - Install the org-plus-contrib package either with command =package-install= or with =package-list-packages= and then searching =org-plus-contrib=, then typing i to mark it for installation and then typing x to install the marked packages.
-** COMMENT Using custom latex documnent styles
-   :PROPERTIES:
-   :DATE:     <2018-09-23 Sun 16:11>
-   :EXPORT_HUGO_WEIGHT: 34
-   :END:
-
-If the .sty or .cls files defining a latex document style are missing from the folders used by latex installed in the system, then these files should be placed in the same directory as latex file that requires them.  (The rationale for this as well as alternatives are discussed here:
-https://tex.stackexchange.com/questions/1137/where-do-i-place-my-own-sty-or-cls-files-to-make-them-available-to-all-my-te)
-
-Including the =sty= and =cls= style files with the =tex= source is a good way to ensure portability to systems with varying latex installations.
-
-Now under development is a modification of the function =org-compile-latex-with-custom-headers= that will provide a simpler and safer way of including the required =sty= and =cls= files as well as any other required files in the same folder as the tex file being compiled.  The version should work like this:
-
- - The org-mode latex templates are always placed in subfolders of the =latex-recipes= folder.  The folder containing an org-mode template as well as any necessary accompanying files (=sty=, =cls=, =bib=, images etc.) is called =source folder=.
-- Actual export files (tex and generated pdf files etc.) are placed in subfolders of the =latex-exports= folder.  The folder containing the tex source and any necessary accompanying files is called =target folder=.  =org-compile-latex-with-custom-headers= copies the accompanying files from the source folder to the target folder before generating and compiling the tex source for the document.  The mechanism for this is as follows:
-- When importing a latex header section from one of the org-templates contained in =latex-recipes=, the name of the source folder is added as property =source_folder= in the =latex header= section imported by the import function (='deft-insert-latex-headers=).
-- When exporting latex from the org-mode file to be converted to pdf, the exporting function (=org-compile-latex-with-custom-headers=) gets the name of the folder from the =source_folder= property and then:
-  - Create a target folder with the same name as the source folder in the =latex-exports= folder.
-  - Copy the contents of the source folder to the target folder.
-  - Generate the source tex file for compiling the intended pdf document.
-  - Generate the intended pdf document by compiling the source tex file, if needed using any auxiliary files contained in the target folder.
-
-** COMMENT Compiling bibliogaphies wih biblatex
-   :PROPERTIES:
-   :EXPORT_HUGO_WEIGHT: 35
-   :END:
-
-The templates provided here use references stored in =bib= files (bibtex format).  Biblatex requires to use the =\bibliography= in order specify the name(s) of the =bib= files used.  Since biblatex works also when the name of a bib file points to a symbolic link, we store a symbolic link to the =bib= file in the target folder (see [[*Using custom latex documnent styles][previous section]]).  We store the directory path and the file name of the default bib file use custom variables =org-latex-bib-path= and =org=latex-bib-filename=.
-
 * org-journal
   :PROPERTIES:
   :EXPORT_HUGO_WEIGHT: 36
@@ -2078,7 +2018,7 @@ The templates provided here use references stored in =bib= files (bibtex format)
   ;; e.g. bib or graphics files.
   ;; The org source is exported as body.tex and then imported by the framework file
   ;; using \input{body.tex}
-  ;; The pdf output file is copied to the exports folder with a name 
+  ;; The pdf output file is copied to the exports folder with a name
   ;; provided by the user and a timestamp.
 
   ;; Compile org mode buffer to pdf using these options:
@@ -2158,52 +2098,6 @@ The templates provided here use references stored in =bib= files (bibtex format)
     "Calculate full path of file to body file from FRAMEWORK-PATH."
     (concat (file-name-directory framework-path) "body.tex"))
 
-  (defun test ()
-    "Temporary test function for debugging this package."
-    (interactive)
-    (message "found: %s"
-             (save-excursion
-               (org-with-wide-buffer
-                (goto-char (point-min))
-                (let* ((property-value (org-latex-default-template-path))
-                       (property-name "LATEX_HEADER_PATH")
-                       (here (re-search-forward
-                              (concat "^"
-                                      (regexp-quote (concat "#+" property-name ":")))
-                              ;; property-name
-                              ;; (concat "^"
-                              ;;         (regexp-quote (concat "#+" property-name ":"))
-                              ;;         " ?")
-                              nil t)))
-                  (message "found here: %s" here)
-                  here)))))
-
-  (defhydra org-latex-hydra (org-mode-map "H-l" color: red columns: 2)
-    "LATEX"
-    ;; tested OK:
-    ("l" pdflatex-compile-buffer "pdflatex tex buffer")
-    ;; tested OK:
-    ("L" xelatex-compile-buffer "xelatex tex buffer")
-    ;;
-    ("p" org-pdflatex-compile-buffer "pdflatex org buffer")
-    ("P" org-pdflatex-compile-subtree "pdflatex org subtree")
-    ;; ;; testing:
-    ("x" org-xelatex-compile-buffer "xelatex org buffer")
-    ("X" org-xelatex-compile-subtree "xelatex org subtree")
-    ;; tested OK:
-    ("t" org-latex-set-buffer-template "set buffer template")
-    ;; tested OK:
-    ("T" org-latex-set-subtree-template "set subtree template")
-    ;; tested OK:
-    ("?" org-latex-post-subtree-template-path "post subtree template path")
-    ;; tested OK:
-    ("/" org-latex-post-file-template-path "post file template path")
-    ("f" org-latex-find-file-template-file "find file template file")
-    ("F" org-latex-find-subtree-template-file "find subtree template file")
-    ("q" quit "exit hydra" :exit t))
-
-  (global-set-key (kbd "H-l") 'org-latex-hydra)
-
   (defun org-pdflatex-compile-buffer ()
     "Export buffer as body.tex and create pdf with pdflatex using template.
   The template for the buffer is chosen by org-latex-get-file-template-path."
@@ -2240,6 +2134,19 @@ The templates provided here use references stored in =bib= files (bibtex format)
     (let*
         ((template-path (org-latex-get-file-template-path))
          (template-directory (file-name-directory template-path))
+         (export-file-copy-path
+          (concat
+           org-latex-export-path "/exports/"
+           (read-string
+            "pdf export file copy name base:"
+            (if subtreep
+                (substring-no-properties
+                 (replace-regexp-in-string "\\W" ""  (org-get-heading t t)))
+              (file-name-nondirectory (file-name-sans-extension
+                                       (buffer-file-name)))))
+           "_"
+           (format-time-string "%y%m%d")
+           ".pdf"))
          (body-path (concat template-directory "body.tex"))
          (latex-output (org-export-as
                         ;; backend subtreep visible-only body-only ext-plist
@@ -2250,21 +2157,14 @@ The templates provided here use references stored in =bib= files (bibtex format)
         (insert latex-output)
         (write-file body-path))
       ;; compile framework and body files into framework.pdf file
-      (latex-compile-file-with-latexmk pdflatexp template-path)
+      (latex-compile-file-with-latexmk pdflatexp template-path t) ;; t: do not open!
       (copy-file
        (concat (file-name-sans-extension template-path) ".pdf")
-       (concat
-        org-latex-export-path "/exports/"
-        (read-string
-         "File name base:"
-         (if subtreep
-             (substring-no-properties
-              (replace-regexp-in-string "\\W" ""  (org-get-heading t t)))
-           (file-name-nondirectory (file-name-sans-extension
-                                    (buffer-file-name)))))
-        (format-time-string "%y%m%d")
-        ".pdf")
-       t)))
+       export-file-copy-path
+       t)
+      ;; open the copy of the exported file:
+      (shell-command (concat "open " (shell-quote-argument export-file-copy-path)))
+      (message "pdf export file copied to:\n%s" export-file-copy-path)))
 
   (defun xelatex-compile-buffer ()
     "Compile current tex buffer into PDF using xelatex.
@@ -2278,7 +2178,7 @@ The templates provided here use references stored in =bib= files (bibtex format)
     (interactive)
     (latex-compile-file-with-latexmk t))
 
-  (defun latex-compile-file-with-latexmk (&optional pdflatexp filename)
+  (defun latex-compile-file-with-latexmk (&optional pdflatexp filename donotopen)
     "Compile tex file using latexmk.
   If PDFLATEXP then use pdflatex instead of xelatex.
   Open resulting pdf file with default macos open method."
@@ -2294,7 +2194,8 @@ The templates provided here use references stored in =bib= files (bibtex format)
       (delete-file (concat (file-name-sans-extension file) ".bbl"))
       (org-latex-compile file)
       (message "tex->pdf done. Opening:\n%s" (shell-quote-argument pdf-file))
-      (shell-command (concat "open " (shell-quote-argument pdf-file)))))
+      (unless donotopen
+        (shell-command (concat "open " (shell-quote-argument pdf-file))))))
 
   (defun org-latex-post-file-template-path ()
     "Post the path of the latex template file for this file."
@@ -2418,6 +2319,26 @@ The templates provided here use references stored in =bib= files (bibtex format)
             )))
       property-value
       ))
+
+  ;;; redoing the fucker
+  (defhydra hydra-latex (global-map "H-x" :color red :columns 2)
+    "latex hydra"
+
+    ("x" org-xelatex-compile-buffer "ORG xelatex buffer")
+    ("X" org-xelatex-compile-subtree "ORG xelatex subtree")
+    ("l" pdflatex-compile-buffer "TEX pdflatex buffer")
+    ("L" xelatex-compile-buffer "TEX xelatex buffer")
+    ("p" org-pdflatex-compile-buffer "ORG pdflatex buffer")
+    ("P" org-pdflatex-compile-subtree "ORG pdflatex subtree")
+    ("t" org-latex-set-buffer-template "set buffer template")
+    ("T" org-latex-set-subtree-template "set subtree template")
+    ("/" org-latex-post-file-template-path "post file template path")
+    ("?" org-latex-post-subtree-template-path "post subtree template path")
+    ("f" org-latex-find-file-template-file "find file template file")
+    ("F" org-latex-find-subtree-template-file "find subtree template file")
+    ("q" quit "exit hydra" :exit t))
+
+  (global-set-key (kbd "H-l") 'hydra-latex/body)
 #+END_SRC
 
 * org mode and reference management ebib reftex
