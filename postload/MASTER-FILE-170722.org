@@ -2132,7 +2132,9 @@ Incomplete draft.
   If SUBTREEP then export subtree only, else export entire buffer.
   The template for the buffer is chosen by org-latex-get-file-template-path."
     (let*
-        ((template-path (org-latex-get-file-template-path))
+        ((template-path (if subtreep
+                            (org-latex-get-subtree-template-path)
+                          (org-latex-get-file-template-path)))
          (template-directory (file-name-directory template-path))
          (export-file-copy-path
           (concat
@@ -2319,6 +2321,16 @@ Incomplete draft.
             )))
       property-value
       ))
+
+  (defun org-latex-find-file-template-file ()
+    "Open file's template file."
+    (interactive)
+    (find-file (org-latex-get-file-template-path)))
+
+  (defun org-latex-find-subtree-template-file ()
+    "Open file's template file."
+    (interactive)
+    (find-file (org-latex-get-subtree-template-path)))
 
   ;;; redoing the fucker
   (defhydra hydra-latex (global-map "H-x" :color red :columns 2)
@@ -3151,14 +3163,6 @@ Design draft for next version:
     ("a" org-agenda "agenda")
     ("j" org-journal-at-date-from-user "journal entry")
     ("J" air-journal-goto-date "journal goto")
-    ("?" org-post-current-latex-export-template "show latex template")
-    ("l" deft "latex recipes")
-    ("x" org-compile-xelatex-with-custom-headers "org-xelatex")
-    ("p" org-compile-pdflatex-with-custom-headers "org-pdflatex")
-    ("t" org-compile-xelatex-subtree-with-custom-headers "subtree-xelatex")
-    ("T" org-compile-pdflatex-subtree-with-custom-headers "subtree-pdflatex")
-    ("X" latex-compile-file-with-xelatex "xelatex this")
-    ("P" latex-compile-file-with-pdflatex "pdflatex this")
     ("h" load-theme "load theme")
     ("H" hl-set-faces "set line faces")
     ("q" nil "quit" :color blue))

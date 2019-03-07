@@ -1,4 +1,4 @@
-;;; tiny_menu_and_hydra --- 2019-03-05 12:28:11 PM
+;;; tiny_menu_and_hydra --- 2019-03-07 03:41:17 PM
     ;;; Commentary:
 
   ;; 2 tiny-menus for functions that I do not want to place on command-keys,
@@ -185,14 +185,6 @@
     ("a" org-agenda "agenda")
     ("j" org-journal-at-date-from-user "journal entry")
     ("J" air-journal-goto-date "journal goto")
-    ("?" org-post-current-latex-export-template "show latex template")
-    ("l" deft "latex recipes")
-    ("x" org-compile-xelatex-with-custom-headers "org-xelatex")
-    ("p" org-compile-pdflatex-with-custom-headers "org-pdflatex")
-    ("t" org-compile-xelatex-subtree-with-custom-headers "subtree-xelatex")
-    ("T" org-compile-pdflatex-subtree-with-custom-headers "subtree-pdflatex")
-    ("X" latex-compile-file-with-xelatex "xelatex this")
-    ("P" latex-compile-file-with-pdflatex "pdflatex this")
     ("h" load-theme "load theme")
     ("H" hl-set-faces "set line faces")
     ("q" nil "quit" :color blue))

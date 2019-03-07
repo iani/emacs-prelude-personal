@@ -1,4 +1,4 @@
-;;; org_compile_latex_with_custom_framework --- 2019-03-05 12:28:09 PM
+;;; org_compile_latex_with_custom_framework --- 2019-03-07 03:41:16 PM
   ;;; Commentary:
 
   ;; 28 Feb 2019 14:18 ff
@@ -121,7 +121,9 @@
   If SUBTREEP then export subtree only, else export entire buffer.
   The template for the buffer is chosen by org-latex-get-file-template-path."
     (let*
-        ((template-path (org-latex-get-file-template-path))
+        ((template-path (if subtreep
+                            (org-latex-get-subtree-template-path)
+                          (org-latex-get-file-template-path)))
          (template-directory (file-name-directory template-path))
          (export-file-copy-path
           (concat
@@ -308,6 +310,16 @@
             )))
       property-value
       ))
+
+  (defun org-latex-find-file-template-file ()
+    "Open file's template file."
+    (interactive)
+    (find-file (org-latex-get-file-template-path)))
+
+  (defun org-latex-find-subtree-template-file ()
+    "Open file's template file."
+    (interactive)
+    (find-file (org-latex-get-subtree-template-path)))
 
   ;;; redoing the fucker
   (defhydra hydra-latex (global-map "H-x" :color red :columns 2)
