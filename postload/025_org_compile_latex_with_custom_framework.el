@@ -1,4 +1,4 @@
-;;; org_compile_latex_with_custom_framework --- 2019-03-07 03:41:16 PM
+;;; org_compile_latex_with_custom_framework --- 2019-03-09 04:18:30 PM
   ;;; Commentary:
 
   ;; 28 Feb 2019 14:18 ff
@@ -266,28 +266,38 @@
            (insert "#+LATEX_HEADER_PATH: " path new-line))))
       (message "You selected: \n%s" path)))
 
-  (defun org-latex-set-buffer-template ()
-    "Set LATEX_HEADER_PATH property in current org buffer, globally"
-    (interactive)
-    (let ((template-path
-           (read-file-name "Select template file: " "~/latex-exports/templates"
-                           "framework.tex")))
-      (message "You selected: %s\n" template-path)
-      (save-excursion
-        (org-with-wide-buffer
-         (goto-char (point-min))
-         (let ((here (re-search-forward
-                      (concat "^"
-                              (regexp-quote (concat "#+" "LATEX_HEADER_PATH" ":"))
-                              " ?") nil t)))
-           (cond
-            (here
-             (goto-char here)
-             (beginning-of-line)
-             (kill-line))
-            (t
-             (goto-char (point-min))))
-           (insert "\n#+LATEX_HEADER_PATH: " template-path "\n"))))))
+  (defun org-latex-set-buffer-export-name (&optional name)
+    "Set value of LATEX_EXPORT_NAME property globally in current buffer."
+    (interactive "sName: ")
+    (org-set-subtree-or-buffer-property "LATEX_EXPORT_NAME" name t))
+
+  (defun org-latex-set-subtree-export-name (&optional name)
+    "Set value of LATEX_EXPORT_NAME property in current subtree."
+    (interactive "sName: ")
+    (org-set-subtree-or-buffer-property "LATEX_EXPORT_NAME" name nil))
+
+  (defun org-set-subtree-or-buffer-property (property value bufferp)
+    "Set PROPERTY to VALUE, in buffer if BUFFERP, else in subtree."
+    (if bufferp
+        (save-excursion
+          (org-with-wide-buffer
+           (goto-char (point-min))
+           (let ((new-line "")
+                 (here (re-search-forward
+                        (concat "^"
+                                (regexp-quote (concat "#+" property ":"))
+                                " ?") nil t)))
+             (cond
+              (here
+               (goto-char here)
+               (beginning-of-line)
+               (kill-line))
+              (t
+               (setq new-line "\n")
+               (goto-char (point-min))))
+             (insert "#+" property ": " value new-line))))
+      (org-set-property property value))
+    (message "You selected: \n%s" value))
 
   (defun org-get-custom-property (property-name)
     "Get property PROPERTY-NAME locally or globally."

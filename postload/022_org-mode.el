@@ -1,4 +1,4 @@
-;;; org-mode --- 2019-03-07 03:41:15 PM
+;;; org-mode --- 2019-03-09 04:18:29 PM
     ;;; Commentary:
 
   ;; customize some org mode settings
@@ -14,7 +14,7 @@
   ;;; use bullets currently displayable by emacson macos 10.13:
   (setq org-bullets-bullet-list
         '(
-          "⦿" "◎" "●" "○" "◆" "◇" "■" "□" "◼" "◻" "⚙"
+          "⦿" "●" "○" "⧁" "⟾" "⤇" "⟹" "⥤" "⟶" "◎" "◆" "◇" "■" "□" "◼" "◻" "⚙"
           ))
 
   (add-hook 'org-mode-hook (lambda () ;; custom bullets: on, auto-fill: off
