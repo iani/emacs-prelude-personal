@@ -1,4 +1,4 @@
-;;; tiny_menu_and_hydra --- 2019-03-09 04:18:32 PM
+;;; tiny_menu_and_hydra --- 2019-03-24 06:03:24 PM
     ;;; Commentary:
 
   ;; 2 tiny-menus for functions that I do not want to place on command-keys,
@@ -173,6 +173,7 @@
 
   (defhydra hydra-global (global-map "H-g" :color red :columns 3)
     "global hydra"
+    ("i" ibuffer "ibuffer")
     ("o" open-in-finder "open in finder")
     ("g" helm-projectile-switch-project "projectile goto project")
     ("G" org-jump-to-refile-target "goto refile heading")
@@ -236,7 +237,6 @@
          '(hl-sexp-face ((t (:background "gray80"))))
          '(org-block-end-line ((t (:background "#AaBaFf" :foreground "gray9"))) t)
          '(org-block-begin-line ((t (:background "#AaAaFf" :foreground "gray9"))) t))) ))
-
 
   (defun open-in-finder (arg)
     "Open containing folder in default external program."
@@ -352,6 +352,7 @@
                             'corral-double-quotes-backward
                             'corral-double-quotes-forward
                             wrap-toggle))
+
   (defhydra hydra-corral (global-map "M-'" :columns 4)
     "Corral"
     ("(" corral-parentheses-backward "Back")
@@ -427,4 +428,4 @@
   (global-set-key (kbd "H-m") 'air-tiny-menu)
   (global-set-key (kbd "H-M") 'air-tiny-menu2)
 (provide 'tiny_menu_and_hydra)
-;;; 034_tiny_menu_and_hydra.el ends here
+;;; 035_tiny_menu_and_hydra.el ends here

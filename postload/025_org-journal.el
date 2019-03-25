@@ -1,4 +1,4 @@
-;;; org-journal --- 2019-03-09 04:18:29 PM
+;;; org-journal --- 2019-03-24 06:03:23 PM
   ;;; Commentary:
   ;;; use org-journal for capture globally into files named by date number.
   ;;; https://github.com/bastibe/org-journal.
@@ -149,4 +149,4 @@
   (global-set-key (kbd "C-c c j") 'org-journal-at-date-from-user)
   (global-set-key (kbd "C-c c J") 'org-journal-new-entry-from-org-timestamp)
 (provide 'org-journal)
-;;; 024_org-journal.el ends here
+;;; 025_org-journal.el ends here

@@ -1,4 +1,4 @@
-;;; org-mode:_Use_uppercase_UUIDs_in_Linux_for_consistency_with_MacOS_when_syncing_with_rslsync --- 2019-03-09 04:18:30 PM
+;;; org-mode:_Use_uppercase_UUIDs_in_Linux_for_consistency_with_MacOS_when_syncing_with_rslsync --- 2019-03-24 06:03:23 PM
     (defun org-id-get (&optional pom create prefix)
       "Get the ID property of the entry at point-or-marker POM.
 
@@ -21,4 +21,4 @@
             (org-id-add-location id (buffer-file-name (buffer-base-buffer)))
             (upcase id))))))
 (provide 'org-mode:_Use_uppercase_UUIDs_in_Linux_for_consistency_with_MacOS_when_syncing_with_rslsync)
-;;; 027_org-mode:_Use_uppercase_UUIDs_in_Linux_for_consistency_with_MacOS_when_syncing_with_rslsync.el ends here
+;;; 028_org-mode:_Use_uppercase_UUIDs_in_Linux_for_consistency_with_MacOS_when_syncing_with_rslsync.el ends here

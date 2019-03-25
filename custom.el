@@ -14,7 +14,7 @@
  '(nrepl-message-colors
    '("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3"))
  '(package-selected-packages
-   '(dockerfile-mode csv-mode afternoon-theme airline-themes alect-themes ample-theme ample-zen-theme badger-theme badwolf-theme basic-theme blackboard-theme bliss-theme caroline-theme chyla-theme circadian commentary-theme creamsody-theme cycle-themes darkburn-theme darkmine-theme darkokai-theme darkroom darktooth-theme django-theme doneburn-theme eink-theme espresso-theme abyss-theme zop-to-char zenburn-theme yaml-mode workgroups2 which-key web-mode volatile-highlights vkill use-package undo-tree tiny-menu tidal sr-speedbar smex smartrep smartparens smart-mode-line slime scss-mode rainbow-mode rainbow-delimiters powerline ox-hugo ov osx-plist org-ref org-plus-contrib org-journal org-bullets operate-on-number multi-term move-text moe-theme mediawiki mc-extras markdown-mode magit litable json-mode js2-mode imenu-anywhere image-dired+ ido-completing-read+ icicles hl-sexp helm-swoop helm-projectile helm-descbinds helm-ag guru-mode grizzl gotest god-mode go-projectile gitignore-mode gitconfig-mode git-timemachine gist geiser flycheck-lilypond flx-ido expand-region exec-path-from-shell elisp-slime-nav editorconfig ebib easy-kill easy-hugo discover-my-major diminish diff-hl deft crux corral company-go company-auctex company-anaconda cdlatex calfw-org calfw-cal calfw buffer-move browse-kill-ring bookmark+ bm beacon avy-zap autobookmarks auto-async-byte-compile anzu ahungry-theme ace-window ace-popup-menu ace-mc ace-isearch ac-c-headers))
+   '(perspective sclang-extensions dockerfile-mode csv-mode afternoon-theme airline-themes alect-themes ample-theme ample-zen-theme badger-theme badwolf-theme basic-theme blackboard-theme bliss-theme caroline-theme chyla-theme circadian commentary-theme creamsody-theme cycle-themes darkburn-theme darkmine-theme darkokai-theme darkroom darktooth-theme django-theme doneburn-theme eink-theme espresso-theme abyss-theme zop-to-char zenburn-theme yaml-mode workgroups2 which-key web-mode volatile-highlights vkill use-package undo-tree tiny-menu tidal sr-speedbar smex smartrep smartparens smart-mode-line slime scss-mode rainbow-mode rainbow-delimiters powerline ox-hugo ov osx-plist org-ref org-plus-contrib org-journal org-bullets operate-on-number multi-term move-text moe-theme mediawiki mc-extras markdown-mode magit litable json-mode js2-mode imenu-anywhere image-dired+ ido-completing-read+ icicles hl-sexp helm-swoop helm-projectile helm-descbinds helm-ag guru-mode grizzl gotest god-mode go-projectile gitignore-mode gitconfig-mode git-timemachine gist geiser flycheck-lilypond flx-ido expand-region exec-path-from-shell elisp-slime-nav editorconfig ebib easy-kill easy-hugo discover-my-major diminish diff-hl deft crux corral company-go company-auctex company-anaconda cdlatex calfw-org calfw-cal calfw buffer-move browse-kill-ring bookmark+ bm beacon avy-zap autobookmarks auto-async-byte-compile anzu ahungry-theme ace-window ace-popup-menu ace-mc ace-isearch ac-c-headers))
  '(pdf-view-midnight-colors '("#DCDCCC" . "#383838"))
  '(vc-annotate-background "#2B2B2B")
  '(vc-annotate-color-map
@@ -86,19 +86,20 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Ubuntu Mono derivative Powerline" :foundry "nil" :width normal :height 110 :weight normal :slant normal :underline nil :overline nil :strike-through nil :box nil))))
- '(highlight ((t (:foreground "#FaFbff" :background "#119191"))))
- '(hl-line ((t (:background "gray0"))))
- '(hl-sexp-face ((t (:background "gray10"))))
+ '(default ((t (:foreground "#DCDCCC" :background "#3F3F3F"))))
+ '(highlight ((t (:background "#383838"))))
+ '(hl-line ((((class color) (min-colors 89)) (:background "#383838")) (t :weight bold)))
+ '(hl-sexp-face ((((class color) (min-colors 89)) (:background "#4F4F4F")) (t :weight bold)))
  '(org-block ((t (:foreground "#9bff7" :background "#17271f"))))
  '(org-block-begin-line ((t (:background "#3a2a2f" :foreground "gray99"))))
  '(org-block-end-line ((t (:background "#2a2a2f" :foreground "gray99"))))
- '(org-level-3 ((t (:weight bold :height 1.1))))
- '(org-level-4 ((t (:weight bold :height 1.1))))
- '(org-level-5 ((t (:weight bold :height 1.1))))
- '(org-level-6 ((t (:weight bold :height 1.1))))
- '(org-level-7 ((t (:weight bold :height 1.1))))
- '(org-level-8 ((t (:weight bold :height 1.1))))
+ '(org-level-2 ((t (:inherit default :foreground "#BFEBBF"))))
+ '(org-level-3 ((t (:inherit default :foreground "#7CB8BB"))))
+ '(org-level-4 ((t (:inherit default :foreground "#D0BF8F"))))
+ '(org-level-5 ((t (:inherit default :foreground "#93E0E3"))))
+ '(org-level-6 ((t (:inherit default :foreground "#9FC59F"))))
+ '(org-level-7 ((t (:inherit default :foreground "#8C5353"))))
+ '(org-level-8 ((t (:inherit default :foreground "#4C7073"))))
  '(org-level-9 ((t (:weight bold :height 1.1))))
- '(org-link ((t (:underline (:color "cyan" :style line) :foreground "cyan"))))
- '(region ((t (:background "#454A35")))))
+ '(org-link ((t (:foreground "#D0BF8F" :underline t))))
+ '(region ((((class color) (min-colors 89)) (:background "#2B2B2B")) (t :inverse-video t))))

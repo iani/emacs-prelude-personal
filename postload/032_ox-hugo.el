@@ -1,4 +1,4 @@
-;;; ox-hugo --- 2019-03-09 04:18:31 PM
+;;; ox-hugo --- 2019-03-24 06:03:24 PM
   ;; Functions for ox-hugo.  (11 Aug 2018 11:36)
 
   ;;; use yaml format in export front matter,
@@ -78,4 +78,4 @@
       (message "Copied %s"
                (shell-quote-argument (file-name-directory (directory-file-name pub-dir))))))
 (provide 'ox-hugo)
-;;; 031_ox-hugo.el ends here
+;;; 032_ox-hugo.el ends here

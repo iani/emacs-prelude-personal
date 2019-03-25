@@ -1,4 +1,4 @@
-;;; org_compile_latex_with_custom_framework --- 2019-03-09 04:18:30 PM
+;;; org_compile_latex_with_custom_framework --- 2019-03-24 06:03:23 PM
   ;;; Commentary:
 
   ;; 28 Feb 2019 14:18 ff
@@ -351,4 +351,4 @@
 
   (global-set-key (kbd "H-l") 'hydra-latex/body)
 (provide 'org_compile_latex_with_custom_framework)
-;;; 025_org_compile_latex_with_custom_framework.el ends here
+;;; 026_org_compile_latex_with_custom_framework.el ends here

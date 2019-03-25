@@ -1,4 +1,4 @@
-;;; org-mode_hydra --- 2019-03-09 04:18:29 PM
+;;; org-mode_hydra --- 2019-03-24 06:03:23 PM
   (defhydra hydra-org ( :color red :columns 3)
     "org-mode hydra"
     ("n" outline-next-visible-heading "next heading")
@@ -54,4 +54,4 @@
   ;;   (org-set-property "EXPORT_HUGO_SECTION*" section-name)
   ;;   (message "EXPORT_HUGO_SECTION* was set to %" section-name))
 (provide 'org-mode_hydra)
-;;; 023_org-mode_hydra.el ends here
+;;; 024_org-mode_hydra.el ends here
